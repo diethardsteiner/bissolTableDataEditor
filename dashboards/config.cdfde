@@ -20,7 +20,7 @@
      },
      {
       "name": "resourceCode",
-      "value": "function cdeBootstrapSelect(myContainerId, myData){\n    //document.getElementById('html_db_connection_picker').innerHTML = JSON.stringify(result_fetch_db_connections);\n    //var myData = result_fetch_db_connections;\n    //var myContainer = document.getElementById('html_db_connection_picker');\n    \n    var myContainer = document.getElementById(myContainerId);\n    var mySelect = document.createElement('select');\n    var myOption = document.createElement('option');\n    \n    mySelect.className = \"form-control\";\n    //mySelect.id = \"mySelect\";\n\n    for(var i = 0; i < myData.length; i++) {\n        var myValue = document.createTextNode(myData[i][0]);\n        mySelect.appendChild(myOption.cloneNode()).appendChild(myValue);\n        }\n    \n    myContainer.appendChild(mySelect);\n}\n\nfunction propagateSelection(){\n    alert(\"Hello\");\n    //alert(this.options[this.selectedIndex].text);\n    // get selected value\n    //Dashboards.setParameter('param_db_connection', this.options[this.selectedIndex].text);    \n}\n\nfunction establishListeners(){\n    var mySelect = document.getElementsByTagName('select'); //[OPEN] This is quite dangerous as it could get any spans outside our table\n    mySelect.addEventListener('select', propagateSelection ,false);\n}\n\n\n ",
+      "value": "function cdeBootstrapSelect(myContainerId, mySelectId, myData){\n    //document.getElementById('html_db_connection_picker').innerHTML = JSON.stringify(result_fetch_db_connections);\n    //var myData = result_fetch_db_connections;\n    //var myContainer = document.getElementById('html_db_connection_picker');\n    \n    var myContainer = document.getElementById(myContainerId);\n    var mySelect = document.createElement('select');\n    var myOption = document.createElement('option');\n    \n    mySelect.className = \"form-control\";\n    mySelect.id = mySelectId;\n\n    for(var i = 0; i < myData.length; i++) {\n        var myValue = document.createTextNode(myData[i][0]);\n        mySelect.appendChild(myOption.cloneNode()).appendChild(myValue);\n        }\n    \n    myContainer.appendChild(mySelect);\n}\n\nfunction propagateSelection(cdeParam, selectedText){\n    Dashboards.fireChange(cdeParam, selectedText);\n    console.log('Setting parameter param_db_connection to: ' + selectedText);\n}\n\nfunction establishListeners(mySelectId, cdeParam){\n    var select = document.getElementById(mySelectId);\n    var selectedText = select.options[select.selectedIndex].text;\n    //console.log(selectedText);\n    select.addEventListener('change', propagateSelection(cdeParam, selectedText), false);\n}\n\n\n ",
       "type": "Resource"
      }
     ]
@@ -149,7 +149,7 @@
      },
      {
       "name": "html",
-      "value": "<p></p>\n<div class=\"panel panel-default\">\n  <div class=\"panel-heading\">\n    <h3 class=\"panel-title\">My Form Title</h3>\n  </div>\n  <div class=\"panel-body\">\n    <div id=\"html_db_connection_picker\"></div>\n  </div>\n</div> ",
+      "value": "<p></p>\n<div class=\"panel panel-default\">\n  <div class=\"panel-heading\">\n    <h3 class=\"panel-title\">My Form Title</h3>\n  </div>\n  <div class=\"panel-body\">\n    <div id=\"html_db_connection_picker\"></div>\n  </div>\n  <div class=\"panel-body\">\n    <div id=\"html_db_schema_picker\"></div>\n  </div>\n  <div class=\"panel-body\">\n    <div id=\"html_db_table_picker\"></div>\n  </div>\n</div> ",
       "type": "Html"
      },
      {
@@ -245,7 +245,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    cdeBootstrapSelect('html_db_connection_picker',result_fetch_db_connections);\n    console.log(this);\n    //establishListeners();\n}",
+      "value": "function(){\n    cdeBootstrapSelect('html_db_connection_picker', 'dbConnectionPicker', result_fetch_db_connections);\n    establishListeners('dbConnectionPicker', 'param_db_connection');\n}",
       "type": "JavaScript"
      },
      {
@@ -267,6 +267,270 @@
       "name": "tooltip",
       "value": "",
       "type": "Html"
+     }
+    ]
+   },
+   {
+    "id": "1c9825e0-81d9-6cc8-d3fc-54d00deb8ab1",
+    "type": "ComponentsQuery",
+    "typeDesc": "Query Component",
+    "parent": "OTHERCOMPONENTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "comp_db_schema_picker",
+      "type": "Id"
+     },
+     {
+      "name": "listeners",
+      "value": "['${p:param_db_connection}']",
+      "type": "Listeners"
+     },
+     {
+      "name": "parameters",
+      "value": "[[\"param_db_connection\",\"param_db_connection\"]]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "resultvar",
+      "value": "result_fetch_db_schemas",
+      "type": "Result"
+     },
+     {
+      "name": "dataSource",
+      "value": "qry_fetch_db_schemas",
+      "type": "Datasource"
+     },
+     {
+      "name": "refreshPeriod",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "priority",
+      "value": 5,
+      "type": "Integer"
+     },
+     {
+      "name": "htmlObject",
+      "value": "",
+      "type": "HtmlObject"
+     },
+     {
+      "name": "executeAtStart",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "preExecution",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postExecution",
+      "value": "function(){\n    cdeBootstrapSelect('html_db_schema_picker','dbSchemaPicker', result_fetch_db_schemas);\n    establishListeners('dbSchemaPicker', 'param_db_schema');\n}",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postFetch",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "preChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "tooltip",
+      "value": "",
+      "type": "Html"
+     }
+    ]
+   },
+   {
+    "id": "896b05cb-a53c-4159-9fcb-eb23f9d0995f",
+    "type": "ComponentsQuery",
+    "typeDesc": "Query Component",
+    "parent": "OTHERCOMPONENTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "comp_db_table_picker",
+      "type": "Id"
+     },
+     {
+      "name": "listeners",
+      "value": "['${p:param_db_table}']",
+      "type": "Listeners"
+     },
+     {
+      "name": "parameters",
+      "value": "[[\"param_db_connection\",\"param_db_connection\"],[\"param_db_schema\",\"param_db_schema\"]]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "resultvar",
+      "value": "result_fetch_db_tables",
+      "type": "Result"
+     },
+     {
+      "name": "dataSource",
+      "value": "qry_fetch_db_tables",
+      "type": "Datasource"
+     },
+     {
+      "name": "refreshPeriod",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "priority",
+      "value": 5,
+      "type": "Integer"
+     },
+     {
+      "name": "htmlObject",
+      "value": "",
+      "type": "HtmlObject"
+     },
+     {
+      "name": "executeAtStart",
+      "value": "true",
+      "type": "Boolean"
+     },
+     {
+      "name": "preExecution",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postExecution",
+      "value": "function(){\n    cdeBootstrapSelect('html_db_table_picker','dbTablePicker', result_fetch_db_tables);\n    establishListeners('dbTablePicker', 'param_db_table');\n}",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postFetch",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "preChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "tooltip",
+      "value": "",
+      "type": "Html"
+     }
+    ]
+   },
+   {
+    "id": "GENERIC",
+    "name": "Generic",
+    "type": "Label",
+    "typeDesc": "<i>Group</i>",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "Group",
+      "value": "Generic",
+      "type": "Label"
+     }
+    ]
+   },
+   {
+    "id": "56f1fab1-2c4e-b174-754e-4608e1bd0723",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_db_connection",
+      "type": "Id"
+     },
+     {
+      "name": "propertyValue",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
+     }
+    ]
+   },
+   {
+    "id": "a8c5cf6a-2c38-830d-4f41-332b66649628",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_db_schema",
+      "type": "Id"
+     },
+     {
+      "name": "propertyValue",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
+     }
+    ]
+   },
+   {
+    "id": "7223fea1-41d3-bcf2-c80c-553a98c17fe4",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_db_table",
+      "type": "Id"
+     },
+     {
+      "name": "propertyValue",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
      }
     ]
    }
@@ -393,6 +657,58 @@
     "meta": "CPK",
     "meta_pluginId": "bissolTableDataEditor",
     "meta_endpoint": "fetchDBConnections"
+   },
+   {
+    "id": "464b80c3-f27c-68e2-af3e-b5bc311874c4",
+    "type": "ComponentsbissolTableDataEditor_fetchdbschemas_CPKENDPOINT",
+    "typeDesc": "fetchdbschemas Endpoint",
+    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "qry_fetch_db_schemas",
+      "type": "Id"
+     },
+     {
+      "name": "stepName",
+      "value": "OUTPUT",
+      "type": "String"
+     },
+     {
+      "name": "kettleOutput",
+      "value": "Inferred",
+      "type": "kettleOutputCustom"
+     }
+    ],
+    "meta": "CPK",
+    "meta_pluginId": "bissolTableDataEditor",
+    "meta_endpoint": "fetchdbschemas"
+   },
+   {
+    "id": "f5942c1a-3053-60bf-aed8-42d178f1bcf2",
+    "type": "ComponentsbissolTableDataEditor_fetchdbtables_CPKENDPOINT",
+    "typeDesc": "fetchdbtables Endpoint",
+    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "qry_fetch_db_tables",
+      "type": "Id"
+     },
+     {
+      "name": "stepName",
+      "value": "OUTPUT",
+      "type": "String"
+     },
+     {
+      "name": "kettleOutput",
+      "value": "Inferred",
+      "type": "kettleOutputCustom"
+     }
+    ],
+    "meta": "CPK",
+    "meta_pluginId": "bissolTableDataEditor",
+    "meta_endpoint": "fetchdbtables"
    }
   ]
  },
