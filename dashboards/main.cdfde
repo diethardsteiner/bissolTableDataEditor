@@ -1,0 +1,494 @@
+{
+ "layout": {
+  "title": "main",
+  "rows": [
+   {
+    "id": "6338438b-4055-060a-21ba-5f2976f0bb78",
+    "type": "LayoutResourceCode",
+    "typeDesc": "Resource",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "tableeditorjs",
+      "type": "Id"
+     },
+     {
+      "name": "resourceType",
+      "value": "Javascript",
+      "type": "Label"
+     },
+     {
+      "name": "resourceCode",
+      "value": "function buildTable(data,metadata) {\n    \n    // DATA\n    // prod\n    var myMetadata = metadata;\n    var myData = data;\n    // check how CDE data looks like\n    // document.getElementById('test').innerHTML = JSON.stringify(myMetadata);\n    // document.getElementById('test').innerHTML = JSON.stringify(myData);\n    // sample data for dev purposes only\n    // var myMetadata = [{\"colIndex\":0,\"colType\":\"String\",\"colName\":\"CUSTOMERNAME\"},{\"colIndex\":1,\"colType\":\"Integer\",\"colName\":\"CUSTOMERNUMBER\"},{\"colIndex\":2,\"colType\":\"String\",\"colName\":\"PHONE\"}];\n    // var myData = [[\"Atelier graphique\",103,\"40.32.2555\"],[\"Signal Gift Stores\",112,\"7025551838\"],[\"Australian Collectors, Co.\",114,\"03 9520 4555\"],[\"La Rochelle Gifts\",119,\"40.67.8555\"],[\"Baane Mini Imports\",121,\"07-98 9555\"],[\"Mini Gifts Distributors Ltd.\",124,\"4155551450\"],[\"Havel & Zbyszek Co\",125,\"(26) 642-7555\"],[\"Blauer See Auto, Co.\",128,\"+49 69 66 90 2555\"],[\"Mini Wheels Co.\",129,\"6505555787\"],[\"Land of Toys Inc.\",131,\"2125557818\"],[\"Euro+ Shopping Channel\",141,\"(91) 555 94 44\"],[\"Volvo Model Replicas, Co\",144,\"0921-12 3555\"],[\"Danish Wholesale Imports\",145,\"31 12 3555\"],[\"Saveley & Henriot, Co.\",146,\"78.32.5555\"],[\"Dragon Souveniers, Ltd.\",148,\"+65 221 7555\"],[\"Muscle Machine Inc\",151,\"2125557413\"],[\"Diecast Classics Inc.\",157,\"2155551555\"],[\"Technics Stores Inc.\",161,\"6505556809\"],[\"Handji Gifts& Co\",166,\"+65 224 1555\"],[\"Herkku Gifts\",167,\"+47 2267 3215\"],[\"American Souvenirs Inc\",168,\"2035557845\"],[\"Porto Imports Co.\",169,\"(1) 356-5555\"],[\"Daedalus Designs Imports\",171,\"20.16.1555\"],[\"La Corne D'abondance, Co.\",172,\"(1) 42.34.2555\"],[\"Cambridge Collectables Co.\",173,\"6175555555\"],[\"Gift Depot Inc.\",175,\"2035552570\"],[\"Osaka Souveniers Co.\",177,\"+81 06 6342 5555\"]];\n\n    \n    \n    // create basic table nodes\n    var myTable = document.createElement('table');\n    var myTHead = document.createElement('thead');\n    var myTh = document.createElement('th');\n    var myTBody = document.createElement('tbody');\n    var myTr = document.createElement('tr');\n    var myTd = document.createElement('td');\n    // add span so that we can use the contenteditable attribute which doesnt work on td directly\n    var mySpan = document.createElement('span');\n    mySpan.setAttribute('contenteditable','true');\n    //myTable.id = 'table1';\n    myTable.className = 'table table-striped';\n    \n    // retrieve column type\n/**\n    var myColFormats = [];\n    \n    for(var t = 0; t < myMetadata.length; t++){\n        switch(myMetadata[t]['colType']){\n            case 'Integer':\n                myColFormats.push('%d');\n                break;\n            case 'Number':\n                myColFormats.push('%.2f');\n                break;\n            default:\n                myColFormats.push('%s');\n                break;\n        }\n        \n        myColFormats.push();\n    }    \n**/  \n\n\n    // build table header\n    var myContainer = document.getElementById('tableeditor');\n    myContainer.appendChild(myTable).appendChild(myTHead).appendChild(myTr);\n   \n    for(var s = 0; s < myMetadata.length; s++){\n        myHeaderText = document.createTextNode(myMetadata[s]['colName']);\n        myContainer.lastChild.lastChild.lastChild.appendChild(myTh.cloneNode()).appendChild(myHeaderText);\n    }\n   \n    // build table body\n    myContainer.lastChild.appendChild(myTBody);\n        \n    for(var i = 0; i < myData.length; i++) {\n        myContainer.lastChild.lastChild.appendChild(myTr.cloneNode());\n        for(var j = 0; j < myData[i].length; j++) {\n            var myCell = myTd.cloneNode();\n            myCell.appendChild(mySpan.cloneNode());\n            myMessenger = [];\n            myMessenger.push({\n                \"key\": \"id\", // [OPEN] replace with variable\n                \"keyValue\": myData[i][0], // [OPEN] has to be dynamic\n                \"column\": myMetadata[j]['colName'],\n                \"valueOld\": myData[i][j]\n                });\n            myCell.lastChild.setAttribute('alt',JSON.stringify(myMessenger));\n            var myText = document.createTextNode(myData[i][j]);\n            myCell.lastChild.appendChild(myText);\n            // uncomment below once format source js is available\n            //myCell.lastChild.appendChild(sprintf(myColFormats[j],myText));\n            myContainer.lastChild.lastChild.lastChild.appendChild(myCell);\n        }\n    }\n\n}\n\n\nfunction saveCellData(){\n    //alert(this.getAttribute('alt') + \": \" + this.textContent);\n    \n    // pass values to CDF parameter\n    \n    var myMessengerBox = JSON.parse(this.getAttribute('alt'));\n    //alert(JSON.stringify(myMessengerBox));\n    //alert(myMessengerBox[0].keyValue);\n    //var param_value = this.textContent; \n    //PARAM_KEY_VALUE = myMessengerBox[0].keyValue;\n    //PARAM_KEY = myMessengerBox[0].key;\n    //Dashboards.fireChange('PARAM_VALUE', param_value);\n\n    // [OPEN] CAST NUMBERS AND STRING VALUES RESPECTIVELY -- currently only String values allowed\n\n    var updateQuery = \"UPDATE employees SET \" + myMessengerBox[0].column + \" = '\" + this.textContent \n         + \"' WHERE \" + myMessengerBox[0].key + \" = \" + myMessengerBox[0].keyValue;\n\n    param_db_connection = 'psqllocaltest'; // [OPEN] Make dynamic\n    \n    Dashboards.log(param_db_connection + ' :: Update Query: ' + updateQuery);\n    console.log(param_db_connection + ' :: Update Query: ' + updateQuery);\n    \n    Dashboards.fireChange('param_sql_update', updateQuery);\n    \n    // [OPEN] Add logic that value is only saved back if it is different from the previous value\n}\n\n\n// call main function and create event listeners\n\nfunction establishListeners(){\n    var myCells = document.getElementsByTagName('span'); \n\n    for(z = 0;  z < myCells.length; z++) {\n        currentCell = myCells.item(z);\n        //currentCell.addEventListener('blur',saveCellData(this.textContent),false);\n        currentCell.addEventListener('blur', saveCellData ,false);\n    }\n\n}\n\n\n\n\n ",
+      "type": "Resource"
+     }
+    ]
+   },
+   {
+    "id": "a41c34f3-a2d5-d478-f6de-575b9b5021ab",
+    "type": "LayoutRow",
+    "typeDesc": "Row",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "",
+      "type": "Id"
+     },
+     {
+      "name": "height",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "backgroundColor",
+      "value": "",
+      "type": "Color"
+     },
+     {
+      "name": "roundCorners",
+      "value": "",
+      "type": "RoundCorners"
+     },
+     {
+      "name": "textAlign",
+      "value": "",
+      "type": "TextAlign"
+     },
+     {
+      "name": "cssClass",
+      "value": "",
+      "type": "String"
+     }
+    ]
+   },
+   {
+    "id": "bb23d3ba-03a7-ee50-7d54-0b46d2780a9c",
+    "type": "LayoutColumn",
+    "typeDesc": "Column",
+    "parent": "a41c34f3-a2d5-d478-f6de-575b9b5021ab",
+    "properties": [
+     {
+      "name": "name",
+      "value": "tableeditor",
+      "type": "Id"
+     },
+     {
+      "name": "columnSpan",
+      "value": "12",
+      "type": "Integer"
+     },
+     {
+      "name": "columnPrepend",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "columnAppend",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "columnPrependTop",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "columnAppendBottom",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "columnBorder",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "columnBigBorder",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "height",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "backgroundColor",
+      "value": "",
+      "type": "Color"
+     },
+     {
+      "name": "roundCorners",
+      "value": "",
+      "type": "RoundCorners"
+     },
+     {
+      "name": "textAlign",
+      "value": "",
+      "type": "TextAlign"
+     },
+     {
+      "name": "cssClass",
+      "value": "",
+      "type": "String"
+     }
+    ]
+   }
+  ]
+ },
+ "components": {
+  "rows": [
+   {
+    "id": "GENERIC",
+    "name": "Generic",
+    "type": "Label",
+    "typeDesc": "<i>Group</i>",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "Group",
+      "value": "Generic",
+      "type": "Label"
+     }
+    ]
+   },
+   {
+    "id": "5deee05c-a10c-981a-04c1-7e8a399d82c5",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_sql_select",
+      "type": "Id"
+     },
+     {
+      "name": "propertyValue",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
+     }
+    ]
+   },
+   {
+    "id": "03da0f38-4d4b-1aa9-0e96-28456936e2b0",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_db_connection",
+      "type": "Id"
+     },
+     {
+      "name": "propertyValue",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
+     }
+    ]
+   },
+   {
+    "id": "d2805cfd-a18e-b2bb-c2e6-d4fb8672ca94",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_sql_update",
+      "type": "Id"
+     },
+     {
+      "name": "propertyValue",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
+     }
+    ]
+   },
+   {
+    "id": "OTHERCOMPONENTS",
+    "name": "Others",
+    "type": "Label",
+    "typeDesc": "<i>Group</i>",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "Group",
+      "value": "Others",
+      "type": "Label"
+     }
+    ]
+   },
+   {
+    "id": "5e6cf1e5-4518-198a-068e-e4ed7aa01674",
+    "type": "ComponentsQuery",
+    "typeDesc": "Query Component",
+    "parent": "OTHERCOMPONENTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "comp_generic_select",
+      "type": "Id"
+     },
+     {
+      "name": "listeners",
+      "value": "['${p:param_sql_select}']",
+      "type": "Listeners"
+     },
+     {
+      "name": "parameters",
+      "value": "[[\"param_db_connection\",\"param_db_connection\"],[\"param_sql_select\",\"param_sql_select\"]]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "resultvar",
+      "value": "select_result",
+      "type": "Result"
+     },
+     {
+      "name": "dataSource",
+      "value": "qry_generic_select",
+      "type": "Datasource"
+     },
+     {
+      "name": "refreshPeriod",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "priority",
+      "value": 5,
+      "type": "Integer"
+     },
+     {
+      "name": "htmlObject",
+      "value": "tableeditor",
+      "type": "HtmlObject"
+     },
+     {
+      "name": "executeAtStart",
+      "value": "true",
+      "type": "Boolean"
+     },
+     {
+      "name": "preExecution",
+      "value": "function(){    \n    var selectQuery = \"SELECT * FROM employees\";\n    param_db_connection = \"psqllocaltest\"; //[OPEN] Make dynamic\n    Dashboards.fireChange('param_sql_select', selectQuery);\n}",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postExecution",
+      "value": "function(){\n    buildTable(select_result,this.metadata);\n    establishListeners();\n}",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postFetch",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "preChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "tooltip",
+      "value": "",
+      "type": "Html"
+     }
+    ]
+   },
+   {
+    "id": "9a3c2e32-89f3-b6f4-24ea-15ad3bd89ae3",
+    "type": "ComponentsQuery",
+    "typeDesc": "Query Component",
+    "parent": "OTHERCOMPONENTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "comp_generic_update",
+      "type": "Id"
+     },
+     {
+      "name": "listeners",
+      "value": "['${p:param_sql_update}']",
+      "type": "Listeners"
+     },
+     {
+      "name": "parameters",
+      "value": "[[\"param_sql_update\",\"param_sql_update\"],[\"param_db_connection\",\"param_db_connection\"]]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "resultvar",
+      "value": "",
+      "type": "Result"
+     },
+     {
+      "name": "dataSource",
+      "value": "qry_generic_update",
+      "type": "Datasource"
+     },
+     {
+      "name": "refreshPeriod",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "priority",
+      "value": 5,
+      "type": "Integer"
+     },
+     {
+      "name": "htmlObject",
+      "value": "",
+      "type": "HtmlObject"
+     },
+     {
+      "name": "executeAtStart",
+      "value": "true",
+      "type": "Boolean"
+     },
+     {
+      "name": "preExecution",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postExecution",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postFetch",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "preChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "tooltip",
+      "value": "",
+      "type": "Html"
+     }
+    ]
+   }
+  ]
+ },
+ "datasources": {
+  "rows": [
+   {
+    "id": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
+    "name": "BISSOLTABLEDATAEDITOR Endpoints",
+    "type": "Label",
+    "typeDesc": "<i>Group</i>",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "Group",
+      "value": "BISSOLTABLEDATAEDITOR Endpoints",
+      "type": "Label"
+     }
+    ]
+   },
+   {
+    "id": "fb523ae5-19d8-c344-dff8-db69803b3088",
+    "type": "ComponentsbissolTableDataEditor_genericselectquery_CPKENDPOINT",
+    "typeDesc": "genericselectquery Endpoint",
+    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "qry_generic_select",
+      "type": "Id"
+     },
+     {
+      "name": "stepName",
+      "value": "OUTPUT",
+      "type": "String"
+     },
+     {
+      "name": "kettleOutput",
+      "value": "Inferred",
+      "type": "kettleOutputCustom"
+     }
+    ],
+    "meta": "CPK",
+    "meta_pluginId": "bissolTableDataEditor",
+    "meta_endpoint": "genericselectquery"
+   },
+   {
+    "id": "71bed294-f5ca-6240-3ec8-5d2dda8e4bc8",
+    "type": "ComponentsbissolTableDataEditor_genericupdatequery_CPKENDPOINT",
+    "typeDesc": "genericupdatequery Endpoint",
+    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "qry_generic_update",
+      "type": "Id"
+     },
+     {
+      "name": "stepName",
+      "value": "OUTPUT",
+      "type": "String"
+     },
+     {
+      "name": "kettleOutput",
+      "value": "Inferred",
+      "type": "kettleOutputCustom"
+     }
+    ],
+    "meta": "CPK",
+    "meta_pluginId": "bissolTableDataEditor",
+    "meta_endpoint": "genericupdatequery"
+   }
+  ]
+ },
+ "filename": "/system/bissolTableDataEditor/dashboards/main.cdfde"
+}
