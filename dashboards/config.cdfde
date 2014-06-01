@@ -20,7 +20,7 @@
      },
      {
       "name": "resourceCode",
-      "value": "function cdeBootstrapSelect(myContainerId, mySelectId, myLabelText, myData){\n    //document.getElementById('html_db_connection_picker').innerHTML = JSON.stringify(result_fetch_db_connections);\n    //var myData = result_fetch_db_connections;\n    //var myContainer = document.getElementById('html_db_connection_picker');\n    \n    var myContainer = document.getElementById(myContainerId);\n    var myLabel = document.createElement('label');\n    var mySelect = document.createElement('select');\n    var myOption = document.createElement('option');\n    \n    var myLabelTextNode = document.createTextNode(myLabelText);\n    myLabel.setAttribute('for', mySelectId);\n    \n    mySelect.className = \"form-control\";\n    mySelect.id = mySelectId;\n\n    for(var i = 0; i < myData.length; i++) {\n        var myValue = document.createTextNode(myData[i][0]);\n        mySelect.appendChild(myOption.cloneNode()).appendChild(myValue);\n        }\n    \n    // check if select already exists otherwise create   \n    var myExistingSelect = document.getElementById(mySelectId);\n    switch (myExistingSelect){\n        case null:\n            myContainer.appendChild(myLabel.cloneNode()).appendChild(myLabelTextNode);\n            myContainer.appendChild(mySelect);\n            break;\n        default:\n            myContainer.replaceChild(mySelect, myExistingSelect);\n            break;\n    }\n    \n}\n\nfunction propagateSelection(evt){\n    //console.log(evt);\n    //console.log('And the value is: ' + evt.target.selectedIndex);\n    //console.log('And the value is: ' + evt.target.options[evt.target.selectedIndex].text);\n    Dashboards.fireChange(evt.target.cdeParam, evt.target.options[evt.target.selectedIndex].text);\n    console.log('Setting parameter ' + evt.target.cdeParam + ' to: ' + evt.target.options[evt.target.selectedIndex].text);\n}\n\nfunction establishListeners(mySelectId, cdeParam){\n    var select = document.getElementById(mySelectId);\n    // add arguments to pass on to event\n    //select.selectedText = select.options[select.selectedIndex].text; // dont set it here as the changes wont be picked up - set in function which the event listener calls\n    select.cdeParam = cdeParam;\n    //console.log('The selection for param ' + select.cdeParam + ' is: ' + select.selectedText);\n    select.addEventListener('change', propagateSelection, false);\n}\n\n\n ",
+      "value": "\nfunction bissolCreateSelect(myContainerId, mySelectId, myLabelText, myData, cdeParam){\n    bissolCreateSelectContainer(myContainerId, mySelectId, myLabelText, myData);\n    bissolEstablishListeners(mySelectId, cdeParam);\n}\n\n\nfunction bissolCreateSelectContainer(myContainerId, mySelectId, myLabelText, myData){\n    //document.getElementById('html_db_connection_picker').innerHTML = JSON.stringify(result_fetch_db_connections);\n    //var myData = result_fetch_db_connections;\n    //var myContainer = document.getElementById('html_db_connection_picker');\n    \n    var myContainer = document.getElementById(myContainerId);\n    var myLabel = document.createElement('label');\n    var mySelect = document.createElement('select');\n    var myOption = document.createElement('option');\n    \n    var myLabelTextNode = document.createTextNode(myLabelText);\n    myLabel.setAttribute('for', mySelectId);\n    \n    mySelect.className = \"form-control\";\n    mySelect.id = mySelectId;\n\n    for(var i = 0; i < myData.length; i++) {\n        var myValue = document.createTextNode(myData[i][0]);\n        mySelect.appendChild(myOption.cloneNode()).appendChild(myValue);\n        }\n    \n    // check if select already exists otherwise create   \n    var myExistingSelect = document.getElementById(mySelectId);\n    switch (myExistingSelect){\n        case null:\n            myContainer.appendChild(myLabel.cloneNode()).appendChild(myLabelTextNode);\n            myContainer.appendChild(mySelect);\n            break;\n        default:\n            myContainer.replaceChild(mySelect, myExistingSelect);\n            break;\n    }   \n}\n\nfunction propagateSelection(evt){\n    //console.log(evt);\n    //console.log('And the value is: ' + evt.target.selectedIndex);\n    //console.log('And the value is: ' + evt.target.options[evt.target.selectedIndex].text);\n    \n    // change the value of the cde parameter to the selected value\n    Dashboards.fireChange(evt.target.cdeParam, evt.target.options[evt.target.selectedIndex].text);\n    console.log('Setting parameter ' + evt.target.cdeParam + ' to: ' + evt.target.options[evt.target.selectedIndex].text);\n\n}\n\nfunction bissolEstablishListeners(mySelectId, cdeParam){\n    var select = document.getElementById(mySelectId);\n    // add arguments to pass on to event\n    //select.selectedText = select.options[select.selectedIndex].text; // dont set it here as the changes wont be picked up - set in function which the event listener calls\n    select.cdeParam = cdeParam;\n    //console.log('The selection for param ' + select.cdeParam + ' is: ' + select.selectedText);\n    select.addEventListener('change', propagateSelection, false);\n}\n\n\n ",
       "type": "Resource"
      }
     ]
@@ -245,7 +245,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    cdeBootstrapSelect('html_db_connection_picker', 'dbConnectionPicker', 'Choose Connection:', result_fetch_db_connections);\n    establishListeners('dbConnectionPicker', 'param_db_connection');\n}",
+      "value": "function(){\n    //cdeBootstrapSelect('html_db_connection_picker', 'dbConnectionPicker', 'Choose Connection:', result_fetch_db_connections);\n    //establishListeners('dbConnectionPicker', 'param_db_connection');\n    bissolCreateSelect('html_db_connection_picker', 'dbConnectionPicker', 'Choose Connection:', result_fetch_db_connections, 'param_db_connection');\n}",
       "type": "JavaScript"
      },
      {
@@ -328,7 +328,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    cdeBootstrapSelect('html_db_schema_picker','dbSchemaPicker', 'Choose Schema:', result_fetch_db_schemas);\n    establishListeners('dbSchemaPicker', 'param_db_schema');\n}",
+      "value": "function(){\n    bissolCreateSelect('html_db_schema_picker','dbSchemaPicker', 'Choose Schema:', result_fetch_db_schemas, 'param_db_schema');\n}",
       "type": "JavaScript"
      },
      {
@@ -366,7 +366,7 @@
      },
      {
       "name": "listeners",
-      "value": "['${p:param_db_table}']",
+      "value": "['${p:param_db_schema}']",
       "type": "Listeners"
      },
      {
@@ -411,7 +411,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    cdeBootstrapSelect('html_db_table_picker','dbTablePicker', 'Choose Table:', result_fetch_db_tables);\n    establishListeners('dbTablePicker', 'param_db_table');\n}",
+      "value": "function(){\n    bissolCreateSelect('html_db_table_picker','dbTablePicker', 'Choose Table:', result_fetch_db_tables, 'param_db_table');\n}",
       "type": "JavaScript"
      },
      {
