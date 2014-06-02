@@ -3,6 +3,29 @@
   "title": "config",
   "rows": [
    {
+    "id": "04f6373b-4bbd-2d03-f841-242d75459c3b",
+    "type": "LayoutResourceCode",
+    "typeDesc": "Resource",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "configcss",
+      "type": "Id"
+     },
+     {
+      "name": "resourceType",
+      "value": "Css",
+      "type": "Label"
+     },
+     {
+      "name": "resourceCode",
+      "value": ".bissolConfigBox{\n    position: relative;\n    top: 1em;\n} \n\n.bissolConfigSubmit{\n    width: 92%;\n    height: 92%;\n    margin: 4% 4% 4% 4%;\n} ",
+      "type": "Resource"
+     }
+    ]
+   },
+   {
     "id": "7307cd80-7d92-4b9e-9be1-8c56320c71ad",
     "type": "LayoutResourceCode",
     "typeDesc": "Resource",
@@ -20,7 +43,7 @@
      },
      {
       "name": "resourceCode",
-      "value": "\nfunction bissolCreateSelect(myContainerId, mySelectId, myLabelText, myData, cdeParam){\n    bissolCreateSelectContainer(myContainerId, mySelectId, myLabelText, myData);\n    bissolEstablishListeners(mySelectId, cdeParam);\n}\n\n\nfunction bissolCreateSelectContainer(myContainerId, mySelectId, myLabelText, myData){\n    //document.getElementById('html_db_connection_picker').innerHTML = JSON.stringify(result_fetch_db_connections);\n    //var myData = result_fetch_db_connections;\n    //var myContainer = document.getElementById('html_db_connection_picker');\n    \n    var myContainer = document.getElementById(myContainerId);\n    var myLabel = document.createElement('label');\n    var mySelect = document.createElement('select');\n    var myOption = document.createElement('option');\n    \n    var myLabelTextNode = document.createTextNode(myLabelText);\n    myLabel.setAttribute('for', mySelectId);\n    \n    mySelect.className = \"form-control\";\n    mySelect.id = mySelectId;\n\n    for(var i = 0; i < myData.length; i++) {\n        var myValue = document.createTextNode(myData[i][0]);\n        mySelect.appendChild(myOption.cloneNode()).appendChild(myValue);\n        }\n    \n    // check if select already exists otherwise create   \n    var myExistingSelect = document.getElementById(mySelectId);\n    switch (myExistingSelect){\n        case null:\n            myContainer.appendChild(myLabel.cloneNode()).appendChild(myLabelTextNode);\n            myContainer.appendChild(mySelect);\n            break;\n        default:\n            myContainer.replaceChild(mySelect, myExistingSelect);\n            break;\n    }   \n}\n\nfunction propagateSelection(evt){\n    //console.log(evt);\n    //console.log('And the value is: ' + evt.target.selectedIndex);\n    //console.log('And the value is: ' + evt.target.options[evt.target.selectedIndex].text);\n    \n    // change the value of the cde parameter to the selected value\n    Dashboards.fireChange(evt.target.cdeParam, evt.target.options[evt.target.selectedIndex].text);\n    console.log('Setting parameter ' + evt.target.cdeParam + ' to: ' + evt.target.options[evt.target.selectedIndex].text);\n\n}\n\nfunction bissolEstablishListeners(mySelectId, cdeParam){\n    var select = document.getElementById(mySelectId);\n    // add arguments to pass on to event\n    //select.selectedText = select.options[select.selectedIndex].text; // dont set it here as the changes wont be picked up - set in function which the event listener calls\n    select.cdeParam = cdeParam;\n    //console.log('The selection for param ' + select.cdeParam + ' is: ' + select.selectedText);\n    select.addEventListener('change', propagateSelection, false);\n}\n\n//---------------------- checkbox -----------------------//\n\nfunction bissolCreateCheckboxSet(myContainerId, myCheckBoxId, myLabelText, myData, cdeParam){\n    var myContainer = document.getElementById(myContainerId);\n    var myLabel = document.createElement('label');\n    \n    // create main container which holds all the checkboxes\n    var myCheckboxSetContainer = document.createElement('div');\n    myCheckboxSetContainer.id = myCheckBoxId;    \n    var myMainLabelTextNode = document.createTextNode(myLabelText);\n    myCheckboxSetContainer.appendChild(myLabel.cloneNode()).appendChild(myMainLabelTextNode);\n    myContainer.appendChild(myCheckboxSetContainer);\n    \n    // create structure for one checkbox\n    var myCheckboxContainer = document.createElement('div');\n    myCheckboxContainer.className = 'checkbox';\n    var myCheckbox = document.createElement('input');   \n    myCheckbox.setAttribute('type','checkbox');\n\n    for(var i = 0; i < myData.length; i++) {\n        var myCheckboxLabel = document.createTextNode(myData[i][0]);\n        myCheckboxSetContainer.appendChild(myCheckboxContainer.cloneNode()).appendChild(myLabel.cloneNode()).appendChild(myCheckbox.cloneNode());\n        myCheckboxSetContainer.lastChild.lastChild.appendChild(myCheckboxLabel);\n        myCheckboxSetContainer.lastChild.lastChild.firstChild.setAttribute('name', cdeParam);\n        myCheckboxSetContainer.lastChild.lastChild.firstChild.setAttribute('value', myData[i][0]);\n        }\n}\n\n ",
+      "value": "\nfunction bissolCreateSelect(myContainerId, mySelectId, myLabelText, myData, cdeParam){\n    bissolCreateSelectContainer(myContainerId, mySelectId, myLabelText, myData);\n    bissolEstablishListeners(mySelectId, cdeParam);\n}\n\n\nfunction bissolCreateSelectContainer(myContainerId, mySelectId, myLabelText, myData){\n    //document.getElementById('html_db_connection_picker').innerHTML = JSON.stringify(result_fetch_db_connections);\n    //var myData = result_fetch_db_connections;\n    //var myContainer = document.getElementById('html_db_connection_picker');\n    \n    var myContainer = document.getElementById(myContainerId);\n    var myLabel = document.createElement('label');\n    var mySelect = document.createElement('select');\n    var myOption = document.createElement('option');\n    \n    var myLabelTextNode = document.createTextNode(myLabelText);\n    myLabel.setAttribute('for', mySelectId);\n    \n    mySelect.className = \"form-control\";\n    mySelect.id = mySelectId;\n\n    for(var i = 0; i < myData.length; i++) {\n        var myValue = document.createTextNode(myData[i][0]);\n        mySelect.appendChild(myOption.cloneNode()).appendChild(myValue);\n        }\n    \n    // check if select already exists otherwise create   \n    var myExistingSelect = document.getElementById(mySelectId);\n    switch (myExistingSelect){\n        case null:\n            myContainer.appendChild(myLabel.cloneNode()).appendChild(myLabelTextNode);\n            myContainer.appendChild(mySelect);\n            break;\n        default:\n            myContainer.replaceChild(mySelect, myExistingSelect);\n            break;\n    }   \n}\n\nfunction bissolPropagateSelection(evt){\n    //console.log(evt);\n    //console.log('And the value is: ' + evt.target.selectedIndex);\n    //console.log('And the value is: ' + evt.target.options[evt.target.selectedIndex].text);\n    \n    // change the value of the cde parameter to the selected value\n    Dashboards.fireChange(evt.target.cdeParam, evt.target.options[evt.target.selectedIndex].text);\n    console.log('Setting parameter ' + evt.target.cdeParam + ' to: ' + evt.target.options[evt.target.selectedIndex].text);\n\n}\n\nfunction bissolEstablishListeners(mySelectId, cdeParam){\n    var select = document.getElementById(mySelectId);\n    // add arguments to pass on to event\n    //select.selectedText = select.options[select.selectedIndex].text; // dont set it here as the changes wont be picked up - set in function which the event listener calls\n    select.cdeParam = cdeParam;\n    //console.log('The selection for param ' + select.cdeParam + ' is: ' + select.selectedText);\n    select.addEventListener('change', bissolPropagateSelection, false);\n}\n\n//---------------------- checkbox -----------------------//\n\nfunction bissolCreateCheckboxSet(myContainerId, myCheckboxSetId, myLabelText, myData, cdeParam){\n    var myContainer = document.getElementById(myContainerId);\n    var myLabel = document.createElement('label');\n    \n    // create main container which holds all the checkboxes\n    var myCheckboxSetContainer = document.createElement('div');\n    myCheckboxSetContainer.id = myCheckboxSetId;    \n    var myMainLabelTextNode = document.createTextNode(myLabelText);\n    myCheckboxSetContainer.appendChild(myLabel.cloneNode()).appendChild(myMainLabelTextNode);\n    myContainer.appendChild(myCheckboxSetContainer);\n    \n    // create structure for one checkbox\n    var myCheckboxContainer = document.createElement('div');\n    myCheckboxContainer.className = 'checkbox';\n    var myCheckbox = document.createElement('input');   \n    myCheckbox.setAttribute('type','checkbox');\n\n    for(var i = 0; i < myData.length; i++) \n    {\n        var myCheckboxLabel = document.createTextNode(myData[i][0]);\n        myCheckboxSetContainer.appendChild(myCheckboxContainer.cloneNode()).appendChild(myLabel.cloneNode()).appendChild(myCheckbox.cloneNode());\n        myCheckboxSetContainer.lastChild.lastChild.appendChild(myCheckboxLabel);\n        myCheckboxSetContainer.lastChild.lastChild.firstChild.setAttribute('name', cdeParam);\n        myCheckboxSetContainer.lastChild.lastChild.firstChild.setAttribute('value', myData[i][0]);\n    }\n}\n\nfunction bissolGetCheckboxSetValues(myCheckboxSetId, cdeParam) \n{\n    var myCheckedValues = [];\n    var myCheckboxSetContainer = document.getElementById(myCheckboxSetId);\n    var checkboxes = myCheckboxSetContainer.getElementsByTagName('input');\n    for (var i = 0; i < checkboxes.length; i++)\n    {\n        if(checkboxes[i].checked)\n        {\n            //alert(checkboxes[i].getAttribute('value'));\n            myCheckedValues.push(checkboxes[i].getAttribute('value'));            \n        }\n    }\n    //console.log(JSON.stringify(myCheckedValues));\n    console.log('cdeParam set to: ' + cdeParam);\n    Dashboards.fireChange(cdeParam, JSON.stringify(myCheckedValues));\n} ",
       "type": "Resource"
      }
     ]
@@ -149,7 +172,7 @@
      },
      {
       "name": "html",
-      "value": "<p></p>\n<div class=\"panel panel-default\">\n  <div class=\"panel-heading\">\n    <h3 class=\"panel-title\">Configuration</h3>\n  </div>\n  <div class=\"panel-body\">\n    <div id=\"html_db_connection_picker\"></div>\n    <div id=\"html_db_schema_picker\"></div>\n    <div id=\"html_db_table_picker\"></div>\n    <div id=\"html_db_column_picker\"></div>\n  </div>\n  <button type=\"submit\" class=\"btn btn-default\">Submit</button>\n</div> ",
+      "value": "<div class=\"panel panel-default bissolConfigBox\">\n  <div class=\"panel-heading\">\n    <h3 class=\"panel-title\">Configuration</h3>\n  </div>\n  <div class=\"panel-body\">\n    <div id=\"html_db_connection_picker\"></div>\n    <div id=\"html_db_schema_picker\"></div>\n    <div id=\"html_db_table_picker\"></div>\n    <div id=\"html_db_column_picker\"></div>\n  </div>\n  <button type=\"submit\" class=\"btn btn-primary bissolConfigSubmit\" onclick=\"bissolGetCheckboxSetValues('dbColumnPicker','param_db_column')\">Submit</button>\n</div> ",
       "type": "Html"
      },
      {
@@ -520,6 +543,89 @@
     ]
    },
    {
+    "id": "faa8c03d-0800-3d9a-0f95-4ba29aba4b90",
+    "type": "ComponentsQuery",
+    "typeDesc": "Query Component",
+    "parent": "OTHERCOMPONENTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "comp_save_config",
+      "type": "Id"
+     },
+     {
+      "name": "listeners",
+      "value": "['${p:param_db_column}']",
+      "type": "Listeners"
+     },
+     {
+      "name": "parameters",
+      "value": "[[\"param_db_connection\",\"param_db_connection\"],[\"param_db_schema\",\"param_db_schema\"],[\"param_db_table\",\"param_db_table\"],[\"param_db_column\",\"param_db_column\"]]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "resultvar",
+      "value": "",
+      "type": "Result"
+     },
+     {
+      "name": "dataSource",
+      "value": "qry_save_config",
+      "type": "Datasource"
+     },
+     {
+      "name": "refreshPeriod",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "priority",
+      "value": 5,
+      "type": "Integer"
+     },
+     {
+      "name": "htmlObject",
+      "value": "",
+      "type": "HtmlObject"
+     },
+     {
+      "name": "executeAtStart",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "preExecution",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postExecution",
+      "value": "console.log(\"Saving configuration details\");",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postFetch",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "preChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "tooltip",
+      "value": "",
+      "type": "Html"
+     }
+    ]
+   },
+   {
     "id": "GENERIC",
     "name": "Generic",
     "type": "Label",
@@ -846,6 +952,32 @@
     "meta": "CPK",
     "meta_pluginId": "bissolTableDataEditor",
     "meta_endpoint": "fetchdbcolumns"
+   },
+   {
+    "id": "4921e733-d3b6-f26c-09f3-6dabfd916984",
+    "type": "ComponentsbissolTableDataEditor_saveconfig_CPKENDPOINT",
+    "typeDesc": "saveconfig Endpoint",
+    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "qry_save_config",
+      "type": "Id"
+     },
+     {
+      "name": "stepName",
+      "value": "OUTPUT",
+      "type": "String"
+     },
+     {
+      "name": "kettleOutput",
+      "value": "Inferred",
+      "type": "kettleOutputCustom"
+     }
+    ],
+    "meta": "CPK",
+    "meta_pluginId": "bissolTableDataEditor",
+    "meta_endpoint": "saveconfig"
    }
   ]
  },

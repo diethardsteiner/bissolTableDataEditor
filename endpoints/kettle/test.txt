@@ -1,2 +1,2 @@
 "db_connection";"db_schema";"db_table";"db_column"
-"psqllocaltest";"public";"employees";"[""id"",""firstname"",""lastname""]"
+"psqllocaltest";"public";"employees";"[""id"",""firstname""]"
