@@ -43,7 +43,7 @@
      },
      {
       "name": "resourceCode",
-      "value": "function bissolCreateSelect(myCdeContainerId, myDashboardObjectId, myLabelText, myData, cdeParam){\n    //document.getElementById('html_db_connection_picker').innerHTML = JSON.stringify(result_fetch_db_connections);\n    //var myData = result_fetch_db_connections;\n    //var myContainer = document.getElementById('html_db_connection_picker');\n        \n    var myContainer = document.getElementById(myCdeContainerId);\n    var myLabel = document.createElement('label');\n    var mySelect = document.createElement('select');\n    var myOption = document.createElement('option');\n    \n    var myLabelTextNode = document.createTextNode(myLabelText);\n    myLabel.setAttribute('for', myDashboardObjectId);\n    \n    mySelect.className = \"form-control\";\n    mySelect.id = myDashboardObjectId;\n    \n    // avoid having a default value preselected\n    var myDefaultOption = myOption.cloneNode();\n    myDefaultOption.setAttribute('disabled','');\n    myDefaultOption.setAttribute('selected','');\n    var myDefaultOptionText = document.createTextNode('Please select an option...'); \n    myDefaultOption.appendChild(myDefaultOptionText);\n    \n    console.log(myDashboardObjectId + \" with following values: \" + JSON.stringify(myData));\n    \n    // 1. Check if data is available\n    if(myData.length > 0){  \n        \n        //console.log(\"myDate has following length: \" + myData.length);\n          \n        mySelect.appendChild(myDefaultOption.cloneNode());\n        \n        for(var i = 0; i < myData.length; i++) {\n            var myValue = document.createTextNode(myData[i][0]);\n            mySelect.appendChild(myOption.cloneNode()).appendChild(myValue);\n        }\n        \n        // 2. Check if select exists - !! checks for a truthy value \n        // if it exists ...\n        if(!!document.getElementById(myDashboardObjectId)){\n            myContainer.replaceChild(mySelect,document.getElementById(myDashboardObjectId));\n            bissolEstablishSelectListener(myDashboardObjectId, cdeParam);\n            Dashboards.fireChange(cdeParam,null);\n        }\n        // if it doesnt exist ...\n        else {\n            myContainer.appendChild(myLabel.cloneNode()).appendChild(myLabelTextNode);\n            myContainer.appendChild(mySelect);\n            bissolEstablishSelectListener(myDashboardObjectId, cdeParam);\n        }\n    } \n    // if no data is available remove any existing selects\n    else {\n        //myContainer.removeChild(document.getElementById(myDashboardObjectId));\n        myContainer.innerHTML = '';\n        Dashboards.fireChange(cdeParam,null);\n    }   \n}\n\nfunction bissolPropagateSelectSelection(evt){\n    //console.log(evt);\n    //console.log('And the value is: ' + evt.target.selectedIndex);\n    //console.log('And the value is: ' + evt.target.options[evt.target.selectedIndex].text);\n    \n    // change the value of the cde parameter to the selected value\n    Dashboards.fireChange(evt.target.cdeParam, evt.target.options[evt.target.selectedIndex].text);\n    console.log('Setting parameter ' + evt.target.cdeParam + ' to: ' + evt.target.options[evt.target.selectedIndex].text);\n\n}\n\nfunction bissolEstablishSelectListener(myDashboardObjectId, cdeParam){\n    var select = document.getElementById(myDashboardObjectId);\n    // add arguments to pass on to event\n    //select.selectedText = select.options[select.selectedIndex].text; // dont set it here as the changes wont be picked up - set in function which the event listener calls\n    select.cdeParam = cdeParam;\n    //console.log('The selection for param ' + select.cdeParam + ' is: ' + select.selectedText);\n    select.addEventListener('change', bissolPropagateSelectSelection, false);\n    console.log('Adding event listener for id: ' + myDashboardObjectId);\n}\n\nfunction bissolRemoveSelectListeners(myDashboardObjectId){\n    var myDashboardObject = document.getElementById(myDashboardObjectId);\n    myDashboardObject.addEventListener('change', bissolPropagateSelectSelection, false);\n    console.log('Removing event listener for id: ' + myDashboardObjectId);\n}\n\n//---------------------- checkbox -----------------------//\n\nfunction bissolCreateCheckboxSet(myCdeContainerId, myDashboardObjectId, myLabelText, myData, cdeParam){\n    var myContainer = document.getElementById(myCdeContainerId);\n    var myLabel = document.createElement('label');\n    \n    // create main container which holds all the checkboxes\n    var myCheckboxSetContainer = document.createElement('div');\n    myCheckboxSetContainer.id = myDashboardObjectId;    \n    var myMainLabelTextNode = document.createTextNode(myLabelText);\n    myCheckboxSetContainer.appendChild(myLabel.cloneNode()).appendChild(myMainLabelTextNode);\n    \n    // create structure for one checkbox\n    var myCheckboxContainer = document.createElement('div');\n    myCheckboxContainer.className = 'checkbox';\n    var myCheckbox = document.createElement('input');   \n    myCheckbox.setAttribute('type','checkbox');\n\n    // 1. Check if data is available\n    if(myData.length > 0){  \n        \n        \n        for(var i = 0; i < myData.length; i++) \n        {\n            var myCheckboxLabel = document.createTextNode(myData[i][0]);\n            myCheckboxSetContainer.appendChild(myCheckboxContainer.cloneNode()).appendChild(myLabel.cloneNode()).appendChild(myCheckbox.cloneNode());\n            myCheckboxSetContainer.lastChild.lastChild.appendChild(myCheckboxLabel);\n            myCheckboxSetContainer.lastChild.lastChild.firstChild.setAttribute('name', cdeParam);\n            myCheckboxSetContainer.lastChild.lastChild.firstChild.setAttribute('value', myData[i][0]);\n        }\n        \n        // 2. Check if checkbox exists - !! checks for a truthy value \n        // if it exists ...\n        if(!!document.getElementById(myDashboardObjectId)){\n            myContainer.replaceChild(myCheckboxSetContainer,document.getElementById(myDashboardObjectId));\n            bissolEstablishCheckboxListener(myDashboardObjectId, cdeParam);\n            Dashboards.fireChange(cdeParam,null);\n        }\n        // if it doesnt exist ...\n        else {\n            myContainer.appendChild(myCheckboxSetContainer);\n            bissolEstablishCheckboxListener(myDashboardObjectId, cdeParam);\n        }\n    } \n    // if no data is available remove any existing selects\n    else {\n        //myContainer.removeChild(document.getElementById(myDashboardObjectId));\n        myContainer.innerHTML = '';\n    }\n} \n\n\n/**\nfunction bissolGetCheckboxSetValues(myCheckboxSetId, cdeParam)  \n{\n    var myCheckedValues = [];\n    var myCheckboxSetContainer = document.getElementById(myCheckboxSetId);\n    var checkboxes = myCheckboxSetContainer.getElementsByTagName('input');\n    for (var i = 0; i < checkboxes.length; i++)\n    {\n        if(checkboxes[i].checked)\n        {\n            //alert(checkboxes[i].getAttribute('value'));\n            myCheckedValues.push(checkboxes[i].getAttribute('value'));            \n        }\n    }\n    //console.log(JSON.stringify(myCheckedValues));\n    console.log('cdeParam set to: ' + cdeParam);\n\n    Dashboards.fireChange(cdeParam, JSON.stringify(myCheckedValues));\n} \n**/\n\n// new [OPEN] \n// - when a checkbox is ticked, add value to cde param array\n// - when a checkbox is unticked, remove value from cde param array\n// - once the cde param array has more than one value display the submit button otherwise not (remove it)\n\nfunction bissolPropagateCheckboxSelection(evt){\n    //console.log('Checkbox clicked ...');\n    //console.log(evt);\n    \n    var myCheckedValues = [];\n    \n    if(Dashboards.getParameterValue(evt.target.cdeParam) === ''){\n        //myCheckedValues = [];\n    } else {\n        myCheckedValues = Dashboards.getParameterValue(evt.target.cdeParam);    \n    }\n    \n    \n    if(evt.target.checked){\n        myCheckedValues.push(evt.target.value);\n        Dashboards.fireChange(evt.target.cdeParam,myCheckedValues);\n        console.log('Setting parameter ' + evt.target.cdeParam + ' to: ' + myCheckedValues);\n    } else {\n        // find element in array\n        var index = myCheckedValues.indexOf(evt.target.value);\n        // remove element from array\n        if (index > -1) {\n            myCheckedValues.splice(index, 1);\n        }\n        // fire change\n        Dashboards.fireChange(evt.target.cdeParam,myCheckedValues);\n        console.log('Setting parameter ' + evt.target.cdeParam + ' to: ' + myCheckedValues);\n    }\n}\n\nfunction bissolEstablishCheckboxListener(myDashboardObjectId, cdeParam){\n    var myDashboardObject = document.getElementById(myDashboardObjectId);\n    var checkboxes = myDashboardObject.getElementsByTagName('input');\n    // establish listener for each checkbox\n    for(var i = 0; i < checkboxes.length; i++){\n        var checkbox = checkboxes[i];\n        checkbox.cdeParam = cdeParam;\n        checkbox.addEventListener('change', bissolPropagateCheckboxSelection, false);\n        console.log('Adding event listener for id: ' + myDashboardObjectId +', checkbox: ' + i );        \n    }\n\n}\n\n// non generic submit button\n//<button type=\"submit\" class=\"btn btn-primary bissolConfigSubmit\" onclick=\"bissolGetCheckboxSetValues('dbColumnPicker','param_db_column')\">Submit</button>\n\nfunction bissolCreateConfigSubmitButton(){\n    var myContainer = document.getElementById('html_submit');\n    var myButton = document.createElement('button');\n    var myButtonText = document.createTextNode('Submit');\n    myButton.className = 'btn btn-primary bissolConfigSubmit';\n    myButton.setAttribute('type','submit');\n    myButton.setAttribute('onclick',\"bissolGetCheckboxSetValues('dbColumnPicker','param_db_column')\");\n    myButton.appendChild(myButtonText);\n    \n    //[OPEN] ONLY DISPLAY IF ALL PARAMETER VALUES ARE AVAILABLE\n    \n    // check if select already exists otherwise create   \n    var myExistingSubmit = document.getElementById('html_submit');\n    var myExistingButtons = myExistingSubmit.getElementsByTagName('button');\n    if(myExistingButtons == 'undefined' || myExistingButtons.length === 0){\n        myContainer.appendChild(myButton);\n    } \n    \n} ",
+      "value": "function bissolCreateSelect(myCdeContainerId, myDashboardObjectId, myLabelText, myData, cdeParam){\n    //document.getElementById('html_db_connection_picker').innerHTML = JSON.stringify(result_fetch_db_connections);\n    //var myData = result_fetch_db_connections;\n    //var myContainer = document.getElementById('html_db_connection_picker');\n        \n    var myContainer = document.getElementById(myCdeContainerId);\n    var myLabel = document.createElement('label');\n    var mySelect = document.createElement('select');\n    var myOption = document.createElement('option');\n    \n    var myLabelTextNode = document.createTextNode(myLabelText);\n    myLabel.setAttribute('for', myDashboardObjectId);\n    \n    mySelect.className = \"form-control\";\n    mySelect.id = myDashboardObjectId;\n    \n    // avoid having a default value preselected\n    var myDefaultOption = myOption.cloneNode();\n    myDefaultOption.setAttribute('disabled','');\n    myDefaultOption.setAttribute('selected','');\n    var myDefaultOptionText = document.createTextNode('Please select an option...'); \n    myDefaultOption.appendChild(myDefaultOptionText);\n    \n    console.log(myDashboardObjectId + \" with following values: \" + JSON.stringify(myData));\n    \n    // 1. Check if data is available\n    if(myData.length > 0){  \n        \n        //console.log(\"myDate has following length: \" + myData.length);\n          \n        mySelect.appendChild(myDefaultOption.cloneNode());\n        \n        for(var i = 0; i < myData.length; i++) {\n            var myValue = document.createTextNode(myData[i][0]);\n            mySelect.appendChild(myOption.cloneNode()).appendChild(myValue);\n        }\n        \n        // 2. Check if select exists - !! checks for a truthy value \n        // if it exists ...\n        if(!!document.getElementById(myDashboardObjectId)){\n            myContainer.replaceChild(mySelect,document.getElementById(myDashboardObjectId));\n            bissolEstablishSelectListener(myDashboardObjectId, cdeParam);\n            Dashboards.fireChange(cdeParam,null);\n        }\n        // if it doesnt exist ...\n        else {\n            myContainer.appendChild(myLabel.cloneNode()).appendChild(myLabelTextNode);\n            myContainer.appendChild(mySelect);\n            bissolEstablishSelectListener(myDashboardObjectId, cdeParam);\n        }\n    } \n    // if no data is available remove any existing selects\n    else {\n        //myContainer.removeChild(document.getElementById(myDashboardObjectId));\n        myContainer.innerHTML = '';\n        Dashboards.fireChange(cdeParam,null);\n    }   \n}\n\nfunction bissolPropagateSelectSelection(evt){\n    //console.log(evt);\n    //console.log('And the value is: ' + evt.target.selectedIndex);\n    //console.log('And the value is: ' + evt.target.options[evt.target.selectedIndex].text);\n    \n    // change the value of the cde parameter to the selected value\n    Dashboards.fireChange(evt.target.cdeParam, evt.target.options[evt.target.selectedIndex].text);\n    console.log('Setting parameter ' + evt.target.cdeParam + ' to: ' + evt.target.options[evt.target.selectedIndex].text);\n\n}\n\nfunction bissolEstablishSelectListener(myDashboardObjectId, cdeParam){\n    var select = document.getElementById(myDashboardObjectId);\n    // add arguments to pass on to event\n    //select.selectedText = select.options[select.selectedIndex].text; // dont set it here as the changes wont be picked up - set in function which the event listener calls\n    select.cdeParam = cdeParam;\n    //console.log('The selection for param ' + select.cdeParam + ' is: ' + select.selectedText);\n    select.addEventListener('change', bissolPropagateSelectSelection, false);\n    console.log('Adding event listener for id: ' + myDashboardObjectId);\n}\n\nfunction bissolRemoveSelectListeners(myDashboardObjectId){\n    var myDashboardObject = document.getElementById(myDashboardObjectId);\n    myDashboardObject.addEventListener('change', bissolPropagateSelectSelection, false);\n    console.log('Removing event listener for id: ' + myDashboardObjectId);\n}\n\n//---------------------- checkbox -----------------------//\n\nfunction bissolCreateCheckboxSet(myCdeContainerId, myDashboardObjectId, myLabelText, myData, cdeParam){\n    var myContainer = document.getElementById(myCdeContainerId);\n    var myLabel = document.createElement('label');\n    \n    // create main container which holds all the checkboxes\n    var myCheckboxSetContainer = document.createElement('div');\n    myCheckboxSetContainer.id = myDashboardObjectId;    \n    var myMainLabelTextNode = document.createTextNode(myLabelText);\n    myCheckboxSetContainer.appendChild(myLabel.cloneNode()).appendChild(myMainLabelTextNode);\n    \n    // create structure for one checkbox\n    var myCheckboxContainer = document.createElement('div');\n    myCheckboxContainer.className = 'checkbox';\n    var myCheckbox = document.createElement('input');   \n    myCheckbox.setAttribute('type','checkbox');\n\n    // 1. Check if data is available\n    if(myData.length > 0){  \n        \n        \n        for(var i = 0; i < myData.length; i++) \n        {\n            var myCheckboxLabel = document.createTextNode(myData[i][0]);\n            myCheckboxSetContainer.appendChild(myCheckboxContainer.cloneNode()).appendChild(myLabel.cloneNode()).appendChild(myCheckbox.cloneNode());\n            myCheckboxSetContainer.lastChild.lastChild.appendChild(myCheckboxLabel);\n            myCheckboxSetContainer.lastChild.lastChild.firstChild.setAttribute('name', cdeParam);\n            myCheckboxSetContainer.lastChild.lastChild.firstChild.setAttribute('value', myData[i][0]);\n        }\n        \n        // 2. Check if checkbox exists - !! checks for a truthy value \n        // if it exists ...\n        if(!!document.getElementById(myDashboardObjectId)){\n            myContainer.replaceChild(myCheckboxSetContainer,document.getElementById(myDashboardObjectId));\n            bissolEstablishCheckboxListener(myDashboardObjectId, cdeParam);\n            Dashboards.fireChange(cdeParam,null);\n        }\n        // if it doesnt exist ...\n        else {\n            myContainer.appendChild(myCheckboxSetContainer);\n            bissolEstablishCheckboxListener(myDashboardObjectId, cdeParam);\n        }\n    } \n    // if no data is available remove any existing selects\n    else {\n        //myContainer.removeChild(document.getElementById(myDashboardObjectId));\n        myContainer.innerHTML = '';\n    }\n} \n\n\n/**\nfunction bissolGetCheckboxSetValues(myCheckboxSetId, cdeParam)  \n{\n    var myCheckedValues = [];\n    var myCheckboxSetContainer = document.getElementById(myCheckboxSetId);\n    var checkboxes = myCheckboxSetContainer.getElementsByTagName('input');\n    for (var i = 0; i < checkboxes.length; i++)\n    {\n        if(checkboxes[i].checked)\n        {\n            //alert(checkboxes[i].getAttribute('value'));\n            myCheckedValues.push(checkboxes[i].getAttribute('value'));            \n        }\n    }\n    //console.log(JSON.stringify(myCheckedValues));\n    console.log('cdeParam set to: ' + cdeParam);\n\n    Dashboards.fireChange(cdeParam, JSON.stringify(myCheckedValues));\n} \n**/\n\n// new \n// - when a checkbox is ticked, add value to cde param array\n// - when a checkbox is unticked, remove value from cde param array\n// - once the cde param array has more than one value display the submit button otherwise not (remove it)\n\nfunction bissolPropagateCheckboxSelection(evt){\n    //console.log('Checkbox clicked ...');\n    //console.log(evt);\n    \n    var myCheckedValues = [];\n    \n    if(Dashboards.getParameterValue(evt.target.cdeParam) === ''){\n        //myCheckedValues = [];\n    } else {\n        myCheckedValues = Dashboards.getParameterValue(evt.target.cdeParam);    \n    }\n    \n    \n    if(evt.target.checked){\n        myCheckedValues.push(evt.target.value);\n        Dashboards.fireChange(evt.target.cdeParam,myCheckedValues);\n        console.log('Setting parameter ' + evt.target.cdeParam + ' to: ' + myCheckedValues);\n    } else {\n        // find element in array\n        var index = myCheckedValues.indexOf(evt.target.value);\n        // remove element from array\n        if (index > -1) {\n            myCheckedValues.splice(index, 1);\n        }\n        // fire change\n        Dashboards.fireChange(evt.target.cdeParam,myCheckedValues);\n        console.log('Setting parameter ' + evt.target.cdeParam + ' to: ' + myCheckedValues);\n    }\n}\n\nfunction bissolEstablishCheckboxListener(myDashboardObjectId, cdeParam){\n    var myDashboardObject = document.getElementById(myDashboardObjectId);\n    var checkboxes = myDashboardObject.getElementsByTagName('input');\n    // establish listener for each checkbox\n    for(var i = 0; i < checkboxes.length; i++){\n        var checkbox = checkboxes[i];\n        checkbox.cdeParam = cdeParam;\n        checkbox.addEventListener('change', bissolPropagateCheckboxSelection, false);\n        console.log('Adding event listener for id: ' + myDashboardObjectId +', checkbox: ' + i );        \n    }\n}\n\n// non generic submit button\n//<button type=\"submit\" class=\"btn btn-primary bissolConfigSubmit\" onclick=\"bissolGetCheckboxSetValues('dbColumnPicker','param_db_column')\">Submit</button>\n\n/**\nfunction bissolCreateConfigSubmitButton(){\n    var myContainer = document.getElementById('html_submit');\n    var myButton = document.createElement('button');\n    var myButtonText = document.createTextNode('Submit');\n    myButton.className = 'btn btn-primary bissolConfigSubmit';\n    myButton.setAttribute('type','submit');\n    myButton.setAttribute('onclick',\"bissolGetCheckboxSetValues('dbColumnPicker','param_db_column')\");\n    myButton.appendChild(myButtonText);\n    \n    //[OPEN] ONLY DISPLAY IF ALL PARAMETER VALUES ARE AVAILABLE\n    \n    // check if select already exists otherwise create   \n    var myExistingSubmit = document.getElementById('html_submit');\n    var myExistingButtons = myExistingSubmit.getElementsByTagName('button');\n    if(myExistingButtons == 'undefined' || myExistingButtons.length === 0){\n        myContainer.appendChild(myButton);\n    } \n    \n} \n**/\n\n// [OPEN] make bootstrap style dynamic, make button type dynamic\n/**\n * The idea is that the button only shows up when a given CDE parameter has a value.\n * Use a Freeform Component to listen to this CDE parameter and call bissolCreateButton()\n * in the Custom Script property\n **/\n \nfunction bissolCreateButton(myCdeContainerId, myLabelText, cdeParam){\n    console.log('Trying to create a button ...');\n    var myContainer = document.getElementById(myCdeContainerId);\n\n    var myButton = document.createElement('button');\n    var myButtonText = document.createTextNode(myLabelText);\n    myButton.className = 'btn btn-primary bissolConfigSubmit';\n    myButton.setAttribute('type','submit');\n    myButton.appendChild(myButtonText);\n    \n    // check if select already exists otherwise create   \n    var myExistingSubmit = document.getElementById(myCdeContainerId);\n    var myExistingButtons = myExistingSubmit.getElementsByTagName('button');\n    if(myExistingButtons == 'undefined' || myExistingButtons.length === 0){\n        myContainer.appendChild(myButton);\n    } \n\n}\n//bissolCreateButton('html_submit','Submit','');\n\n/**\nfunction bissolCreateButtonListener(myCdeContainerId, myLabelText, cdeParam, cdeParamToListenTo ){\n    var myDashboardObject = document.getElementById(myDashboardObjectId);\n    myDashboardObject.myCdeContainerId = myCdeContainerId;\n    myDashboardObject.myLabelText = myLabelText;\n    myDashboardObject.cdeParam = cdeParam;\n    myDashboardObject.addEventListener('change', bissolCreateButton, false);\n    if(Dashboards.getParameterValue(cdeParamToListenTo) === ''){\n}\n**/\n\n\n/**\nfunction bissolEstablishButtonListener(myDashboardObjectId, cdeParam){\n    var myDashboardObject = document.getElementById(myDashboardObjectId);\n    myDashboardObject.cdeParam = cdeParam;\n    myDashboardObject.addEventListener('change', bissolPropagateButtonSelection, false);            \n\n    console.log('Adding event listener for id: ' + myDashboardObjectId);    \n}\n**/\n ",
       "type": "Resource"
      }
     ]
@@ -517,7 +517,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    bissolCreateCheckboxSet('html_db_column_picker','dbColumnPicker', 'Choose Columns:', result_fetch_db_columns, 'param_db_column');\n    bissolCreateConfigSubmitButton();\n}",
+      "value": "function(){\n    bissolCreateCheckboxSet('html_db_column_picker','dbColumnPicker', 'Choose Columns:', result_fetch_db_columns, 'param_db_column');\n}",
       "type": "JavaScript"
      },
      {
@@ -555,7 +555,7 @@
      },
      {
       "name": "listeners",
-      "value": "['${p:param_db_column}']",
+      "value": "[]",
       "type": "Listeners"
      },
      {
@@ -605,6 +605,99 @@
      },
      {
       "name": "postFetch",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "preChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "tooltip",
+      "value": "",
+      "type": "Html"
+     }
+    ]
+   },
+   {
+    "id": "dc446f30-ae9a-fd5a-25c8-0f6cd675b9a1",
+    "type": "Componentsfreeform",
+    "typeDesc": "Freeform Component",
+    "parent": "OTHERCOMPONENTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "comp_create_button_listener",
+      "type": "Id"
+     },
+     {
+      "name": "listeners",
+      "value": "['${p:param_db_column}']",
+      "type": "Listeners"
+     },
+     {
+      "name": "parameters",
+      "value": "[]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "customfunction",
+      "value": "function(){\n    bissolCreateButton('html_submit','Submit','');\n}",
+      "type": "JavaScript"
+     },
+     {
+      "name": "manageCallee",
+      "value": "true",
+      "type": "Boolean"
+     },
+     {
+      "name": "dataSource",
+      "value": "",
+      "type": "Datasource"
+     },
+     {
+      "name": "width",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "priority",
+      "value": 5,
+      "type": "Integer"
+     },
+     {
+      "name": "height",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "htmlObject",
+      "value": "",
+      "type": "HtmlObject"
+     },
+     {
+      "name": "executeAtStart",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "preExecution",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postFetch",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postExecution",
       "value": "",
       "type": "JavaScript"
      },
