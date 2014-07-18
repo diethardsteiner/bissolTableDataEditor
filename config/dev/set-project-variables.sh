@@ -13,7 +13,7 @@ export PENTAHO_JAVA_HOME=/usr/java/jre1.7.0_45
 export KETTLE_JNDI_ROOT=$PROJECT_HOME/config/$PROJECT_ENVIRONMENT/simple-jndi
 export KETTLE_HOME=$PROJECT_HOME/config/$PROJECT_ENVIRONMENT
 export PENTAHO_DI_JAVA_OPTIONS=" -Xmx1024m"
-export PDI_ROOT_DIR=/home/dsteiner/apps/pentaho/pdi-ce-5.0.1-stable
+export PDI_ROOT_DIR=/home/dsteiner/apps/pentaho/pdi/pdi-ce-5.0.1-stable
 
 #SPARKL
 export SPARKL_PLUGIN_ROOT=/home/dsteiner/apps/pentaho/biserver/biserver-ce/pentaho-solutions/system/bissolTableDataEditor

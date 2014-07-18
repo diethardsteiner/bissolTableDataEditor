@@ -1,0 +1,10 @@
+.bissolConfigBox{
+    position: relative;
+    top: 1em;
+} 
+
+.bissolConfigSubmit{
+    width: 92%;
+    height: 92%;
+    margin: 4% 4% 4% 4%;
+} 

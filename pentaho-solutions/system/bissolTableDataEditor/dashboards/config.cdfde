@@ -3,48 +3,48 @@
   "title": "config",
   "rows": [
    {
-    "id": "04f6373b-4bbd-2d03-f841-242d75459c3b",
-    "type": "LayoutResourceCode",
+    "id": "1df3f5a3-501c-6319-91cf-c410e2b7df01",
+    "type": "LayoutResourceFile",
     "typeDesc": "Resource",
     "parent": "UnIqEiD",
     "properties": [
      {
       "name": "name",
-      "value": "configcss",
+      "value": "bissolSelectComponents.js",
       "type": "Id"
      },
      {
-      "name": "resourceType",
-      "value": "Css",
-      "type": "Label"
-     },
-     {
-      "name": "resourceCode",
-      "value": ".bissolConfigBox{\n    position: relative;\n    top: 1em;\n} \n\n.bissolConfigSubmit{\n    width: 92%;\n    height: 92%;\n    margin: 4% 4% 4% 4%;\n} ",
-      "type": "Resource"
-     }
-    ]
-   },
-   {
-    "id": "7307cd80-7d92-4b9e-9be1-8c56320c71ad",
-    "type": "LayoutResourceCode",
-    "typeDesc": "Resource",
-    "parent": "UnIqEiD",
-    "properties": [
-     {
-      "name": "name",
-      "value": "configjs",
-      "type": "Id"
+      "name": "resourceFile",
+      "value": "/pentaho/api/repos/bissolTableDataEditor/static/custom/js/bissolSelectComponents.js",
+      "type": "ResourceFile"
      },
      {
       "name": "resourceType",
       "value": "Javascript",
       "type": "Label"
+     }
+    ]
+   },
+   {
+    "id": "035e5d66-ae96-dae0-3f8d-6c7455ac4869",
+    "type": "LayoutResourceFile",
+    "typeDesc": "Resource",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "bissolTableConfig.css",
+      "type": "Id"
      },
      {
-      "name": "resourceCode",
-      "value": "function bissolCreateSelect(myCdeContainerId, myDashboardObjectId, myLabelText, myData, cdeParam){\n    //document.getElementById('html_db_connection_picker').innerHTML = JSON.stringify(result_fetch_db_connections);\n    \n    console.log(myDashboardObjectId + \" with following values: \" + JSON.stringify(myData));\n    \n    // 1. Check if data is available\n    if(myData.length > 0){ \n        \n        var myLabel = '<label for=\"' + myDashboardObjectId + '\">' + myLabelText + '</label>';\n        \n        var myOptions = '<option disabled selected>Please select an option...</option>';\n        \n        $.each(myData, function(i, val){\n           myOptions += '<option>' + val + '</option>'; \n        });      \n        \n        var mySelect = '<select id=\"' + myDashboardObjectId  + '\" class=\"form-control\">' \n            + myOptions + '</select>';\n            \n        // Check if select exists \n        // if it exists ...\n        if($('#' + myDashboardObjectId).length){\n            Dashboards.fireChange(cdeParam,null);\n        } \n                       \n        $('#' + myCdeContainerId).empty() // empty in case there is already a select\n        $('#' + myCdeContainerId).append(myLabel + mySelect);\n        \n        $('#' + myDashboardObjectId).on('change', function(){\n            Dashboards.fireChange(cdeParam, $( this ).find('option:selected').val());\n        });\n    } \n    // if no data is available remove any existing selects\n    else {\n        $('#' + myCdeContainerId).empty();\n        Dashboards.fireChange(cdeParam,null);\n    }   \n}\n\n//---------------------- checkbox -----------------------//\n\nfunction bissolCreateCheckboxSet(myCdeContainerId, myDashboardObjectId, myLabelText, myData, cdeParam){\n    \n    // create main container which holds all the checkboxes\n    var myCheckboxSetContainer = '<div id=\"' + myDashboardObjectId + '\"><label>' + myLabelText + '</label></div>';\n    \n    // 1. Check if data is available\n    if(myData.length > 0){  \n        \n        var myCheckboxes = '';\n        $.each(myData, function(i, val){\n            myCheckboxes += \n            '<div class=\"checkbox\">' + \n            '<label>' + \n            '<input type=\"checkbox\" name=\"' + cdeParam + '\" value=\"' + myData[i][0] + '\"></input>' +\n            myData[i][0] + '</label>' +\n            '</div>'; \n        });\n        \n        // Check if checkbox exists       \n        if($('#' + myDashboardObjectId).length){\n            Dashboards.fireChange(cdeParam,'');        \n        } \n        \n        $('#' + myCdeContainerId).empty(); //if checkbox exists remove\n        $('#' + myCdeContainerId).append(myCheckboxSetContainer);\n        $('#' + myDashboardObjectId).append(myCheckboxes);\n              \n        $('#' + myDashboardObjectId).find('input[type=checkbox]').on('change', function(){\n            \n            var myCheckedValues = [];\n            \n            $('#' + myDashboardObjectId + ' input:checkbox:checked').each(function() {\n                myCheckedValues.push($(this).val());\n            });\n \n            // fire change\n            Dashboards.fireChange(cdeParam,myCheckedValues);\n            console.log('Setting parameter ' + cdeParam + ' to: ' + myCheckedValues);\n        });\n\n    } \n    // if no data is available remove any existing selects\n    else {\n        $('#' + myCdeContainerId).empty();\n        Dashboards.fireChange(cdeParam,'');\n    }\n} \n\n// [OPEN] make bootstrap style dynamic, make button type dynamic\n/**\n * The idea is that the button only shows up when a given CDE parameter has a value.\n * Use a Freeform Component to listen to this CDE parameter and call bissolCreateButton()\n * in the Custom Script property\n **/\n \nfunction bissolCreateButton(myCdeContainerId, myDashboardObjectId, myLabelText, cdeParamIncoming, cdeParam){\n\n    var myExistingButtons = $('#' + myDashboardObjectId);\n    \n    if(!!Dashboards.getParameterValue(cdeParamIncoming) && Dashboards.getParameterValue(cdeParamIncoming).length > 0){\n        // check if select already exists otherwise create   \n        if(myExistingButtons.length === 0){           \n            $('#' + myCdeContainerId).append('<button type=\"submit\" id=\"' + myDashboardObjectId + '\" class=\"btn btn-primary bissolConfigSubmit\">' + myLabelText + '</button>');\n            \n            $('#' + myDashboardObjectId).on('click', function(){\n                Dashboards.fireChange(cdeParam,'save');\n            });\n        }\n    } else {\n        // remove button\n        $('#' + myCdeContainerId).empty();\n    }\n\n}\n\n ",
-      "type": "Resource"
+      "name": "resourceFile",
+      "value": "",
+      "type": "ResourceFile"
+     },
+     {
+      "name": "resourceType",
+      "value": "Css",
+      "type": "Label"
      }
     ]
    },

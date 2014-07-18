@@ -14,9 +14,9 @@ The structure of the JSON object looks like this:
 [
   {
     "configId": "32s3a343as332sasf3",
-    "dbconnection": "psqllocaltest",
-    "dbschema": "test",
-    "dbtable": "employees",
+    "dbConnection": "psqllocaltest",
+    "dbSchema": "public",
+    "dbTable": "employees",
     "metadata": [
       {
         "colIndex": 0,
@@ -46,9 +46,9 @@ The structure of the JSON object looks like this:
   },
   {
     "configId": "4352dsg4234dfwe423",
-    "dbconnection": "psqllocaltest",
-    "dbschema": "test",
-    "dbtable": "pk_test",
+    "dbConnection": "psqllocaltest",
+    "dbSchema": "public",
+    "dbTable": "pk_test",
     "metadata": [
       {
         "colIndex": 0,
@@ -80,7 +80,7 @@ $.[:1].configId
 Or if we wanted the names of all configured tables we could use this:
 
 ```
-$.[*].dbtable
+$.[*].dbTable
 ```
 
 
@@ -89,3 +89,7 @@ $.[*].dbtable
 ## JSON to form
 
 Make it easy to edit the config. Maybe make use of [jsonform](https://github.com/joshfire/jsonform).
+
+# Status / Task List
+
+- [ ] worked last on fetchConfig.ktr - waiting for Kettle bug to be fixed

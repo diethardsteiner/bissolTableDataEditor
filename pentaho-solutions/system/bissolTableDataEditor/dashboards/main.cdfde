@@ -3,48 +3,71 @@
   "title": "main",
   "rows": [
    {
-    "id": "b8c2f192-39d5-4010-c630-7a0cc9cebb15",
-    "type": "LayoutResourceCode",
+    "id": "9d1a0272-b700-57ae-adf4-ade6dea69762",
+    "type": "LayoutResourceFile",
     "typeDesc": "Resource",
     "parent": "UnIqEiD",
     "properties": [
      {
       "name": "name",
-      "value": "tableeditorcss",
+      "value": "bissolSelectComponents.js",
       "type": "Id"
      },
      {
-      "name": "resourceType",
-      "value": "Css",
-      "type": "Label"
-     },
-     {
-      "name": "resourceCode",
-      "value": ".add-row{\n    margin-right:2px;\n    margin-left:2px;\n}\n\n.remove-row{\n    margin-right:2px;\n    margin-left:2px;\n}\n\n.save-row{\n    margin-right:2px;\n    margin-left:2px;\n} \n/**\n.newrecord > td{\n    background-color:#C0C2FC;\n    border-style:solid;\n    border-bottom:#4848FA;\n} \n**/ ",
-      "type": "Resource"
-     }
-    ]
-   },
-   {
-    "id": "6338438b-4055-060a-21ba-5f2976f0bb78",
-    "type": "LayoutResourceCode",
-    "typeDesc": "Resource",
-    "parent": "UnIqEiD",
-    "properties": [
-     {
-      "name": "name",
-      "value": "tableeditorjs",
-      "type": "Id"
+      "name": "resourceFile",
+      "value": "/pentaho/api/repos/bissolTableDataEditor/static/custom/js/bissolSelectComponents.js",
+      "type": "ResourceFile"
      },
      {
       "name": "resourceType",
       "value": "Javascript",
       "type": "Label"
+     }
+    ]
+   },
+   {
+    "id": "a8a9d2cf-7875-521c-0232-c9d71c13207a",
+    "type": "LayoutResourceFile",
+    "typeDesc": "Resource",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "bissolTableDataEditor.js",
+      "type": "Id"
      },
      {
-      "name": "resourceCode",
-      "value": "function buildTable(data, metadata, jndi, schema, table, idColumn) {\n    \n    // [OPEN] source the config data - everything hard coded at the moment\n    \n    // get data\n    var myMetadata = metadata;\n    var myData = data;\n    //[OPEN] -- map properly\n    var myJDNI = 'psqllocaltest';\n    var mySchema = 'public';\n    var myTable = 'employees';\n    var myIdColumn = 'id';\n    // the metadata object is empty in case there are no records returned by the query\n    // hence use info from tableeditor config\n    // JSON.parse()\n    var myConfigMetadata = [{\"colIndex\":0,\"colType\":\"Integer\",\"colName\":\"id\"},{\"colIndex\":1,\"colType\":\"String\",\"colName\":\"firstname\"},{\"colIndex\":2,\"colType\":\"String\",\"colName\":\"lastname\"}];\n\n    //console.log('My data: ' + JSON.stringify(myData));\n\n    // check if query returned metadata results \n    if(myMetadata.length === 0){\n        myMetadata = myConfigMetadata;\n    } \n\n\n    console.log(JSON.stringify(myMetadata));\n    \n    if(mySchema !== 'undefined'){\n        myTable = mySchema + '.' + myTable;\n    }\n    \n    var myColNames = [];\n    \n    $.each(myMetadata, function( i, val ){\n            myColNames.push(val.colName);\n    });  \n    //console.log(myColNames);\n    \n    var myColTypes = [];\n    $.each(myMetadata, function( i, val ){\n            myColTypes.push(val.colType);\n    });  \n    //console.log(myColTypes);\n    \n    // prepare table basic structure\n    $('#tableeditor').append('<table class=\"table table-striped\"><thead><tr></tr></thead><tbody></tbody></table>');\n\n    // add table header cells\n    $.each(myMetadata, function( i, val ){\n            $('#tableeditor > table > thead > tr').append('<th>' + val.colName + '</th>');\n    });\n\n    // add table body\n    $.each(myData, function( i, val ){\n\n        // add row\n        $('#tableeditor > table > tbody').append('<tr></tr>');\n        \n        $.each(myData[i], function( j, value ){\n        \n            // add cells within row       \n            $('#tableeditor > table > tbody > tr:last')\n            .append('<td><span contenteditable data-name=\"' + myMetadata[j].colName + '\">' \n            + value + '</span></td>');       \n        \n        });\n    });\n    \n    // icons\n    var removeIcon = '<span class=\"glyphicon glyphicon-minus-sign remove-row\"></span>';\n    //var addIcon = '<span class=\"glyphicon glyphicon-plus-sign add-row\"></span>';\n    var saveIcon = '<span class=\"glyphicon glyphicon-floppy-disk save-row\"></span>';\n    \n    // add remove and save icon\n    $('#tableeditor > table > thead > tr > th:first').before('<th></th>'); // add extra cell to header\n    $('#tableeditor > table > tbody > tr').find('td:first').before('<td>' + removeIcon + saveIcon + '</td>');\n    \n  \n    \n    $('#tableeditor').append('<button type=\"button\" class=\"btn btn-primary btn-lg btn-block\" id=\"newrecordbutton\">New record</button>');\n    \n    // for base table\n    bissolSaveRow();\n    bissolRemoveRow();\n\n\n    // add event listeners\n    $('#newrecordbutton').on('click', function() {\n        \n        if($('#newrecord').length === 0){\n            \n            // add code for new data entry\n            $('#tableeditor > table > tbody').append('<tr class=\"newrecord\"></tr>');\n        \n            $.each(myMetadata, function( i, val ){\n                $('#tableeditor > table > tbody > tr:last')\n                    .append('<td><span contenteditable data-name=\"' + myMetadata[i].colName + '\"></span></td>');  \n            });\n            \n            // add add icon - note special td id to mark new record\n            $('#tableeditor > table > tbody > tr:last > td:first').before('<td id=\"newrecord\">' + saveIcon + '</td>');            \n        \n            // add save icon event listener\n            bissolSaveRow();\n            \n        }\n\t});\n    \n    function bissolRemoveRow() { \n        $('.remove-row').on('click', function() { \n            //[OPEN]: make data-name id dynamic, also adjust query\n            var myId = $(this).parent().parent().find('span[data-name=\"' + myIdColumn + '\"]').text();\n            var myQuery = 'DELETE FROM ' + myTable + ' WHERE ' + myIdColumn + ' = ' + myId;\n            console.log('The query to submit is: ' + myQuery);\n            \n            Dashboards.setParameter('param_db_connection', myJDNI);\n            Dashboards.fireChange('param_sql_update', myQuery);\n            \n            //remove row\n            $(this).parent().parent().remove();\n        });\n    \n    }\n    \n    function bissolSaveRow() { \n        \n        $('.save-row').on('click', function() { \n            \n            var myValueArray = [];\n            \n            var mySpanArray = $(this).parent().parent().find('span:not(.add-row):not(.save-row):not(.remove-row)');\n            \n            $.each(mySpanArray, function(i, val){\n                myValueArray.push($.text(this));\n            });\n            \n            \n            // make sure strings are quoted\n            var sqlValueString = [];\n            $.each(myValueArray, function(i, val){\n                if(myColTypes[i]=='String'){ \n                    sqlValueString.push(\"'\" + val + \"'\");\n                } else {\n                    sqlValueString.push(val);\n                }\n            });\n            \n            // prepare update string\n            var myUpdateString = '';\n            $.each(myValueArray, function(i, val){\n                if(myColTypes[i]=='String'){ \n                    myUpdateString += myColNames[i] + \"='\" + val + \"'\";\n                } else {\n                    myUpdateString += myColNames[i] + \"=\" + val;\n                }\n                if( i < (myValueArray.length - 1)) {\n                    myUpdateString += \",\";\n                }\n            });\n            \n            // [OPEN] make dynamic\n            var myQuery = '';\n            if( $(this).parent().attr(\"id\") == 'newrecord' ){\n                myQuery = 'INSERT INTO ' + myTable + ' (' + myColNames.toString()  + ')  VALUES (' + sqlValueString.toString() + ')'; \n            } else {\n                var myId = $(this).parent().parent().find('span[data-name=\"' + myIdColumn + '\"]').text();\n                myQuery = 'UPDATE ' + myTable + ' SET ' + myUpdateString + ' WHERE ' + myIdColumn + ' = ' + myId;    \n            }\n                    \n            console.log('This query will be executed: ' + myQuery);\n            \n            Dashboards.setParameter('param_db_connection', myJDNI);\n            Dashboards.fireChange('param_sql_update', myQuery);\n            \n            //in case the row is a new record remove the specific class and id and add the remove icon\n            if( $(this).parent().attr(\"id\") == 'newrecord' ){\n                //$(this).parent().parent().removeClass('newrecord');\n                $(this).parent().parent().removeAttr('class');\n                $(this).parent().parent().removeClass('newrecord');\n                $(this).parent().removeAttr('id');\n                $(this).before(removeIcon);\n                // add remove row event listener to newly created remove icon\n                bissolRemoveRow();\n            }           \n        }); \n    \n    }\n    \n    \n}\n\n\n\n\n ",
-      "type": "Resource"
+      "name": "resourceFile",
+      "value": "/pentaho/api/repos/bissolTableDataEditor/static/custom/js/bissolTableDataEditor.js",
+      "type": "ResourceFile"
+     },
+     {
+      "name": "resourceType",
+      "value": "Javascript",
+      "type": "Label"
+     }
+    ]
+   },
+   {
+    "id": "40f2ff37-06f2-06db-57eb-7ef4def71ffc",
+    "type": "LayoutResourceFile",
+    "typeDesc": "Resource",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "bissolTableDataEditor.css",
+      "type": "Id"
+     },
+     {
+      "name": "resourceFile",
+      "value": "/pentaho/api/repos/bissolTableDataEditor/static/custom/css/bissolTableDataEditor.css",
+      "type": "ResourceFile"
+     },
+     {
+      "name": "resourceType",
+      "value": "Css",
+      "type": "Label"
      }
     ]
    },
@@ -94,7 +117,7 @@
     "properties": [
      {
       "name": "name",
-      "value": "tableselect",
+      "value": "html_select_table",
       "type": "Id"
      },
      {
@@ -151,39 +174,6 @@
       "name": "textAlign",
       "value": "",
       "type": "TextAlign"
-     },
-     {
-      "name": "cssClass",
-      "value": "",
-      "type": "String"
-     }
-    ]
-   },
-   {
-    "id": "cfec637c-4ff5-5a92-e59d-a4bd16a2af51",
-    "type": "LayoutHtml",
-    "typeDesc": "Html",
-    "parent": "7523200d-e096-bbc5-0743-89bee50408eb",
-    "properties": [
-     {
-      "name": "name",
-      "value": "fakeinput",
-      "type": "Id"
-     },
-     {
-      "name": "html",
-      "value": "<select class=\"form-control\">\n  <option>public.employees</option>\n</select> ",
-      "type": "Html"
-     },
-     {
-      "name": "fontSize",
-      "value": "",
-      "type": "Integer"
-     },
-     {
-      "name": "color",
-      "value": "",
-      "type": "Color"
      },
      {
       "name": "cssClass",
@@ -368,6 +358,34 @@
     ]
    },
    {
+    "id": "b9f2ab5f-7bd7-bd3f-5066-f56a79946181",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_config_id",
+      "type": "Id"
+     },
+     {
+      "name": "propertyValue",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
+     }
+    ]
+   },
+   {
     "id": "OTHERCOMPONENTS",
     "name": "Others",
     "type": "Label",
@@ -394,12 +412,12 @@
      },
      {
       "name": "listeners",
-      "value": "['${p:param_sql_select}']",
+      "value": "['${p:param_config_id}']",
       "type": "Listeners"
      },
      {
       "name": "parameters",
-      "value": "[[\"param_db_connection\",\"param_db_connection\"],[\"param_sql_select\",\"param_sql_select\"]]",
+      "value": "[[\"param_config_id\",\"param_config_id\"]]",
       "type": "ValuesArray"
      },
      {
@@ -409,7 +427,7 @@
      },
      {
       "name": "dataSource",
-      "value": "qry_generic_select",
+      "value": "qry_fetch_data",
       "type": "Datasource"
      },
      {
@@ -429,7 +447,7 @@
      },
      {
       "name": "executeAtStart",
-      "value": "true",
+      "value": "false",
       "type": "Boolean"
      },
      {
@@ -546,6 +564,89 @@
       "type": "Html"
      }
     ]
+   },
+   {
+    "id": "4a931666-db71-830f-0ede-58a97b2e8726",
+    "type": "ComponentsQuery",
+    "typeDesc": "Query Component",
+    "parent": "OTHERCOMPONENTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "comp_select_table",
+      "type": "Id"
+     },
+     {
+      "name": "listeners",
+      "value": "[]",
+      "type": "Listeners"
+     },
+     {
+      "name": "parameters",
+      "value": "[[\"param_config_id\",\"param_config_id\"]]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "resultvar",
+      "value": "result_fetch_config_tables",
+      "type": "Result"
+     },
+     {
+      "name": "dataSource",
+      "value": "qry_fetch_config_tables",
+      "type": "Datasource"
+     },
+     {
+      "name": "refreshPeriod",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "priority",
+      "value": 5,
+      "type": "Integer"
+     },
+     {
+      "name": "htmlObject",
+      "value": "${p:html_select_table}",
+      "type": "HtmlObject"
+     },
+     {
+      "name": "executeAtStart",
+      "value": "true",
+      "type": "Boolean"
+     },
+     {
+      "name": "preExecution",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postExecution",
+      "value": "function(){\n    bissolCreateSelect('html_select_table', 'dbTablePicker', 'Choose Table:', result_fetch_config_tables, 'param_config_id');\n}",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postFetch",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "preChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "tooltip",
+      "value": "",
+      "type": "Html"
+     }
+    ]
    }
   ]
  },
@@ -564,32 +665,6 @@
       "type": "Label"
      }
     ]
-   },
-   {
-    "id": "fb523ae5-19d8-c344-dff8-db69803b3088",
-    "type": "ComponentsbissolTableDataEditor_genericselectquery_CPKENDPOINT",
-    "typeDesc": "genericselectquery Endpoint",
-    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
-    "properties": [
-     {
-      "name": "name",
-      "value": "qry_generic_select",
-      "type": "Id"
-     },
-     {
-      "name": "stepName",
-      "value": "OUTPUT",
-      "type": "String"
-     },
-     {
-      "name": "kettleOutput",
-      "value": "Inferred",
-      "type": "kettleOutputCustom"
-     }
-    ],
-    "meta": "CPK",
-    "meta_pluginId": "bissolTableDataEditor",
-    "meta_endpoint": "genericselectquery"
    },
    {
     "id": "71bed294-f5ca-6240-3ec8-5d2dda8e4bc8",
@@ -616,6 +691,110 @@
     "meta": "CPK",
     "meta_pluginId": "bissolTableDataEditor",
     "meta_endpoint": "genericupdatequery"
+   },
+   {
+    "id": "040d5897-7358-350b-4654-009e217a8566",
+    "type": "ComponentsbissolTableDataEditor_fetchConfig_CPKENDPOINT",
+    "typeDesc": "fetchConfig Endpoint",
+    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "qry_fetch_config",
+      "type": "Id"
+     },
+     {
+      "name": "stepName",
+      "value": "OUTPUT",
+      "type": "String"
+     },
+     {
+      "name": "kettleOutput",
+      "value": "Inferred",
+      "type": "kettleOutputCustom"
+     }
+    ],
+    "meta": "CPK",
+    "meta_pluginId": "bissolTableDataEditor",
+    "meta_endpoint": "fetchConfig"
+   },
+   {
+    "id": "bc78cba2-4aee-9ef5-42b9-c36bcb257281",
+    "type": "ComponentsbissolTableDataEditor_fetchConfigTables_CPKENDPOINT",
+    "typeDesc": "fetchConfigTables Endpoint",
+    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "qry_fetch_config_tables",
+      "type": "Id"
+     },
+     {
+      "name": "stepName",
+      "value": "OUTPUT",
+      "type": "String"
+     },
+     {
+      "name": "kettleOutput",
+      "value": "Inferred",
+      "type": "kettleOutputCustom"
+     }
+    ],
+    "meta": "CPK",
+    "meta_pluginId": "bissolTableDataEditor",
+    "meta_endpoint": "fetchConfigTables"
+   },
+   {
+    "id": "2aa637b2-8456-0e1d-88e3-d6f2b5dc284a",
+    "type": "ComponentsbissolTableDataEditor_fetchDataJob_CPKENDPOINT",
+    "typeDesc": "fetchDataJob Endpoint",
+    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "qry_fetch_data",
+      "type": "Id"
+     },
+     {
+      "name": "stepName",
+      "value": "OUTPUTfetchData",
+      "type": "String"
+     },
+     {
+      "name": "kettleOutput",
+      "value": "Inferred",
+      "type": "kettleOutputCustom"
+     }
+    ],
+    "meta": "CPK",
+    "meta_pluginId": "bissolTableDataEditor",
+    "meta_endpoint": "fetchDataJob"
+   },
+   {
+    "id": "ea7020ea-a008-e435-57b3-1f742f68d72d",
+    "type": "ComponentsbissolTableDataEditor_fetchConfig_CPKENDPOINT",
+    "typeDesc": "fetchConfig Endpoint",
+    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "qry_fetch_data2",
+      "type": "Id"
+     },
+     {
+      "name": "stepName",
+      "value": "OUTPUTFinal",
+      "type": "String"
+     },
+     {
+      "name": "kettleOutput",
+      "value": "Inferred",
+      "type": "kettleOutputCustom"
+     }
+    ],
+    "meta": "CPK",
+    "meta_pluginId": "bissolTableDataEditor",
+    "meta_endpoint": "fetchConfig"
    }
   ]
  },

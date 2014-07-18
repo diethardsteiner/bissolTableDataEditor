@@ -1,9 +1,9 @@
 [
   {
     "configId": "32s3a343as332sasf3",
-    "dbconnection": "psqllocaltest",
-    "dbschema": "test",
-    "dbtable": "employees",
+    "dbConnection": "psqllocaltest",
+    "dbSchema": "test",
+    "dbTable": "employees",
     "metadata": [
       {
         "colIndex": 0,
@@ -33,9 +33,9 @@
   },
   {
     "configId": "4352dsg4234dfwe423",
-    "dbconnection": "psqllocaltest",
-    "dbschema": "test",
-    "dbtable": "pk_test",
+    "dbConnection": "psqllocaltest",
+    "dbSchema": "test",
+    "dbTable": "pk_test",
     "metadata": [
       {
         "colIndex": 0,

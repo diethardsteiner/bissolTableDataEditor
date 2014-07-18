@@ -1,0 +1,21 @@
+.add-row{
+    margin-right:2px;
+    margin-left:2px;
+}
+
+.remove-row{
+    margin-right:2px;
+    margin-left:2px;
+}
+
+.save-row{
+    margin-right:2px;
+    margin-left:2px;
+} 
+/**
+.newrecord > td{
+    background-color:#C0C2FC;
+    border-style:solid;
+    border-bottom:#4848FA;
+} 
+**/ 
