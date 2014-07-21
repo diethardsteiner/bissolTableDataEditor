@@ -90,6 +90,16 @@ $.[*].dbTable
 
 Make it easy to edit the config. Maybe make use of [jsonform](https://github.com/joshfire/jsonform).
 
+## OrientDB
+
+CDE makes use of [OrientDB](http://www.orientechnologies.com/orientdb/) - is there any chance to use it for this project as well?
+
+DB files are stored in `system/.orient`.
+
 # Status / Task List
 
 - [ ] worked last on fetchConfig.ktr - waiting for Kettle bug to be fixed
+
+# Sparkl Jira Cases
+
+[Endpoints for Kettle sub-transformation steps](http://jira.pentaho.com/browse/SPARKL-65)

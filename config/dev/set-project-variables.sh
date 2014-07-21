@@ -17,7 +17,6 @@ export PDI_ROOT_DIR=/home/dsteiner/apps/pentaho/pdi/pdi-ce-5.0.1-stable
 
 #SPARKL
 export SPARKL_PLUGIN_ROOT=/home/dsteiner/apps/pentaho/biserver/biserver-ce/pentaho-solutions/system/bissolTableDataEditor
-alias syncsparkl=`cp -fR $SPARKL_PLUGIN_ROOT/* $PROJECT_HOME/pentaho-solutions/system/bissolTableDataEditor`
 
 # PENTAHO REPORT DESIGNER
 #ln -sf $PROJECT_HOME/config/$PROJECT_ENVIRONMENT/simple-jndi/jdbc.properties $HOME/.pentaho/simple-jndi/default.properties
