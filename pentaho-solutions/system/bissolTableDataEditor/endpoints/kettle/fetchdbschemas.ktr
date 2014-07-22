@@ -157,7 +157,7 @@
     <name>generic</name>
     <server>localhost</server>
     <type>GENERIC</type>
-    <access>, </access>
+    <access>JNDI</access>
     <database>&#x24;&#x7b;param_db_connection&#x7d;</database>
     <port>5432</port>
     <username/>
@@ -180,25 +180,6 @@
   <order>
   <hop> <from>Get schema names</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
   </order>
-  <step>
-    <name>OUTPUT</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>207</xloc>
-      <yloc>264</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
   <step>
     <name>Get schema names</name>
     <type>GetTableNames</type>
@@ -229,6 +210,25 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>207</xloc>
       <yloc>140</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>OUTPUT</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>207</xloc>
+      <yloc>264</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

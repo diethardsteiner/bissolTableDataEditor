@@ -167,7 +167,7 @@
     <name>generic</name>
     <server>localhost</server>
     <type>GENERIC</type>
-    <access>, </access>
+    <access>JNDI</access>
     <database>&#x24;&#x7b;param_db_connection&#x7d;</database>
     <port>5432</port>
     <username/>
@@ -192,8 +192,8 @@
   <hop> <from>Get JDBC Metadata</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
   </order>
   <step>
-    <name>OUTPUT</name>
-    <type>Dummy</type>
+    <name>Generate Rows</name>
+    <type>RowGenerator</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -202,10 +202,17 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
+    <fields>
+    </fields>
+    <limit>1</limit>
+    <never_ending>N</never_ending>
+    <interval_in_ms>5000</interval_in_ms>
+    <row_time_field>now</row_time_field>
+    <last_time_field>FiveSecondsAgo</last_time_field>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>154</xloc>
-      <yloc>225</yloc>
+      <yloc>68</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -269,8 +276,8 @@
     </step>
 
   <step>
-    <name>Generate Rows</name>
-    <type>RowGenerator</type>
+    <name>OUTPUT</name>
+    <type>Dummy</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -279,17 +286,10 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <fields>
-    </fields>
-    <limit>1</limit>
-    <never_ending>N</never_ending>
-    <interval_in_ms>5000</interval_in_ms>
-    <row_time_field>now</row_time_field>
-    <last_time_field>FiveSecondsAgo</last_time_field>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>154</xloc>
-      <yloc>68</yloc>
+      <yloc>225</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

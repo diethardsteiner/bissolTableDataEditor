@@ -162,7 +162,7 @@
     <name>generic</name>
     <server>localhost</server>
     <type>GENERIC</type>
-    <access>, </access>
+    <access>JNDI</access>
     <database>&#x24;&#x7b;param_db_connection&#x7d;</database>
     <port>5432</port>
     <username/>

@@ -83,6 +83,17 @@ Or if we wanted the names of all configured tables we could use this:
 $.[*].dbTable
 ```
 
+# Dependencies
+
+## Kettle Plugins
+These **Kettle** plugins have to be installed manually into the `pentaho-solutions/system/kettle/plugins/steps` folder:
+
+- BA Server Utils
+- JDBC Metadata
+
+## JDBC Driver
+
+The respective JDBC driver have to be installed in `tomcat/lib`. This should already be the case if you defined **data sources** on the Pentaho BA Server.
 
 # Open points
 
@@ -103,3 +114,5 @@ DB files are stored in `system/.orient`.
 # Sparkl Jira Cases
 
 [Endpoints for Kettle sub-transformation steps](http://jira.pentaho.com/browse/SPARKL-65)
+[Endpoints for last transformation within job](http://jira.pentaho.com/browse/SPARKL-66)
+[Automatically included dependend Kettle plugins](http://jira.pentaho.com/browse/SPARKL-67)
