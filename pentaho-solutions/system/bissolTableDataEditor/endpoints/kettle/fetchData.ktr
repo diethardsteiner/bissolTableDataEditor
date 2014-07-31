@@ -113,8 +113,8 @@
            </partitioning>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>290</xloc>
-      <yloc>91</yloc>
+      <xloc>365</xloc>
+      <yloc>92</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -123,7 +123,7 @@
     <name>Table input</name>
     <type>TableInput</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
          <partitioning>

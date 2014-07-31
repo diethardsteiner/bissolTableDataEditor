@@ -452,7 +452,7 @@
      },
      {
       "name": "preExecution",
-      "value": "function(){    \n    var selectQuery = \"SELECT * FROM public.employees\";\n    param_db_connection = \"psqllocaltest\"; //[OPEN] Make dynamic\n    Dashboards.fireChange('param_sql_select', selectQuery);\n}",
+      "value": "",
       "type": "JavaScript"
      },
      {
@@ -762,39 +762,13 @@
      },
      {
       "name": "kettleOutput",
-      "value": "Inferred",
+      "value": "Json",
       "type": "kettleOutputCustom"
      }
     ],
     "meta": "CPK",
     "meta_pluginId": "bissolTableDataEditor",
     "meta_endpoint": "fetchDataJob"
-   },
-   {
-    "id": "ea7020ea-a008-e435-57b3-1f742f68d72d",
-    "type": "ComponentsbissolTableDataEditor_fetchConfig_CPKENDPOINT",
-    "typeDesc": "fetchConfig Endpoint",
-    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
-    "properties": [
-     {
-      "name": "name",
-      "value": "qry_fetch_data2",
-      "type": "Id"
-     },
-     {
-      "name": "stepName",
-      "value": "OUTPUTFinal",
-      "type": "String"
-     },
-     {
-      "name": "kettleOutput",
-      "value": "Inferred",
-      "type": "kettleOutputCustom"
-     }
-    ],
-    "meta": "CPK",
-    "meta_pluginId": "bissolTableDataEditor",
-    "meta_endpoint": "fetchConfig"
    }
   ]
  },
