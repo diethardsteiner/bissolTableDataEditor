@@ -245,10 +245,10 @@
   </hops>
   <notepads>
     <notepad>
-      <note>To test&#x3a;&#xa;http&#x3a;&#x2f;&#x2f;localhost&#x3a;8080&#x2f;pentaho&#x2f;plugin&#x2f;bissolTableDataEditor&#x2f;api&#x2f;fetchDataJob&#x3f;stepName&#x3d;OUTPUTfetchData&#x26;paramparam_config_id&#x3d;32s3a343as332sasf3&#x26;bypassCache&#x3d;true</note>
+      <note>To test&#x3a;&#xa;http&#x3a;&#x2f;&#x2f;localhost&#x3a;8080&#x2f;pentaho&#x2f;plugin&#x2f;bissolTableDataEditor&#x2f;api&#x2f;fetchDataJob&#x3f;paramparam_config_id&#x3d;32s3a343as332sasf3&#x26;bypassCache&#x3d;true&#x26;kettleOutput&#x3d;Json</note>
       <xloc>318</xloc>
       <yloc>54</yloc>
-      <width>1012</width>
+      <width>945</width>
       <heigth>40</heigth>
       <fontname>Arial</fontname>
       <fontsize>10</fontsize>

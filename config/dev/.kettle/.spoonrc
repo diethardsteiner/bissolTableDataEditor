@@ -1,5 +1,5 @@
 #Kettle Properties file
-#Thu Jul 31 18:44:34 BST 2014
+#Thu Jul 31 22:05:31 BST 2014
 AskAboutReplacingDatabases=N
 AutoCollapseCoreObjectsTree=Y
 AutoSave=N
@@ -646,13 +646,13 @@ TabColorR=200
 TipNr=4
 UseDBCache=N
 filetype10=Trans
-filetype1=Trans
+filetype1=Job
 filetype2=Trans
 filetype3=Trans
 filetype4=Trans
 filetype5=Trans
 filetype6=Trans
-filetype7=Job
+filetype7=Trans
 filetype8=Trans
 filetype9=Trans
 lastdir10=/
@@ -666,13 +666,13 @@ lastdir7=
 lastdir8=
 lastdir9=
 lastfile10=
-lastfile1=file\:///home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/fetchData.ktr
-lastfile2=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/fetchdbschemas.ktr
-lastfile3=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/fetchdbtables.ktr
-lastfile4=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/fetchdbcolumns.ktr
-lastfile5=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/saveData.ktr
-lastfile6=file\:///home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/fetchConfig.ktr
-lastfile7=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/fetchDataJob.kjb
+lastfile1=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/fetchDataJob.kjb
+lastfile2=file\:///home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/fetchData.ktr
+lastfile3=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/fetchdbschemas.ktr
+lastfile4=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/fetchdbtables.ktr
+lastfile5=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/fetchdbcolumns.ktr
+lastfile6=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/saveData.ktr
+lastfile7=file\:///home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/fetchConfig.ktr
 lastfile8=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/fetchDataKtrExecutor.ktr
 lastfile9=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/fetchConfigKtrExecutor.ktr
 lastfiles=9

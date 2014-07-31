@@ -457,7 +457,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    buildTable(select_result,this.metadata);\n    //establishListeners();\n    console.log(this);\n}",
+      "value": "function(){\n    buildTable('tableeditor','myTableEditor',select_result,this.metadata);\n    //establishListeners();\n    console.log(this);\n}",
       "type": "JavaScript"
      },
      {

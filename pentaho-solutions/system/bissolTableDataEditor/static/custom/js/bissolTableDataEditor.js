@@ -1,4 +1,4 @@
-function buildTable(data, metadata, jndi, schema, table, idColumn) {
+function buildTable(myCdeContainerId, myDashboardObjectId, data, metadata, jndi, schema, table, idColumn) {
     
     // [OPEN] source the config data - everything hard coded at the moment
     
@@ -42,8 +42,11 @@ function buildTable(data, metadata, jndi, schema, table, idColumn) {
     });  
     //console.log(myColTypes);
     
+    // empty in case table already exists
+    $('#' + myCdeContainerId).empty();       
+   
     // prepare table basic structure
-    $('#tableeditor').append('<table class="table table-striped"><thead><tr></tr></thead><tbody></tbody></table>');
+    $('#' + myCdeContainerId).append('<table id="' + myDashboardObjectId + '" class="table table-striped"><thead><tr></tr></thead><tbody></tbody></table>');
 
     // add table header cells
     $.each(myMetadata, function( i, val ){
@@ -77,7 +80,7 @@ function buildTable(data, metadata, jndi, schema, table, idColumn) {
     
   
     
-    $('#tableeditor').append('<button type="button" class="btn btn-primary btn-lg btn-block" id="newrecordbutton">New record</button>');
+    $('#' + myCdeContainerId).append('<button type="button" class="btn btn-primary btn-lg btn-block" id="newrecordbutton">New record</button>');
     
     // for base table
     bissolSaveRow();
