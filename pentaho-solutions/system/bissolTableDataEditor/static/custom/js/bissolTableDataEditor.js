@@ -1,29 +1,47 @@
-function buildTable(myCdeContainerId, myDashboardObjectId, data, metadata, jndi, schema, table, idColumn) {
-    
-    // [OPEN] source the config data - everything hard coded at the moment
+
+
+
+
+function buildTable(myCdeContainerId, myDashboardObjectId, data, param_config_id) {
     
     // get data
-    var myMetadata = metadata;
+    //var myMetadata = metadata;
     var myData = data;
-    //[OPEN] -- map properly
-    var myJDNI = 'psqllocaltest';
-    var mySchema = 'public';
-    var myTable = 'employees';
-    var myIdColumn = 'id';
+
     // the metadata object is empty in case there are no records returned by the query
     // hence use info from tableeditor config
     // JSON.parse()
-    var myConfigMetadata = [{"colIndex":0,"colType":"Integer","colName":"id"},{"colIndex":1,"colType":"String","colName":"firstname"},{"colIndex":2,"colType":"String","colName":"lastname"}];
-
-    //console.log('My data: ' + JSON.stringify(myData));
-
-    // check if query returned metadata results 
-    if(myMetadata.length === 0){
-        myMetadata = myConfigMetadata;
-    } 
+    //var myConfigMetadata = [{"colIndex":0,"colType":"Integer","colName":"id"},{"colIndex":1,"colType":"String","colName":"firstname"},{"colIndex":2,"colType":"String","colName":"lastname"}];
 
 
-    //console.log(JSON.stringify(myMetadata));
+    //testing
+    /**
+    $.getJSON("http://localhost:8080/pentaho/api/repos/bissolTableDataEditor/static/custom/config/bissolTableDataEditorConfig.json", function(json) {
+        console.log(json); // this will show the info it in firebug console
+    });
+    **/
+   
+
+
+    var myJDNI = '';
+    var mySchema = '';
+    var myTable = '';
+    var myConfigMetadata = [];
+    var myMetadata = [];
+
+    $.getJSON("../../../api/repos/bissolTableDataEditor/static/custom/config/bissolTableDataEditorConfig.json", function(json) {
+        for (var i = 0; i < json.length; i++) {
+            if(json[i].configId === param_config_id){
+                myJDNI = json[i].dbConnection;
+                mySchema = json[i].dbSchema;
+                myTable = json[i].dbTable;
+                myMetadata = json[i].metadata;
+                //console.log('jndi: ' + myJDNI + ', schema: ' + mySchema + ', table: ' + myTable);
+                //console.log(myMetadata);               
+            }
+        }
+    });
+
     
     if(mySchema !== 'undefined'){
         myTable = mySchema + '.' + myTable;
@@ -32,15 +50,23 @@ function buildTable(myCdeContainerId, myDashboardObjectId, data, metadata, jndi,
     var myColNames = [];
     
     $.each(myMetadata, function( i, val ){
-            myColNames.push(val.colName);
+        myColNames.push(val.colName);
     });  
     //console.log(myColNames);
     
     var myColTypes = [];
     $.each(myMetadata, function( i, val ){
-            myColTypes.push(val.colType);
+        myColTypes.push(val.colType);
     });  
     //console.log(myColTypes);
+    
+    //find out which column is the key column
+    var myIdColumn = '';
+    $.each(myMetadata, function( i, val ){
+        if(myMetadata[i].isPrimaryKey){
+            myIdColumn = myMetadata[i].colName;
+        }
+    });
     
     // empty in case table already exists
     $('#' + myCdeContainerId).empty();       
@@ -50,7 +76,9 @@ function buildTable(myCdeContainerId, myDashboardObjectId, data, metadata, jndi,
 
     // add table header cells
     $.each(myMetadata, function( i, val ){
+        if(myMetadata[i].isVisible){
             $('#tableeditor > table > thead > tr').append('<th>' + val.colName + '</th>');
+        }
     });
 
     // add table body
@@ -61,10 +89,16 @@ function buildTable(myCdeContainerId, myDashboardObjectId, data, metadata, jndi,
         
         $.each(myData[i], function( j, value ){
         
-            // add cells within row       
-            $('#tableeditor > table > tbody > tr:last')
-            .append('<td><span contenteditable data-name="' + myMetadata[j].colName + '">' 
-            + value + '</span></td>');       
+            // add cells within row    
+            if(myMetadata[j].isEditable){
+                $('#tableeditor > table > tbody > tr:last')
+                .append('<td><span contenteditable data-name="' + myMetadata[j].colName + '">' 
+                + value + '</span></td>');
+            } else {
+                $('#tableeditor > table > tbody > tr:last')
+                .append('<td><span class="content-non-editable" data-name="' + myMetadata[j].colName + '">' 
+                + value + '</span></td>');                
+            }
         
         });
     });
@@ -188,6 +222,5 @@ function buildTable(myCdeContainerId, myDashboardObjectId, data, metadata, jndi,
         }); 
     
     }
-    
-    
+
 }

@@ -400,6 +400,89 @@
     ]
    },
    {
+    "id": "4a931666-db71-830f-0ede-58a97b2e8726",
+    "type": "ComponentsQuery",
+    "typeDesc": "Query Component",
+    "parent": "OTHERCOMPONENTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "comp_select_table",
+      "type": "Id"
+     },
+     {
+      "name": "listeners",
+      "value": "[]",
+      "type": "Listeners"
+     },
+     {
+      "name": "parameters",
+      "value": "[[\"param_config_id\",\"param_config_id\"]]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "resultvar",
+      "value": "result_fetch_config_tables",
+      "type": "Result"
+     },
+     {
+      "name": "dataSource",
+      "value": "qry_fetch_config_tables",
+      "type": "Datasource"
+     },
+     {
+      "name": "refreshPeriod",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "priority",
+      "value": 5,
+      "type": "Integer"
+     },
+     {
+      "name": "htmlObject",
+      "value": "${p:html_select_table}",
+      "type": "HtmlObject"
+     },
+     {
+      "name": "executeAtStart",
+      "value": "true",
+      "type": "Boolean"
+     },
+     {
+      "name": "preExecution",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postExecution",
+      "value": "function(){\n    bissolCreateSelect('html_select_table', 'dbTablePicker', 'Choose Table:', result_fetch_config_tables, 'param_config_id');\n}",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postFetch",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "preChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "tooltip",
+      "value": "",
+      "type": "Html"
+     }
+    ]
+   },
+   {
     "id": "5e6cf1e5-4518-198a-068e-e4ed7aa01674",
     "type": "ComponentsQuery",
     "typeDesc": "Query Component",
@@ -457,7 +540,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    buildTable('tableeditor','myTableEditor',select_result,this.metadata);\n    //establishListeners();\n    console.log(this);\n}",
+      "value": "function(){\n    //buildTable('tableeditor','myTableEditor',select_result,this.metadata);\n    //buildTable('tableeditor','myTableEditor',select_result, result_fetch_metadata);\n    buildTable('tableeditor','myTableEditor',select_result, param_config_id);\n    //console.log(this);\n}",
       "type": "JavaScript"
      },
      {
@@ -541,89 +624,6 @@
      {
       "name": "postExecution",
       "value": "",
-      "type": "JavaScript"
-     },
-     {
-      "name": "postFetch",
-      "value": "",
-      "type": "JavaScript"
-     },
-     {
-      "name": "preChange",
-      "value": "",
-      "type": "JavaScript"
-     },
-     {
-      "name": "postChange",
-      "value": "",
-      "type": "JavaScript"
-     },
-     {
-      "name": "tooltip",
-      "value": "",
-      "type": "Html"
-     }
-    ]
-   },
-   {
-    "id": "4a931666-db71-830f-0ede-58a97b2e8726",
-    "type": "ComponentsQuery",
-    "typeDesc": "Query Component",
-    "parent": "OTHERCOMPONENTS",
-    "properties": [
-     {
-      "name": "name",
-      "value": "comp_select_table",
-      "type": "Id"
-     },
-     {
-      "name": "listeners",
-      "value": "[]",
-      "type": "Listeners"
-     },
-     {
-      "name": "parameters",
-      "value": "[[\"param_config_id\",\"param_config_id\"]]",
-      "type": "ValuesArray"
-     },
-     {
-      "name": "resultvar",
-      "value": "result_fetch_config_tables",
-      "type": "Result"
-     },
-     {
-      "name": "dataSource",
-      "value": "qry_fetch_config_tables",
-      "type": "Datasource"
-     },
-     {
-      "name": "refreshPeriod",
-      "value": "",
-      "type": "Integer"
-     },
-     {
-      "name": "priority",
-      "value": 5,
-      "type": "Integer"
-     },
-     {
-      "name": "htmlObject",
-      "value": "${p:html_select_table}",
-      "type": "HtmlObject"
-     },
-     {
-      "name": "executeAtStart",
-      "value": "true",
-      "type": "Boolean"
-     },
-     {
-      "name": "preExecution",
-      "value": "",
-      "type": "JavaScript"
-     },
-     {
-      "name": "postExecution",
-      "value": "function(){\n    bissolCreateSelect('html_select_table', 'dbTablePicker', 'Choose Table:', result_fetch_config_tables, 'param_config_id');\n}",
       "type": "JavaScript"
      },
      {
@@ -769,6 +769,32 @@
     "meta": "CPK",
     "meta_pluginId": "bissolTableDataEditor",
     "meta_endpoint": "fetchDataJob"
+   },
+   {
+    "id": "4f55c616-3e74-0d2f-1939-61464c8e7eed",
+    "type": "ComponentsbissolTableDataEditor_fetchConfig_CPKENDPOINT",
+    "typeDesc": "fetchConfig Endpoint",
+    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "qry_fetch_metadata",
+      "type": "Id"
+     },
+     {
+      "name": "stepName",
+      "value": "OUTPUT",
+      "type": "String"
+     },
+     {
+      "name": "kettleOutput",
+      "value": "Inferred",
+      "type": "kettleOutputCustom"
+     }
+    ],
+    "meta": "CPK",
+    "meta_pluginId": "bissolTableDataEditor",
+    "meta_endpoint": "fetchConfig"
    }
   ]
  },

@@ -12,6 +12,10 @@
     margin-right:2px;
     margin-left:2px;
 } 
+
+.content-non-editable{
+    color:#3276b1;
+}
 /**
 .newrecord > td{
     background-color:#C0C2FC;
