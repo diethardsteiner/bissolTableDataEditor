@@ -386,6 +386,34 @@
     ]
    },
    {
+    "id": "16f5dccd-8b13-34c3-39aa-0e204a348da4",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_new_record",
+      "type": "Id"
+     },
+     {
+      "name": "propertyValue",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
+     }
+    ]
+   },
+   {
     "id": "OTHERCOMPONENTS",
     "name": "Others",
     "type": "Label",
@@ -490,7 +518,7 @@
     "properties": [
      {
       "name": "name",
-      "value": "comp_generic_select",
+      "value": "comp_fetch_data",
       "type": "Id"
      },
      {
@@ -624,6 +652,89 @@
      {
       "name": "postExecution",
       "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postFetch",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "preChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "tooltip",
+      "value": "",
+      "type": "Html"
+     }
+    ]
+   },
+   {
+    "id": "bd209bc2-073d-d48b-17af-bd9258ec5a47",
+    "type": "ComponentsQuery",
+    "typeDesc": "Query Component",
+    "parent": "OTHERCOMPONENTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "comp_save_new_record",
+      "type": "Id"
+     },
+     {
+      "name": "listeners",
+      "value": "['${p:param_new_record}']",
+      "type": "Listeners"
+     },
+     {
+      "name": "parameters",
+      "value": "[[\"param_new_record\",\"param_new_record\"],[\"param_db_connection\",\"param_db_connection\"]]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "resultvar",
+      "value": "result_new_id",
+      "type": "Result"
+     },
+     {
+      "name": "dataSource",
+      "value": "qry_save_new_record",
+      "type": "Datasource"
+     },
+     {
+      "name": "refreshPeriod",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "priority",
+      "value": 5,
+      "type": "Integer"
+     },
+     {
+      "name": "htmlObject",
+      "value": "",
+      "type": "HtmlObject"
+     },
+     {
+      "name": "executeAtStart",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "preExecution",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postExecution",
+      "value": "function(){\n    bissolChangeNewRowToStdRow(result_new_id);\n}",
       "type": "JavaScript"
      },
      {
@@ -795,6 +906,32 @@
     "meta": "CPK",
     "meta_pluginId": "bissolTableDataEditor",
     "meta_endpoint": "fetchConfig"
+   },
+   {
+    "id": "86ace617-b543-838a-4fd4-30018da3ed25",
+    "type": "ComponentsbissolTableDataEditor_saveRecordAndReturnKeyInjector_CPKENDPOINT",
+    "typeDesc": "saveRecordAndReturnKeyInjector Endpoint",
+    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "qry_save_new_record",
+      "type": "Id"
+     },
+     {
+      "name": "stepName",
+      "value": "OUTPUT",
+      "type": "String"
+     },
+     {
+      "name": "kettleOutput",
+      "value": "Json",
+      "type": "kettleOutputCustom"
+     }
+    ],
+    "meta": "CPK",
+    "meta_pluginId": "bissolTableDataEditor",
+    "meta_endpoint": "saveRecordAndReturnKeyInjector"
    }
   ]
  },
