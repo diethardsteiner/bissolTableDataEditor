@@ -610,6 +610,118 @@
     ]
    },
    {
+    "id": "efdfc287-6908-3a45-546e-8fed5b57e518",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_col_names_visible",
+      "type": "Id"
+     },
+     {
+      "name": "propertyValue",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
+     }
+    ]
+   },
+   {
+    "id": "741ba19f-769e-f0ee-6d40-686deac32600",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_col_names_visible_delimited",
+      "type": "Id"
+     },
+     {
+      "name": "propertyValue",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
+     }
+    ]
+   },
+   {
+    "id": "ce15eeed-7c42-a5a0-4445-2f53067ce62e",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_col_names_editable",
+      "type": "Id"
+     },
+     {
+      "name": "propertyValue",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
+     }
+    ]
+   },
+   {
+    "id": "a9a7d311-dfbe-b3d7-03d9-d65e4cb01a75",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_col_names_editable_delimited",
+      "type": "Id"
+     },
+     {
+      "name": "propertyValue",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
+     }
+    ]
+   },
+   {
     "id": "OTHERCOMPONENTS",
     "name": "Others",
     "type": "Label",
@@ -707,14 +819,14 @@
     ]
    },
    {
-    "id": "5e6cf1e5-4518-198a-068e-e4ed7aa01674",
+    "id": "ee194872-5395-12a8-c0f6-5c695896449a",
     "type": "ComponentsQuery",
     "typeDesc": "Query Component",
     "parent": "OTHERCOMPONENTS",
     "properties": [
      {
       "name": "name",
-      "value": "comp_fetch_data",
+      "value": "comp_fetch_config",
       "type": "Id"
      },
      {
@@ -729,12 +841,95 @@
      },
      {
       "name": "resultvar",
+      "value": "result_fetch_config",
+      "type": "Result"
+     },
+     {
+      "name": "dataSource",
+      "value": "qry_fetch_config",
+      "type": "Datasource"
+     },
+     {
+      "name": "refreshPeriod",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "priority",
+      "value": 5,
+      "type": "Integer"
+     },
+     {
+      "name": "htmlObject",
+      "value": "",
+      "type": "HtmlObject"
+     },
+     {
+      "name": "executeAtStart",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "preExecution",
+      "value": "//at the moment the query is not used at all - in future we should replace the JS function with a server side query\nfunction(){\n    bissolFetchConfig(param_config_id);\n}\n",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postExecution",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postFetch",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "preChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "tooltip",
+      "value": "",
+      "type": "Html"
+     }
+    ]
+   },
+   {
+    "id": "5e6cf1e5-4518-198a-068e-e4ed7aa01674",
+    "type": "ComponentsQuery",
+    "typeDesc": "Query Component",
+    "parent": "OTHERCOMPONENTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "comp_fetch_data",
+      "type": "Id"
+     },
+     {
+      "name": "listeners",
+      "value": "['${p:param_sql_select}']",
+      "type": "Listeners"
+     },
+     {
+      "name": "parameters",
+      "value": "[[\"param_sql_select\",\"param_sql_select\"],[\"param_db_connection\",\"param_db_connection\"]]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "resultvar",
       "value": "select_result",
       "type": "Result"
      },
      {
       "name": "dataSource",
-      "value": "qry_fetch_data",
+      "value": "qry_generic_select",
       "type": "Datasource"
      },
      {
@@ -974,58 +1169,6 @@
     ]
    },
    {
-    "id": "71bed294-f5ca-6240-3ec8-5d2dda8e4bc8",
-    "type": "ComponentsbissolTableDataEditor_genericupdatequery_CPKENDPOINT",
-    "typeDesc": "genericupdatequery Endpoint",
-    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
-    "properties": [
-     {
-      "name": "name",
-      "value": "qry_generic_update",
-      "type": "Id"
-     },
-     {
-      "name": "stepName",
-      "value": "OUTPUT",
-      "type": "String"
-     },
-     {
-      "name": "kettleOutput",
-      "value": "Inferred",
-      "type": "kettleOutputCustom"
-     }
-    ],
-    "meta": "CPK",
-    "meta_pluginId": "bissolTableDataEditor",
-    "meta_endpoint": "genericupdatequery"
-   },
-   {
-    "id": "040d5897-7358-350b-4654-009e217a8566",
-    "type": "ComponentsbissolTableDataEditor_fetchConfig_CPKENDPOINT",
-    "typeDesc": "fetchConfig Endpoint",
-    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
-    "properties": [
-     {
-      "name": "name",
-      "value": "qry_fetch_config",
-      "type": "Id"
-     },
-     {
-      "name": "stepName",
-      "value": "OUTPUT",
-      "type": "String"
-     },
-     {
-      "name": "kettleOutput",
-      "value": "Inferred",
-      "type": "kettleOutputCustom"
-     }
-    ],
-    "meta": "CPK",
-    "meta_pluginId": "bissolTableDataEditor",
-    "meta_endpoint": "fetchConfig"
-   },
-   {
     "id": "bc78cba2-4aee-9ef5-42b9-c36bcb257281",
     "type": "ComponentsbissolTableDataEditor_fetchConfigTables_CPKENDPOINT",
     "typeDesc": "fetchConfigTables Endpoint",
@@ -1050,6 +1193,58 @@
     "meta": "CPK",
     "meta_pluginId": "bissolTableDataEditor",
     "meta_endpoint": "fetchConfigTables"
+   },
+   {
+    "id": "fe872214-bc8c-4e8c-cb9e-0ec42d0adae8",
+    "type": "ComponentsbissolTableDataEditor_genericselectquery_CPKENDPOINT",
+    "typeDesc": "genericselectquery Endpoint",
+    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "qry_generic_select",
+      "type": "Id"
+     },
+     {
+      "name": "stepName",
+      "value": "OUTPUT",
+      "type": "String"
+     },
+     {
+      "name": "kettleOutput",
+      "value": "Inferred",
+      "type": "kettleOutputCustom"
+     }
+    ],
+    "meta": "CPK",
+    "meta_pluginId": "bissolTableDataEditor",
+    "meta_endpoint": "genericselectquery"
+   },
+   {
+    "id": "71bed294-f5ca-6240-3ec8-5d2dda8e4bc8",
+    "type": "ComponentsbissolTableDataEditor_genericupdatequery_CPKENDPOINT",
+    "typeDesc": "genericupdatequery Endpoint",
+    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "qry_generic_update",
+      "type": "Id"
+     },
+     {
+      "name": "stepName",
+      "value": "OUTPUT",
+      "type": "String"
+     },
+     {
+      "name": "kettleOutput",
+      "value": "Inferred",
+      "type": "kettleOutputCustom"
+     }
+    ],
+    "meta": "CPK",
+    "meta_pluginId": "bissolTableDataEditor",
+    "meta_endpoint": "genericupdatequery"
    },
    {
     "id": "2aa637b2-8456-0e1d-88e3-d6f2b5dc284a",
@@ -1078,32 +1273,6 @@
     "meta_endpoint": "fetchDataJob"
    },
    {
-    "id": "4f55c616-3e74-0d2f-1939-61464c8e7eed",
-    "type": "ComponentsbissolTableDataEditor_fetchConfig_CPKENDPOINT",
-    "typeDesc": "fetchConfig Endpoint",
-    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
-    "properties": [
-     {
-      "name": "name",
-      "value": "qry_fetch_metadata",
-      "type": "Id"
-     },
-     {
-      "name": "stepName",
-      "value": "OUTPUT",
-      "type": "String"
-     },
-     {
-      "name": "kettleOutput",
-      "value": "Inferred",
-      "type": "kettleOutputCustom"
-     }
-    ],
-    "meta": "CPK",
-    "meta_pluginId": "bissolTableDataEditor",
-    "meta_endpoint": "fetchConfig"
-   },
-   {
     "id": "86ace617-b543-838a-4fd4-30018da3ed25",
     "type": "ComponentsbissolTableDataEditor_saveRecordAndReturnKeyInjector_CPKENDPOINT",
     "typeDesc": "saveRecordAndReturnKeyInjector Endpoint",
@@ -1128,6 +1297,32 @@
     "meta": "CPK",
     "meta_pluginId": "bissolTableDataEditor",
     "meta_endpoint": "saveRecordAndReturnKeyInjector"
+   },
+   {
+    "id": "8cb6f005-7c20-2b0c-c628-3928f768a657",
+    "type": "ComponentsbissolTableDataEditor_fetchConfig_CPKENDPOINT",
+    "typeDesc": "fetchConfig Endpoint",
+    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "qry_fetch_config",
+      "type": "Id"
+     },
+     {
+      "name": "stepName",
+      "value": "OUTPUT",
+      "type": "String"
+     },
+     {
+      "name": "kettleOutput",
+      "value": "Inferred",
+      "type": "kettleOutputCustom"
+     }
+    ],
+    "meta": "CPK",
+    "meta_pluginId": "bissolTableDataEditor",
+    "meta_endpoint": "fetchConfig"
    }
   ]
  },

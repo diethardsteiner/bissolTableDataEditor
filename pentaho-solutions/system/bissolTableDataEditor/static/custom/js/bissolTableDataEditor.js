@@ -14,6 +14,8 @@ function bissolFetchConfig(param_config_id){
     });
     **/
 
+    console.log('Fetching Config Data ...');
+
     var myJNDI = '';
     var mySchema = '';
     var myTable = '';
@@ -32,7 +34,6 @@ function bissolFetchConfig(param_config_id){
             }
         }
     });
-
     
     if(mySchema !== 'undefined'){
         mySchemaAndTable = mySchema + '.' + myTable;
@@ -40,27 +41,43 @@ function bissolFetchConfig(param_config_id){
         mySchemaAndTable = myTable;
     }
         
-    
+ 
     var myColNames = [];
     
-    $.each(myMetadata, function( i, val ){
+    $.each(myMetadata, function(i, val){
         myColNames.push(val.colName);
-    });  
+    }); 
     //console.log(myColNames);
     
     var myColTypes = [];
-    $.each(myMetadata, function( i, val ){
+    $.each(myMetadata, function(i, val){
         myColTypes.push(val.colType);
     });  
     //console.log(myColTypes);
     
     //find out which column is the key column
     var myIdColumn = '';
-    $.each(myMetadata, function( i, val ){
-        if(myMetadata[i].isPrimaryKey){
-            myIdColumn = myMetadata[i].colName;
+    $.each(myMetadata, function(i, val){
+        if(val.isPrimaryKey){
+            myIdColumn = val.colName;
+        }
+    });  
+    
+    var myColNamesVisible = [];
+    $.each(myMetadata, function(i, val){
+        if(val.isVisible){
+            myColNamesVisible.push(val.colName);
         }
     });
+    var myColNamesVisibleDelimited = myColNamesVisible.join(','); // comma delimeted for SQL query
+
+    var myColNamesEditable = [];
+    $.each(myMetadata, function(i, val){
+        if(val.isEditable){
+            myColNamesEditable.push(val.colName);
+        }
+    });
+    var myColNamesEditableDelimited = myColNamesEditable.join('|'); 
     
     // make config values available globally by storing their values in parameters
     Dashboards.setParameter('param_db_connection', myJNDI);
@@ -69,8 +86,16 @@ function bissolFetchConfig(param_config_id){
     Dashboards.setParameter('param_db_schematable', mySchemaAndTable);
     Dashboards.setParameter('param_metadata', myMetadata);
     Dashboards.setParameter('param_col_names', myColNames);
+    Dashboards.setParameter('param_col_names_visible', myColNamesVisible);
+    Dashboards.setParameter('param_col_names_visible_delimited', myColNamesVisibleDelimited);
+    Dashboards.setParameter('param_col_names_editable', myColNamesEditable);
+    Dashboards.setParameter('param_col_names_editable_delimited', myColNamesEditableDelimited);
     Dashboards.setParameter('param_col_types', myColTypes);
     Dashboards.setParameter('param_id_column', myIdColumn);
+    
+    myGenericSelectQuery = "SELECT " + param_col_names_visible_delimited + " FROM " + mySchemaAndTable;
+    console.log('Generating SQL select query ...');
+    Dashboards.fireChange('param_sql_select', myGenericSelectQuery);
     /**
     return {
         myJNDI: myJNDI
@@ -89,7 +114,7 @@ function bissolFetchConfig(param_config_id){
 function bissolBuildTable(myCdeContainerId, myDashboardObjectId, data) {
     // no reason to define param_config_id as a function arguement as it is already set as a parameter value
     
-    var myTableConfig = bissolFetchConfig(param_config_id);
+    //var myTableConfig = bissolFetchConfig(param_config_id);
     /**
     var myJNDI = myTableConfig.myJNDI;
     var mySchema = myTableConfig.mySchema;
@@ -265,6 +290,7 @@ function bissolSaveRow() {
         });
         
         // 2) get data types from html table
+        // [?] We could just take this from the config as well
         var myColTypesArray = [];
         
         $.each(mySpanArray, function(i, val){
@@ -272,6 +298,7 @@ function bissolSaveRow() {
         });
         
         // 3) get col names from html table
+        // [?] We could just take this from the config as well
         var myColNamesArray = [];
         
         $.each(mySpanArray, function(i, val){
