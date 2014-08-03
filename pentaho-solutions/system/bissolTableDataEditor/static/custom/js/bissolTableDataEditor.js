@@ -4,24 +4,20 @@ var removeIcon = '<span class="glyphicon glyphicon-minus-sign remove-row"></span
 //var addIcon = '<span class="glyphicon glyphicon-plus-sign add-row"></span>';
 var saveIcon = '<span class="glyphicon glyphicon-floppy-disk save-row"></span>';
 
-function buildTable(myCdeContainerId, myDashboardObjectId, data, param_config_id) {
-    
-    var myConfigId = param_config_id;
-    var myData = data;
-
+function bissolFetchConfig(param_config_id){
     // the CDA metadata object is empty in case there are no records returned by the query
 
     //testing
     /**
     $.getJSON("http://localhost:8080/pentaho/api/repos/bissolTableDataEditor/static/custom/config/bissolTableDataEditorConfig.json", function(json) {
-        console.log(json); // this will show the info it in firebug console
+        console.log(json); 
     });
     **/
 
     var myJNDI = '';
     var mySchema = '';
     var myTable = '';
-    var myConfigMetadata = [];
+    var mySchemaAndTable = '';
     var myMetadata = [];
 
     $.getJSON("../../../api/repos/bissolTableDataEditor/static/custom/config/bissolTableDataEditorConfig.json", function(json) {
@@ -39,8 +35,11 @@ function buildTable(myCdeContainerId, myDashboardObjectId, data, param_config_id
 
     
     if(mySchema !== 'undefined'){
-        myTable = mySchema + '.' + myTable;
+        mySchemaAndTable = mySchema + '.' + myTable;
+    } else {
+        mySchemaAndTable = myTable;
     }
+        
     
     var myColNames = [];
     
@@ -63,11 +62,63 @@ function buildTable(myCdeContainerId, myDashboardObjectId, data, param_config_id
         }
     });
     
+    // make config values available globally by storing their values in parameters
+    Dashboards.setParameter('param_db_connection', myJNDI);
+    Dashboards.setParameter('param_db_schema', mySchema);
+    Dashboards.setParameter('param_db_table', myTable);
+    Dashboards.setParameter('param_db_schematable', mySchemaAndTable);
+    Dashboards.setParameter('param_metadata', myMetadata);
+    Dashboards.setParameter('param_col_names', myColNames);
+    Dashboards.setParameter('param_col_types', myColTypes);
+    Dashboards.setParameter('param_id_column', myIdColumn);
+    /**
+    return {
+        myJNDI: myJNDI
+        , mySchema: mySchema
+        , myTable: myTable
+        , mySchemaAndTable: mySchemaAndTable
+        , myMetadata: myMetadata
+        , myColNames: myColNames
+        , myColTypes: myColTypes
+        , myIdColumn: myIdColumn
+    };
+    **/
+    
+}
+
+function bissolBuildTable(myCdeContainerId, myDashboardObjectId, data) {
+    // no reason to define param_config_id as a function arguement as it is already set as a parameter value
+    
+    var myTableConfig = bissolFetchConfig(param_config_id);
+    /**
+    var myJNDI = myTableConfig.myJNDI;
+    var mySchema = myTableConfig.mySchema;
+    var myTable = myTableConfig.myTable;
+    var mySchemaAndTable = myTableConfig.mySchemaAndTable;
+    var myMetadata = myTableConfig.myMetadata;
+    var myColNames = myTableConfig.myColNames;
+    var myColTypes = myTableConfig.myColTypes;
+    var myIdColumn = myTableConfig.myIdColumn;
+    **/
+   
+    var myJNDI = param_db_connection;
+    var mySchema = param_db_schema;
+    var myTable = param_db_table;
+    var mySchemaAndTable = param_db_schematable;
+    var myMetadata = param_metadata;
+    var myColNames = param_col_names;
+    var myColTypes = param_col_types;
+    var myIdColumn = param_id_column;
+    var myConfigId = param_config_id;
+    var myData = data;
+    
     // empty in case table already exists
     $('#' + myCdeContainerId).empty();       
    
     // prepare table basic structure
-    $('#' + myCdeContainerId).append('<table id="' + myDashboardObjectId + '" class="table table-striped"><thead><tr></tr></thead><tbody></tbody></table>');
+    $('#' + myCdeContainerId).append('<table id="' 
+            + myDashboardObjectId 
+            + '" class="table table-striped"><thead><tr></tr></thead><tbody></tbody></table>');
 
     // add table header cells
     $.each(myMetadata, function( i, val ){
@@ -87,11 +138,15 @@ function buildTable(myCdeContainerId, myDashboardObjectId, data, param_config_id
             // add cells within row    
             if(myMetadata[j].isEditable){
                 $('#tableeditor > table > tbody > tr:last')
-                .append('<td><span contenteditable data-name="' + myMetadata[j].colName + '">' 
+                .append('<td><span contenteditable '
+                + ' data-name="'  + myMetadata[j].colName + '"'
+                + ' data-type="' + myMetadata[j].colType + '">' 
                 + value + '</span></td>');
             } else {
                 $('#tableeditor > table > tbody > tr:last')
-                .append('<td><span class="content-non-editable" data-name="' + myMetadata[j].colName + '">' 
+                .append('<td><span class="content-non-editable" '
+                + ' data-name="'  + myMetadata[j].colName + '"'
+                + ' data-type="' + myMetadata[j].colType + '">'  
                 + value + '</span></td>');                
             }
         
@@ -107,8 +162,8 @@ function buildTable(myCdeContainerId, myDashboardObjectId, data, param_config_id
     $('#' + myCdeContainerId).append('<button type="button" class="btn btn-primary btn-lg btn-block" id="newrecordbutton">New record</button>');
     
     // for base table
-    bissolSaveRow(myConfigId, myJNDI);
-    bissolRemoveRow(myJNDI);
+    bissolSaveRow();
+    bissolRemoveRow();
 
 
     // add event listeners
@@ -122,10 +177,16 @@ function buildTable(myCdeContainerId, myDashboardObjectId, data, param_config_id
             $.each(myMetadata, function(i, val){
                 if(myMetadata[i].isEditable){
                     $('#tableeditor > table > tbody > tr:last')
-                    .append('<td><span contenteditable data-name="' + myMetadata[i].colName + '"></span></td>');
+                    .append('<td><span contenteditable '
+                    + ' data-name="'  + myMetadata[i].colName + '"'
+                    + ' data-type="' + myMetadata[i].colType + '">' 
+                    + '</span></td>');
                 } else {
                     $('#tableeditor > table > tbody > tr:last')
-                    .append('<td><span class="content-non-editable" data-name="' + myMetadata[i].colName + '"></span></td>');                
+                    .append('<td><span class="content-non-editable" '
+                    + ' data-name="'  + myMetadata[i].colName + '"'
+                    + ' data-type="' + myMetadata[i].colType + '">' 
+                    + '</span></td>');       
                 }
             });
     
@@ -133,117 +194,11 @@ function buildTable(myCdeContainerId, myDashboardObjectId, data, param_config_id
             $('#tableeditor > table > tbody > tr:last > td:first').before('<td id="newrecord">' + saveIcon + '</td>');            
         
             // add save icon event listener
-            bissolSaveRow(myConfigId,myJNDI);
+            bissolSaveRow();
             
         }
 	});
-    
-    function bissolRemoveRow(myJNDI) { 
-        $('.remove-row').on('click', function() { 
-            //[OPEN]: make data-name id dynamic, also adjust query
-            var myId = $(this).parent().parent().find('span[data-name="' + myIdColumn + '"]').text();
-            var myQuery = 'DELETE FROM ' + myTable + ' WHERE ' + myIdColumn + ' = ' + myId;
-            console.log('The query to submit is: ' + myQuery);
-            
-            Dashboards.setParameter('param_db_connection', myJNDI);
-            Dashboards.fireChange('param_sql_update', myQuery);
-            
-            //remove row
-            $(this).parent().parent().remove();
-        });
-    
-    }
-    
-    function bissolSaveRow(myConfigId, myJNDI) { 
         
-        $('.save-row').on('click', function() { 
-            
-            var myValueArray = [];
-            
-            //var mySpanArray = $(this).parent().parent().find('span:not(.add-row):not(.save-row):not(.remove-row)');
-            var mySpanArray = $(this).parent().parent().find('span[contenteditable]');
-            
-            $.each(mySpanArray, function(i, val){
-                myValueArray.push($.text(this));
-            });
-            
-            //var new_record = '"' + myValueArray.join('","') + '"';
-            var new_record = myValueArray.join('|');
-            //console.log('The new record: ' + new_record);
-
-            Dashboards.setParameter('param_db_connection', myJNDI);
-            Dashboards.setParameter('param_config_id', myConfigId);
-            Dashboards.fireChange('param_new_record', new_record);  
-
-        }); 
-    
-    }
-    
-/**    
-    function bissolSaveRow(myJNDI) { 
-        
-        $('.save-row').on('click', function() { 
-            
-            var myValueArray = [];
-            
-            var mySpanArray = $(this).parent().parent().find('span:not(.add-row):not(.save-row):not(.remove-row)');
-            
-            $.each(mySpanArray, function(i, val){
-                myValueArray.push($.text(this));
-            });
-            
-            
-            // make sure strings are quoted
-            var sqlValueString = [];
-            $.each(myValueArray, function(i, val){
-                if(myColTypes[i]=='String'){ 
-                    sqlValueString.push("'" + val + "'");
-                } else {
-                    sqlValueString.push(val);
-                }
-            });
-            
-            // prepare update string
-            var myUpdateString = '';
-            $.each(myValueArray, function(i, val){
-                if(myColTypes[i]=='String'){ 
-                    myUpdateString += myColNames[i] + "='" + val + "'";
-                } else {
-                    myUpdateString += myColNames[i] + "=" + val;
-                }
-                if( i < (myValueArray.length - 1)) {
-                    myUpdateString += ",";
-                }
-            });
-            
-            // [OPEN] make dynamic
-            var myQuery = '';
-            if( $(this).parent().attr("id") == 'newrecord' ){
-                myQuery = 'INSERT INTO ' + myTable + ' (' + myColNames.toString()  + ')  VALUES (' + sqlValueString.toString() + ')'; 
-            } else {
-                var myId = $(this).parent().parent().find('span[data-name="' + myIdColumn + '"]').text();
-                myQuery = 'UPDATE ' + myTable + ' SET ' + myUpdateString + ' WHERE ' + myIdColumn + ' = ' + myId;    
-            }
-                    
-            console.log('This query will be executed: ' + myQuery);
-            
-            Dashboards.setParameter('param_db_connection', myJNDI);
-            Dashboards.fireChange('param_sql_update', myQuery);
-            
-            //in case the row is a new record remove the specific class and id and add the remove icon
-            if( $(this).parent().attr("id") == 'newrecord' ){
-                //$(this).parent().parent().removeClass('newrecord');
-                $(this).parent().parent().removeAttr('class');
-                $(this).parent().parent().removeClass('newrecord');
-                $(this).parent().removeAttr('id');
-                $(this).before(removeIcon);
-                // add remove row event listener to newly created remove icon
-                bissolRemoveRow();
-            }           
-        }); 
-    
-    }
-**/
 }
 
 function bissolChangeNewRowToStdRow(result_new_id){
@@ -259,6 +214,124 @@ function bissolChangeNewRowToStdRow(result_new_id){
     $('td[id="newrecord"]').parent().removeAttr('id');
     $('td[id="newrecord"] > span').before(removeIcon);
     // add remove row event listener to newly created remove icon
-    bissolRemoveRow();
-  
+    bissolRemoveRow();  
+}
+
+function bissolRemoveRow() {
+
+    var myJNDI = param_db_connection;
+    var mySchema = param_db_schema;
+    var myTable = param_db_table;
+    var mySchemaAndTable = param_db_schematable;
+    var myMetadata = param_metadata;
+    var myColNames = param_col_names;
+    var myColTypes = param_col_types;
+    var myIdColumn = param_id_column;
+    
+    $('.remove-row').on('click', function() { 
+        
+        var myId = $(this).parent().parent().find('span[data-name="' + myIdColumn + '"]').text();
+        var myQuery = 'DELETE FROM ' + mySchemaAndTable + ' WHERE ' + myIdColumn + ' = ' + myId;
+        console.log('The query to submit is: ' + myQuery);
+
+        //Dashboards.setParameter('param_db_connection', myJNDI); // not necessary, should be already set
+        Dashboards.fireChange('param_sql_update', myQuery);
+
+        //remove row
+        $(this).parent().parent().remove();
+    });   
+}
+
+function bissolSaveRow() {
+    
+    var myJNDI = param_db_connection;
+    var mySchema = param_db_schema;
+    var myTable = param_db_table;
+    var mySchemaAndTable = param_db_schematable;
+    var myMetadata = param_metadata;
+    var myColNames = param_col_names;
+    var myColTypes = param_col_types;
+    var myIdColumn = param_id_column;
+    
+    
+    $('.save-row').on('click', function() { 
+
+        // 1) get data from html table
+        var myValueArray = [];
+        var mySpanArray = $(this).parent().parent().find('span[contenteditable]');
+
+        $.each(mySpanArray, function(i, val){
+            myValueArray.push($.text(this));
+        });
+        
+        // 2) get data types from html table
+        var myColTypesArray = [];
+        
+        $.each(mySpanArray, function(i, val){
+            myColTypesArray.push($(this).attr('data-type'));
+        });
+        
+        // 3) get col names from html table
+        var myColNamesArray = [];
+        
+        $.each(mySpanArray, function(i, val){
+            myColNamesArray.push($(this).attr('data-name'));
+        });
+        
+        var myQuery = '';
+        
+        if( $(this).parent().attr("id") == 'newrecord' ){
+            
+            // make sure strings are quoted
+            /**
+            var sqlValueString = [];
+            $.each(myValueArray, function(i, val){
+                if(myColTypes[i]=='String'){ 
+                    sqlValueString.push("'" + val + "'");
+                } else {
+                    sqlValueString.push(val);
+                }
+            });
+            
+            myQuery = 'INSERT INTO ' + mySchemaAndTable + ' (' + myColNames.toString()  + ')  VALUES (' + sqlValueString.toString() + ')'; 
+            **/
+            
+            //var new_record = '"' + myValueArray.join('","') + '"';
+            var myNewRecord = myValueArray.join('|');
+            var myColTypes = myColTypesArray.join('|');
+            var myColNames = myColNamesArray.join('|');
+
+            //Dashboards.setParameter('param_db_connection', myJNDI); // should be already set
+            Dashboards.fireChange('param_new_record', myNewRecord);
+            Dashboards.setParameter('param_col_types_delimited', myColTypes);
+            Dashboards.setParameter('param_col_names_delimited', myColNames);
+            //Dashboards.setParameter('param_config_id', param_config_id);
+      
+        } else {
+            var myId = $(this).parent().parent().find('span[data-name="' + myIdColumn + '"]').text();
+            
+            // prepare update string
+            var myUpdateString = '';
+            
+            $.each(myValueArray, function(i, val){
+                if(myColTypesArray[i]==='String'){ 
+                    myUpdateString += myColNamesArray[i] + "='" + val + "'";
+                } else {
+                    myUpdateString += myColNamesArray[i] + "=" + val;
+                }
+                if( i < (myValueArray.length - 1)) {
+                    myUpdateString += ",";
+                }
+            });
+            
+            myQuery = 'UPDATE ' + mySchemaAndTable + ' SET ' + myUpdateString + ' WHERE ' + myIdColumn + ' = ' + myId;    
+                        
+            console.log('This query will be executed: ' + myQuery);
+            
+            //Dashboards.setParameter('param_db_connection', myJNDI); // should be already set
+            Dashboards.fireChange('param_sql_update', myQuery);
+        }
+
+    }); 
+
 }
