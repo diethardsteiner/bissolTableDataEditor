@@ -1,0 +1,43 @@
+[
+	{
+		"configId": "e6dc5870-b12c-40b7-98f9-05840876a2c0",
+		"dbConnection": "SampleData",
+		"dbSchema": "PUBLIC",
+		"dbTable": "ORDERS",
+		"metadata": [
+			{
+			"colIndex": 0,
+			"colType": "Integer",
+			"colName": "ORDERNUMBER",
+			"isVisible": true,
+			"isEditable": false,
+			"isPrimaryKey": true
+			},
+			{
+			"colIndex": 1,
+			"colType": "String",
+			"colName": "SHIPPEDDATE",
+			"isVisible": true,
+			"isEditable": true,
+			"isPrimaryKey": false
+			},
+			{
+			"colIndex": 2,
+			"colType": "String",
+			"colName": "COMMENTS",
+			"isVisible": true,
+			"isEditable": true,
+			"isPrimaryKey": false
+			},
+			{
+			"colIndex": 3,
+			"colType": "String",
+			"colName": "CUSTOMERNUMBER",
+			"isVisible": true,
+			"isEditable": true,
+			"isPrimaryKey": false
+			}
+		]
+	}
+]
+

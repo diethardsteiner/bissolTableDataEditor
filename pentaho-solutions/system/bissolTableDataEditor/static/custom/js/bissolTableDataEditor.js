@@ -6,7 +6,7 @@ var saveIcon = '<span class="glyphicon glyphicon-floppy-disk save-row"></span>';
 
 function bissolFetchConfig(param_config_id){
     // the CDA metadata object is empty in case there are no records returned by the query
-
+    console.log('The config id is: ' +  param_config_id);
     //testing
     /**
     $.getJSON("http://localhost:8080/pentaho/api/repos/bissolTableDataEditor/static/custom/config/bissolTableDataEditorConfig.json", function(json) {
@@ -14,12 +14,11 @@ function bissolFetchConfig(param_config_id){
     });
     **/
 
-    console.log('Fetching Config Data ...');
+    
 
     var myJNDI = '';
     var mySchema = '';
     var myTable = '';
-    var mySchemaAndTable = '';
     var myMetadata = [];
 
     $.getJSON("../../../api/repos/bissolTableDataEditor/static/custom/config/bissolTableDataEditorConfig.json", function(json) {
@@ -35,6 +34,9 @@ function bissolFetchConfig(param_config_id){
         }
     });
     
+    console.log('Fetching config data for table: ' + myTable);
+    
+    var mySchemaAndTable = '';
     if(mySchema !== 'undefined'){
         mySchemaAndTable = mySchema + '.' + myTable;
     } else {
@@ -62,6 +64,8 @@ function bissolFetchConfig(param_config_id){
             myIdColumn = val.colName;
         }
     });  
+    
+    console.log('The id column is: ' + myIdColumn);
     
     var myColNamesVisible = [];
     $.each(myMetadata, function(i, val){
@@ -94,7 +98,7 @@ function bissolFetchConfig(param_config_id){
     Dashboards.setParameter('param_id_column', myIdColumn);
     
     myGenericSelectQuery = "SELECT " + param_col_names_visible_delimited + " FROM " + mySchemaAndTable;
-    console.log('Generating SQL select query ...');
+    console.log('Generating SQL select query: ' + myGenericSelectQuery);
     Dashboards.fireChange('param_sql_select', myGenericSelectQuery);
     /**
     return {

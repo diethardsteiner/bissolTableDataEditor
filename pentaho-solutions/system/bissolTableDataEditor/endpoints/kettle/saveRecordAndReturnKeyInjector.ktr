@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>fetchConfigKtrExecutor</name>
+    <name>saveRecordAndReturnKeyInjector</name>
     <description>Clean Transformation</description>
     <extended_description/>
     <trans_version/>
@@ -85,8 +85,33 @@
             <description>The webapp folder. This value is automatically set at runtime if &#x27;&#x23;&#x27; is removed from variable name.</description>
         </parameter>
         <parameter>
-            <name>param_config_id</name>
-            <default_value>32s3a343as332sasf3</default_value>
+            <name>param_col_names_delimited</name>
+            <default_value>firstname&#x7c;lastname</default_value>
+            <description/>
+        </parameter>
+        <parameter>
+            <name>param_col_types_delimited</name>
+            <default_value>String&#x7c;String</default_value>
+            <description/>
+        </parameter>
+        <parameter>
+            <name>param_db_connection</name>
+            <default_value>psqllocaltest</default_value>
+            <description/>
+        </parameter>
+        <parameter>
+            <name>param_db_schema</name>
+            <default_value>public</default_value>
+            <description/>
+        </parameter>
+        <parameter>
+            <name>param_db_table</name>
+            <default_value>employees</default_value>
+            <description/>
+        </parameter>
+        <parameter>
+            <name>param_new_record</name>
+            <default_value>rupert&#x7c;fuller</default_value>
             <description/>
         </parameter>
     </parameters>
@@ -153,32 +178,11 @@
   </info>
   <notepads>
     <notepad>
-      <note>To test JSON paths&#x3a; http&#x3a;&#x2f;&#x2f;ashphy.com&#x2f;JSONPathOnlineEvaluator&#x2f;</note>
-      <xloc>406</xloc>
-      <yloc>14</yloc>
-      <width>394</width>
-      <heigth>25</heigth>
-      <fontname>Arial</fontname>
-      <fontsize>10</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>205</backgroundcolorgreen>
-      <backgroundcolorblue>112</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
-    <notepad>
-      <note>Note working - Kettle bug&#x3a;&#xa;http&#x3a;&#x2f;&#x2f;jira.pentaho.com&#x2f;browse&#x2f;PDI-12204</note>
-      <xloc>567</xloc>
-      <yloc>912</yloc>
+      <note>Bug prevents metadata injection&#xa;from more than one step&#xa;http&#x3a;&#x2f;&#x2f;jira.pentaho.com&#x2f;browse&#x2f;PDI-12667&#xa;Workaround&#x3a; join them</note>
+      <xloc>184</xloc>
+      <yloc>216</yloc>
       <width>249</width>
-      <heigth>40</heigth>
+      <heigth>70</heigth>
       <fontname>Arial</fontname>
       <fontsize>10</fontsize>
       <fontbold>N</fontbold>
@@ -195,11 +199,11 @@
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>the file name is a bit of a misnomer&#x3a;&#xa;&#xa;This file gets the config metadata for a specific table&#xa;and then pulls the data for it.</note>
-      <xloc>21</xloc>
-      <yloc>8</yloc>
-      <width>310</width>
-      <heigth>70</heigth>
+      <note>Note really necessary&#xa;as can be passed&#xa;as standard parameters</note>
+      <xloc>887</xloc>
+      <yloc>235</yloc>
+      <width>147</width>
+      <heigth>55</heigth>
       <fontname>Arial</fontname>
       <fontsize>10</fontsize>
       <fontbold>N</fontbold>
@@ -217,25 +221,29 @@
     </notepad>
   </notepads>
   <order>
-  <hop> <from>Filter rows</from><to>Dummy &#x28;do nothing&#x29;</to><enabled>Y</enabled> </hop>
-  <hop> <from>Json Input</from><to>Get Variables</to><enabled>Y</enabled> </hop>
-  <hop> <from>Get Variables</from><to>Filter rows</to><enabled>Y</enabled> </hop>
-  <hop> <from>Filter rows</from><to>Select values</to><enabled>Y</enabled> </hop>
-  <hop> <from>Select values</from><to>Json Input 2</to><enabled>Y</enabled> </hop>
-  <hop> <from>Json Input 2</from><to>Select values 2</to><enabled>Y</enabled> </hop>
-  <hop> <from>Is visible&#x3f;</from><to>Dummy &#x28;do nothing&#x29; 2</to><enabled>Y</enabled> </hop>
-  <hop> <from>Select values 2</from><to>Reinstate correct col order</to><enabled>Y</enabled> </hop>
-  <hop> <from>Reinstate correct col order</from><to>Is visible&#x3f;</to><enabled>Y</enabled> </hop>
-  <hop> <from>Is visible&#x3f;</from><to>Select values 3</to><enabled>Y</enabled> </hop>
-  <hop> <from>Select values 3</from><to>Group by</to><enabled>Y</enabled> </hop>
-  <hop> <from>Group by</from><to>Create SQL Select</to><enabled>Y</enabled> </hop>
-  <hop> <from>Create SQL Select</from><to>Select values 4</to><enabled>Y</enabled> </hop>
-  <hop> <from>Select values 4</from><to>Transformation Executor</to><enabled>Y</enabled> </hop>
-  <hop> <from>Select values 4</from><to>Set Variables</to><enabled>N</enabled> </hop>
+  <hop> <from>DB Connection - Generate Rows</from><to>DB Connection - Get Variables</to><enabled>Y</enabled> </hop>
+  <hop> <from>DB Connection - Get Variables</from><to>DB Connection - Write to log</to><enabled>Y</enabled> </hop>
+  <hop> <from>Col Types - Generate Rows</from><to>Col Types - Get Variables</to><enabled>Y</enabled> </hop>
+  <hop> <from>Col Types - Get Variables</from><to>Col Types - Write to log</to><enabled>Y</enabled> </hop>
+  <hop> <from>Col Names - Generate Rows</from><to>Col Names - Get Variables</to><enabled>Y</enabled> </hop>
+  <hop> <from>Col Names - Get Variables</from><to>Col Names - Write to log</to><enabled>Y</enabled> </hop>
+  <hop> <from>Col Types - Get Variables</from><to>Col Types - Split field to rows</to><enabled>Y</enabled> </hop>
+  <hop> <from>Col Types - Split field to rows</from><to>Col Types - Metadata Inj Input</to><enabled>Y</enabled> </hop>
+  <hop> <from>Col Names - Split field to rows</from><to>Col Names - Metadata Inj Input</to><enabled>Y</enabled> </hop>
+  <hop> <from>Col Names - Get Variables</from><to>Col Names - Split field to rows</to><enabled>Y</enabled> </hop>
+  <hop> <from>DB Connection - Get Variables</from><to>DB Connection - Metadata Inj Input</to><enabled>Y</enabled> </hop>
+  <hop> <from>DB Connection - Metadata Inj Input</from><to>ETL Metadata Injection</to><enabled>N</enabled> </hop>
+  <hop> <from>ETL Metadata Injection</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
+  <hop> <from>Col Types - Metadata Inj Input</from><to>Col Types - Add sequence</to><enabled>Y</enabled> </hop>
+  <hop> <from>Col Names - Metadata Inj Input</from><to>Col Names - Add sequence</to><enabled>Y</enabled> </hop>
+  <hop> <from>Col Types - Add sequence</from><to>Merge Join</to><enabled>Y</enabled> </hop>
+  <hop> <from>Col Names - Add sequence</from><to>Merge Join</to><enabled>Y</enabled> </hop>
+  <hop> <from>Merge Join</from><to>Metadata Inj Input</to><enabled>Y</enabled> </hop>
+  <hop> <from>Metadata Inj Input</from><to>ETL Metadata Injection</to><enabled>Y</enabled> </hop>
   </order>
   <step>
-    <name>Create SQL Select</name>
-    <type>Janino</type>
+    <name>Col Names - Generate Rows</name>
+    <type>RowGenerator</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -244,93 +252,26 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-       <formula><field_name>sql_select</field_name>
-<formula_string>&#x22;SELECT &#x22;&#x2b;colName&#x2b;&#x22; FROM &#x22;&#x2b;dbSchema&#x2b;&#x22;.&#x22;&#x2b;dbTable</formula_string>
-<value_type>String</value_type>
-<value_length>-1</value_length>
-<value_precision>-1</value_precision>
-<replace_field/>
-</formula>
+    <fields>
+    </fields>
+    <limit>1</limit>
+    <never_ending>N</never_ending>
+    <interval_in_ms>5000</interval_in_ms>
+    <row_time_field>now</row_time_field>
+    <last_time_field>FiveSecondsAgo</last_time_field>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>464</xloc>
-      <yloc>723</yloc>
+      <xloc>471</xloc>
+      <yloc>58</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Dummy &#x28;do nothing&#x29;</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>356</xloc>
-      <yloc>193</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Dummy &#x28;do nothing&#x29; 2</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>592</xloc>
-      <yloc>456</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Filter rows</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<send_true_to>Select values</send_true_to>
-<send_false_to>Dummy &#x28;do nothing&#x29;</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <leftvalue>configId</leftvalue>
- <function>&#x3d;</function>
- <rightvalue>config_id_filter</rightvalue>
- </condition>
-    </compare>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>355</xloc>
-      <yloc>89</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Get Variables</name>
+    <name>Col Names - Get Variables</name>
     <type>GetVariable</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
          <partitioning>
@@ -339,8 +280,8 @@
            </partitioning>
     <fields>
       <field>
-        <name>config_id_filter</name>
-        <variable>&#x24;&#x7b;param_config_id&#x7d;</variable>
+        <name>col_names</name>
+        <variable>&#x24;&#x7b;param_col_names_delimited&#x7d;</variable>
         <type>String</type>
         <format/>
         <currency/>
@@ -348,20 +289,20 @@
         <group/>
         <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>253</xloc>
-      <yloc>89</yloc>
+      <xloc>471</xloc>
+      <yloc>135</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Group by</name>
-    <type>GroupBy</type>
+    <name>Col Names - Metadata Inj Input</name>
+    <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -370,47 +311,77 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-      <all_rows>N</all_rows>
-      <ignore_aggregate>N</ignore_aggregate>
-      <field_ignore/>
-      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
-      <prefix>grp</prefix>
-      <add_linenr>N</add_linenr>
-      <linenr_fieldname/>
-      <give_back_row>N</give_back_row>
-      <group>
-        <field>
-          <name>configId</name>
-        </field>
-        <field>
-          <name>dbConnection</name>
-        </field>
-        <field>
-          <name>dbSchema</name>
-        </field>
-        <field>
-          <name>dbTable</name>
-        </field>
-      </group>
-      <fields>
-        <field>
-          <aggregate>colName</aggregate>
-          <subject>colName</subject>
-          <type>CONCAT_COMMA</type>
-          <valuefield>,</valuefield>
+    <fields>      <field>        <name>col_name</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>471</xloc>
+      <yloc>275</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Col Names - Split field to rows</name>
+    <type>SplitFieldToRows3</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+   <splitfield>col_names</splitfield>
+   <delimiter>&#x7c;</delimiter>
+   <newfield>col_name</newfield>
+   <rownum>N</rownum>
+   <rownum_field/>
+   <resetrownumber>Y</resetrownumber>
+   <delimiter_is_regex>N</delimiter_is_regex>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>471</xloc>
+      <yloc>200</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Col Names - Write to log</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <loglevel>log_level_basic</loglevel>
+      <displayHeader>Y</displayHeader>
+      <limitRows>N</limitRows>
+      <limitRowsNumber>0</limitRowsNumber>
+      <logmessage>&#x3d;&#x3d;&#x3d;&#x3d; Received param value &#x3d;&#x3d;&#x3d;&#x3d;&#x3d;</logmessage>
+    <fields>
+      <field>
+        <name>col_names</name>
         </field>
       </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>464</xloc>
-      <yloc>629</yloc>
+      <xloc>633</xloc>
+      <yloc>135</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Is visible&#x3f;</name>
-    <type>FilterRows</type>
+    <name>Col Types - Generate Rows</name>
+    <type>RowGenerator</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -419,169 +390,36 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-<send_true_to>Select values 3</send_true_to>
-<send_false_to>Dummy &#x28;do nothing&#x29; 2</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <leftvalue>isVisible</leftvalue>
- <function>&#x3d;</function>
- <rightvalue/>
- <value><name>constant</name><type>Boolean</type><text>Y</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value> </condition>
-    </compare>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>464</xloc>
-      <yloc>457</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Json Input</name>
-    <type>JsonInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <include>N</include>
-    <include_field/>
-    <rownum>N</rownum>
-    <addresultfile>N</addresultfile>
-    <readurl>N</readurl>
-    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
-    <doNotFailIfNoFile>N</doNotFailIfNoFile>
-    <ignoreMissingPath>N</ignoreMissingPath>
-    <rownum_field/>
-    <file>
-      <name>&#x24;&#x7b;Internal.Transformation.Filename.Directory&#x7d;&#x2f;..&#x2f;..&#x2f;..&#x2f;bissolTableDataEditorConfig&#x2f;bissolTableDataEditorConfig.json</name>
-      <filemask/>
-      <exclude_filemask/>
-      <file_required>N</file_required>
-      <include_subfolders>N</include_subfolders>
-    </file>
     <fields>
-      <field>
-        <name>configId</name>
-        <path>&#x24;.&#x5b;&#x2a;&#x5d;.configId</path>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>dbConnection</name>
-        <path>&#x24;.&#x5b;&#x2a;&#x5d;.dbConnection</path>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>dbSchema</name>
-        <path>&#x24;.&#x5b;&#x2a;&#x5d;.dbSchema</path>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>dbTable</name>
-        <path>&#x24;.&#x5b;&#x2a;&#x5d;.dbTable</path>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>metadata</name>
-        <path>&#x24;.&#x5b;&#x2a;&#x5d;.metadata</path>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
     </fields>
-    <limit>0</limit>
-    <IsInFields>N</IsInFields>
-    <IsAFile>N</IsAFile>
-    <valueField/>
-    <shortFileFieldName/>
-    <pathFieldName/>
-    <hiddenFieldName/>
-    <lastModificationTimeFieldName/>
-    <uriNameFieldName/>
-    <rootUriNameFieldName/>
-    <extensionFieldName/>
-    <sizeFieldName/>
+    <limit>1</limit>
+    <never_ending>N</never_ending>
+    <interval_in_ms>5000</interval_in_ms>
+    <row_time_field>now</row_time_field>
+    <last_time_field>FiveSecondsAgo</last_time_field>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>148</xloc>
-      <yloc>89</yloc>
+      <xloc>110</xloc>
+      <yloc>58</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Json Input 2</name>
-    <type>JsonInput</type>
+    <name>Col Types - Get Variables</name>
+    <type>GetVariable</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <include>N</include>
-    <include_field/>
-    <rownum>N</rownum>
-    <addresultfile>N</addresultfile>
-    <readurl>N</readurl>
-    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
-    <doNotFailIfNoFile>N</doNotFailIfNoFile>
-    <ignoreMissingPath>N</ignoreMissingPath>
-    <rownum_field/>
-    <file>
-      <name/>
-      <filemask/>
-      <exclude_filemask/>
-      <file_required>N</file_required>
-      <include_subfolders>N</include_subfolders>
-    </file>
     <fields>
       <field>
-        <name>colName</name>
-        <path>&#x24;.&#x5b;&#x2a;&#x5d;.colName</path>
+        <name>col_types</name>
+        <variable>&#x24;&#x7b;param_col_types_delimited&#x7d;</variable>
         <type>String</type>
         <format/>
         <currency/>
@@ -589,131 +427,19 @@
         <group/>
         <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>colType</name>
-        <path>&#x24;.&#x5b;&#x2a;&#x5d;.colType</path>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>colIndex</name>
-        <path>&#x24;.&#x5b;&#x2a;&#x5d;.colIndex</path>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>isEditable</name>
-        <path>&#x24;.&#x5b;&#x2a;&#x5d;.isEditable</path>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>isVisible</name>
-        <path>&#x24;.&#x5b;&#x2a;&#x5d;.isVisible</path>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>isPrimaryKey</name>
-        <path>&#x24;.&#x5b;&#x2a;&#x5d;.isPrimaryKey</path>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-    </fields>
-    <limit>0</limit>
-    <IsInFields>Y</IsInFields>
-    <IsAFile>N</IsAFile>
-    <valueField>metadata</valueField>
-    <shortFileFieldName/>
-    <pathFieldName/>
-    <hiddenFieldName/>
-    <lastModificationTimeFieldName/>
-    <uriNameFieldName/>
-    <rootUriNameFieldName/>
-    <extensionFieldName/>
-    <sizeFieldName/>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>465</xloc>
-      <yloc>194</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Reinstate correct col order</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
-      <prefix>out</prefix>
-      <sort_size>1000000</sort_size>
-      <free_memory/>
-      <compress>N</compress>
-      <compress_variable/>
-      <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>colIndex</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <presorted>N</presorted>
+        <trim_type>both</trim_type>
       </field>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>464</xloc>
-      <yloc>352</yloc>
+      <xloc>110</xloc>
+      <yloc>135</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Select values</name>
+    <name>Col Types - Metadata Inj Input</name>
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
@@ -723,38 +449,22 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <fields>      <field>        <name>configId</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>dbConnection</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>dbSchema</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>dbTable</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>metadata</name>
+    <fields>      <field>        <name>col_type</name>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
       </field>        <select_unspecified>N</select_unspecified>
     </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>466</xloc>
-      <yloc>89</yloc>
+      <xloc>110</xloc>
+      <yloc>275</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Select values 2</name>
-    <type>SelectValues</type>
+    <name>Col Types - Split field to rows</name>
+    <type>SplitFieldToRows3</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -763,58 +473,24 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <fields>      <field>        <name>configId</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>dbConnection</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>dbSchema</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>dbTable</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>colName</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>colType</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>colIndex</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>isEditable</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>isVisible</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>isPrimaryKey</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
+   <splitfield>col_types</splitfield>
+   <delimiter>&#x7c;</delimiter>
+   <newfield>col_type</newfield>
+   <rownum>N</rownum>
+   <rownum_field/>
+   <resetrownumber>Y</resetrownumber>
+   <delimiter_is_regex>N</delimiter_is_regex>
+     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>464</xloc>
-      <yloc>270</yloc>
+      <xloc>110</xloc>
+      <yloc>204</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Select values 3</name>
-    <type>SelectValues</type>
+    <name>Col Types - Write to log</name>
+    <type>WriteToLog</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -823,132 +499,192 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <fields>      <field>        <name>configId</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>dbConnection</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>dbSchema</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>dbTable</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>colName</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>colType</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>colIndex</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>isEditable</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>isVisible</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>isPrimaryKey</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>464</xloc>
-      <yloc>539</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Select values 4</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>      <field>        <name>configId</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>dbConnection</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>dbSchema</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>dbTable</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>sql_select</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>463</xloc>
-      <yloc>822</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Set Variables</name>
-    <type>SetVariable</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
+      <loglevel>log_level_basic</loglevel>
+      <displayHeader>Y</displayHeader>
+      <limitRows>N</limitRows>
+      <limitRowsNumber>0</limitRowsNumber>
+      <logmessage>&#x3d;&#x3d;&#x3d;&#x3d; Received param value &#x3d;&#x3d;&#x3d;&#x3d;&#x3d;</logmessage>
     <fields>
       <field>
-        <field_name>dbConnection</field_name>
-        <variable_name>VAR_DB_CONNECTION</variable_name>
-        <variable_type>PARENT_JOB</variable_type>
-        <default_value/>
-        </field>
-      <field>
-        <field_name>sql_select</field_name>
-        <variable_name>VAR_SQL_SELECT</variable_name>
-        <variable_type>PARENT_JOB</variable_type>
-        <default_value/>
+        <name>col_types</name>
         </field>
       </fields>
-    <use_formatting>Y</use_formatting>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>594</xloc>
-      <yloc>821</yloc>
+      <xloc>290</xloc>
+      <yloc>135</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Transformation Executor</name>
-    <type>TransExecutor</type>
+    <name>DB Connection - Generate Rows</name>
+    <type>RowGenerator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+    </fields>
+    <limit>1</limit>
+    <never_ending>N</never_ending>
+    <interval_in_ms>5000</interval_in_ms>
+    <row_time_field>now</row_time_field>
+    <last_time_field>FiveSecondsAgo</last_time_field>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>830</xloc>
+      <yloc>56</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>DB Connection - Get Variables</name>
+    <type>GetVariable</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>db_connection</name>
+        <variable>&#x24;&#x7b;param_db_connection&#x7d;</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>new_record</name>
+        <variable>&#x24;&#x7b;param_new_record&#x7d;</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>db_schema</name>
+        <variable>&#x24;&#x7b;param_db_schema&#x7d;</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>db_table</name>
+        <variable>&#x24;&#x7b;param_db_table&#x7d;</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>830</xloc>
+      <yloc>133</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>DB Connection - Metadata Inj Input</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>db_connection</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>db_schema</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>db_table</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>830</xloc>
+      <yloc>273</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>DB Connection - Write to log</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <loglevel>log_level_basic</loglevel>
+      <displayHeader>Y</displayHeader>
+      <limitRows>N</limitRows>
+      <limitRowsNumber>0</limitRowsNumber>
+      <logmessage>&#x3d;&#x3d;&#x3d;&#x3d; received following param values &#x3d;&#x3d;&#x3d;</logmessage>
+    <fields>
+      <field>
+        <name>db_connection</name>
+        </field>
+      <field>
+        <name>new_record</name>
+        </field>
+      <field>
+        <name>db_schema</name>
+        </field>
+      <field>
+        <name>db_table</name>
+        </field>
+      </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1023</xloc>
+      <yloc>133</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>ETL Metadata Injection</name>
+    <type>MetaInject</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -960,40 +696,164 @@
     <specification_method>filename</specification_method>
     <trans_object_id/>
     <trans_name/>
-    <filename>&#x24;&#x7b;Internal.Transformation.Filename.Directory&#x7d;&#x2f;fetchDataKtrExecutor.ktr</filename>
+    <filename>&#x24;&#x7b;Internal.Transformation.Filename.Directory&#x7d;&#x2f;saveRecordAndReturnKey.ktr</filename>
     <directory_path/>
-    <group_size>1</group_size>
-    <group_field/>
-    <group_time/>
-          <parameters>       <variablemapping><variable>VAR_DB_CONNECTION</variable><field>dbConnection</field><input/></variablemapping>
-       <variablemapping><variable>VAR_SQL_SELECT</variable><field>sql_select</field><input/></variablemapping>
-    <inherit_all_vars>N</inherit_all_vars>
-    </parameters>
-    <execution_result_target_step/>
-    <execution_time_field>ExecutionTime</execution_time_field>
-    <execution_result_field>ExecutionResult</execution_result_field>
-    <execution_errors_field>ExecutionNrErrors</execution_errors_field>
-    <execution_lines_read_field>ExecutionLinesRead</execution_lines_read_field>
-    <execution_lines_written_field>ExecutionLinesWritten</execution_lines_written_field>
-    <execution_lines_input_field>ExecutionLinesInput</execution_lines_input_field>
-    <execution_lines_output_field>ExecutionLinesOutput</execution_lines_output_field>
-    <execution_lines_rejected_field>ExecutionLinesRejected</execution_lines_rejected_field>
-    <execution_lines_updated_field>ExecutionLinesUpdated</execution_lines_updated_field>
-    <execution_lines_deleted_field>ExecutionLinesDeleted</execution_lines_deleted_field>
-    <execution_files_retrieved_field>ExecutionFilesRetrieved</execution_files_retrieved_field>
-    <execution_exit_status_field>ExecutionExitStatus</execution_exit_status_field>
-    <execution_log_text_field>ExecutionLogText</execution_log_text_field>
-    <execution_log_channelid_field>ExecutionLogChannelId</execution_log_channelid_field>
-    <result_rows_target_step/>
-      <result_rows_field><name>id</name><type>Integer</type><length>-1</length><precision>-1</precision></result_rows_field>
-      <result_rows_field><name>firstname</name><type>String</type><length>-1</length><precision>-1</precision></result_rows_field>
-      <result_rows_field><name>lastname</name><type>String</type><length>-1</length><precision>-1</precision></result_rows_field>
-    <result_files_target_step/>
-    <result_files_file_name_field>FileName</result_files_file_name_field>
+    <source_step>OutputKey</source_step>
+    <source_output_fields>      <source_output_field>        <source_output_field_name>id</source_output_field_name>
+        <source_output_field_type>Integer</source_output_field_type>
+        <source_output_field_length>-1</source_output_field_length>
+        <source_output_field_precision>-1</source_output_field_precision>
+      </source_output_field>    </source_output_fields>    <target_file/>
+    <no_execution>N</no_execution>
+    <stream_source_step/>
+    <stream_target_step/>
+    <mappings>      <mapping>        <target_step_name>Split Fields</target_step_name>
+        <target_attribute_key>NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>Metadata Inj Input</source_step>
+        <source_field>col_name</source_field>
+      </mapping>      <mapping>        <target_step_name>Split Fields</target_step_name>
+        <target_attribute_key>DATA_TYPE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>Metadata Inj Input</source_step>
+        <source_field>col_type</source_field>
+      </mapping>    </mappings>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>471</xloc>
+      <yloc>393</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>OUTPUT</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>463</xloc>
-      <yloc>905</yloc>
+      <xloc>471</xloc>
+      <yloc>490</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Col Types - Add sequence</name>
+    <type>Sequence</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <valuename>idtypes</valuename>
+      <use_database>N</use_database>
+      <connection/>
+      <schema/>
+      <seqname>SEQ_</seqname>
+      <use_counter>Y</use_counter>
+      <counter_name>idcountertypes</counter_name>
+      <start_at>1</start_at>
+      <increment_by>1</increment_by>
+      <max_value>999999999</max_value>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>110</xloc>
+      <yloc>344</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Col Names - Add sequence</name>
+    <type>Sequence</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <valuename>idnames</valuename>
+      <use_database>N</use_database>
+      <connection/>
+      <schema/>
+      <seqname>SEQ_</seqname>
+      <use_counter>Y</use_counter>
+      <counter_name>idcounternames</counter_name>
+      <start_at>1</start_at>
+      <increment_by>1</increment_by>
+      <max_value>999999999</max_value>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>319</xloc>
+      <yloc>317</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Merge Join</name>
+    <type>MergeJoin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<join_type>INNER</join_type>
+<step1>Col Types - Add sequence</step1>
+<step2>Col Names - Add sequence</step2>
+    <keys_1>
+      <key>idtypes</key>
+    </keys_1>
+    <keys_2>
+      <key>idnames</key>
+    </keys_2>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>248</xloc>
+      <yloc>400</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Metadata Inj Input</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>col_name</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>col_type</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>332</xloc>
+      <yloc>423</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

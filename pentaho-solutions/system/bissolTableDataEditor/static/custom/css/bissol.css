@@ -1,0 +1,32 @@
+html,
+body {
+	margin:0;
+	padding:0;
+	height:100%;
+}
+#wrapper {
+	min-height:100%;
+	position:relative;
+}
+#header {
+	padding:1%;
+}
+
+#content {
+	padding:1%;
+	padding-bottom:10%;   /* Height of the footer element */
+}
+
+
+#footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    background-color: #f8f8f8;
+    border-top: 1px solid #e7e7e7;
+    color: #777;
+    text-align:center;
+    font-size: 1em;
+}

@@ -86,22 +86,22 @@
         </parameter>
         <parameter>
             <name>param_db_column</name>
-            <default_value/>
+            <default_value>id,firstname,lastname</default_value>
             <description/>
         </parameter>
         <parameter>
             <name>param_db_connection</name>
-            <default_value/>
+            <default_value>psqllocaltest</default_value>
             <description/>
         </parameter>
         <parameter>
             <name>param_db_schema</name>
-            <default_value/>
+            <default_value>public</default_value>
             <description/>
         </parameter>
         <parameter>
             <name>param_db_table</name>
-            <default_value/>
+            <default_value>employees</default_value>
             <description/>
         </parameter>
     </parameters>
@@ -167,29 +167,79 @@
   <modified_date>2013&#x2f;07&#x2f;04 18&#x3a;48&#x3a;57.073</modified_date>
   </info>
   <notepads>
+    <notepad>
+      <note>Currently only supports saving config for one table</note>
+      <xloc>292</xloc>
+      <yloc>313</yloc>
+      <width>297</width>
+      <heigth>25</heigth>
+      <fontname>Arial</fontname>
+      <fontsize>10</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>dummy output as otherwise&#xa;Sparkl throws error</note>
+      <xloc>413</xloc>
+      <yloc>394</yloc>
+      <width>170</width>
+      <heigth>40</heigth>
+      <fontname>Arial</fontname>
+      <fontsize>10</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <order>
   <hop> <from>Generate Rows</from><to>Get Variables</to><enabled>Y</enabled> </hop>
-  <hop> <from>Dummy &#x28;do nothing&#x29;</from><to>Text file output</to><enabled>Y</enabled> </hop>
-  <hop> <from>Dummy &#x28;do nothing&#x29;</from><to>Json output</to><enabled>N</enabled> </hop>
-  <hop> <from>Get Variables</from><to>User Defined Java Expression</to><enabled>Y</enabled> </hop>
-  <hop> <from>User Defined Java Expression</from><to>Dummy &#x28;do nothing&#x29;</to><enabled>Y</enabled> </hop>
+  <hop> <from>Modified Java Script Value</from><to>Text file output</to><enabled>Y</enabled> </hop>
+  <hop> <from>Get Variables</from><to>Create UUID</to><enabled>Y</enabled> </hop>
+  <hop> <from>Create UUID</from><to>Modified Java Script Value</to><enabled>Y</enabled> </hop>
+  <hop> <from>Generate Rows 2</from><to>Dummy &#x28;do nothing&#x29;</to><enabled>Y</enabled> </hop>
+  <hop> <from>Get Variables</from><to>Write to log</to><enabled>Y</enabled> </hop>
   </order>
   <step>
-    <name>Dummy &#x28;do nothing&#x29;</name>
-    <type>Dummy</type>
+    <name>Create UUID</name>
+    <type>Janino</type>
     <description/>
-    <distribute>N</distribute>
+    <distribute>Y</distribute>
     <custom_distribution/>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
            <schema_name/>
            </partitioning>
+       <formula><field_name>uuid</field_name>
+<formula_string>java.util.UUID.randomUUID&#x28;&#x29;.toString&#x28;&#x29;</formula_string>
+<value_type>String</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<replace_field/>
+</formula>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>172</xloc>
-      <yloc>283</yloc>
+      <xloc>168</xloc>
+      <yloc>213</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -214,7 +264,7 @@
     <last_time_field>FiveSecondsAgo</last_time_field>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>172</xloc>
+      <xloc>168</xloc>
       <yloc>66</yloc>
       <draw>Y</draw>
       </GUI>
@@ -224,7 +274,7 @@
     <name>Get Variables</name>
     <type>GetVariable</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
          <partitioning>
@@ -233,7 +283,7 @@
            </partitioning>
     <fields>
       <field>
-        <name>db_connection</name>
+        <name>dbConnection</name>
         <variable>&#x24;&#x7b;param_db_connection&#x7d;</variable>
         <type>String</type>
         <format/>
@@ -245,7 +295,7 @@
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>db_table</name>
+        <name>dbTable</name>
         <variable>&#x24;&#x7b;param_db_table&#x7d;</variable>
         <type>String</type>
         <format/>
@@ -257,7 +307,7 @@
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>db_schema</name>
+        <name>dbSchema</name>
         <variable>&#x24;&#x7b;param_db_schema&#x7d;</variable>
         <type>String</type>
         <format/>
@@ -269,7 +319,7 @@
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>db_column_tmp</name>
+        <name>dbColumn</name>
         <variable>&#x24;&#x7b;param_db_column&#x7d;</variable>
         <type>String</type>
         <format/>
@@ -283,15 +333,15 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>172</xloc>
+      <xloc>168</xloc>
       <yloc>149</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Json output</name>
-    <type>JsonOutput</type>
+    <name>Modified Java Script Value</name>
+    <type>ScriptValueMod</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -300,62 +350,21 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <outputValue>outputValue</outputValue>
-    <jsonBloc>data</jsonBloc>
-    <nrRowsInBloc>1</nrRowsInBloc>
-    <operation_type>writetofile</operation_type>
-    <compatibility_mode>N</compatibility_mode>
-    <encoding>UTF-8</encoding>
-    <addtoresult>N</addtoresult>
-    <file>
-      <name>&#x24;&#x7b;Internal.Transformation.Filename.Directory&#x7d;&#x2f;test</name>
-      <extention>js</extention>
-      <append>N</append>
-      <split>N</split>
-      <haspartno>N</haspartno>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <create_parent_folder>N</create_parent_folder>
-      <DoNotOpenNewFileInit>N</DoNotOpenNewFileInit>
-      <servlet_output>N</servlet_output>
-      </file>
-    <fields>
-      <field>
-        <name>db_connection</name>
-        <element>db_connection</element>
-    </field>
-      <field>
-        <name>db_table</name>
-        <element>db_table</element>
-    </field>
-      <field>
-        <name>db_column</name>
-        <element>db_column</element>
-    </field>
-    </fields>
-     <cluster_schema/>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;var json &#x3d;&#xa;&#x27;&#x5b;&#x5c;n&#x27;&#xa;&#x2b; &#x27;	&#x7b;&#x5c;n&#x27;&#xa;&#x2b; &#x27;		&#x22;configId&#x22;&#x3a; &#x22;&#x27; &#x2b; uuid &#x2b; &#x27;&#x22;,&#x5c;n&#x27;&#xa;&#x2b; &#x27;		&#x22;dbConnection&#x22;&#x3a; &#x22;&#x27; &#x2b; dbConnection &#x2b; &#x27;&#x22;,&#x5c;n&#x27;&#xa;&#x2b; &#x27;		&#x22;dbSchema&#x22;&#x3a; &#x22;&#x27; &#x2b; dbSchema &#x2b; &#x27;&#x22;,&#x5c;n&#x27;&#xa;&#x2b; &#x27;		&#x22;dbTable&#x22;&#x3a; &#x22;&#x27; &#x2b; dbTable &#x2b; &#x27;&#x22;,&#x5c;n&#x27;&#xa;&#x2b; &#x27;		&#x22;metadata&#x22;&#x3a; &#x5b;&#x5c;n&#x27;&#xa;&#x3b;&#xa;&#xa;var dbColumns &#x3d; dbColumn.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;&#xa;for&#x28;i&#x3d;0&#x3b; i&#x3c;dbColumns.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;	json&#x2b;&#x3d;&#xa;&#x27;			&#x7b;&#x5c;n&#x27;&#xa;&#x2b; &#x27;			&#x22;colIndex&#x22;&#x3a; &#x27; &#x2b; i &#x2b; &#x27;,&#x5c;n&#x27;&#xa;&#x2b; &#x27;			&#x22;colType&#x22;&#x3a; &#x22;&#x27; &#x2b; &#x28;i&#x3d;&#x3d;&#x3d;0 &#x3f; &#x27;Integer&#x27; &#x3a; &#x27;String&#x27;&#x29; &#x2b; &#x27;&#x22;,&#x5c;n&#x27; &#x2f;&#x2f;&#x5b;OPEN&#x5d; has to be made dynamic&#xa;&#x2b; &#x27;			&#x22;colName&#x22;&#x3a; &#x22;&#x27; &#x2b; dbColumns&#x5b;i&#x5d; &#x2b; &#x27;&#x22;,&#x5c;n&#x27;&#xa;&#x2b; &#x27;			&#x22;isVisible&#x22;&#x3a; true,&#x5c;n&#x27; &#x2f;&#x2f;&#x5b;OPEN&#x5d; has to be made dynamic&#xa;&#x2b; &#x27;			&#x22;isEditable&#x22;&#x3a; &#x27; &#x2b; &#x28;i&#x3d;&#x3d;&#x3d;0 &#x3f; &#x27;false&#x27; &#x3a; &#x27;true&#x27;&#x29; &#x2b; &#x27;,&#x5c;n&#x27; &#x2f;&#x2f;&#x5b;OPEN&#x5d; has to be made dynamic&#xa;&#x2b; &#x27;			&#x22;isPrimaryKey&#x22;&#x3a; &#x27; &#x2b; &#x28;i&#x3d;&#x3d;&#x3d;0 &#x3f; &#x27;true&#x27; &#x3a; &#x27;false&#x27;&#x29; &#x2b; &#x27;&#x5c;n&#x27; &#x2f;&#x2f;&#x5b;OPEN&#x5d; has to be made dynamic&#xa;&#x2b; &#x27;			&#x7d;&#x27; &#x2b; &#x28; i &#x3d;&#x3d;&#x3d; &#x28;dbColumns.length - 1&#x29; &#x3f; &#x27;&#x27; &#x3a; &#x27;,&#x27;&#x29; &#x2b; &#x27;&#x5c;n&#x27;&#xa;&#x3b;&#xa;&#x7d;&#xa;&#xa;json &#x2b;&#x3d; &#xa;&#x27;		&#x5d;&#x5c;n&#x27;&#xa;&#x2b; &#x27;	&#x7d;&#x5c;n&#x27;&#xa;&#x2b; &#x27;&#x5d;&#x5c;n&#x27;&#xa;&#x3b;&#xa;&#xa;&#xa;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>json</name>
+        <rename>json</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>266</xloc>
-      <yloc>350</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>OUTPUT</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>440</xloc>
-      <yloc>207</yloc>
+      <xloc>168</xloc>
+      <yloc>296</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -371,11 +380,11 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <separator>&#x3b;</separator>
-    <enclosure>&#x22;</enclosure>
-    <enclosure_forced>Y</enclosure_forced>
+    <separator/>
+    <enclosure/>
+    <enclosure_forced>N</enclosure_forced>
     <enclosure_fix_disabled>N</enclosure_fix_disabled>
-    <header>Y</header>
+    <header>N</header>
     <footer>N</footer>
     <format>UNIX</format>
     <compression>None</compression>
@@ -385,11 +394,11 @@
     <fileNameField/>
     <create_parent_folder>N</create_parent_folder>
     <file>
-      <name>&#x24;&#x7b;Internal.Transformation.Filename.Directory&#x7d;&#x2f;test</name>
+      <name>&#x24;&#x7b;Internal.Transformation.Filename.Directory&#x7d;&#x2f;..&#x2f;..&#x2f;static&#x2f;custom&#x2f;config&#x2f;bissolTableDataEditorConfig</name>
       <is_command>N</is_command>
       <servlet_output>N</servlet_output>
       <do_not_open_new_file_init>N</do_not_open_new_file_init>
-      <extention>txt</extention>
+      <extention>json</extention>
       <append>N</append>
       <split>N</split>
       <haspartno>N</haspartno>
@@ -404,43 +413,7 @@
     </file>
     <fields>
       <field>
-        <name>db_connection</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>db_schema</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>db_table</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>db_column</name>
+        <name>json</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -454,15 +427,15 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>172</xloc>
-      <yloc>388</yloc>
+      <xloc>167</xloc>
+      <yloc>389</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>User Defined Java Expression</name>
-    <type>Janino</type>
+    <name>Dummy &#x28;do nothing&#x29;</name>
+    <type>Dummy</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -471,17 +444,74 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-       <formula><field_name>db_column</field_name>
-<formula_string>db_column_tmp.replace&#x28;&#x22;&#x5c;&#x22;&#x5b;&#x22;,&#x22;&#x22;&#x29;.replace&#x28;&#x22;&#x5d;&#x5c;&#x22;&#x22;,&#x22;&#x22;&#x29;.replace&#x28;&#x22;&#x5c;&#x22;&#x5c;&#x22;&#x22;,&#x22;&#x22;&#x29;</formula_string>
-<value_type>String</value_type>
-<value_length>-1</value_length>
-<value_precision>-1</value_precision>
-<replace_field/>
-</formula>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>171</xloc>
-      <yloc>222</yloc>
+      <xloc>333</xloc>
+      <yloc>427</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Generate Rows 2</name>
+    <type>RowGenerator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+    </fields>
+    <limit>1</limit>
+    <never_ending>N</never_ending>
+    <interval_in_ms>5000</interval_in_ms>
+    <row_time_field>now</row_time_field>
+    <last_time_field>FiveSecondsAgo</last_time_field>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>332</xloc>
+      <yloc>368</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Write to log</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <loglevel>log_level_basic</loglevel>
+      <displayHeader>Y</displayHeader>
+      <limitRows>N</limitRows>
+      <limitRowsNumber>0</limitRowsNumber>
+      <logmessage>&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d; Received following parameter values &#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;</logmessage>
+    <fields>
+      <field>
+        <name>dbConnection</name>
+        </field>
+      <field>
+        <name>dbTable</name>
+        </field>
+      <field>
+        <name>dbSchema</name>
+        </field>
+      <field>
+        <name>dbColumn</name>
+        </field>
+      </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>298</xloc>
+      <yloc>172</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Bissol Table Data Editor</title>
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+        <!--link href="/pentaho-style/dashboard.css" rel="stylesheet" type="text/css" media="screen" /-->       
+
+         
+        @HEADER@        
+        <link rel="stylesheet" type="text/css" href="../../../api/repos/bissolTableDataEditor/static/system/css/cpk.css" />
+        <link rel="stylesheet" type="text/css" href="../../../api/repos/bissolTableDataEditor/static/custom/css/bissol.css" />
+        
+
+
+    </head>
+    <body>
+        <div class="wrapper"><!--<div class="cpkWrapper">-->
+            
+            <!-- START HEADER SECTION -->
+            <div id="header">
+                
+                <nav class="navbar navbar-default" role="navigation" id="nav">
+                  <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                      </button>
+                      <a class="navbar-brand" href="#">Bissol Table Data Editor</a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                      <ul class="nav navbar-nav">
+                        <li id="li_main"><a href="main">Main</a></li>
+                        <li id="li_config"><a href="config">Admin</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </nav>
+                
+            </div>
+            <!-- END HEADER SECTION -->    
+            
+            <!-- START CONTENT -->
+            
+            <div id="content"> <!--class="cpkContent"-->
+                @CONTENT@
+            </div>
+          
+            <!-- END CONTENT -->        
+            <footer>
+                <div class="container" id="footer">
+                    <div class="row">
+                        <div class="col col-sm-12">
+                            <div id="copyright">
+                                <a href="http://diethardsteiner.github.io" target="_blank">Copyright © 2014 Bissol Consulting Ltd.</a>
+                            </div>
+                            <div class="btn-group">
+                                Follow Us:
+                                <a href="https://twitter.com/diethardsteiner" target="_blank"><i class="fa fa-twitter-square"></i> @twitter</a>
+                                <a href="https://www.linkedin.com/in/diethardsteiner" target="_blank"><i class="fa fa-linkedin-square"></i> linkedin</a>
+                                <a href="http://diethardsteiner.github.io" target="_blank"><i class="fa fa-github"></i> Github Blog</a>
+                                <a href="https://plus.google.com/u/0/+DiethardSteiner/postsx" target="_blank"><i class="fa fa-google-plus"></i> google+</a>
+                                <a href="http://feedly.com/index.html#subscription%2Ffeed%2Fhttp%3A%2F%2Fdiethardsteiner.github.io%2Ffeed.xml" target="_blank"><i class="fa fa-rss"></i> feedly</a>
+                                <a href="http://diethardsteiner.github.io/feed.xml" target="_blank"><i class="fa fa-rss"></i> rss</a>
+                            </div>
+                      </div>
+                    </div>
+                </div>
+                @FOOTER@
+            </footer>
+
+            <script type="text/javascript">
+
+            function GetCurrentPageName() { 
+                //method to get Current page name from url. 
+                var PageURL = document.location.href; 
+                var PageName = PageURL.substring(PageURL.lastIndexOf('/') + 1); 
+
+                return PageName.toLowerCase() ;
+            }
+
+
+            $('#nav').ready(function(){
+
+                var CurrPage = GetCurrentPageName();
+                switch(CurrPage){
+                    case 'main':
+                     $('#li_main').addClass('active') ;
+                     break;
+                    case 'config':
+                     $('#li_config').addClass('active') ;
+                     break;
+                }
+            });
+
+            </script>
+        </div>
+    </body>
+</html>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>fetchConfigTables</name>
+    <name>fetchConfigDataForTable</name>
     <description>Clean Transformation</description>
     <extended_description/>
     <trans_version/>
@@ -84,6 +84,11 @@
             <default_value>&#x24;&#x7b;cpk.solution.system.dir&#x7d;&#x2f;..&#x2f;..&#x2f;tomcat&#x2f;webapps&#x2f;pentaho</default_value>
             <description>The webapp folder. This value is automatically set at runtime if &#x27;&#x23;&#x27; is removed from variable name.</description>
         </parameter>
+        <parameter>
+            <name>param_config_id</name>
+            <default_value>32s3a343as332sasf3</default_value>
+            <description/>
+        </parameter>
     </parameters>
     <log>
 <trans-log-table><connection/>
@@ -147,15 +152,61 @@
   <modified_date>2013&#x2f;07&#x2f;04 18&#x3a;48&#x3a;57.073</modified_date>
   </info>
   <notepads>
+    <notepad>
+      <note>To test JSON paths&#x3a; http&#x3a;&#x2f;&#x2f;ashphy.com&#x2f;JSONPathOnlineEvaluator&#x2f;</note>
+      <xloc>556</xloc>
+      <yloc>20</yloc>
+      <width>394</width>
+      <heigth>25</heigth>
+      <fontname>Arial</fontname>
+      <fontsize>10</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>NOT used as this makes retrieving the data more complicated&#xa;implemented in JavaScript instead&#xa;&#xa;--- this is a bit an improved version over fetchConfig, but in general,&#xa;it&#x27;s still easier to just use JavaScript client side. Doing this client side&#xa;has the main advantage that the whole config file has to be sent to the&#xa;client.</note>
+      <xloc>17</xloc>
+      <yloc>17</yloc>
+      <width>414</width>
+      <heigth>115</heigth>
+      <fontname>Arial</fontname>
+      <fontsize>10</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <order>
-  <hop> <from>Json Input</from><to>Concat Fields</to><enabled>Y</enabled> </hop>
-  <hop> <from>Concat Fields</from><to>Select values</to><enabled>Y</enabled> </hop>
-  <hop> <from>Select values</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
+  <hop> <from>Get Variables 2</from><to>Filter rows 2</to><enabled>Y</enabled> </hop>
+  <hop> <from>Json Input 3</from><to>Get Variables 2</to><enabled>Y</enabled> </hop>
+  <hop> <from>Filter rows 2</from><to>Dummy &#x28;do nothing&#x29; 2</to><enabled>Y</enabled> </hop>
+  <hop> <from>Filter rows 2</from><to>Select values 3</to><enabled>Y</enabled> </hop>
+  <hop> <from>Select values 3</from><to>Modified Java Script Value</to><enabled>Y</enabled> </hop>
+  <hop> <from>Modified Java Script Value</from><to>Final Selection</to><enabled>Y</enabled> </hop>
+  <hop> <from>Final Selection</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
   </order>
   <step>
-    <name>Concat Fields</name>
-    <type>ConcatFields</type>
+    <name>OUTPUT</name>
+    <type>Dummy</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -164,90 +215,16 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <separator>.</separator>
-    <enclosure/>
-    <enclosure_forced>N</enclosure_forced>
-    <enclosure_fix_disabled>N</enclosure_fix_disabled>
-    <header>N</header>
-    <footer>N</footer>
-    <format>DOS</format>
-    <compression>None</compression>
-    <encoding/>
-    <endedLine/>
-    <fileNameInField>N</fileNameInField>
-    <fileNameField/>
-    <create_parent_folder>Y</create_parent_folder>
-    <file>
-      <name>file</name>
-      <is_command>N</is_command>
-      <servlet_output>N</servlet_output>
-      <do_not_open_new_file_init>Y</do_not_open_new_file_init>
-      <extention>txt</extention>
-      <append>N</append>
-      <split>N</split>
-      <haspartno>N</haspartno>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <SpecifyFormat>N</SpecifyFormat>
-      <date_time_format/>
-      <add_to_result_filenames>Y</add_to_result_filenames>
-      <pad>N</pad>
-      <fast_dump>N</fast_dump>
-      <splitevery>0</splitevery>
-    </file>
-    <fields>
-      <field>
-        <name>dbConnection</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>dbSchema</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>dbTable</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>none</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-    </fields>
-    <ConcatFields>
-<targetFieldName>dbTableFullPath</targetFieldName>
-<targetFieldLength>0</targetFieldLength>
-<removeSelectedFields>Y</removeSelectedFields>
-    </ConcatFields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>250</xloc>
-      <yloc>101</yloc>
+      <xloc>390</xloc>
+      <yloc>380</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Json Input</name>
+    <name>Json Input 3</name>
     <type>JsonInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -267,7 +244,7 @@
     <ignoreMissingPath>N</ignoreMissingPath>
     <rownum_field/>
     <file>
-      <name>&#x24;&#x7b;Internal.Transformation.Filename.Directory&#x7d;&#x2f;..&#x2f;..&#x2f;static&#x2f;custom&#x2f;config&#x2f;bissolTableDataEditorConfig.json</name>
+      <name>&#x24;&#x7b;Internal.Transformation.Filename.Directory&#x7d;&#x2f;..&#x2f;..&#x2f;..&#x2f;bissolTableDataEditorConfig&#x2f;bissolTableDataEditorConfig.json</name>
       <filemask/>
       <exclude_filemask/>
       <file_required>N</file_required>
@@ -275,47 +252,21 @@
     </file>
     <fields>
       <field>
+        <name>tableConfig</name>
+        <path>&#x2a;</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
         <name>configId</name>
         <path>&#x24;.&#x5b;&#x2a;&#x5d;.configId</path>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>dbConnection</name>
-        <path>&#x24;.&#x5b;&#x2a;&#x5d;.dbConnection</path>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>dbSchema</name>
-        <path>&#x24;.&#x5b;&#x2a;&#x5d;.dbSchema</path>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>dbTable</name>
-        <path>&#x24;.&#x5b;&#x2a;&#x5d;.dbTable</path>
         <type>String</type>
         <format/>
         <currency/>
@@ -341,14 +292,86 @@
     <sizeFieldName/>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>101</xloc>
-      <yloc>101</yloc>
+      <xloc>155</xloc>
+      <yloc>119</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>OUTPUT</name>
+    <name>Modified Java Script Value</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;var json &#x3d;  JSON.parse&#x28;tableConfig&#x29;&#x3b;&#xa;&#xa;var myJNDI &#x3d; json.dbConnection&#x3b;&#xa;var mySchema &#x3d; json.dbSchema&#x3b;&#xa;var myTable &#x3d; json.dbTable&#x3b;&#xa;&#x2f;&#x2f;var myMetadata &#x3d; JSON.stringify&#x28;json.metadata&#x29;&#x3b;&#xa;var myMetadata &#x3d; json.metadata&#x3b;&#xa;&#xa;    var mySchemaAndTable &#x3d; &#x27;&#x27;&#x3b;&#xa;    if&#x28;mySchema &#x21;&#x3d;&#x3d; &#x27;undefined&#x27;&#x29;&#x7b;&#xa;        mySchemaAndTable &#x3d; mySchema &#x2b; &#x27;.&#x27; &#x2b; myTable&#x3b;&#xa;    &#x7d; else &#x7b;&#xa;        mySchemaAndTable &#x3d; myTable&#x3b;&#xa;    &#x7d;&#xa;&#xa;	&#x2f;&#x2f; col names&#xa;&#xa;    var myColNames &#x3d; &#x5b;&#x5d;&#x3b;&#xa;    &#xa;    for&#x28;i&#x3d;0&#x3b; i&#x3c;myMetadata.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;        myColNames.push&#x28;myMetadata&#x5b;i&#x5d;.colName&#x29;&#x3b;&#xa;    &#x7d;&#xa;&#xa;	var myColNamesDelimited &#x3d; myColNames.join&#x28;&#x27;,&#x27;&#x29;&#x3b; &#xa;&#xa;	&#x2f;&#x2f; col types&#xa;&#xa;    var myColTypes &#x3d; &#x5b;&#x5d;&#x3b;&#xa;    &#xa;    for&#x28;i&#x3d;0&#x3b; i&#x3c;myMetadata.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;        myColTypes.push&#x28;myMetadata&#x5b;i&#x5d;.colType&#x29;&#x3b;&#xa;    &#x7d;&#xa;&#xa;	var myColTypesDelimited &#x3d; myColTypes.join&#x28;&#x27;,&#x27;&#x29;&#x3b; &#xa;&#xa;	&#x2f;&#x2f; col names visible&#xa;&#xa;    var myColNamesVisible &#x3d; &#x5b;&#x5d;&#x3b;&#xa;    &#xa;    for&#x28;i&#x3d;0&#x3b; i&#x3c;myMetadata.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;        if&#x28;myMetadata&#x5b;i&#x5d;.isVisible&#x29;&#x7b;&#xa;            myColNamesVisible.push&#x28;myMetadata&#x5b;i&#x5d;.colName&#x29;&#x3b;&#xa;        &#x7d;&#xa;    &#x7d;&#xa;&#xa;	var myColNamesVisibleDelimited &#x3d; myColNamesVisible.join&#x28;&#x27;,&#x27;&#x29;&#x3b; &#xa;&#xa;	&#x2f;&#x2f; col types visible&#xa;&#xa;    var myColTypesVisible &#x3d; &#x5b;&#x5d;&#x3b;&#xa;    &#xa;    for&#x28;i&#x3d;0&#x3b; i&#x3c;myMetadata.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;        if&#x28;myMetadata&#x5b;i&#x5d;.isVisible&#x29;&#x7b;&#xa;            myColTypesVisible.push&#x28;myMetadata&#x5b;i&#x5d;.colType&#x29;&#x3b;&#xa;        &#x7d;&#xa;    &#x7d;&#xa;&#xa;	var myColTypesVisibleDelimited &#x3d; myColTypesVisible.join&#x28;&#x27;,&#x27;&#x29;&#x3b; &#xa;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>myJNDI</name>
+        <rename>myJNDI</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>mySchema</name>
+        <rename>mySchema</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>myTable</name>
+        <rename>myTable</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>mySchemaAndTable</name>
+        <rename>mySchemaAndTable</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>myColNamesDelimited</name>
+        <rename>myColNamesDelimited</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>myColTypesDelimited</name>
+        <rename>myColTypesDelimited</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>myColNamesVisibleDelimited</name>
+        <rename>myColNamesVisibleDelimited</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>myColTypesVisibleDelimited</name>
+        <rename>myColTypesVisibleDelimited</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>390</xloc>
+      <yloc>260</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Dummy &#x28;do nothing&#x29; 2</name>
     <type>Dummy</type>
     <description/>
     <distribute>Y</distribute>
@@ -360,14 +383,76 @@
            </partitioning>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>457</xloc>
-      <yloc>101</yloc>
+      <xloc>588</xloc>
+      <yloc>118</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Select values</name>
+    <name>Filter rows 2</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>Select values 3</send_true_to>
+<send_false_to>Dummy &#x28;do nothing&#x29; 2</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>configId</leftvalue>
+ <function>&#x3d;</function>
+ <rightvalue>config_id_filter</rightvalue>
+ </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>390</xloc>
+      <yloc>118</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Get Variables 2</name>
+    <type>GetVariable</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>config_id_filter</name>
+        <variable>&#x24;&#x7b;param_config_id&#x7d;</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>288</xloc>
+      <yloc>118</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Select values 3</name>
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
@@ -377,19 +462,67 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <fields>      <field>        <name>configId</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>dbTableFullPath</name>
+    <fields>      <field>        <name>tableConfig</name>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
       </field>        <select_unspecified>N</select_unspecified>
     </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>366</xloc>
-      <yloc>102</yloc>
+      <xloc>390</xloc>
+      <yloc>191</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Final Selection</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>myJNDI</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>mySchema</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>myTable</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>mySchemaAndTable</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>myColNamesDelimited</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>myColTypesDelimited</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>myColNamesVisibleDelimited</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>myColTypesVisibleDelimited</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>390</xloc>
+      <yloc>315</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

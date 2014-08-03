@@ -80,7 +80,7 @@ function bissolCreateCheckboxSet(myCdeContainerId, myDashboardObjectId, myLabelT
             });
  
             // fire change
-            Dashboards.fireChange(cdeParam,myCheckedValues);
+            Dashboards.fireChange(cdeParam, myCheckedValues.join(','));
             console.log('Setting parameter ' + cdeParam + ' to: ' + myCheckedValues);
         });
 
