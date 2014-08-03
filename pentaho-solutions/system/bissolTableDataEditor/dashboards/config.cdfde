@@ -38,7 +38,7 @@
      },
      {
       "name": "resourceFile",
-      "value": "",
+      "value": "/pentaho/api/repos/bissolTableDataEditor/static/custom/css/bissolTableConfig.css",
       "type": "ResourceFile"
      },
      {

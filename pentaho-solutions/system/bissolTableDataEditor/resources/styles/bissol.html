@@ -5,18 +5,12 @@
         <title>Bissol Table Data Editor</title>
         <meta name="keywords" content="" />
         <meta name="description" content="" />
-        <!--link href="/pentaho-style/dashboard.css" rel="stylesheet" type="text/css" media="screen" /-->       
-
-         
-        @HEADER@        
+        @HEADER@
         <link rel="stylesheet" type="text/css" href="../../../api/repos/bissolTableDataEditor/static/system/css/cpk.css" />
         <link rel="stylesheet" type="text/css" href="../../../api/repos/bissolTableDataEditor/static/custom/css/bissol.css" />
-        
-
-
     </head>
     <body>
-        <div class="wrapper"><!--<div class="cpkWrapper">-->
+        <div class="page-wrap">
             
             <!-- START HEADER SECTION -->
             <div id="header">
@@ -52,9 +46,9 @@
             <div id="content"> <!--class="cpkContent"-->
                 @CONTENT@
             </div>
-          
+        </div>
             <!-- END CONTENT -->        
-            <footer>
+            <footer class="site-footer">
                 <div class="container" id="footer">
                     <div class="row">
                         <div class="col col-sm-12">
@@ -74,33 +68,33 @@
                     </div>
                 </div>
                 @FOOTER@
-            </footer>
+        </footer>
 
-            <script type="text/javascript">
+        <script type="text/javascript">
 
-            function GetCurrentPageName() { 
-                //method to get Current page name from url. 
-                var PageURL = document.location.href; 
-                var PageName = PageURL.substring(PageURL.lastIndexOf('/') + 1); 
+        function GetCurrentPageName() { 
+            //method to get Current page name from url. 
+            var PageURL = document.location.href; 
+            var PageName = PageURL.substring(PageURL.lastIndexOf('/') + 1); 
 
-                return PageName.toLowerCase() ;
+            return PageName.toLowerCase() ;
+        }
+
+
+        $('#nav').ready(function(){
+
+            var CurrPage = GetCurrentPageName();
+            switch(CurrPage){
+                case 'main':
+                 $('#li_main').addClass('active') ;
+                 break;
+                case 'config':
+                 $('#li_config').addClass('active') ;
+                 break;
             }
+        });
 
-
-            $('#nav').ready(function(){
-
-                var CurrPage = GetCurrentPageName();
-                switch(CurrPage){
-                    case 'main':
-                     $('#li_main').addClass('active') ;
-                     break;
-                    case 'config':
-                     $('#li_config').addClass('active') ;
-                     break;
-                }
-            });
-
-            </script>
-        </div>
+        </script>
+    </div>
     </body>
 </html>

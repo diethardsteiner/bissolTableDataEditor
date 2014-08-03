@@ -149,260 +149,11 @@
   <notepads>
   </notepads>
   <order>
-  <hop> <from>Get data from XML</from><to>Exclude hibernate and quartz</to><enabled>N</enabled> </hop>
-  <hop> <from>Exclude hibernate and quartz</from><to>OUTPUT2</to><enabled>N</enabled> </hop>
-  <hop> <from>Exclude hibernate and quartz</from><to>Discard records</to><enabled>N</enabled> </hop>
-  <hop> <from>Data Grid</from><to>OUTPUT2</to><enabled>N</enabled> </hop>
   <hop> <from>Data Grid 2</from><to>Retrieve server details</to><enabled>Y</enabled> </hop>
   <hop> <from>Retrieve server details</from><to>Json Input</to><enabled>Y</enabled> </hop>
   <hop> <from>Json Input</from><to>Select values</to><enabled>Y</enabled> </hop>
   <hop> <from>Select values</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
   </order>
-  <step>
-    <name>Data Grid</name>
-    <type>DataGrid</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
-      <field>
-        <name>name</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <data>
-      <line> <item>psqllocaltest</item> </line>
-      <line> <item>test2</item> </line>
-    </data>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>32</xloc>
-      <yloc>216</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Discard records</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>322</xloc>
-      <yloc>186</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Exclude hibernate and quartz</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<send_true_to>OUTPUT2</send_true_to>
-<send_false_to>Discard records</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <conditions>
-  <condition>
-   <negated>N</negated>
-   <leftvalue>name</leftvalue>
-   <function>&#x3c;&#x3e;</function>
-   <rightvalue/>
-   <value><name>constant</name><type>String</type><text>jdbc&#x2f;Hibernate</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value>   </condition>
-  <condition>
-   <negated>N</negated>
-   <operator>AND</operator>
-   <leftvalue>name</leftvalue>
-   <function>&#x3c;&#x3e;</function>
-   <rightvalue/>
-   <value><name>constant</name><type>String</type><text>jdbc&#x2f;Quartz</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value>   </condition>
-  </conditions>
- </condition>
-    </compare>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>143</xloc>
-      <yloc>186</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Get data from XML</name>
-    <type>getXMLData</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <include>N</include>
-    <include_field/>
-    <rownum>N</rownum>
-    <addresultfile>N</addresultfile>
-    <namespaceaware>N</namespaceaware>
-    <ignorecomments>N</ignorecomments>
-    <readurl>N</readurl>
-    <validating>N</validating>
-    <usetoken>N</usetoken>
-    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
-    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
-    <rownum_field/>
-    <encoding>UTF-8</encoding>
-    <file>
-      <name>&#x2f;home&#x2f;dsteiner&#x2f;apps&#x2f;pentaho&#x2f;biserver&#x2f;biserver-ce&#x2f;tomcat&#x2f;webapps&#x2f;pentaho&#x2f;META-INF&#x2f;context.xml</name>
-      <filemask/>
-      <exclude_filemask/>
-      <file_required>N</file_required>
-      <include_subfolders>N</include_subfolders>
-    </file>
-    <fields>
-      <field>
-        <name>name</name>
-        <xpath>&#x40;name</xpath>
-        <element_type>attribut</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>username</name>
-        <xpath>&#x40;username</xpath>
-        <element_type>attribut</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>password</name>
-        <xpath>&#x40;password</xpath>
-        <element_type>attribut</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>driverClassName</name>
-        <xpath>&#x40;driverClassName</xpath>
-        <element_type>attribut</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>url</name>
-        <xpath>&#x40;url</xpath>
-        <element_type>attribut</element_type>
-        <result_type>valueof</result_type>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-    </fields>
-    <limit>0</limit>
-    <loopxpath>&#x2f;Context&#x2f;Resource</loopxpath>
-    <IsInFields>N</IsInFields>
-    <IsAFile>N</IsAFile>
-    <XmlField/>
-    <prunePath/>
-    <shortFileFieldName/>
-    <pathFieldName/>
-    <hiddenFieldName/>
-    <lastModificationTimeFieldName/>
-    <uriNameFieldName/>
-    <rootUriNameFieldName/>
-    <extensionFieldName/>
-    <sizeFieldName/>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>143</xloc>
-      <yloc>78</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>OUTPUT2</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>143</xloc>
-      <yloc>281</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
   <step>
     <name>Data Grid 2</name>
     <type>DataGrid</type>
@@ -432,41 +183,8 @@
     </data>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>465</xloc>
-      <yloc>36</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Retrieve server details</name>
-    <type>CallEndpointStep</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <serverUrl>http&#x3a;&#x2f;&#x2f;localhost&#x3a;8080&#x2f;pentaho</serverUrl>
-    <userName>admin</userName>
-    <password>password</password>
-    <isBypassingAuthentication>Y</isBypassingAuthentication>
-    <moduleName>data-access</moduleName>
-    <isModuleFromField>N</isModuleFromField>
-    <endpointPath>&#x2f;connection&#x2f;list</endpointPath>
-    <httpMethod>GET</httpMethod>
-    <isEndpointFromField>N</isEndpointFromField>
-    <resultField>Result</resultField>
-    <statusCodeField>Status code</statusCodeField>
-    <responseTimeField>Response time</responseTimeField>
-    <fields>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>465</xloc>
-      <yloc>95</yloc>
+      <xloc>139</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -527,8 +245,8 @@
     <sizeFieldName/>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>465</xloc>
-      <yloc>166</yloc>
+      <xloc>139</xloc>
+      <yloc>162</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -546,8 +264,41 @@
            </partitioning>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>465</xloc>
-      <yloc>291</yloc>
+      <xloc>139</xloc>
+      <yloc>287</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Retrieve server details</name>
+    <type>CallEndpointStep</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <serverUrl>http&#x3a;&#x2f;&#x2f;localhost&#x3a;8080&#x2f;pentaho</serverUrl>
+    <userName>admin</userName>
+    <password>password</password>
+    <isBypassingAuthentication>Y</isBypassingAuthentication>
+    <moduleName>data-access</moduleName>
+    <isModuleFromField>N</isModuleFromField>
+    <endpointPath>&#x2f;connection&#x2f;list</endpointPath>
+    <httpMethod>GET</httpMethod>
+    <isEndpointFromField>N</isEndpointFromField>
+    <resultField>Result</resultField>
+    <statusCodeField>Status code</statusCodeField>
+    <responseTimeField>Response time</responseTimeField>
+    <fields>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>139</xloc>
+      <yloc>91</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -570,8 +321,8 @@
       </field>        <select_unspecified>N</select_unspecified>
     </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>466</xloc>
-      <yloc>226</yloc>
+      <xloc>140</xloc>
+      <yloc>222</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
