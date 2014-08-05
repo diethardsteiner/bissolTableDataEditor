@@ -3,6 +3,29 @@
   "title": "config",
   "rows": [
    {
+    "id": "5baf5b42-fb92-e9c3-ee07-62d480b23d00",
+    "type": "LayoutResourceFile",
+    "typeDesc": "Resource",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "bissolTableConfig.js",
+      "type": "Id"
+     },
+     {
+      "name": "resourceFile",
+      "value": "/pentaho/api/repos/bissolTableDataEditor/static/custom/js/bissolTableConfig.js",
+      "type": "ResourceFile"
+     },
+     {
+      "name": "resourceType",
+      "value": "Javascript",
+      "type": "Label"
+     }
+    ]
+   },
+   {
     "id": "1df3f5a3-501c-6319-91cf-c410e2b7df01",
     "type": "LayoutResourceFile",
     "typeDesc": "Resource",
@@ -87,8 +110,8 @@
     ]
    },
    {
-    "id": "1732bb87-859e-a727-4c08-35a39cf6c22a",
-    "type": "LayoutColumn",
+    "id": "653c0f6e-76e8-6a35-123c-aa593fce7e8d",
+    "type": "LayoutBootstrapColumn",
     "typeDesc": "Column",
     "parent": "99682fbf-3b25-b955-dcb2-311e2be7c139",
     "properties": [
@@ -98,39 +121,29 @@
       "type": "Id"
      },
      {
-      "name": "columnSpan",
-      "value": "4",
-      "type": "Integer"
-     },
-     {
-      "name": "columnPrepend",
+      "name": "bootstrapExtraSmall",
       "value": "",
-      "type": "Integer"
+      "type": "String"
      },
      {
-      "name": "columnAppend",
+      "name": "bootstrapSmall",
       "value": "",
-      "type": "Integer"
+      "type": "String"
      },
      {
-      "name": "columnPrependTop",
-      "value": "false",
-      "type": "Boolean"
+      "name": "bootstrapMedium",
+      "value": "",
+      "type": "String"
      },
      {
-      "name": "columnAppendBottom",
-      "value": "false",
-      "type": "Boolean"
+      "name": "bootstrapLarge",
+      "value": "6",
+      "type": "String"
      },
      {
-      "name": "columnBorder",
-      "value": "false",
-      "type": "Boolean"
-     },
-     {
-      "name": "columnBigBorder",
-      "value": "false",
-      "type": "Boolean"
+      "name": "bootstrapCssClass",
+      "value": "",
+      "type": "String"
      },
      {
       "name": "height",
@@ -160,10 +173,10 @@
     ]
    },
    {
-    "id": "c9920181-9115-cc60-38d3-45efd867a386",
+    "id": "e1a3d442-f9eb-1a39-0448-9e9840c97761",
     "type": "LayoutHtml",
     "typeDesc": "Html",
-    "parent": "1732bb87-859e-a727-4c08-35a39cf6c22a",
+    "parent": "653c0f6e-76e8-6a35-123c-aa593fce7e8d",
     "properties": [
      {
       "name": "name",
@@ -172,7 +185,103 @@
      },
      {
       "name": "html",
-      "value": "<div class=\"panel panel-default bissolConfigBox\">\n  <div class=\"panel-heading\">\n    <h3 class=\"panel-title\">Configuration</h3>\n  </div>\n  <div class=\"panel-body\">\n    <div id=\"html_db_connection_picker\"></div>\n    <div id=\"html_db_schema_picker\"></div>\n    <div id=\"html_db_table_picker\"></div>\n    <div id=\"html_db_column_picker\"></div>\n  </div>\n  <div id=\"html_submit\"></div>\n</div> ",
+      "value": "<div class=\"panel panel-default bissolConfigBox\">\n  <div class=\"panel-heading\">\n    <h3 class=\"panel-title\">Connection Properties</h3>\n  </div>\n  <div class=\"panel-body\">\n    <div id=\"html_db_connection_picker\"></div>\n    <div id=\"html_db_schema_picker\"></div>\n    <div id=\"html_db_table_picker\"></div>\n    <!--<div id=\"html_db_column_picker\"></div>-->\n  </div>\n  <!--<div id=\"html_submit\"></div>-->\n</div> ",
+      "type": "Html"
+     },
+     {
+      "name": "fontSize",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "color",
+      "value": "",
+      "type": "Color"
+     },
+     {
+      "name": "cssClass",
+      "value": "",
+      "type": "String"
+     }
+    ]
+   },
+   {
+    "id": "d0dadc52-734d-489b-9fe1-0f7f44b3b125",
+    "type": "LayoutBootstrapColumn",
+    "typeDesc": "Column",
+    "parent": "99682fbf-3b25-b955-dcb2-311e2be7c139",
+    "properties": [
+     {
+      "name": "name",
+      "value": "",
+      "type": "Id"
+     },
+     {
+      "name": "bootstrapExtraSmall",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "bootstrapSmall",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "bootstrapMedium",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "bootstrapLarge",
+      "value": "6",
+      "type": "String"
+     },
+     {
+      "name": "bootstrapCssClass",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "height",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "backgroundColor",
+      "value": "",
+      "type": "Color"
+     },
+     {
+      "name": "roundCorners",
+      "value": "",
+      "type": "RoundCorners"
+     },
+     {
+      "name": "textAlign",
+      "value": "",
+      "type": "TextAlign"
+     },
+     {
+      "name": "cssClass",
+      "value": "",
+      "type": "String"
+     }
+    ]
+   },
+   {
+    "id": "7144f854-8368-e7a5-ad28-f4be9e455f62",
+    "type": "LayoutHtml",
+    "typeDesc": "Html",
+    "parent": "d0dadc52-734d-489b-9fe1-0f7f44b3b125",
+    "properties": [
+     {
+      "name": "name",
+      "value": "",
+      "type": "Id"
+     },
+     {
+      "name": "html",
+      "value": "<div class=\"panel panel-default bissolTableMetadataBox\">\n  <div class=\"panel-heading\">\n    <h3 class=\"panel-title\">Table Properties</h3>\n  </div>\n  <div class=\"panel-body\">\n    <div id=\"html_db_table_metadata_picker\">\n    </div>\n  </div>\n  <div id=\"html_submit\"></div>\n</div> ",
       "type": "Html"
      },
      {
@@ -517,7 +626,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    bissolCreateCheckboxSet('html_db_column_picker','dbColumnPicker', 'Choose Columns:', result_fetch_db_columns, 'param_db_column');\n}",
+      "value": "function(){\n    //bissolCreateCheckboxSet('html_db_column_picker','dbColumnPicker', 'Choose Columns:', result_fetch_db_columns, 'param_db_column');\n    bissolCreateTableConfigPicker(result_fetch_db_columns);\n}",
       "type": "JavaScript"
      },
      {

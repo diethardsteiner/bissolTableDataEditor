@@ -317,7 +317,7 @@ function bissolSaveRow() {
             /**
             var sqlValueString = [];
             $.each(myValueArray, function(i, val){
-                if(myColTypes[i]=='String'){ 
+                if(myColTypes[i].toUpperCase()==='STRING' || myColTypes[i].toUpperCase().indexOf("CHAR") >= 0){ 
                     sqlValueString.push("'" + val + "'");
                 } else {
                     sqlValueString.push(val);
@@ -345,7 +345,7 @@ function bissolSaveRow() {
             var myUpdateString = '';
             
             $.each(myValueArray, function(i, val){
-                if(myColTypesArray[i]==='String'){ 
+                if(myColTypesArray[i].toUpperCase()==='STRING'){ 
                     myUpdateString += myColNamesArray[i] + "='" + val + "'";
                 } else {
                     myUpdateString += myColNamesArray[i] + "=" + val;

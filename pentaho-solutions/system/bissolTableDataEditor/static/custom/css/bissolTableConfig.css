@@ -8,3 +8,8 @@
     height: 92%;
     margin: 4% 4% 4% 4%;
 } 
+
+.bissolTableMetadataBox{
+    position: relative;
+    top: 1em;
+} 

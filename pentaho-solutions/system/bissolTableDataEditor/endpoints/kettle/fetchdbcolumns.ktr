@@ -86,17 +86,17 @@
         </parameter>
         <parameter>
             <name>param_db_connection</name>
-            <default_value/>
+            <default_value>psqllocaltest</default_value>
             <description/>
         </parameter>
         <parameter>
             <name>param_db_schema</name>
-            <default_value/>
+            <default_value>public</default_value>
             <description/>
         </parameter>
         <parameter>
             <name>param_db_table</name>
-            <default_value/>
+            <default_value>employees</default_value>
             <description/>
         </parameter>
     </parameters>
@@ -162,6 +162,27 @@
   <modified_date>2013&#x2f;07&#x2f;04 18&#x3a;48&#x3a;57.073</modified_date>
   </info>
   <notepads>
+    <notepad>
+      <note>http&#x3a;&#x2f;&#x2f;localhost&#x3a;8080&#x2f;pentaho&#x2f;plugin&#x2f;bissolTableDataEditor&#x2f;api&#x2f;fetchdbcolumns&#x3f;paramparam_db_connection&#x3d;SampleData&#x26;paramparam_db_schema&#x3d;PUBLIC&#x26;paramparam_db_table&#x3d;TRIAL_BALANCE&#xa;http&#x3a;&#x2f;&#x2f;localhost&#x3a;8080&#x2f;pentaho&#x2f;plugin&#x2f;bissolTableDataEditor&#x2f;api&#x2f;fetchdbcolumns&#x3f;paramparam_db_connection&#x3d;psqllocaltest&#x26;paramparam_db_schema&#x3d;public&#x26;paramparam_db_table&#x3d;employees&#xa;&#xa;IS_AUTOINCREMENT is not reliable&#x3a;&#xa;for biserver bundled DB it returns 1, whereas for psql it returns proper values of YES and NO</note>
+      <xloc>313</xloc>
+      <yloc>61</yloc>
+      <width>1167</width>
+      <heigth>85</heigth>
+      <fontname>Arial</fontname>
+      <fontsize>10</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <connection>
     <name>generic</name>
@@ -189,7 +210,8 @@
   </connection>
   <order>
   <hop> <from>Generate Rows</from><to>Get JDBC Metadata</to><enabled>Y</enabled> </hop>
-  <hop> <from>Get JDBC Metadata</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
+  <hop> <from>Get JDBC Metadata</from><to>Map to PDI Data Type</to><enabled>Y</enabled> </hop>
+  <hop> <from>Map to PDI Data Type</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>Generate Rows</name>
@@ -289,7 +311,37 @@
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>154</xloc>
-      <yloc>225</yloc>
+      <yloc>332</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Map to PDI Data Type</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;   &#xa;    var myPdiType&#x3b;&#xa;&#xa;	var myDbType &#x3d; TYPE_NAME&#x3b;&#xa;        &#xa;    if&#x28;myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;STRING&#x27; &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;TEXT&#x27; &#xa;            &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;CHAR&#x27;&#x29; &#x3e;&#x3d; 0&#x29; &#x7b;&#xa;        myPdiType &#x3d; &#x27;String&#x27;&#x3b;&#xa;    &#x7d; &#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;INT&#x27;&#x29; &#x3e;&#x3d; 0 &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;SERIAL&#x27;&#x29; &#x7b;&#xa;        myPdiType &#x3d; &#x27;Integer&#x27;&#x3b;&#xa;    &#x7d;&#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;DECIMAL&#x27; &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;NUMERIC&#x27;&#x29;&#x7b;&#xa;        myPdiType &#x3d; &#x27;BigNumber&#x27;&#x3b;&#xa;    &#x7d;&#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;FLOAT&#x27; &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;REAL&#x27; &#xa;            &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;DOUBLE&#x27;&#x29; &#x3e;&#x3d; 0&#x29;&#x7b;&#xa;        myPdiType &#x3d; &#x27;Number&#x27;&#x3b;&#xa;    &#x7d;&#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;BOOL&#x27;&#x29; &#x3e;&#x3d; 0&#x29;&#x7b;&#xa;        myPdiType &#x3d; &#x27;Boolean&#x27;&#x3b;&#xa;    &#x7d;&#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;TIME&#x27;&#x29; &#x3e;&#x3d; 0 &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;DATE&#x27;&#x29; &#x7b;&#xa;        myPdiType &#x3d; &#x27;Date&#x27;&#x3b;&#xa;    &#x7d;    &#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;BLOB&#x27;&#x29; &#x3e;&#x3d; 0 &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;BINARY&#x27;&#x29;&#x7b;&#xa;        myPdiType &#x3d; &#x27;Binary&#x27;&#x3b;&#xa;    &#x7d; &#xa;    else &#x7b;&#xa;        myPdiType &#x3d; &#x27;Unknown - Report bug&#x27;&#x3b;&#xa;    &#x7d;&#xa;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>myPdiType</name>
+        <rename>myPdiType</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>154</xloc>
+      <yloc>212</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
