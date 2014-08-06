@@ -85,8 +85,33 @@
             <description>The webapp folder. This value is automatically set at runtime if &#x27;&#x23;&#x27; is removed from variable name.</description>
         </parameter>
         <parameter>
-            <name>param_db_column</name>
+            <name>param_db_columns_is_editable</name>
+            <default_value>firstname,lastname</default_value>
+            <description/>
+        </parameter>
+        <parameter>
+            <name>param_db_columns_is_primary_key</name>
+            <default_value>id</default_value>
+            <description/>
+        </parameter>
+        <parameter>
+            <name>param_db_columns_is_visible</name>
             <default_value>id,firstname,lastname</default_value>
+            <description/>
+        </parameter>
+        <parameter>
+            <name>param_db_columns_name</name>
+            <default_value>id,firstname,lastname</default_value>
+            <description/>
+        </parameter>
+        <parameter>
+            <name>param_db_columns_position</name>
+            <default_value>1,2,3</default_value>
+            <description/>
+        </parameter>
+        <parameter>
+            <name>param_db_columns_type</name>
+            <default_value>Integer,String,String</default_value>
             <description/>
         </parameter>
         <parameter>
@@ -209,6 +234,27 @@
       <bordercolorblue>100</bordercolorblue>
       <drawshadow>Y</drawshadow>
     </notepad>
+    <notepad>
+      <note>There should be an interface in Sparkl for&#xa;saving data&#xa;-- this is way to cumbersome&#x21;&#xa;Jira submitted</note>
+      <xloc>288</xloc>
+      <yloc>32</yloc>
+      <width>246</width>
+      <heigth>70</heigth>
+      <fontname>Arial</fontname>
+      <fontsize>10</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <order>
   <hop> <from>Generate Rows</from><to>Get Variables</to><enabled>Y</enabled> </hop>
@@ -245,6 +291,25 @@
     </step>
 
   <step>
+    <name>Dummy &#x28;do nothing&#x29;</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>333</xloc>
+      <yloc>427</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Generate Rows</name>
     <type>RowGenerator</type>
     <description/>
@@ -266,6 +331,32 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>168</xloc>
       <yloc>66</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Generate Rows 2</name>
+    <type>RowGenerator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+    </fields>
+    <limit>1</limit>
+    <never_ending>N</never_ending>
+    <interval_in_ms>5000</interval_in_ms>
+    <row_time_field>now</row_time_field>
+    <last_time_field>FiveSecondsAgo</last_time_field>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>332</xloc>
+      <yloc>368</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -319,8 +410,68 @@
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>dbColumn</name>
-        <variable>&#x24;&#x7b;param_db_column&#x7d;</variable>
+        <name>dbColumnsName</name>
+        <variable>&#x24;&#x7b;param_db_columns_name&#x7d;</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>dbColumnsType</name>
+        <variable>&#x24;&#x7b;param_db_columns_type&#x7d;</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>dbColumnsPosition</name>
+        <variable>&#x24;&#x7b;param_db_columns_position&#x7d;</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>dbColumnsIsVisible</name>
+        <variable>&#x24;&#x7b;param_db_columns_is_visible&#x7d;</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>dbColumnsIsEditable</name>
+        <variable>&#x24;&#x7b;param_db_columns_is_editable&#x7d;</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>dbColumnsIsPrimaryKey</name>
+        <variable>&#x24;&#x7b;param_db_columns_is_primary_key&#x7d;</variable>
         <type>String</type>
         <format/>
         <currency/>
@@ -354,7 +505,7 @@
     <optimizationLevel>9</optimizationLevel>
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;var json &#x3d;&#xa;&#x27;&#x5b;&#x5c;n&#x27;&#xa;&#x2b; &#x27;	&#x7b;&#x5c;n&#x27;&#xa;&#x2b; &#x27;		&#x22;configId&#x22;&#x3a; &#x22;&#x27; &#x2b; uuid &#x2b; &#x27;&#x22;,&#x5c;n&#x27;&#xa;&#x2b; &#x27;		&#x22;dbConnection&#x22;&#x3a; &#x22;&#x27; &#x2b; dbConnection &#x2b; &#x27;&#x22;,&#x5c;n&#x27;&#xa;&#x2b; &#x27;		&#x22;dbSchema&#x22;&#x3a; &#x22;&#x27; &#x2b; dbSchema &#x2b; &#x27;&#x22;,&#x5c;n&#x27;&#xa;&#x2b; &#x27;		&#x22;dbTable&#x22;&#x3a; &#x22;&#x27; &#x2b; dbTable &#x2b; &#x27;&#x22;,&#x5c;n&#x27;&#xa;&#x2b; &#x27;		&#x22;metadata&#x22;&#x3a; &#x5b;&#x5c;n&#x27;&#xa;&#x3b;&#xa;&#xa;var dbColumns &#x3d; dbColumn.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;&#xa;for&#x28;i&#x3d;0&#x3b; i&#x3c;dbColumns.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;	json&#x2b;&#x3d;&#xa;&#x27;			&#x7b;&#x5c;n&#x27;&#xa;&#x2b; &#x27;			&#x22;colIndex&#x22;&#x3a; &#x27; &#x2b; i &#x2b; &#x27;,&#x5c;n&#x27;&#xa;&#x2b; &#x27;			&#x22;colType&#x22;&#x3a; &#x22;&#x27; &#x2b; &#x28;i&#x3d;&#x3d;&#x3d;0 &#x3f; &#x27;Integer&#x27; &#x3a; &#x27;String&#x27;&#x29; &#x2b; &#x27;&#x22;,&#x5c;n&#x27; &#x2f;&#x2f;&#x5b;OPEN&#x5d; has to be made dynamic&#xa;&#x2b; &#x27;			&#x22;colName&#x22;&#x3a; &#x22;&#x27; &#x2b; dbColumns&#x5b;i&#x5d; &#x2b; &#x27;&#x22;,&#x5c;n&#x27;&#xa;&#x2b; &#x27;			&#x22;isVisible&#x22;&#x3a; true,&#x5c;n&#x27; &#x2f;&#x2f;&#x5b;OPEN&#x5d; has to be made dynamic&#xa;&#x2b; &#x27;			&#x22;isEditable&#x22;&#x3a; &#x27; &#x2b; &#x28;i&#x3d;&#x3d;&#x3d;0 &#x3f; &#x27;false&#x27; &#x3a; &#x27;true&#x27;&#x29; &#x2b; &#x27;,&#x5c;n&#x27; &#x2f;&#x2f;&#x5b;OPEN&#x5d; has to be made dynamic&#xa;&#x2b; &#x27;			&#x22;isPrimaryKey&#x22;&#x3a; &#x27; &#x2b; &#x28;i&#x3d;&#x3d;&#x3d;0 &#x3f; &#x27;true&#x27; &#x3a; &#x27;false&#x27;&#x29; &#x2b; &#x27;&#x5c;n&#x27; &#x2f;&#x2f;&#x5b;OPEN&#x5d; has to be made dynamic&#xa;&#x2b; &#x27;			&#x7d;&#x27; &#x2b; &#x28; i &#x3d;&#x3d;&#x3d; &#x28;dbColumns.length - 1&#x29; &#x3f; &#x27;&#x27; &#x3a; &#x27;,&#x27;&#x29; &#x2b; &#x27;&#x5c;n&#x27;&#xa;&#x3b;&#xa;&#x7d;&#xa;&#xa;json &#x2b;&#x3d; &#xa;&#x27;		&#x5d;&#x5c;n&#x27;&#xa;&#x2b; &#x27;	&#x7d;&#x5c;n&#x27;&#xa;&#x2b; &#x27;&#x5d;&#x5c;n&#x27;&#xa;&#x3b;&#xa;&#xa;&#xa;</jsScript_script>
+        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;function findInArray&#x28;myValue, myArray&#x29;&#x7b;&#xa;	var myResult&#x3d;&#x27;&#x27;&#x3b;&#xa;	if&#x28;myArray.indexOf&#x28;myValue&#x29; &#x3e; -1&#x29;&#x7b;&#xa;		myResult &#x3d; &#x27;true&#x27;&#x3b;&#xa;	&#x7d; else &#x7b;&#xa;		myResult &#x3d; &#x27;false&#x27;&#x3b;&#xa;	&#x7d;&#xa;	return myResult&#x3b;&#xa;&#x7d;&#xa;&#xa;var json &#x3d;&#xa;&#x27;&#x5b;&#x5c;n&#x27;&#xa;&#x2b; &#x27;	&#x7b;&#x5c;n&#x27;&#xa;&#x2b; &#x27;		&#x22;configId&#x22;&#x3a; &#x22;&#x27; &#x2b; uuid &#x2b; &#x27;&#x22;,&#x5c;n&#x27;&#xa;&#x2b; &#x27;		&#x22;dbConnection&#x22;&#x3a; &#x22;&#x27; &#x2b; dbConnection &#x2b; &#x27;&#x22;,&#x5c;n&#x27;&#xa;&#x2b; &#x27;		&#x22;dbSchema&#x22;&#x3a; &#x22;&#x27; &#x2b; dbSchema &#x2b; &#x27;&#x22;,&#x5c;n&#x27;&#xa;&#x2b; &#x27;		&#x22;dbTable&#x22;&#x3a; &#x22;&#x27; &#x2b; dbTable &#x2b; &#x27;&#x22;,&#x5c;n&#x27;&#xa;&#x2b; &#x27;		&#x22;metadata&#x22;&#x3a; &#x5b;&#x5c;n&#x27;&#xa;&#x3b;&#xa;&#xa;var dbColumnsNameArray &#x3d; dbColumnsName.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;var dbColumnsTypeArray &#x3d; dbColumnsType.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;var dbColumnsPositionArray &#x3d; dbColumnsPosition.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;var dbColumnsIsVisibleArray &#x3d; dbColumnsIsVisible.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;var dbColumnsIsEditableArray &#x3d; dbColumnsIsEditable.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;var dbColumnsIsPrimaryKeyArray &#x3d; dbColumnsIsPrimaryKey.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;&#xa;for&#x28;i&#x3d;0&#x3b; i&#x3c;dbColumnsNameArray.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;	json&#x2b;&#x3d;&#xa;    &#x27;			&#x7b;&#x5c;n&#x27;&#xa;    &#x2b; &#x27;			&#x22;colIndex&#x22;&#x3a; &#x27; &#x2b; dbColumnsPositionArray&#x5b;i&#x5d; &#x2b; &#x27;,&#x5c;n&#x27;&#xa;    &#x2b; &#x27;			&#x22;colType&#x22;&#x3a; &#x22;&#x27; &#x2b; dbColumnsTypeArray&#x5b;i&#x5d; &#x2b; &#x27;&#x22;,&#x5c;n&#x27;&#xa;    &#x2b; &#x27;			&#x22;colName&#x22;&#x3a; &#x22;&#x27; &#x2b; dbColumnsNameArray&#x5b;i&#x5d; &#x2b; &#x27;&#x22;,&#x5c;n&#x27;&#xa;    &#x2b; &#x27;			&#x22;isVisible&#x22;&#x3a; &#x27; &#x2b; findInArray&#x28;dbColumnsNameArray&#x5b;i&#x5d;, dbColumnsIsVisibleArray&#x29; &#x2b; &#x27;,&#x5c;n&#x27;&#xa;    &#x2b; &#x27;			&#x22;isEditable&#x22;&#x3a; &#x27; &#x2b; findInArray&#x28;dbColumnsNameArray&#x5b;i&#x5d;, dbColumnsIsEditableArray&#x29; &#x2b; &#x27;,&#x5c;n&#x27;&#xa;    &#x2b; &#x27;			&#x22;isPrimaryKey&#x22;&#x3a; &#x27; &#x2b; findInArray&#x28;dbColumnsNameArray&#x5b;i&#x5d;, dbColumnsIsPrimaryKeyArray&#x29; &#x2b; &#x27;&#x5c;n&#x27;&#xa;	&#x3b;&#xa;&#xa;	if&#x28;i &#x3d;&#x3d;&#x3d; &#x28;dbColumnsNameArray.length - 1&#x29;&#x29;&#x7b;&#xa;        json&#x2b;&#x3d; &#x27;			&#x7d;&#x5c;n&#x27;&#x3b;&#xa;	&#x7d; else &#x7b;&#xa;        json&#x2b;&#x3d; &#x27;			&#x7d;,&#x5c;n&#x27;&#x3b;&#xa;	&#x7d;&#xa;&#xa;&#x7d;&#xa;&#xa;json &#x2b;&#x3d; &#xa;&#x27;		&#x5d;&#x5c;n&#x27;&#xa;&#x2b; &#x27;	&#x7d;&#x5c;n&#x27;&#xa;&#x2b; &#x27;&#x5d;&#x5c;n&#x27;&#xa;&#x3b;</jsScript_script>
       </jsScript>    </jsScripts>    <fields>      <field>        <name>json</name>
         <rename>json</rename>
         <type>String</type>
@@ -434,51 +585,6 @@
     </step>
 
   <step>
-    <name>Dummy &#x28;do nothing&#x29;</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>333</xloc>
-      <yloc>427</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Generate Rows 2</name>
-    <type>RowGenerator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
-    </fields>
-    <limit>1</limit>
-    <never_ending>N</never_ending>
-    <interval_in_ms>5000</interval_in_ms>
-    <row_time_field>now</row_time_field>
-    <last_time_field>FiveSecondsAgo</last_time_field>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>332</xloc>
-      <yloc>368</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
     <name>Write to log</name>
     <type>WriteToLog</type>
     <description/>
@@ -505,7 +611,22 @@
         <name>dbSchema</name>
         </field>
       <field>
-        <name>dbColumn</name>
+        <name>dbColumnsName</name>
+        </field>
+      <field>
+        <name>dbColumnsType</name>
+        </field>
+      <field>
+        <name>dbColumnsPosition</name>
+        </field>
+      <field>
+        <name>dbColumnsIsVisible</name>
+        </field>
+      <field>
+        <name>dbColumnsIsEditable</name>
+        </field>
+      <field>
+        <name>dbColumnsIsPrimaryKey</name>
         </field>
       </fields>
      <cluster_schema/>

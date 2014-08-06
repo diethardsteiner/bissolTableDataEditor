@@ -167,13 +167,13 @@ function bissolBuildTable(myCdeContainerId, myDashboardObjectId, data) {
             // add cells within row    
             if(myMetadata[j].isEditable){
                 $('#tableeditor > table > tbody > tr:last')
-                .append('<td><span contenteditable '
+                .append('<td><span contenteditable title="Content editable"'
                 + ' data-name="'  + myMetadata[j].colName + '"'
                 + ' data-type="' + myMetadata[j].colType + '">' 
                 + value + '</span></td>');
             } else {
                 $('#tableeditor > table > tbody > tr:last')
-                .append('<td><span class="content-non-editable" '
+                .append('<td><span class="content-non-editable" title="Content not editable"'
                 + ' data-name="'  + myMetadata[j].colName + '"'
                 + ' data-type="' + myMetadata[j].colType + '">'  
                 + value + '</span></td>');                

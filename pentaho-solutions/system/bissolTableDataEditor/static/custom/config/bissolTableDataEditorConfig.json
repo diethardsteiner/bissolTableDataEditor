@@ -1,40 +1,80 @@
 [
 	{
-		"configId": "e6dc5870-b12c-40b7-98f9-05840876a2c0",
+		"configId": "bbe7a82b-c719-48f1-b8c0-d065e4029604",
 		"dbConnection": "SampleData",
 		"dbSchema": "PUBLIC",
-		"dbTable": "ORDERS",
+		"dbTable": "PRODUCTS",
 		"metadata": [
 			{
-			"colIndex": 0,
-			"colType": "Integer",
-			"colName": "ORDERNUMBER",
+			"colIndex": 1,
+			"colType": "String",
+			"colName": "PRODUCTCODE",
 			"isVisible": true,
 			"isEditable": false,
 			"isPrimaryKey": true
 			},
 			{
-			"colIndex": 1,
-			"colType": "String",
-			"colName": "SHIPPEDDATE",
-			"isVisible": true,
-			"isEditable": true,
-			"isPrimaryKey": false
-			},
-			{
 			"colIndex": 2,
 			"colType": "String",
-			"colName": "COMMENTS",
+			"colName": "PRODUCTNAME",
 			"isVisible": true,
-			"isEditable": true,
+			"isEditable": false,
 			"isPrimaryKey": false
 			},
 			{
 			"colIndex": 3,
 			"colType": "String",
-			"colName": "CUSTOMERNUMBER",
+			"colName": "PRODUCTLINE",
+			"isVisible": false,
+			"isEditable": false,
+			"isPrimaryKey": false
+			},
+			{
+			"colIndex": 4,
+			"colType": "String",
+			"colName": "PRODUCTSCALE",
 			"isVisible": true,
 			"isEditable": true,
+			"isPrimaryKey": false
+			},
+			{
+			"colIndex": 5,
+			"colType": "String",
+			"colName": "PRODUCTVENDOR",
+			"isVisible": true,
+			"isEditable": true,
+			"isPrimaryKey": false
+			},
+			{
+			"colIndex": 6,
+			"colType": "String",
+			"colName": "PRODUCTDESCRIPTION",
+			"isVisible": false,
+			"isEditable": false,
+			"isPrimaryKey": false
+			},
+			{
+			"colIndex": 7,
+			"colType": "Integer",
+			"colName": "QUANTITYINSTOCK",
+			"isVisible": false,
+			"isEditable": false,
+			"isPrimaryKey": false
+			},
+			{
+			"colIndex": 8,
+			"colType": "BigNumber",
+			"colName": "BUYPRICE",
+			"isVisible": false,
+			"isEditable": false,
+			"isPrimaryKey": false
+			},
+			{
+			"colIndex": 9,
+			"colType": "BigNumber",
+			"colName": "MSRP",
+			"isVisible": false,
+			"isEditable": false,
 			"isPrimaryKey": false
 			}
 		]

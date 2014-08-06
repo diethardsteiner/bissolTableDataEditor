@@ -652,99 +652,6 @@
     ]
    },
    {
-    "id": "dc446f30-ae9a-fd5a-25c8-0f6cd675b9a1",
-    "type": "Componentsfreeform",
-    "typeDesc": "Freeform Component",
-    "parent": "OTHERCOMPONENTS",
-    "properties": [
-     {
-      "name": "name",
-      "value": "comp_create_button_listener",
-      "type": "Id"
-     },
-     {
-      "name": "listeners",
-      "value": "['${p:param_db_column}']",
-      "type": "Listeners"
-     },
-     {
-      "name": "parameters",
-      "value": "[]",
-      "type": "ValuesArray"
-     },
-     {
-      "name": "customfunction",
-      "value": "function(){\n    bissolCreateButton('html_submit','config-submit','Submit','param_db_column','param_config_save');\n}",
-      "type": "JavaScript"
-     },
-     {
-      "name": "manageCallee",
-      "value": "true",
-      "type": "Boolean"
-     },
-     {
-      "name": "dataSource",
-      "value": "",
-      "type": "Datasource"
-     },
-     {
-      "name": "width",
-      "value": "",
-      "type": "Integer"
-     },
-     {
-      "name": "priority",
-      "value": 5,
-      "type": "Integer"
-     },
-     {
-      "name": "height",
-      "value": "",
-      "type": "Integer"
-     },
-     {
-      "name": "htmlObject",
-      "value": "",
-      "type": "HtmlObject"
-     },
-     {
-      "name": "executeAtStart",
-      "value": "false",
-      "type": "Boolean"
-     },
-     {
-      "name": "preExecution",
-      "value": "",
-      "type": "JavaScript"
-     },
-     {
-      "name": "postFetch",
-      "value": "",
-      "type": "JavaScript"
-     },
-     {
-      "name": "postExecution",
-      "value": "",
-      "type": "JavaScript"
-     },
-     {
-      "name": "preChange",
-      "value": "",
-      "type": "JavaScript"
-     },
-     {
-      "name": "postChange",
-      "value": "",
-      "type": "JavaScript"
-     },
-     {
-      "name": "tooltip",
-      "value": "",
-      "type": "Html"
-     }
-    ]
-   },
-   {
     "id": "faa8c03d-0800-3d9a-0f95-4ba29aba4b90",
     "type": "ComponentsQuery",
     "typeDesc": "Query Component",
@@ -762,7 +669,7 @@
      },
      {
       "name": "parameters",
-      "value": "[[\"param_db_connection\",\"param_db_connection\"],[\"param_db_schema\",\"param_db_schema\"],[\"param_db_table\",\"param_db_table\"],[\"param_db_column\",\"param_db_column\"]]",
+      "value": "[[\"param_db_connection\",\"param_db_connection\"],[\"param_db_schema\",\"param_db_schema\"],[\"param_db_table\",\"param_db_table\"],[\"param_db_columns_name\",\"param_db_columns_name\"],[\"param_db_columns_type\",\"param_db_columns_type\"],[\"param_db_columns_position\",\"param_db_columns_position\"],[\"param_db_columns_is_visible\",\"param_db_columns_is_visible\"],[\"param_db_columns_is_editable\",\"param_db_columns_is_editable\"],[\"param_db_columns_is_primary_key\",\"param_db_columns_is_primary_key\"]]",
       "type": "ValuesArray"
      },
      {
@@ -933,7 +840,147 @@
     "properties": [
      {
       "name": "name",
-      "value": "param_db_column",
+      "value": "param_db_columns_name",
+      "type": "Id"
+     },
+     {
+      "name": "propertyValue",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
+     }
+    ]
+   },
+   {
+    "id": "d17a5141-0b09-c411-0484-88af5491680d",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_db_columns_type",
+      "type": "Id"
+     },
+     {
+      "name": "propertyValue",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
+     }
+    ]
+   },
+   {
+    "id": "f5666e36-00e2-225d-d07c-6c904cb14456",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_db_columns_position",
+      "type": "Id"
+     },
+     {
+      "name": "propertyValue",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
+     }
+    ]
+   },
+   {
+    "id": "f8a92c7b-3cf0-b357-25f4-3f7588ead85b",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_db_columns_is_visible",
+      "type": "Id"
+     },
+     {
+      "name": "propertyValue",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
+     }
+    ]
+   },
+   {
+    "id": "0b1bca5d-7b55-86a1-cc64-536d104ac94d",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_db_columns_is_editable",
+      "type": "Id"
+     },
+     {
+      "name": "propertyValue",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
+     }
+    ]
+   },
+   {
+    "id": "e10e65c3-e2a3-3122-4b13-c4e67a14047a",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_db_columns_is_primary_key",
       "type": "Id"
      },
      {
