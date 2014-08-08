@@ -2,6 +2,20 @@
 
 # Open points
 
+## Table pagination
+
+Open source project: http://www.datatables.net/examples/styling/bootstrap.html
+
+dataTables file are already included in CDF, so there is no need to reference them.
+
+Implemented.
+Missing functionality:
+On clicking new record remove 'New Record' button and table.
+Add small table to input the data with a save button.
+Once saved:
+1) Show success msg 
+2) Display 'New record' button and whole table again.
+
 ## JSON to form
 
 Make it easy to edit the config. Maybe make use of [jsonform](https://github.com/joshfire/jsonform).
@@ -12,9 +26,6 @@ CDE makes use of [OrientDB](http://www.orientechnologies.com/orientdb/) - is the
 
 DB files are stored in `pentaho-solutions/system/.orient`.
 
-# Status / Task List
-
-- [ ] worked last on fetchConfig.ktr - waiting for Kettle bug to be fixed
 
 # Submitted Sparkl Jira Cases
 
