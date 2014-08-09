@@ -8,13 +8,13 @@ Open source project: http://www.datatables.net/examples/styling/bootstrap.html
 
 dataTables file are already included in CDF, so there is no need to reference them.
 
-Implemented.
-Missing functionality:
-On clicking new record remove 'New Record' button and table.
-Add small table to input the data with a save button.
-Once saved:
-1) Show success msg 
-2) Display 'New record' button and whole table again.
+[Bootstrap Styling](https://editor.datatables.net/examples/styling/bootstrap.html).
+
+To get the proper bootstrap styling add following files from the examples package folder `examples/resources/bootstrap/3`:
+
+- `dataTables.bootstrap.css`
+- `dataTables.bootstrap.js`
+
 
 ## JSON to form
 
@@ -34,3 +34,5 @@ DB files are stored in `pentaho-solutions/system/.orient`.
 [Endpoints for last transformation within job](http://jira.pentaho.com/browse/SPARKL-66)
 
 [Automatically included dependend Kettle plugins](http://jira.pentaho.com/browse/SPARKL-67)
+
+[Kettle: Return DB error/status message](http://jira.pentaho.com/browse/PDI-12719)
