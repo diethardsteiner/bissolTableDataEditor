@@ -1,3 +1,22 @@
+th{
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #428bca !important;
+}
+
+#dbTablePicker{
+    margin-bottom: 2em;
+}
+
+#new-record-button{
+    margin-bottom: 2em;
+}
+
+#new-record-save-button-div{
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-bottom: 1em;
+}
+
 .add-row{
     margin-right:2px;
     margin-left:2px;

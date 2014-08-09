@@ -38,105 +38,199 @@ function bissolMapDbTypeToPdiType(myDbType){
 
 function bissolCreateTableConfigPicker(myData){
     
-    if($('#bissol-table-properties').length){
-        $('#bissol-table-properties').remove();
-    }
+    if(myData.length > 0){ 
     
-    var myColsName = [];
-    var myColsType = [];
-    var myColsPosition = [];
+        if($('#bissol-table-properties').length){
+            $('#bissol-table-properties').remove();
+        }
 
-    var myConfigTable=
-    '<table class="table table-striped" id="bissol-table-properties">'
-    +'    <thead>'
-    +'        <tr>'
-    +'            <th>#</th>'
-    +'            <th>Col Name</th>'
-    +'            <th>DB Col Type</th>'
-    +'            <th>PDI Col Type</th>'
-    +'            <th>Is Visible?</th>'
-    +'            <th>Is Editable?</th>'
-    +'            <th>Is Primary Key?</th>'        
-    +'        </tr>'
-    +'    </thead>'
-    +'    <tbody>'
-    ;
 
-    $.each(myData, function(i, val){
-        myConfigTable +=
-        '        <tr>'
-        +'            <td>' + val[3] + '</td>'
-        +'            <td>' + val[0] + '</td>'
-        +'            <td>' + val[1] + '</td>'
-        +'            <td>' + val[5] + '</td>'
-        +'            <td><input type="checkbox" name="isVisible" value="' + val[0] + '"/></td>'
-        +'            <td><input type="checkbox" name="isEditable" value="' + val[0] + '"/></td>'
-        +'            <td><input type="checkbox" name="isPrimaryKey" value="' + val[0] + '" ' + (val[4]==='YES' ? ' checked ' : ' ') + ' />'
-        +'        </tr>'
+        var basicStructure =
+        '<div class="panel panel-default bissolTableMetadataBox" id="bissol-table-properties">'
+        +'  <div class="panel-heading">'
+        +'    <h3 class="panel-title">Table Properties</h3>'
+        +'  </div>'
+        +'  <div class="panel-body">'
+        +'    <div id="html_db_table_metadata_picker">'
+        +'    </div>'
+        +'  </div>'
+        +'  <div id="html_submit"></div>'
+        +'</div>'
         ;
 
-        myColsName.push(val[0]);
-        myColsType.push(val[5]); // use pdi col types
-        myColsPosition.push(val[3]);
-    });
+        $('#bissolTablePropertiesContainer').append(basicStructure);
 
-    myConfigTable +=
-    '    </tbody>'
-    +'</table>'
-    ;
+        var myColsName = [];
+        var myColsType = [];
+        var myColsPosition = [];
 
-    $('#html_db_table_metadata_picker').append(myConfigTable);
-    
-    // add submit button
-    
-    if($('#bissol-table-properties-submit').length === 0){    
-        
-        $('#html_db_table_metadata_picker').append('<button type="submit" id="bissol-table-properties-submit" class="btn btn-primary bissolConfigSubmit">Submit</button>');
-    
-        $('#bissol-table-properties-submit').on('click', function(){
-            
-            var myColsIsVisible = [];
-            
-            $( 'input[name="isVisible"]:checkbox:checked' ).each(function() {
-                myColsIsVisible.push($(this).val());
-            });
-            
-            console.log('my cols is visible:');
-            console.log(myColsIsVisible);
-            
-            var myColsIsEditable = [];
-            
-            $( 'input[name="isEditable"]:checkbox:checked' ).each(function() {
-                myColsIsEditable.push($(this).val());
-            });
-            
-            console.log('my cols is editable:');
-            console.log(myColsIsEditable);
-            
-            var myColsIsPrimaryKey = [];
-            
-            $( 'input[name="isPrimaryKey"]:checkbox:checked' ).each(function() {
-                myColsIsPrimaryKey.push($(this).val());
-            });
-            
-            console.log('my cols is primary key:');
-            console.log(myColsIsPrimaryKey);
-        
-            
-            Dashboards.setParameter('param_db_columns_name', myColsName.join(','));
-            Dashboards.setParameter('param_db_columns_type', myColsType.join(','));
-            Dashboards.setParameter('param_db_columns_position', myColsPosition.join(','));
-            Dashboards.setParameter('param_db_columns_is_visible', myColsIsVisible.join(','));
-            Dashboards.setParameter('param_db_columns_is_editable', myColsIsEditable.join(','));
-            Dashboards.setParameter('param_db_columns_is_primary_key', myColsIsPrimaryKey.join(','));
-            
-            // [OPEN] Add a few checks
-            // 1) are all chosen is_editable cols as well is_visible?
-            // 2) is the chosen primary key column visible? 
-            // 3) check that only one primary key is defined
-            
-            Dashboards.fireChange('param_config_save','save');
+        var myConfigTable=
+        '<table class="table table-striped">'
+        +'    <thead>'
+        +'        <tr>'
+        +'            <th>#</th>'
+        +'            <th>Col Name</th>'
+        +'            <th>DB Col Type</th>'
+        +'            <th>PDI Col Type</th>'
+        +'            <th>Is Visible?</th>'
+        +'            <th>Is Editable?</th>'
+        +'            <th>Is Primary Key?</th>'        
+        +'        </tr>'
+        +'    </thead>'
+        +'    <tbody>'
+        ;
+
+        $.each(myData, function(i, val){
+            myConfigTable +=
+            '        <tr>'
+            +'            <td>' + val[3] + '</td>'
+            +'            <td>' + val[0] + '</td>'
+            +'            <td>' + val[1] + '</td>'
+            +'            <td>' + val[5] + '</td>'
+            +'            <td><input type="checkbox" name="isVisible" value="' + val[0] + '"/></td>'
+            +'            <td><input type="checkbox" name="isEditable" value="' + val[0] + '"/></td>'
+            +'            <td><input type="checkbox" name="isPrimaryKey" value="' + val[0] + '" ' + (val[4]==='YES' ? ' checked ' : ' ') + ' />'
+            +'        </tr>'
+            ;
+
+            myColsName.push(val[0]);
+            myColsType.push(val[5]); // use pdi col types
+            myColsPosition.push(val[3]);
         });
+
+        myConfigTable +=
+        '    </tbody>'
+        +'</table>'
+        ;
+
+        $('#html_db_table_metadata_picker').append(myConfigTable);
+
+        // add submit button
+
+        if($('#bissol-table-properties-submit').length === 0){    
+
+            $('#html_db_table_metadata_picker').append('<button type="submit" id="bissol-table-properties-submit" class="btn btn-primary bissolConfigSubmit">Submit</button>');
+
+            $('#bissol-table-properties-submit').on('click', function(){
+                
+                // remove any exsiting alert messages
+                $('#bissol-table-properties div .alert').remove();
+
+                var myColsIsVisible = [];
+
+                $( 'input[name="isVisible"]:checkbox:checked' ).each(function() {
+                    myColsIsVisible.push($(this).val());
+                });
+
+                console.log('my cols is visible:');
+                console.log(myColsIsVisible);
+
+                var myColsIsEditable = [];
+
+                $( 'input[name="isEditable"]:checkbox:checked' ).each(function() {
+                    myColsIsEditable.push($(this).val());
+                });
+
+                console.log('my cols is editable:');
+                console.log(myColsIsEditable);
+
+                var myColsIsPrimaryKey = [];
+
+                $( 'input[name="isPrimaryKey"]:checkbox:checked' ).each(function() {
+                    myColsIsPrimaryKey.push($(this).val());
+                });
+
+                console.log('my cols is primary key:');
+                console.log(myColsIsPrimaryKey);
+
+                // Add a few checks
+                // 1) are all chosen is_editable cols as well is_visible?
+                // 2) is the chosen primary key column visible? 
+                // 3) check that only one primary key is defined
+
+
+
+                var alertError = '';
+                function createAlertErrorMsg(msg){
+                    alertError =
+                    '<div class="alert alert-danger alert-dismissible" role="alert">'
+                    +'    <button type="button" class="close" data-dismiss="alert">'
+                    +'    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>'
+                    +'    <strong>Error!</strong> Please correct your configuration details: ' 
+                    + msg
+                    +'</div>'
+                    ;
+                    return alertError;
+                }
+
+
+                var isEditableCheckCounter = 0;
+                $.each(myColsIsVisible,function(i,val){
+                    $.each(myColsIsEditable,function(j,value){
+                        if(val === value) {
+                        isEditableCheckCounter++;
+                        }    
+                    });
+                });
+
+
+                var isPrimaryKeyOkCounter = 0;
+                if(myColsIsPrimaryKey.length === 1){
+                    $.each(myColsIsVisible,function(i,val){
+                        if(val === myColsIsPrimaryKey[0]) {
+                            isPrimaryKeyOkCounter++;
+                        }
+                    });
+                }
+
+
+                if(myColsIsPrimaryKey.length === 0){
+                    $('#html_db_table_metadata_picker').prepend(createAlertErrorMsg('You must define a primary key!'));
+                }
+
+                else if(myColsIsPrimaryKey.length > 1){
+                    $('#html_db_table_metadata_picker').prepend(createAlertErrorMsg('You must only define one column as primary key!'));
+                }
+
+                else if(myColsIsVisible.length === 0){
+                    $('#html_db_table_metadata_picker').prepend(createAlertErrorMsg('You must define at least one visible column!'));
+                }     
+
+                else if(isPrimaryKeyOkCounter !== 1){
+                    $('#html_db_table_metadata_picker').prepend(createAlertErrorMsg('The primary key column must be visible!'));                
+                }
+
+                else if(myColsIsEditable.length === 0){
+                    $('#html_db_table_metadata_picker').prepend(createAlertErrorMsg('You must define at least one editable column!'));
+                }
+                else if(isEditableCheckCounter !== myColsIsEditable.length){
+                    $('#html_db_table_metadata_picker').prepend(createAlertErrorMsg('All editable columns must be visible as well!'));                
+                } 
+
+                else {
+
+                    Dashboards.setParameter('param_db_columns_name', myColsName.join(','));
+                    Dashboards.setParameter('param_db_columns_type', myColsType.join(','));
+                    Dashboards.setParameter('param_db_columns_position', myColsPosition.join(','));
+                    Dashboards.setParameter('param_db_columns_is_visible', myColsIsVisible.join(','));
+                    Dashboards.setParameter('param_db_columns_is_editable', myColsIsEditable.join(','));
+                    Dashboards.setParameter('param_db_columns_is_primary_key', myColsIsPrimaryKey.join(','));
+                    Dashboards.fireChange('param_config_save','save');
+
+                    var alertSuccess =
+                    '<div class="alert alert-success alert-dismissible" role="alert">'
+                    +'    <button type="button" class="close" data-dismiss="alert">'
+                    +'    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>'
+                    +'    <strong>Success!</strong> Configuration details were saved.'
+                    +'</div>'
+                    ;
+
+                    $('#bissolTablePropertiesContainer').empty();
+                    $('#bissolTablePropertiesContainer').append(alertSuccess);
+                }
+
+            });
+        }
     }
 }
 

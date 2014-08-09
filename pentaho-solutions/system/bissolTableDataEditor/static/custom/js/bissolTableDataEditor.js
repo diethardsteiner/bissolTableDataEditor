@@ -115,44 +115,21 @@ function bissolFetchConfig(param_config_id){
     
 }
 
-function bissolBuildTable(myCdeContainerId, myDashboardObjectId, data) {
+function bissolBuildTable(data) {
     // no reason to define param_config_id as a function arguement as it is already set as a parameter value
-    
-    //var myTableConfig = bissolFetchConfig(param_config_id);
-    /**
-    var myJNDI = myTableConfig.myJNDI;
-    var mySchema = myTableConfig.mySchema;
-    var myTable = myTableConfig.myTable;
-    var mySchemaAndTable = myTableConfig.mySchemaAndTable;
-    var myMetadata = myTableConfig.myMetadata;
-    var myColNames = myTableConfig.myColNames;
-    var myColTypes = myTableConfig.myColTypes;
-    var myIdColumn = myTableConfig.myIdColumn;
-    **/
-   
-    var myJNDI = param_db_connection;
-    var mySchema = param_db_schema;
-    var myTable = param_db_table;
-    var mySchemaAndTable = param_db_schematable;
-    var myMetadata = param_metadata;
-    var myColNames = param_col_names;
-    var myColTypes = param_col_types;
-    var myIdColumn = param_id_column;
-    var myConfigId = param_config_id;
+
     var myData = data;
     
     // empty in case table already exists
-    $('#' + myCdeContainerId).empty();       
+    $('#html_table_editor').empty();       
    
     // prepare table basic structure
-    $('#' + myCdeContainerId).append('<table id="' 
-            + myDashboardObjectId 
-            + '" class="table table-striped"><thead><tr></tr></thead><tbody></tbody></table>');
+    $('#html_table_editor').append('<table id="myTableEditor" class="display"><thead><tr></tr></thead><tbody></tbody></table>');
 
     // add table header cells
-    $.each(myMetadata, function( i, val ){
-        if(myMetadata[i].isVisible){
-            $('#tableeditor > table > thead > tr').append('<th>' + val.colName + '</th>');
+    $.each(param_metadata, function( i, val ){
+        if(param_metadata[i].isVisible){
+            $('#html_table_editor > table > thead > tr').append('<th>' + val.colName + '</th>');
         }
     });
 
@@ -160,22 +137,22 @@ function bissolBuildTable(myCdeContainerId, myDashboardObjectId, data) {
     $.each(myData, function( i, val ){
 
         // add row
-        $('#tableeditor > table > tbody').append('<tr></tr>');
+        $('#html_table_editor > table > tbody').append('<tr></tr>');
         
         $.each(myData[i], function( j, value ){
         
             // add cells within row    
-            if(myMetadata[j].isEditable){
-                $('#tableeditor > table > tbody > tr:last')
+            if(param_metadata[j].isEditable){
+                $('#html_table_editor > table > tbody > tr:last')
                 .append('<td><span contenteditable title="Content editable"'
-                + ' data-name="'  + myMetadata[j].colName + '"'
-                + ' data-type="' + myMetadata[j].colType + '">' 
+                + ' data-name="'  + param_metadata[j].colName + '"'
+                + ' data-type="' + param_metadata[j].colType + '">' 
                 + value + '</span></td>');
             } else {
-                $('#tableeditor > table > tbody > tr:last')
+                $('#html_table_editor > table > tbody > tr:last')
                 .append('<td><span class="content-non-editable" title="Content not editable"'
-                + ' data-name="'  + myMetadata[j].colName + '"'
-                + ' data-type="' + myMetadata[j].colType + '">'  
+                + ' data-name="'  + param_metadata[j].colName + '"'
+                + ' data-type="' + param_metadata[j].colType + '">'  
                 + value + '</span></td>');                
             }
         
@@ -183,53 +160,94 @@ function bissolBuildTable(myCdeContainerId, myDashboardObjectId, data) {
     });
     
     // add remove and save icon
-    $('#tableeditor > table > thead > tr > th:first').before('<th></th>'); // add extra cell to header
-    $('#tableeditor > table > tbody > tr').find('td:first').before('<td>' + removeIcon + saveIcon + '</td>');
-    
-  
-    
-    $('#' + myCdeContainerId).append('<button type="button" class="btn btn-primary btn-lg btn-block" id="newrecordbutton">New record</button>');
-    
+    $('#html_table_editor > table > thead > tr > th:first').before('<th></th>'); // add extra cell to header
+    $('#html_table_editor > table > tbody > tr').find('td:first').before('<td>' + removeIcon + saveIcon + '</td>');
+ 
     // for base table
     bissolSaveRow();
     bissolRemoveRow();
-
-
-    // add event listeners
-    $('#newrecordbutton').on('click', function() {
-        
-        if($('#newrecord').length === 0){
-            
-            // add code for new data entry
-            $('#tableeditor > table > tbody').append('<tr class="newrecord"></tr>');
-        
-            $.each(myMetadata, function(i, val){
-                if(myMetadata[i].isEditable){
-                    $('#tableeditor > table > tbody > tr:last')
-                    .append('<td><span contenteditable '
-                    + ' data-name="'  + myMetadata[i].colName + '"'
-                    + ' data-type="' + myMetadata[i].colType + '">' 
-                    + '</span></td>');
-                } else {
-                    $('#tableeditor > table > tbody > tr:last')
-                    .append('<td><span class="content-non-editable" '
-                    + ' data-name="'  + myMetadata[i].colName + '"'
-                    + ' data-type="' + myMetadata[i].colType + '">' 
-                    + '</span></td>');       
-                }
-            });
+    bissolNewRecord();
+}
+   
+function bissolNewRecord(){    
     
-            // add add icon - note: special td id to mark new record
-            $('#tableeditor > table > tbody > tr:last > td:first').before('<td id="newrecord">' + saveIcon + '</td>');            
+    // Add new record button
+    $('#html_new_record').prepend('<button type="button" class="btn btn-primary btn-lg btn-block" id="new-record-button">New Record</button>');
+    
+    // add event listeners
+    $('#new-record-button').on('click', function() {
+        // clear way
+        $('#html_table_editor').empty();
+        $('#new-record-button').remove();
         
-            // add save icon event listener
-            bissolSaveRow();
+        // create a dedicated panel
+        var myNewRecordPanel =
+            '<div class="panel panel-default" id="new-record-panel">'
+            +'    <div class="panel-heading">New Record</div>'
+            +'    <div class="panel-body">'
+            +'    </div>'
+            +'</div>';
+    
+        $('#html_new_record').append(myNewRecordPanel); 
+        
+        // create input elements
+        var myFormInput = '';
+
+        $.each(param_metadata, function(i, val){    
+            if(val.isEditable){
             
-        }
-	});
+                myFormInput +=
+                '<div class="form-group">'
+                + '    <label for="' + val.colName + '">' + val.colName + '</label>'
+                + '    <input type="email" class="form-control" '
+                + ' id="' + val.colName + '" '
+                + ' placeholder="Enter ' + val.colName + '" '
+                //+ ' data-name="'  + val.colName + '"'
+                + ' data-type="' + val.colType + '"/>' 
+                +'</div>';
+            
+            }
+        });
         
+        $('#new-record-panel div.panel-body').append(myFormInput); 
+        
+        // add Save Record button
+        $('#new-record-panel').append('<div id="new-record-save-button-div"><button type="button" class="btn btn-primary btn-lg btn-block" id="new-record-save-button">Save Record</button><div>');
+
+        // add Save Record button event
+        $('#new-record-save-button').on('click', function() {
+            
+            var myNewRecordData = [];
+            var myNewRecordColTypes = [];
+            var myNewRecordColNames = [];
+            
+            $.each(param_metadata, function(i, val){ 
+                if(val.isEditable){
+                    
+                    myNewRecordData.push($('#new-record-panel #' + val.colName).val());
+                    myNewRecordColTypes.push(val.colType);
+                    myNewRecordColNames.push(val.colName);
+
+                }
+            });  
+
+            //Dashboards.setParameter('param_db_connection', myJNDI); // should be already set
+            Dashboards.fireChange('param_new_record', myNewRecordData.join('|'));
+            Dashboards.setParameter('param_col_types_delimited', myNewRecordColTypes.join('|'));
+            Dashboards.setParameter('param_col_names_delimited', myNewRecordColNames.join('|'));
+
+            // clear new record table and display standard table editor again
+            $('#new-record-panel').remove();
+            Dashboards.fireChange('param_sql_select', param_sql_select);
+
+        });
+
+
+    });
+     
 }
 
+/**
 function bissolChangeNewRowToStdRow(result_new_id){
     
     console.log('changing new row to standard row');
@@ -245,22 +263,14 @@ function bissolChangeNewRowToStdRow(result_new_id){
     // add remove row event listener to newly created remove icon
     bissolRemoveRow();  
 }
+**/
 
 function bissolRemoveRow() {
-
-    var myJNDI = param_db_connection;
-    var mySchema = param_db_schema;
-    var myTable = param_db_table;
-    var mySchemaAndTable = param_db_schematable;
-    var myMetadata = param_metadata;
-    var myColNames = param_col_names;
-    var myColTypes = param_col_types;
-    var myIdColumn = param_id_column;
     
     $('.remove-row').on('click', function() { 
         
-        var myId = $(this).parent().parent().find('span[data-name="' + myIdColumn + '"]').text();
-        var myQuery = 'DELETE FROM ' + mySchemaAndTable + ' WHERE ' + myIdColumn + ' = ' + myId;
+        var myId = $(this).parent().parent().find('span[data-name="' + param_id_column + '"]').text();
+        var myQuery = 'DELETE FROM ' + param_db_schematable + ' WHERE ' + param_id_column + ' = ' + myId;
         console.log('The query to submit is: ' + myQuery);
 
         //Dashboards.setParameter('param_db_connection', myJNDI); // not necessary, should be already set
@@ -271,17 +281,7 @@ function bissolRemoveRow() {
     });   
 }
 
-function bissolSaveRow() {
-    
-    var myJNDI = param_db_connection;
-    var mySchema = param_db_schema;
-    var myTable = param_db_table;
-    var mySchemaAndTable = param_db_schematable;
-    var myMetadata = param_metadata;
-    var myColNames = param_col_names;
-    var myColTypes = param_col_types;
-    var myIdColumn = param_id_column;
-    
+function bissolSaveRow() { 
     
     $('.save-row').on('click', function() { 
 
@@ -313,6 +313,8 @@ function bissolSaveRow() {
         
         if( $(this).parent().attr("id") == 'newrecord' ){
             
+            // [OPEN] THIS SECTION IS NOT USED ANY MORE - REMOVE
+            
             // make sure strings are quoted
             /**
             var sqlValueString = [];
@@ -324,22 +326,25 @@ function bissolSaveRow() {
                 }
             });
             
-            myQuery = 'INSERT INTO ' + mySchemaAndTable + ' (' + myColNames.toString()  + ')  VALUES (' + sqlValueString.toString() + ')'; 
+            myQuery = 'INSERT INTO ' + param_db_schematable + ' (' + myColNames.toString()  + ')  VALUES (' + sqlValueString.toString() + ')'; 
             **/
             
             //var new_record = '"' + myValueArray.join('","') + '"';
             var myNewRecord = myValueArray.join('|');
-            var myColTypes = myColTypesArray.join('|');
-            var myColNames = myColNamesArray.join('|');
+            var myColTypesFromTable = myColTypesArray.join('|');
+            var myColNamesFromTable = myColNamesArray.join('|');
 
             //Dashboards.setParameter('param_db_connection', myJNDI); // should be already set
             Dashboards.fireChange('param_new_record', myNewRecord);
-            Dashboards.setParameter('param_col_types_delimited', myColTypes);
-            Dashboards.setParameter('param_col_names_delimited', myColNames);
-            //Dashboards.setParameter('param_config_id', param_config_id);
+            Dashboards.setParameter('param_col_types_delimited', myColTypesFromTable);
+            Dashboards.setParameter('param_col_names_delimited', myColNamesFromTable);
+            
+            // clear new record table and display standard table editor again
+            $('#new-record-table').remove();
+            Dashboards.fireChange('param_sql_select', param_sql_select);
       
         } else {
-            var myId = $(this).parent().parent().find('span[data-name="' + myIdColumn + '"]').text();
+            var myId = $(this).parent().parent().find('span[data-name="' + param_id_column + '"]').text();
             
             // prepare update string
             var myUpdateString = '';
@@ -355,7 +360,7 @@ function bissolSaveRow() {
                 }
             });
             
-            myQuery = 'UPDATE ' + mySchemaAndTable + ' SET ' + myUpdateString + ' WHERE ' + myIdColumn + ' = ' + myId;    
+            myQuery = 'UPDATE ' + param_db_schematable + ' SET ' + myUpdateString + ' WHERE ' + param_id_column + ' = ' + myId;    
                         
             console.log('This query will be executed: ' + myQuery);
             

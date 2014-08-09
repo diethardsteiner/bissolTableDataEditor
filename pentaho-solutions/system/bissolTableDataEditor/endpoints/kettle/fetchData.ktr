@@ -132,7 +132,7 @@
            </partitioning>
     <connection>generic</connection>
     <sql>&#x24;&#x7b;VAR_SQL_SELECT&#x7d;</sql>
-    <limit>0</limit>
+    <limit>500</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
     <variables_active>Y</variables_active>

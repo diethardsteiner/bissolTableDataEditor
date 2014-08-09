@@ -3,6 +3,52 @@
   "title": "main",
   "rows": [
    {
+    "id": "7a536567-1f22-5628-c5d6-681b266464eb",
+    "type": "LayoutResourceFile",
+    "typeDesc": "Resource",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "dataTables.bootstrap.js",
+      "type": "Id"
+     },
+     {
+      "name": "resourceFile",
+      "value": "/pentaho/api/repos/bissolTableDataEditor/static/custom/js/dataTables.bootstrap.js",
+      "type": "ResourceFile"
+     },
+     {
+      "name": "resourceType",
+      "value": "Javascript",
+      "type": "Label"
+     }
+    ]
+   },
+   {
+    "id": "0712bc22-b8da-b50e-afd8-bb53307a6875",
+    "type": "LayoutResourceFile",
+    "typeDesc": "Resource",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "dataTables.bootstrap.css",
+      "type": "Id"
+     },
+     {
+      "name": "resourceFile",
+      "value": "/pentaho/api/repos/bissolTableDataEditor/static/custom/css/dataTables.bootstrap.css",
+      "type": "ResourceFile"
+     },
+     {
+      "name": "resourceType",
+      "value": "Css",
+      "type": "Label"
+     }
+    ]
+   },
+   {
     "id": "9d1a0272-b700-57ae-adf4-ade6dea69762",
     "type": "LayoutResourceFile",
     "typeDesc": "Resource",
@@ -117,7 +163,7 @@
     "properties": [
      {
       "name": "name",
-      "value": "html_select_table",
+      "value": "",
       "type": "Id"
      },
      {
@@ -183,50 +229,91 @@
     ]
    },
    {
-    "id": "bb23d3ba-03a7-ee50-7d54-0b46d2780a9c",
-    "type": "LayoutColumn",
-    "typeDesc": "Column",
-    "parent": "a41c34f3-a2d5-d478-f6de-575b9b5021ab",
+    "id": "3ac52d4c-4e2f-b570-e53c-b2528efc4334",
+    "type": "LayoutRow",
+    "typeDesc": "Row",
+    "parent": "7523200d-e096-bbc5-0743-89bee50408eb",
     "properties": [
      {
       "name": "name",
-      "value": "tableeditor",
+      "value": "html_select_table",
       "type": "Id"
      },
      {
-      "name": "columnSpan",
-      "value": "12",
-      "type": "Integer"
-     },
-     {
-      "name": "columnPrepend",
+      "name": "height",
       "value": "",
       "type": "Integer"
      },
      {
-      "name": "columnAppend",
+      "name": "backgroundColor",
+      "value": "",
+      "type": "Color"
+     },
+     {
+      "name": "roundCorners",
+      "value": "",
+      "type": "RoundCorners"
+     },
+     {
+      "name": "textAlign",
+      "value": "",
+      "type": "TextAlign"
+     },
+     {
+      "name": "cssClass",
+      "value": "",
+      "type": "String"
+     }
+    ]
+   },
+   {
+    "id": "1c819dcb-1edd-28bc-9bd7-b8d27105696d",
+    "type": "LayoutRow",
+    "typeDesc": "Row",
+    "parent": "7523200d-e096-bbc5-0743-89bee50408eb",
+    "properties": [
+     {
+      "name": "name",
+      "value": "html_new_record",
+      "type": "Id"
+     },
+     {
+      "name": "height",
       "value": "",
       "type": "Integer"
      },
      {
-      "name": "columnPrependTop",
-      "value": "false",
-      "type": "Boolean"
+      "name": "backgroundColor",
+      "value": "",
+      "type": "Color"
      },
      {
-      "name": "columnAppendBottom",
-      "value": "false",
-      "type": "Boolean"
+      "name": "roundCorners",
+      "value": "",
+      "type": "RoundCorners"
      },
      {
-      "name": "columnBorder",
-      "value": "false",
-      "type": "Boolean"
+      "name": "textAlign",
+      "value": "",
+      "type": "TextAlign"
      },
      {
-      "name": "columnBigBorder",
-      "value": "false",
-      "type": "Boolean"
+      "name": "cssClass",
+      "value": "",
+      "type": "String"
+     }
+    ]
+   },
+   {
+    "id": "d691b50f-ff82-10bd-09db-7da6a8a5cc8d",
+    "type": "LayoutRow",
+    "typeDesc": "Row",
+    "parent": "7523200d-e096-bbc5-0743-89bee50408eb",
+    "properties": [
+     {
+      "name": "name",
+      "value": "html_table_editor",
+      "type": "Id"
      },
      {
       "name": "height",
@@ -959,7 +1046,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    //buildTable('tableeditor','myTableEditor',select_result,this.metadata);\n    //buildTable('tableeditor','myTableEditor',select_result, result_fetch_metadata);\n    bissolBuildTable('tableeditor','myTableEditor',select_result);\n    //console.log(this);\n}",
+      "value": "function(){\n    //buildTable('tableeditor','myTableEditor',select_result,this.metadata);\n    //buildTable('tableeditor','myTableEditor',select_result, result_fetch_metadata);\n    bissolBuildTable(select_result);\n    //console.log(this);\n    $('#myTableEditor').dataTable();\n}",
       "type": "JavaScript"
      },
      {
@@ -1125,7 +1212,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    bissolChangeNewRowToStdRow(result_new_id);\n}",
+      "value": "",
       "type": "JavaScript"
      },
      {

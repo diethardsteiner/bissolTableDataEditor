@@ -28,11 +28,12 @@ function bissolCreateSelect(myCdeContainerId, myDashboardObjectId, myLabelText, 
             Dashboards.fireChange(cdeParam,null);
         } 
                        
-        $('#' + myCdeContainerId).empty() // empty in case there is already a select
+        $('#' + myCdeContainerId).empty(); // empty in case there is already a select
         $('#' + myCdeContainerId).append(myLabel + mySelect);
         
         $('#' + myDashboardObjectId).on('change', function(){
-            Dashboards.fireChange(cdeParam, $( this ).find('option:selected').val());
+            mySelectedValue = $( this ).find('option:selected').val();
+            Dashboards.fireChange(cdeParam, mySelectedValue);      
         });
     } 
     // if no data is available remove any existing selects

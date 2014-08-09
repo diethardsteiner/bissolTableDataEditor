@@ -72,6 +72,140 @@
     ]
    },
    {
+    "id": "43ffa237-cacc-9886-2d51-cd3856da97d2",
+    "type": "LayoutRow",
+    "typeDesc": "Row",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "",
+      "type": "Id"
+     },
+     {
+      "name": "height",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "backgroundColor",
+      "value": "",
+      "type": "Color"
+     },
+     {
+      "name": "roundCorners",
+      "value": "",
+      "type": "RoundCorners"
+     },
+     {
+      "name": "textAlign",
+      "value": "",
+      "type": "TextAlign"
+     },
+     {
+      "name": "cssClass",
+      "value": "",
+      "type": "String"
+     }
+    ]
+   },
+   {
+    "id": "04a6d791-e63c-1cd6-8748-425204cae908",
+    "type": "LayoutBootstrapColumn",
+    "typeDesc": "Column",
+    "parent": "43ffa237-cacc-9886-2d51-cd3856da97d2",
+    "properties": [
+     {
+      "name": "name",
+      "value": "title",
+      "type": "Id"
+     },
+     {
+      "name": "bootstrapExtraSmall",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "bootstrapSmall",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "bootstrapMedium",
+      "value": "12",
+      "type": "String"
+     },
+     {
+      "name": "bootstrapLarge",
+      "value": "12",
+      "type": "String"
+     },
+     {
+      "name": "bootstrapCssClass",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "height",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "backgroundColor",
+      "value": "",
+      "type": "Color"
+     },
+     {
+      "name": "roundCorners",
+      "value": "",
+      "type": "RoundCorners"
+     },
+     {
+      "name": "textAlign",
+      "value": "",
+      "type": "TextAlign"
+     },
+     {
+      "name": "cssClass",
+      "value": "",
+      "type": "String"
+     }
+    ]
+   },
+   {
+    "id": "0d3a3dd9-a1e9-0987-3a4c-2d74753528c1",
+    "type": "LayoutHtml",
+    "typeDesc": "Html",
+    "parent": "04a6d791-e63c-1cd6-8748-425204cae908",
+    "properties": [
+     {
+      "name": "name",
+      "value": "",
+      "type": "Id"
+     },
+     {
+      "name": "html",
+      "value": "<h2>Add Table Details</h2> ",
+      "type": "Html"
+     },
+     {
+      "name": "fontSize",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "color",
+      "value": "",
+      "type": "Color"
+     },
+     {
+      "name": "cssClass",
+      "value": "",
+      "type": "String"
+     }
+    ]
+   },
+   {
     "id": "99682fbf-3b25-b955-dcb2-311e2be7c139",
     "type": "LayoutRow",
     "typeDesc": "Row",
@@ -137,7 +271,7 @@
      },
      {
       "name": "bootstrapLarge",
-      "value": "6",
+      "value": "4",
       "type": "String"
      },
      {
@@ -213,7 +347,7 @@
     "properties": [
      {
       "name": "name",
-      "value": "",
+      "value": "bissolTablePropertiesContainer",
       "type": "Id"
      },
      {
@@ -233,7 +367,7 @@
      },
      {
       "name": "bootstrapLarge",
-      "value": "6",
+      "value": "8",
       "type": "String"
      },
      {
@@ -260,39 +394,6 @@
       "name": "textAlign",
       "value": "",
       "type": "TextAlign"
-     },
-     {
-      "name": "cssClass",
-      "value": "",
-      "type": "String"
-     }
-    ]
-   },
-   {
-    "id": "7144f854-8368-e7a5-ad28-f4be9e455f62",
-    "type": "LayoutHtml",
-    "typeDesc": "Html",
-    "parent": "d0dadc52-734d-489b-9fe1-0f7f44b3b125",
-    "properties": [
-     {
-      "name": "name",
-      "value": "",
-      "type": "Id"
-     },
-     {
-      "name": "html",
-      "value": "<div class=\"panel panel-default bissolTableMetadataBox\">\n  <div class=\"panel-heading\">\n    <h3 class=\"panel-title\">Table Properties</h3>\n  </div>\n  <div class=\"panel-body\">\n    <div id=\"html_db_table_metadata_picker\">\n    </div>\n  </div>\n  <div id=\"html_submit\"></div>\n</div> ",
-      "type": "Html"
-     },
-     {
-      "name": "fontSize",
-      "value": "",
-      "type": "Integer"
-     },
-     {
-      "name": "color",
-      "value": "",
-      "type": "Color"
      },
      {
       "name": "cssClass",
