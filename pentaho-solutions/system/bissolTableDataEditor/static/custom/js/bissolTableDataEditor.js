@@ -121,7 +121,8 @@ function bissolBuildTable(data) {
     var myData = data;
     
     // empty in case table already exists
-    $('#html_table_editor').empty();       
+    $('#html_table_editor').empty();
+    $('#html_new_record').empty();  
    
     // prepare table basic structure
     $('#html_table_editor').append('<table id="myTableEditor" class="display"><thead><tr></tr></thead><tbody></tbody></table>');

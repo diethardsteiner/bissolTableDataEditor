@@ -31,7 +31,7 @@ The respective JDBC driver have to be installed in `tomcat/lib`. This should alr
 
 
 - Only current web browsers are supported. The main editor page makes use of the *contenteditable* attribute which is only supported by recent web browsers.
-- The **Configuration** page only supports adding new table properties **FOR ONE TABLE ONLY**. This is a major limitation and will be fixed as soon as possible. Currently you also cannot edit the configuration nor delete configuration entries.
+- Currently it is not possible to edit the configuration or delete configuration entries.
 - Only one columns is supported for the **primary key**. The primary key has to be defined for the update logic.
 - **Configuration** details (stored as **Json** file) are stored within the **plugin** directory. The reason for this is that the **Json** file can be easily accessed via the **API** using **JavaScript**. This is not ideal as in case of an update of the plugin itself this file might get overridden. 
 
