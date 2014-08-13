@@ -1,8 +1,8 @@
 
 // icons
-var removeIcon = '<span class="glyphicon glyphicon-minus-sign remove-row"></span>';
+var removeIcon = '<span class="glyphicon glyphicon-minus-sign remove-row" data-toggle="modal" data-target="#myDeleteModal"></span>';
 //var addIcon = '<span class="glyphicon glyphicon-plus-sign add-row"></span>';
-var saveIcon = '<span class="glyphicon glyphicon-floppy-disk save-row"></span>';
+var saveIcon = '<span class="glyphicon glyphicon-floppy-disk save-row" data-toggle="modal" data-target="#myUpdateModal"></span>';
 
 function bissolFetchConfig(param_config_id){
     // the CDA metadata object is empty in case there are no records returned by the query
@@ -122,7 +122,26 @@ function bissolBuildTable(data) {
     
     // empty in case table already exists
     $('#html_table_editor').empty();
-    $('#html_new_record').empty();  
+    $('#html_new_record').empty(); 
+    
+    // create modals
+    bissolCreateModal(
+        'html_table_editor'
+        , 'myDeleteModal'
+        , 'Deletion'
+        , 'Do you really want to delete this record?'
+        , 'myDeleteButton'
+        , 'Delete'
+    );
+    
+    bissolCreateModal(
+        'html_table_editor'
+        , 'myUpdateModal'
+        , 'Update'
+        , 'Do you really want to update this record?'
+        , 'myUpdateButton'
+        , 'Update'
+    );
    
     // prepare table basic structure
     $('#html_table_editor').append('<table id="myTableEditor" class="display"><thead><tr></tr></thead><tbody></tbody></table>');
@@ -130,7 +149,7 @@ function bissolBuildTable(data) {
     // add table header cells
     $.each(param_metadata, function( i, val ){
         if(param_metadata[i].isVisible){
-            $('#html_table_editor > table > thead > tr').append('<th>' + val.colName + '</th>');
+            $('#html_table_editor table > thead > tr').append('<th>' + val.colName + '</th>');
         }
     });
 
@@ -138,7 +157,7 @@ function bissolBuildTable(data) {
     $.each(myData, function( i, val ){
 
         // add row
-        $('#html_table_editor > table > tbody').append('<tr></tr>');
+        $('#html_table_editor table > tbody').append('<tr></tr>');
         
         $.each(myData[i], function( j, value ){
         
@@ -161,20 +180,29 @@ function bissolBuildTable(data) {
     });
     
     // add remove and save icon
-    $('#html_table_editor > table > thead > tr > th:first').before('<th></th>'); // add extra cell to header
-    $('#html_table_editor > table > tbody > tr').find('td:first').before('<td>' + removeIcon + saveIcon + '</td>');
+    $('#html_table_editor table > thead > tr > th:first').before('<th></th>'); // add extra cell to header
+    $('#html_table_editor table > tbody > tr').find('td:first').before('<td>' + removeIcon + saveIcon + '</td>');
  
     // for base table
     bissolSaveRow();
     bissolRemoveRow();
     bissolNewRecord();
+    
+    $('#html_table_editor table > tbody > tr').on('click', function() {
+        
+        // remove existing hightlight
+        $('#html_table_editor table > tbody > tr > td').removeClass( "row-highlight" );
+        // highligh this row
+        $(this).find("td").addClass( "row-highlight" );
+        
+    });
 }
    
 function bissolNewRecord(){    
     
     // Add new record button
-    $('#html_new_record').prepend('<button type="button" class="btn btn-primary btn-lg btn-block" id="new-record-button">New Record</button>');
-    
+    $('#html_new_record').prepend('<button type="button" class="btn btn-primary btn-lg btn-block btde-button" id="new-record-button">New Record</button>');
+
     // add event listeners
     $('#new-record-button').on('click', function() {
         // clear way
@@ -248,29 +276,13 @@ function bissolNewRecord(){
      
 }
 
-/**
-function bissolChangeNewRowToStdRow(result_new_id){
-    
-    console.log('changing new row to standard row');
-    console.log('the new id is: ' + result_new_id[0][0]);
-    
-    $('td[id="newrecord"]').parent().find('span[data-name="id"]').text(result_new_id[0][0]);
-    
-    //in case the row is a new record remove the specific class and id and add the remove icon
-    $('td[id="newrecord"]').parent().removeAttr('class');
-    $('td[id="newrecord"]').parent().removeClass('newrecord');
-    $('td[id="newrecord"]').parent().removeAttr('id');
-    $('td[id="newrecord"] > span').before(removeIcon);
-    // add remove row event listener to newly created remove icon
-    bissolRemoveRow();  
-}
-**/
-
 function bissolRemoveRow() {
-    
-    $('.remove-row').on('click', function() { 
+    //.remove-row
+    $('#myDeleteButton').on('click', function() { 
         
-        var myId = $(this).parent().parent().find('span[data-name="' + param_id_column + '"]').text();
+        //var myId = $(this).parent().parent().find('span[data-name="' + param_id_column + '"]').text();
+        //console.log($('#html_table_editor table > tbody > tr > td.row-highlight'));
+        var myId = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span[data-name="' + param_id_column + '"]').text();
         var myQuery = 'DELETE FROM ' + param_db_schematable + ' WHERE ' + param_id_column + ' = ' + myId;
         console.log('The query to submit is: ' + myQuery);
 
@@ -283,12 +295,13 @@ function bissolRemoveRow() {
 }
 
 function bissolSaveRow() { 
-    
-    $('.save-row').on('click', function() { 
+    //.save-row
+    $('#myUpdateButton').on('click', function() { 
 
         // 1) get data from html table
         var myValueArray = [];
-        var mySpanArray = $(this).parent().parent().find('span[contenteditable]');
+        //var mySpanArray = $(this).parent().parent().find('span[contenteditable]');
+        var mySpanArray = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span[contenteditable]');
 
         $.each(mySpanArray, function(i, val){
             myValueArray.push($.text(this));
@@ -311,64 +324,57 @@ function bissolSaveRow() {
         });
         
         var myQuery = '';
-        
-        if( $(this).parent().attr("id") == 'newrecord' ){
-            
-            // [OPEN] THIS SECTION IS NOT USED ANY MORE - REMOVE
-            
-            // make sure strings are quoted
-            /**
-            var sqlValueString = [];
-            $.each(myValueArray, function(i, val){
-                if(myColTypes[i].toUpperCase()==='STRING' || myColTypes[i].toUpperCase().indexOf("CHAR") >= 0){ 
-                    sqlValueString.push("'" + val + "'");
-                } else {
-                    sqlValueString.push(val);
-                }
-            });
-            
-            myQuery = 'INSERT INTO ' + param_db_schematable + ' (' + myColNames.toString()  + ')  VALUES (' + sqlValueString.toString() + ')'; 
-            **/
-            
-            //var new_record = '"' + myValueArray.join('","') + '"';
-            var myNewRecord = myValueArray.join('|');
-            var myColTypesFromTable = myColTypesArray.join('|');
-            var myColNamesFromTable = myColNamesArray.join('|');
+                    
+        //var myId = $(this).parent().parent().find('span[data-name="' + param_id_column + '"]').text();
+        var myId = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span[data-name="' + param_id_column + '"]').text();
+        // prepare update string
+        var myUpdateString = '';
 
-            //Dashboards.setParameter('param_db_connection', myJNDI); // should be already set
-            Dashboards.fireChange('param_new_record', myNewRecord);
-            Dashboards.setParameter('param_col_types_delimited', myColTypesFromTable);
-            Dashboards.setParameter('param_col_names_delimited', myColNamesFromTable);
-            
-            // clear new record table and display standard table editor again
-            $('#new-record-table').remove();
-            Dashboards.fireChange('param_sql_select', param_sql_select);
-      
-        } else {
-            var myId = $(this).parent().parent().find('span[data-name="' + param_id_column + '"]').text();
-            
-            // prepare update string
-            var myUpdateString = '';
-            
-            $.each(myValueArray, function(i, val){
-                if(myColTypesArray[i].toUpperCase()==='STRING'){ 
-                    myUpdateString += myColNamesArray[i] + "='" + val + "'";
-                } else {
-                    myUpdateString += myColNamesArray[i] + "=" + val;
-                }
-                if( i < (myValueArray.length - 1)) {
-                    myUpdateString += ",";
-                }
-            });
-            
-            myQuery = 'UPDATE ' + param_db_schematable + ' SET ' + myUpdateString + ' WHERE ' + param_id_column + ' = ' + myId;    
-                        
-            console.log('This query will be executed: ' + myQuery);
-            
-            //Dashboards.setParameter('param_db_connection', myJNDI); // should be already set
-            Dashboards.fireChange('param_sql_update', myQuery);
-        }
+        $.each(myValueArray, function(i, val){
+            if(myColTypesArray[i].toUpperCase()==='STRING'){ 
+                myUpdateString += myColNamesArray[i] + "='" + val + "'";
+            } else {
+                myUpdateString += myColNamesArray[i] + "=" + val;
+            }
+            if( i < (myValueArray.length - 1)) {
+                myUpdateString += ",";
+            }
+        });
+
+        myQuery = 'UPDATE ' + param_db_schematable + ' SET ' + myUpdateString + ' WHERE ' + param_id_column + ' = ' + myId;    
+
+        console.log('This query will be executed: ' + myQuery);
+
+        //Dashboards.setParameter('param_db_connection', myJNDI); // should be already set
+        Dashboards.fireChange('param_sql_update', myQuery);
+
 
     }); 
+
+}
+
+function bissolCreateModal(myDashboardObjectId,myModalId,myModalTitle,myModalText,myModalButton,myModalButtonText){
+
+    var myModal =
+    '    <div class="modal fade" id="' + myModalId +'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
+    + '     <div class="modal-dialog">'
+    + '        <div class="modal-content">'
+    + '          <div class="modal-header">'
+    + '            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>'
+    + '            <h4 class="modal-title" id="myModalLabel">' + myModalTitle + '</h4>'
+    + '         </div>'
+    + '          <div class="modal-body">'
+    + '          ' + myModalText
+    + '          </div>'
+    + '          <div class="modal-footer">'
+    + '            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
+    + '            <button type="button" class="btn btn-primary" id="' + myModalButton + '">' + myModalButtonText + '</button>'
+    + '          </div>'
+    + '        </div>'
+    + '      </div>'
+    + '    </div>'
+    ;
+    
+    $('#' + myDashboardObjectId).append(myModal);
 
 }

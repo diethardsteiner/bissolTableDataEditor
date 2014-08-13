@@ -7,7 +7,7 @@ th{
     margin-bottom: 2em;
 }
 
-#new-record-button{
+.btde-button{
     margin-bottom: 2em;
 }
 
@@ -34,6 +34,10 @@ th{
 
 .content-non-editable{
     color:#3276b1;
+}
+
+.row-highlight{
+    background-color: #acbad4 !important;
 }
 /**
 .newrecord > td{

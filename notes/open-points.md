@@ -15,6 +15,10 @@ To get the proper bootstrap styling add following files from the examples packag
 - `dataTables.bootstrap.css`
 - `dataTables.bootstrap.js`
 
+## Table Editor Record Add, Update, Remove
+
+use modals: http://getbootstrap.com/javascript/
+
 
 ## JSON to form
 
