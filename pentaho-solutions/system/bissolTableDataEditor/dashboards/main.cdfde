@@ -1094,7 +1094,7 @@
      },
      {
       "name": "resultvar",
-      "value": "",
+      "value": "result_generic_update",
       "type": "Result"
      },
      {
@@ -1129,7 +1129,7 @@
      },
      {
       "name": "postExecution",
-      "value": "",
+      "value": "function(){\n    if(result_generic_update.length === 0){\n        alert(\"Something went wrong! Check JavaScript Console and/or Server Log.\");\n    }\n}",
       "type": "JavaScript"
      },
      {
@@ -1212,7 +1212,7 @@
      },
      {
       "name": "postExecution",
-      "value": "",
+      "value": "function(){\n    if(result_new_id.length === 0){\n        alert(\"Something went wrong! Check JavaScript Console and/or Server Log.\");\n    }\n}",
       "type": "JavaScript"
      },
      {

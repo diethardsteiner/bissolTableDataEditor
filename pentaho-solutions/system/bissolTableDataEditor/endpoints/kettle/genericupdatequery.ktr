@@ -157,6 +157,27 @@
   <modified_date>2013&#x2f;07&#x2f;04 18&#x3a;48&#x3a;57.073</modified_date>
   </info>
   <notepads>
+    <notepad>
+      <note>Added dummy field&#xa;so that there is a output&#xa;for Sparkl</note>
+      <xloc>256</xloc>
+      <yloc>0</yloc>
+      <width>148</width>
+      <heigth>55</heigth>
+      <fontname>Arial</fontname>
+      <fontsize>10</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <connection>
     <name>generic</name>
@@ -257,6 +278,18 @@
            <schema_name/>
            </partitioning>
     <fields>
+      <field>
+        <name>dummy</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
     </fields>
     <limit>1</limit>
     <never_ending>N</never_ending>

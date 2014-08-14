@@ -168,6 +168,48 @@
       <bordercolorblue>100</bordercolorblue>
       <drawshadow>Y</drawshadow>
     </notepad>
+    <notepad>
+      <note>Returning auto-generated key disabled&#xa;as not required any more.&#xa;&#xa;NOTE&#x3a; We have to make sure that we&#xa;output the same fields in case of record&#xa;insertion success or error&#x21; When there is&#xa;an error with submitting the record, we have&#xa;to return an empty record.&#xa;In Sparkl we can then check if there is a value &#xa;in the result set or not. If not, we can show an error&#xa;message to the user using something like&#xa;this on the Post Execution function of the&#xa;Query Component&#x3a;&#xa;function&#x28;&#x29;&#x7b;&#xa;    if&#x28;result_generic_update.length &#x3d;&#x3d;&#x3d; 0&#x29;&#x7b;&#xa;        alert&#x28;&#x22;Something went wrong&#x21; Check JavaScript Console and&#x2f;or Server Log.&#x22;&#x29;&#x3b;&#xa;    &#x7d;&#xa;&#x7d;</note>
+      <xloc>672</xloc>
+      <yloc>320</yloc>
+      <width>487</width>
+      <heigth>280</heigth>
+      <fontname>Arial</fontname>
+      <fontsize>10</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Making sure we pass&#xa;empty record on error</note>
+      <xloc>448</xloc>
+      <yloc>256</yloc>
+      <width>134</width>
+      <heigth>40</heigth>
+      <fontname>Arial</fontname>
+      <fontsize>10</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <connection>
     <name>backoffice</name>
@@ -337,6 +379,10 @@
   <hop> <from>Split Fields</from><to>Table output</to><enabled>Y</enabled> </hop>
   <hop> <from>Get Variables</from><to>Write to log</to><enabled>Y</enabled> </hop>
   <hop> <from>Table output</from><to>OutputKey</to><enabled>Y</enabled> </hop>
+  <hop> <from>OutputKey</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
+  <hop> <from>Table output</from><to>Filter rows</to><enabled>Y</enabled> </hop>
+  <hop> <from>Filter rows</from><to>Dummy &#x28;do nothing&#x29;</to><enabled>Y</enabled> </hop>
+  <hop> <from>Filter rows</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>Generate Rows</name>
@@ -358,8 +404,8 @@
     <last_time_field>FiveSecondsAgo</last_time_field>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>358</xloc>
-      <yloc>34</yloc>
+      <xloc>320</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -391,8 +437,8 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>358</xloc>
-      <yloc>111</yloc>
+      <xloc>320</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -408,15 +454,15 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <fields>      <field>        <name>id</name>
+    <fields>      <field>        <name>new_record</name>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
       </field>        <select_unspecified>N</select_unspecified>
     </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>357</xloc>
-      <yloc>431</yloc>
+      <xloc>320</xloc>
+      <yloc>416</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -437,8 +483,8 @@
    <enclosure/>
     <fields>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>358</xloc>
-      <yloc>178</yloc>
+      <xloc>320</xloc>
+      <yloc>224</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -447,7 +493,7 @@
     <name>Table output</name>
     <type>TableOutput</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
          <partitioning>
@@ -469,14 +515,14 @@
     <tablename_in_field>N</tablename_in_field>
     <tablename_field/>
     <tablename_in_table>N</tablename_in_table>
-    <return_keys>Y</return_keys>
+    <return_keys>N</return_keys>
     <return_field>id</return_field>
     <fields>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>358</xloc>
-      <yloc>343</yloc>
+      <xloc>320</xloc>
+      <yloc>320</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -504,13 +550,92 @@
       </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>510</xloc>
-      <yloc>172</yloc>
+      <xloc>448</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>OUTPUT</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>448</xloc>
+      <yloc>416</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Filter rows</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>Dummy &#x28;do nothing&#x29;</send_true_to>
+<send_false_to>OUTPUT</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>new_record</leftvalue>
+ <function>IS NOT NULL</function>
+ <rightvalue/>
+ </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>448</xloc>
+      <yloc>320</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Dummy &#x28;do nothing&#x29;</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>576</xloc>
+      <yloc>320</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step_error_handling>
+      <error>
+        <source_step>Table output</source_step>
+        <target_step>Filter rows</target_step>
+        <is_enabled>Y</is_enabled>
+        <nr_valuename/>
+        <descriptions_valuename/>
+        <fields_valuename/>
+        <codes_valuename/>
+        <max_errors/>
+        <max_pct_errors/>
+        <min_pct_rows/>
+      </error>
   </step_error_handling>
    <slave-step-copy-partition-distribution>
 </slave-step-copy-partition-distribution>

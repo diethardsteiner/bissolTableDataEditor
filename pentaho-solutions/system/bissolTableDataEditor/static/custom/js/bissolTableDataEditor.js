@@ -289,8 +289,6 @@ function bissolRemoveRow() {
         //Dashboards.setParameter('param_db_connection', myJNDI); // not necessary, should be already set
         Dashboards.fireChange('param_sql_update', myQuery);
 
-        //remove row
-        $(this).parent().parent().remove();
     });   
 }
 
@@ -308,7 +306,6 @@ function bissolSaveRow() {
         });
         
         // 2) get data types from html table
-        // [?] We could just take this from the config as well
         var myColTypesArray = [];
         
         $.each(mySpanArray, function(i, val){
@@ -316,7 +313,6 @@ function bissolSaveRow() {
         });
         
         // 3) get col names from html table
-        // [?] We could just take this from the config as well
         var myColNamesArray = [];
         
         $.each(mySpanArray, function(i, val){
@@ -347,8 +343,7 @@ function bissolSaveRow() {
 
         //Dashboards.setParameter('param_db_connection', myJNDI); // should be already set
         Dashboards.fireChange('param_sql_update', myQuery);
-
-
+        
     }); 
 
 }
@@ -368,7 +363,7 @@ function bissolCreateModal(myDashboardObjectId,myModalId,myModalTitle,myModalTex
     + '          </div>'
     + '          <div class="modal-footer">'
     + '            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
-    + '            <button type="button" class="btn btn-primary" id="' + myModalButton + '">' + myModalButtonText + '</button>'
+    + '            <button type="button" class="btn btn-primary" id="' + myModalButton + '" data-dismiss="modal">' + myModalButtonText + '</button>'
     + '          </div>'
     + '        </div>'
     + '      </div>'
