@@ -33,14 +33,13 @@ The respective JDBC driver have to be installed in `tomcat/lib`. This should alr
 - Only current web browsers are supported. The main editor page makes use of the *contenteditable* attribute which is only supported by recent web browsers.
 - Currently it is not possible to edit the configuration or delete configuration entries.
 - Only one columns is supported for the **primary key**. The primary key has to be defined for the update logic.
-- If there is a DB error while adding, updating or removing records, this error is not shown in the interface. This has to do with the fact that currently PDI DB steps do not feed back any error messages. A Jira case has been created for this feature to be implemented.
-- **Configuration** details (stored as **Json** file) are stored within the **plugin** directory. The reason for this is that the **Json** file can be easily accessed via the **API** using **JavaScript**. This is not ideal as in case of an update of the plugin itself this file might get overridden. 
+- If there is a DB error while adding, updating or removing records, only a generic error is shown in the web UI. This has to do with the fact that currently PDI DB steps do not feed back any DB error message details. A Jira case has been created for this feature to be implemented.
 
 ## Configuration
 
 Administrators can enter the config information for each table via a dedicated **Admin** page in the **Pentaho User Console**. Currently, there is no support for updating this configuration via this interface, but admins can directly manipulate the file on the server in following directory:
 
-`pentaho-solutions/system/bissolTableDataEditor/static/custom/config`
+`pentaho-solutions/system/bissolTableDataEditorConfig`
 
 ### How the configuration is saved to JSON
 

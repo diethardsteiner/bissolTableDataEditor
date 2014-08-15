@@ -809,6 +809,62 @@
     ]
    },
    {
+    "id": "9960dfd8-e39b-7924-221a-43a15083e97e",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_col_types_editable",
+      "type": "Id"
+     },
+     {
+      "name": "propertyValue",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
+     }
+    ]
+   },
+   {
+    "id": "d7a73d59-29da-62b5-a540-78c593b82264",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_col_types_editable_delimited",
+      "type": "Id"
+     },
+     {
+      "name": "propertyValue",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
+     }
+    ]
+   },
+   {
     "id": "OTHERCOMPONENTS",
     "name": "Others",
     "type": "Label",
@@ -958,12 +1014,12 @@
      },
      {
       "name": "preExecution",
-      "value": "//at the moment the query is not used at all - in future we should replace the JS function with a server side query\nfunction(){\n    bissolFetchConfig(param_config_id);\n}\n",
+      "value": "\n",
       "type": "JavaScript"
      },
      {
       "name": "postExecution",
-      "value": "",
+      "value": "function(){\n    bissolFetchConfigServerSide(result_fetch_config);\n}",
       "type": "JavaScript"
      },
      {
@@ -1334,32 +1390,6 @@
     "meta_endpoint": "genericupdatequery"
    },
    {
-    "id": "2aa637b2-8456-0e1d-88e3-d6f2b5dc284a",
-    "type": "ComponentsbissolTableDataEditor_fetchDataJob_CPKENDPOINT",
-    "typeDesc": "fetchDataJob Endpoint",
-    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
-    "properties": [
-     {
-      "name": "name",
-      "value": "qry_fetch_data",
-      "type": "Id"
-     },
-     {
-      "name": "stepName",
-      "value": "OUTPUTfetchData",
-      "type": "String"
-     },
-     {
-      "name": "kettleOutput",
-      "value": "Json",
-      "type": "kettleOutputCustom"
-     }
-    ],
-    "meta": "CPK",
-    "meta_pluginId": "bissolTableDataEditor",
-    "meta_endpoint": "fetchDataJob"
-   },
-   {
     "id": "86ace617-b543-838a-4fd4-30018da3ed25",
     "type": "ComponentsbissolTableDataEditor_saveRecordAndReturnKeyInjector_CPKENDPOINT",
     "typeDesc": "saveRecordAndReturnKeyInjector Endpoint",
@@ -1386,9 +1416,9 @@
     "meta_endpoint": "saveRecordAndReturnKeyInjector"
    },
    {
-    "id": "8cb6f005-7c20-2b0c-c628-3928f768a657",
-    "type": "ComponentsbissolTableDataEditor_fetchConfig_CPKENDPOINT",
-    "typeDesc": "fetchConfig Endpoint",
+    "id": "393c73f5-f2ca-24de-cdd0-b6179919243e",
+    "type": "ComponentsbissolTableDataEditor_fetchConfigDataForTable_CPKENDPOINT",
+    "typeDesc": "fetchConfigDataForTable Endpoint",
     "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
     "properties": [
      {
@@ -1409,7 +1439,7 @@
     ],
     "meta": "CPK",
     "meta_pluginId": "bissolTableDataEditor",
-    "meta_endpoint": "fetchConfig"
+    "meta_endpoint": "fetchConfigDataForTable"
    }
   ]
  },
