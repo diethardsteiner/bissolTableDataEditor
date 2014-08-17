@@ -3,6 +3,29 @@
   "title": "config",
   "rows": [
    {
+    "id": "ca85c98a-dbc1-0352-3d58-a745953f3482",
+    "type": "LayoutResourceFile",
+    "typeDesc": "Resource",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "bissolTableDataEditor.js",
+      "type": "Id"
+     },
+     {
+      "name": "resourceFile",
+      "value": "/pentaho/api/repos/bissolTableDataEditor/static/custom/js/bissolTableDataEditor.js",
+      "type": "ResourceFile"
+     },
+     {
+      "name": "resourceType",
+      "value": "Javascript",
+      "type": "Label"
+     }
+    ]
+   },
+   {
     "id": "5baf5b42-fb92-e9c3-ee07-62d480b23d00",
     "type": "LayoutResourceFile",
     "typeDesc": "Resource",
@@ -117,7 +140,7 @@
     "properties": [
      {
       "name": "name",
-      "value": "title",
+      "value": "",
       "type": "Id"
      },
      {
@@ -173,30 +196,35 @@
     ]
    },
    {
-    "id": "0d3a3dd9-a1e9-0987-3a4c-2d74753528c1",
-    "type": "LayoutHtml",
-    "typeDesc": "Html",
+    "id": "e68994d3-293a-de79-e657-a5fe9777935f",
+    "type": "LayoutRow",
+    "typeDesc": "Row",
     "parent": "04a6d791-e63c-1cd6-8748-425204cae908",
     "properties": [
      {
       "name": "name",
-      "value": "",
+      "value": "html_config_action_picker",
       "type": "Id"
      },
      {
-      "name": "html",
-      "value": "<h2>Add Table Details</h2> ",
-      "type": "Html"
-     },
-     {
-      "name": "fontSize",
+      "name": "height",
       "value": "",
       "type": "Integer"
      },
      {
-      "name": "color",
+      "name": "backgroundColor",
       "value": "",
       "type": "Color"
+     },
+     {
+      "name": "roundCorners",
+      "value": "",
+      "type": "RoundCorners"
+     },
+     {
+      "name": "textAlign",
+      "value": "",
+      "type": "TextAlign"
      },
      {
       "name": "cssClass",
@@ -251,7 +279,7 @@
     "properties": [
      {
       "name": "name",
-      "value": "",
+      "value": "html_table_config_container",
       "type": "Id"
      },
      {
@@ -271,103 +299,7 @@
      },
      {
       "name": "bootstrapLarge",
-      "value": "4",
-      "type": "String"
-     },
-     {
-      "name": "bootstrapCssClass",
       "value": "",
-      "type": "String"
-     },
-     {
-      "name": "height",
-      "value": "",
-      "type": "Integer"
-     },
-     {
-      "name": "backgroundColor",
-      "value": "",
-      "type": "Color"
-     },
-     {
-      "name": "roundCorners",
-      "value": "",
-      "type": "RoundCorners"
-     },
-     {
-      "name": "textAlign",
-      "value": "",
-      "type": "TextAlign"
-     },
-     {
-      "name": "cssClass",
-      "value": "",
-      "type": "String"
-     }
-    ]
-   },
-   {
-    "id": "e1a3d442-f9eb-1a39-0448-9e9840c97761",
-    "type": "LayoutHtml",
-    "typeDesc": "Html",
-    "parent": "653c0f6e-76e8-6a35-123c-aa593fce7e8d",
-    "properties": [
-     {
-      "name": "name",
-      "value": "",
-      "type": "Id"
-     },
-     {
-      "name": "html",
-      "value": "<div class=\"panel panel-default bissolConfigBox\">\n  <div class=\"panel-heading\">\n    <h3 class=\"panel-title\">Connection Properties</h3>\n  </div>\n  <div class=\"panel-body\">\n    <div id=\"html_db_connection_picker\"></div>\n    <div id=\"html_db_schema_picker\"></div>\n    <div id=\"html_db_table_picker\"></div>\n    <!--<div id=\"html_db_column_picker\"></div>-->\n  </div>\n  <!--<div id=\"html_submit\"></div>-->\n</div> ",
-      "type": "Html"
-     },
-     {
-      "name": "fontSize",
-      "value": "",
-      "type": "Integer"
-     },
-     {
-      "name": "color",
-      "value": "",
-      "type": "Color"
-     },
-     {
-      "name": "cssClass",
-      "value": "",
-      "type": "String"
-     }
-    ]
-   },
-   {
-    "id": "d0dadc52-734d-489b-9fe1-0f7f44b3b125",
-    "type": "LayoutBootstrapColumn",
-    "typeDesc": "Column",
-    "parent": "99682fbf-3b25-b955-dcb2-311e2be7c139",
-    "properties": [
-     {
-      "name": "name",
-      "value": "bissolTablePropertiesContainer",
-      "type": "Id"
-     },
-     {
-      "name": "bootstrapExtraSmall",
-      "value": "",
-      "type": "String"
-     },
-     {
-      "name": "bootstrapSmall",
-      "value": "",
-      "type": "String"
-     },
-     {
-      "name": "bootstrapMedium",
-      "value": "",
-      "type": "String"
-     },
-     {
-      "name": "bootstrapLarge",
-      "value": "8",
       "type": "String"
      },
      {
@@ -421,6 +353,172 @@
     ]
    },
    {
+    "id": "95caec67-4dca-c174-8ea4-be14b9591eb8",
+    "type": "ComponentsQuery",
+    "typeDesc": "Query Component",
+    "parent": "OTHERCOMPONENTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "comp_config_action_picker",
+      "type": "Id"
+     },
+     {
+      "name": "listeners",
+      "value": "[]",
+      "type": "Listeners"
+     },
+     {
+      "name": "parameters",
+      "value": "[[\"param_config_id\",\"param_config_id\"]]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "resultvar",
+      "value": "result_fetch_config_tables",
+      "type": "Result"
+     },
+     {
+      "name": "dataSource",
+      "value": "qry_fetch_config_tables",
+      "type": "Datasource"
+     },
+     {
+      "name": "refreshPeriod",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "priority",
+      "value": 5,
+      "type": "Integer"
+     },
+     {
+      "name": "htmlObject",
+      "value": "${p:html_config_action_picker}",
+      "type": "HtmlObject"
+     },
+     {
+      "name": "executeAtStart",
+      "value": "true",
+      "type": "Boolean"
+     },
+     {
+      "name": "preExecution",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postExecution",
+      "value": "function(){\n    \n    if(result_fetch_config_tables.length > 0){\n        bissolCreateSelect('html_config_action_picker', 'configActionPicker', 'Choose Action:', result_fetch_config_tables, 'param_config_id');       \n    } else {\n        // in case no table was set up there will be no result so provide workaround\n        // very nasty workaround\n        var fakeSet = [];\n        fakeSet.push(\"1\");\n        bissolCreateSelect('html_config_action_picker', 'configActionPicker', 'Choose Action:', fakeSet, 'param_config_id'); \n        $('#configActionPicker > option:nth-child(2)')\n        .attr('disabled','').text('--- NO TABLE CONFIGURED ---');\n    }\n    \n   \n    // add new element at the beginning\n    $('#configActionPicker').prepend(\n            '<option disabled selected>PICK AN ACTION</option>'\n            + '<option value=\"new-table-config\">Configure new table</option>' \n            );\n    // override descriptive text of the 2nd option\n    $('#configActionPicker > option:nth-child(3)').text('Or choose to edit a configured table below:');\n   \n}",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postFetch",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "preChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "tooltip",
+      "value": "",
+      "type": "Html"
+     }
+    ]
+   },
+   {
+    "id": "ff821350-c88e-6530-df1b-2271a20617e0",
+    "type": "ComponentsQuery",
+    "typeDesc": "Query Component",
+    "parent": "OTHERCOMPONENTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "comp_fetch_config",
+      "type": "Id"
+     },
+     {
+      "name": "listeners",
+      "value": "['${p:param_config_id}']",
+      "type": "Listeners"
+     },
+     {
+      "name": "parameters",
+      "value": "[[\"param_config_id\",\"param_config_id\"]]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "resultvar",
+      "value": "result_fetch_config",
+      "type": "Result"
+     },
+     {
+      "name": "dataSource",
+      "value": "qry_fetch_config",
+      "type": "Datasource"
+     },
+     {
+      "name": "refreshPeriod",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "priority",
+      "value": 5,
+      "type": "Integer"
+     },
+     {
+      "name": "htmlObject",
+      "value": "",
+      "type": "HtmlObject"
+     },
+     {
+      "name": "executeAtStart",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "preExecution",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postExecution",
+      "value": "function(){\n\n    if(param_config_id !== 'new-table-config'){\n        bissolFetchConfigServerSide(result_fetch_config);\n    } \n    console.log(param_col_names);\n    Dashboards.fireChange('param_action_picker_selection', 'dummy');\n}",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postFetch",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "preChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "tooltip",
+      "value": "",
+      "type": "Html"
+     }
+    ]
+   },
+   {
     "id": "fef9c001-4e78-3901-f642-ace691cfd8a4",
     "type": "ComponentsQuery",
     "typeDesc": "Query Component",
@@ -433,7 +531,7 @@
      },
      {
       "name": "listeners",
-      "value": "[]",
+      "value": "['${p:param_action_picker_selection}']",
       "type": "Listeners"
      },
      {
@@ -468,7 +566,7 @@
      },
      {
       "name": "executeAtStart",
-      "value": "true",
+      "value": "false",
       "type": "Boolean"
      },
      {
@@ -478,7 +576,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    //cdeBootstrapSelect('html_db_connection_picker', 'dbConnectionPicker', 'Choose Connection:', result_fetch_db_connections);\n    //establishListeners('dbConnectionPicker', 'param_db_connection');\n    bissolCreateSelect('html_db_connection_picker', 'dbConnectionPicker', 'Choose Connection:', result_fetch_db_connections, 'param_db_connection');\n}",
+      "value": "function(){\n    //cdeBootstrapSelect('html_db_connection_picker', 'dbConnectionPicker', 'Choose Connection:', result_fetch_db_connections);\n    //establishListeners('dbConnectionPicker', 'param_db_connection');\n    \n    $('#html_table_config_container').empty();\n    $('#html_table_config_container').append(\n    '<div id=\"bissolTableConfigContainer\">'\n    + ' <div class=\"col-lg-4\">'\n    + '     <div class=\"panel panel-default bissolConfigBox\">'\n    + '         <div class=\"panel-heading\">'\n    + '             <h3 class=\"panel-title\">Connection Properties</h3>'\n    + '         </div>'\n    + '         <div class=\"panel-body\">'\n    + '             <div id=\"html_db_connection_picker\"></div>'\n    + '             <div id=\"html_db_schema_picker\"></div>'\n    + '             <div id=\"html_db_table_picker\"></div>'\n    + '         </div>'\n    + '     </div>'\n    + ' </div>'\n    + ' <div class=\"col-lg-8\">'\n    + '     <div id=\"bissolTablePropertiesContainer\"></div>'\n    + ' </div>'\n    + '</div>'\n    );\n    \n    bissolCreateSelect('html_db_connection_picker', 'dbConnectionPicker', 'Choose Connection:', result_fetch_db_connections, 'param_db_connection');\n    // if editing an existing table config\n    if(result_fetch_config.length > 0){\n            Dashboards.fireChange('param_db_connection', param_db_connection);\n            $('#dbConnectionPicker').prepend(\n                '<option selected value=\"'\n                + param_db_connection\n                + '\">' + param_db_connection + '</option>'\n            )\n    }\n}",
       "type": "JavaScript"
      },
      {
@@ -561,7 +659,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    bissolCreateSelect('html_db_schema_picker','dbSchemaPicker', 'Choose Schema:', result_fetch_db_schemas, 'param_db_schema');\n}",
+      "value": "function(){\n    bissolCreateSelect('html_db_schema_picker','dbSchemaPicker', 'Choose Schema:', result_fetch_db_schemas, 'param_db_schema');\n    // if editing an existing table config\n    if(result_fetch_config.length > 0){\n            Dashboards.fireChange('param_db_schema', param_db_schema);\n                $('#dbSchemaPicker').prepend(\n                '<option selected value=\"'\n                + param_db_schema\n                + '\">' + param_db_schema + '</option>'\n            )\n    }\n}",
       "type": "JavaScript"
      },
      {
@@ -644,7 +742,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    bissolCreateSelect('html_db_table_picker','dbTablePicker', 'Choose Table:', result_fetch_db_tables, 'param_db_table');\n}",
+      "value": "function(){\n    bissolCreateSelect('html_db_table_picker','dbTablePicker', 'Choose Table:', result_fetch_db_tables, 'param_db_table');\n    // if editing an existing table config\n    if(result_fetch_config.length > 0){\n            Dashboards.fireChange('param_db_table', param_db_table);\n            $('#dbTablePicker').prepend(\n                '<option selected value=\"'\n                + param_db_table\n                + '\">' + param_db_table + '</option>'\n            )\n    }\n}",
       "type": "JavaScript"
      },
      {
@@ -727,7 +825,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    //bissolCreateCheckboxSet('html_db_column_picker','dbColumnPicker', 'Choose Columns:', result_fetch_db_columns, 'param_db_column');\n    bissolCreateTableConfigPicker(result_fetch_db_columns);\n}",
+      "value": "function(){\n    //bissolCreateCheckboxSet('html_db_column_picker','dbColumnPicker', 'Choose Columns:', result_fetch_db_columns, 'param_db_column');\n    bissolCreateTableConfigPicker(result_fetch_db_columns);\n    if(result_fetch_config.length > 0){\n        var column = $('#html_db_table_metadata_picker > table > tbody > tr');\n        $.each(column,function(i, cell){\n            var colPositionPostion = $(this).find('td:nth-child(1)');\n            var colNameCell = $(this).find('td:nth-child(2)');\n            \n            console.log('--------');\n            console.log(colNameCell.text());\n            console.log(param_col_names);\n            \n            if($.inArray(colNameCell.text(), param_col_names) > -1){\n                colPositionPostion.prepend('<span class=\"label label-primary bissolConfigLabel\">Configured</span>');\n                //colNameCell.addClass('bissolExistsInConfig');\n            } else {\n                //colNameCell.addClass('bissolNotExistsInConfig');\n                colPositionPostion.prepend('<span class=\"label label-info bissolConfigLabel\">New</span>');\n            }\n            \n            if($.inArray(colNameCell.text(), param_col_names_visible) > -1){\n                $(this).find('td:nth-child(5) > input').attr('checked','');\n            }\n            \n            if($.inArray(colNameCell.text(), param_col_names_editable) > -1){\n                $(this).find('td:nth-child(6) > input').attr('checked','');\n            }\n            \n            if(colNameCell.text() === param_id_column){\n                $(this).find('td:nth-child(7) > input').attr('checked','');\n            }\n    \n        }); \n        \n        $('#html_db_table_metadata_picker').append(\n            '<button type=\"submit\" id=\"bissol-table-properties-delete\" class=\"btn btn-danger bissolConfigSubmit\">Delete</button>'\n            );\n    }\n}",
       "type": "JavaScript"
      },
      {
@@ -770,7 +868,7 @@
      },
      {
       "name": "parameters",
-      "value": "[[\"param_db_connection\",\"param_db_connection\"],[\"param_db_schema\",\"param_db_schema\"],[\"param_db_table\",\"param_db_table\"],[\"param_db_columns_name\",\"param_db_columns_name\"],[\"param_db_columns_type\",\"param_db_columns_type\"],[\"param_db_columns_position\",\"param_db_columns_position\"],[\"param_db_columns_is_visible\",\"param_db_columns_is_visible\"],[\"param_db_columns_is_editable\",\"param_db_columns_is_editable\"],[\"param_db_columns_is_primary_key\",\"param_db_columns_is_primary_key\"]]",
+      "value": "[[\"param_db_connection\",\"param_db_connection\"],[\"param_db_schema\",\"param_db_schema\"],[\"param_db_table\",\"param_db_table\"],[\"param_col_names\",\"param_col_names\"],[\"param_col_types\",\"param_col_types\"],[\"param_col_positions\",\"param_col_positions\"],[\"param_col_names_visible\",\"param_col_names_visible\"],[\"param_col_names_editable\",\"param_col_names_editable\"],[\"param_id_column\",\"param_id_column\"]]",
       "type": "ValuesArray"
      },
      {
@@ -846,6 +944,29 @@
       "name": "Group",
       "value": "Generic",
       "type": "Label"
+     }
+    ]
+   },
+   {
+    "id": "3612a3c1-a234-0f5c-8316-c99e5b6a4161",
+    "type": "ComponentsDateParameter",
+    "typeDesc": "Date Parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_action_picker_selection",
+      "type": "Id"
+     },
+     {
+      "name": "propertyDateValue",
+      "value": "",
+      "type": "Date"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
      }
     ]
    },
@@ -941,7 +1062,7 @@
     "properties": [
      {
       "name": "name",
-      "value": "param_db_columns_name",
+      "value": "param_col_names",
       "type": "Id"
      },
      {
@@ -969,7 +1090,7 @@
     "properties": [
      {
       "name": "name",
-      "value": "param_db_columns_type",
+      "value": "param_col_types",
       "type": "Id"
      },
      {
@@ -997,7 +1118,7 @@
     "properties": [
      {
       "name": "name",
-      "value": "param_db_columns_position",
+      "value": "param_col_positions",
       "type": "Id"
      },
      {
@@ -1025,7 +1146,7 @@
     "properties": [
      {
       "name": "name",
-      "value": "param_db_columns_is_visible",
+      "value": "param_col_names_visible",
       "type": "Id"
      },
      {
@@ -1053,7 +1174,7 @@
     "properties": [
      {
       "name": "name",
-      "value": "param_db_columns_is_editable",
+      "value": "param_col_names_editable",
       "type": "Id"
      },
      {
@@ -1081,7 +1202,7 @@
     "properties": [
      {
       "name": "name",
-      "value": "param_db_columns_is_primary_key",
+      "value": "param_id_column",
       "type": "Id"
      },
      {
@@ -1110,6 +1231,34 @@
      {
       "name": "name",
       "value": "param_config_save",
+      "type": "Id"
+     },
+     {
+      "name": "propertyValue",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
+     }
+    ]
+   },
+   {
+    "id": "ee841d8f-1eb0-78ee-dcbc-e8f3e69e74d1",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_config_id",
       "type": "Id"
      },
      {
@@ -1356,8 +1505,60 @@
     "meta": "CPK",
     "meta_pluginId": "bissolTableDataEditor",
     "meta_endpoint": "saveconfig"
+   },
+   {
+    "id": "faa5c526-8348-ed40-c9da-33c01408dd76",
+    "type": "ComponentsbissolTableDataEditor_fetchConfigTables_CPKENDPOINT",
+    "typeDesc": "fetchConfigTables Endpoint",
+    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "qry_fetch_config_tables",
+      "type": "Id"
+     },
+     {
+      "name": "stepName",
+      "value": "OUTPUT",
+      "type": "String"
+     },
+     {
+      "name": "kettleOutput",
+      "value": "Inferred",
+      "type": "kettleOutputCustom"
+     }
+    ],
+    "meta": "CPK",
+    "meta_pluginId": "bissolTableDataEditor",
+    "meta_endpoint": "fetchConfigTables"
+   },
+   {
+    "id": "78964c91-5b90-b6e9-06d0-77d017b6975e",
+    "type": "ComponentsbissolTableDataEditor_fetchConfigDataForTable_CPKENDPOINT",
+    "typeDesc": "fetchConfigDataForTable Endpoint",
+    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "qry_fetch_config",
+      "type": "Id"
+     },
+     {
+      "name": "stepName",
+      "value": "OUTPUT",
+      "type": "String"
+     },
+     {
+      "name": "kettleOutput",
+      "value": "Inferred",
+      "type": "kettleOutputCustom"
+     }
+    ],
+    "meta": "CPK",
+    "meta_pluginId": "bissolTableDataEditor",
+    "meta_endpoint": "fetchConfigDataForTable"
    }
   ]
  },
- "filename": "/system/bissolTableDataEditor/dashboards/config.cdfde"
+ "filename": "/system/bissolTableDataEditor/dashboards/admin/config.cdfde"
 }

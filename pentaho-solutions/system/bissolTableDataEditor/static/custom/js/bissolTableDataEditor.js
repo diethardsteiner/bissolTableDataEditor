@@ -131,9 +131,6 @@ function bissolFetchConfig(param_config_id){
 function bissolFetchConfigServerSide(result_metadata){
     
     // in this case we source the config metadata via Kettle server side
-    
-    //console.log('------------');
-    //console.log(result_metadata);
 
     var myJNDI = result_fetch_config[0][0];
     var mySchema = result_fetch_config[0][1];

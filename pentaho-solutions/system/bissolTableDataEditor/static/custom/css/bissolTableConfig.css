@@ -6,10 +6,24 @@
 .bissolConfigSubmit{
     width: 92%;
     height: 92%;
-    margin: 4% 4% 4% 4%;
+    margin-bottom: 2%;
+    margin-left: 4%;
+    margin-right: 4%;
 } 
 
 .bissolTableMetadataBox{
     position: relative;
     top: 1em;
 } 
+
+.bissolExistsInConfig{
+    color: green;
+}
+
+.bissolNotExistsInConfig{
+    color: red;
+}
+
+.bissolConfigLabel{
+    margin-right: 4px;
+}

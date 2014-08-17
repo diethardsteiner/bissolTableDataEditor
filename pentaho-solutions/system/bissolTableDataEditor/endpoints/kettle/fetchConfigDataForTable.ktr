@@ -86,7 +86,7 @@
         </parameter>
         <parameter>
             <name>param_config_id</name>
-            <default_value>c2843f6a-ce19-41b0-83d5-06b1d4158414</default_value>
+            <default_value/>
             <description/>
         </parameter>
     </parameters>

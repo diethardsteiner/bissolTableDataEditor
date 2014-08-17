@@ -182,8 +182,20 @@ function bissolCreateTableConfigPicker(myData){
                         }
                     });
                 }
-
-
+                
+                var primaryKeyIsEditable = 0;
+                if($.inArray(myColsIsPrimaryKey[0], myColsIsEditable) > -1){
+                    primaryKeyIsEditable = 1;
+                } else {
+                    primaryKeyIsEditable = 0;
+                }
+                
+                console.log('Is the primary key editable:');
+                console.log(primaryKeyIsEditable);
+                console.log(primaryKeyIsEditable[0]);
+                console.log(primaryKeyIsEditable[1]);
+                
+                
                 if(myColsIsPrimaryKey.length === 0){
                     $('#html_db_table_metadata_picker').prepend(createAlertErrorMsg('You must define a primary key!'));
                 }
@@ -206,15 +218,18 @@ function bissolCreateTableConfigPicker(myData){
                 else if(isEditableCheckCounter !== myColsIsEditable.length){
                     $('#html_db_table_metadata_picker').prepend(createAlertErrorMsg('All editable columns must be visible as well!'));                
                 } 
+                else if(primaryKeyIsEditable === 1){
+                    $('#html_db_table_metadata_picker').prepend(createAlertErrorMsg('The primary key column must not be editable!'));                                    
+                }
 
                 else {
 
-                    Dashboards.setParameter('param_db_columns_name', myColsName.join(','));
-                    Dashboards.setParameter('param_db_columns_type', myColsType.join(','));
-                    Dashboards.setParameter('param_db_columns_position', myColsPosition.join(','));
-                    Dashboards.setParameter('param_db_columns_is_visible', myColsIsVisible.join(','));
-                    Dashboards.setParameter('param_db_columns_is_editable', myColsIsEditable.join(','));
-                    Dashboards.setParameter('param_db_columns_is_primary_key', myColsIsPrimaryKey.join(','));
+                    Dashboards.setParameter('param_col_names', myColsName.join(','));
+                    Dashboards.setParameter('param_col_types', myColsType.join(','));
+                    Dashboards.setParameter('param_col_positions', myColsPosition.join(','));
+                    Dashboards.setParameter('param_col_names_visible', myColsIsVisible.join(','));
+                    Dashboards.setParameter('param_col_names_editable', myColsIsEditable.join(','));
+                    Dashboards.setParameter('param_id_column', myColsIsPrimaryKey.join(','));
                     Dashboards.fireChange('param_config_save','save');
 
                     var alertSuccess =
@@ -225,8 +240,8 @@ function bissolCreateTableConfigPicker(myData){
                     +'</div>'
                     ;
 
-                    $('#bissolTablePropertiesContainer').empty();
-                    $('#bissolTablePropertiesContainer').append(alertSuccess);
+                    $('#html_table_config_container').empty();
+                    $('#html_table_config_container').append(alertSuccess);
                 }
 
             });
