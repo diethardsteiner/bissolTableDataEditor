@@ -868,7 +868,7 @@
      },
      {
       "name": "parameters",
-      "value": "[[\"param_db_connection\",\"param_db_connection\"],[\"param_db_schema\",\"param_db_schema\"],[\"param_db_table\",\"param_db_table\"],[\"param_col_names\",\"param_col_names\"],[\"param_col_types\",\"param_col_types\"],[\"param_col_positions\",\"param_col_positions\"],[\"param_col_names_visible\",\"param_col_names_visible\"],[\"param_col_names_editable\",\"param_col_names_editable\"],[\"param_id_column\",\"param_id_column\"]]",
+      "value": "[[\"param_db_connection\",\"param_db_connection\"],[\"param_db_schema\",\"param_db_schema\"],[\"param_db_table\",\"param_db_table\"],[\"param_col_names\",\"param_col_names\"],[\"param_col_types\",\"param_col_types\"],[\"param_col_positions\",\"param_col_positions\"],[\"param_col_names_visible\",\"param_col_names_visible\"],[\"param_col_names_editable\",\"param_col_names_editable\"],[\"param_id_column\",\"param_id_column\"],[\"param_config_id\",\"param_config_id\"]]",
       "type": "ValuesArray"
      },
      {

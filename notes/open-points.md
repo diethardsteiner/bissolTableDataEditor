@@ -42,3 +42,5 @@ DB files are stored in `pentaho-solutions/system/.orient`.
 [Automatically included dependend Kettle plugins](http://jira.pentaho.com/browse/SPARKL-67)
 
 [Kettle: Return DB error/status message](http://jira.pentaho.com/browse/PDI-12719)
+
+[DB Schema Names are shown instead of DB Connection Names](https://github.com/webdetails/kettle-baserver-utils/issues/2)
