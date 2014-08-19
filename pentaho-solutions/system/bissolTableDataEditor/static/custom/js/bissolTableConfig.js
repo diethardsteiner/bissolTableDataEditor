@@ -102,6 +102,10 @@ function bissolCreateTableConfigPicker(myData){
         '    </tbody>'
         +'</table>'
         ;
+        
+        Dashboards.setParameter('param_col_names', myColsName.join(','));
+        Dashboards.setParameter('param_col_types', myColsType.join(','));
+        Dashboards.setParameter('param_col_positions', myColsPosition.join(','));
 
         $('#html_db_table_metadata_picker').append(myConfigTable);
 
@@ -111,7 +115,19 @@ function bissolCreateTableConfigPicker(myData){
 
             $('#html_db_table_metadata_picker').append('<button type="submit" id="bissol-table-properties-submit" class="btn btn-primary bissolConfigSubmit">Submit</button>');
 
-            $('#bissol-table-properties-submit').on('click', function(){
+            bissolSaveAction();
+        }
+    }
+}
+
+
+function bissolSaveAction(){
+    //$('#bissol-table-properties-submit').on('click', function(){
+    $('#html_db_table_metadata_picker > button').on('click', function(){
+                
+                var action = $(this).text();
+                console.log('The action chosen is: ' + action);
+                Dashboards.setParameter('param_config_action', action);
                 
                 // remove any exsiting alert messages
                 $('#bissol-table-properties div .alert').remove();
@@ -190,11 +206,6 @@ function bissolCreateTableConfigPicker(myData){
                     primaryKeyIsEditable = 0;
                 }
                 
-                console.log('Is the primary key editable:');
-                console.log(primaryKeyIsEditable);
-                console.log(primaryKeyIsEditable[0]);
-                console.log(primaryKeyIsEditable[1]);
-                
                 
                 if(myColsIsPrimaryKey.length === 0){
                     $('#html_db_table_metadata_picker').prepend(createAlertErrorMsg('You must define a primary key!'));
@@ -223,10 +234,10 @@ function bissolCreateTableConfigPicker(myData){
                 }
 
                 else {
-
-                    Dashboards.setParameter('param_col_names', myColsName.join(','));
-                    Dashboards.setParameter('param_col_types', myColsType.join(','));
-                    Dashboards.setParameter('param_col_positions', myColsPosition.join(','));
+                    
+                    //Dashboards.setParameter('param_col_names', myColsName.join(','));
+                    //Dashboards.setParameter('param_col_types', myColsType.join(','));
+                    //Dashboards.setParameter('param_col_positions', myColsPosition.join(','));
                     Dashboards.setParameter('param_col_names_visible', myColsIsVisible.join(','));
                     Dashboards.setParameter('param_col_names_editable', myColsIsEditable.join(','));
                     Dashboards.setParameter('param_id_column', myColsIsPrimaryKey.join(','));
@@ -245,8 +256,4 @@ function bissolCreateTableConfigPicker(myData){
                 }
 
             });
-        }
-    }
 }
-
-

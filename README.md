@@ -1,5 +1,7 @@
 # Bissol Table Data Editor
 
+**WARNING**: Do not use in production! This project is in its early stages. Functionality has only been tested with PostgreSQL and MariaDB.
+
 ## Intended Purpose of the Plugin ##
 
 The **Bissol Table Data Editor** (BTDE) Pentaho BI Server Plugin allows you to **update** and **add** data to **small database tables** via an easy-to-use web-interface.
@@ -31,13 +33,12 @@ The respective JDBC driver have to be installed in `tomcat/lib`. This should alr
 
 
 - Only current web browsers are supported. The main editor page makes use of the *contenteditable* attribute which is only supported by recent web browsers.
-- Currently it is not possible to edit the configuration or delete configuration entries.
-- Only one columns is supported for the **primary key**. The primary key has to be defined for the update logic.
+- Only one columns is supported for the **primary key**. The primary key has to be defined for the update logic. Note that the primary key has to be properly defined with auto increment on the database side for this to work. 
 - If there is a DB error while adding, updating or removing records, only a generic error is shown in the web UI. This has to do with the fact that currently PDI DB steps do not feed back any DB error message details. A Jira case has been created for this feature to be implemented.
 
 ## Configuration
 
-Administrators can enter the config information for each table via a dedicated **Admin** page in the **Pentaho User Console**. Currently, there is no support for updating this configuration via this interface, but admins can directly manipulate the file on the server in following directory:
+Administrators can enter the config information for each table via a dedicated **Admin** page in the **Pentaho User Console**. There is full support for adding, editing and deleting configuration entries. The configuration entries are stored in the `bissolTableDataEditorConfig.json` file on the server in following directory:
 
 `pentaho-solutions/system/bissolTableDataEditorConfig`
 
@@ -106,4 +107,8 @@ The structure of the JSON object looks like this:
 ]
 ```
 
-The file structure is pretty self-explanatory, hence I assume that you will find it easy to amend it.
+The file structure is pretty self-explanatory, hence I assume that you will find it easy to amend it. You should not have to edit this file manually.
+
+### Explicit labeling of column config entries
+
+If you **edit** a configuration entry (configuration for one table) the columns will be listed on the **Admin page**. Columns details that are already stored in the configuration file are labelled **Configured** whereas other ones are labelled **New**. This is especially useful when the table definition changes on the database side.

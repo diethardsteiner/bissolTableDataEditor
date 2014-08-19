@@ -1228,7 +1228,7 @@
      },
      {
       "name": "parameters",
-      "value": "[[\"param_new_record\",\"param_new_record\"],[\"param_db_connection\",\"param_db_connection\"],[\"param_col_types_delimited\",\"param_col_types_delimited\"],[\"param_col_names_delimited\",\"param_col_names_delimited\"],[\"param_db_schema\",\"param_db_schema\"],[\"param_db_table\",\"param_db_table\"]]",
+      "value": "[[\"param_new_record\",\"param_new_record\"],[\"param_db_connection\",\"param_db_connection\"],[\"param_col_types_delimited\",\"param_col_types_delimited\"],[\"param_col_names_delimited\",\"param_col_names_delimited\"],[\"param_db_schema\",\"param_db_schema\"],[\"param_db_table\",\"param_db_table\"],[\"param_config_action\",\"param_config_action\"]]",
       "type": "ValuesArray"
      },
      {

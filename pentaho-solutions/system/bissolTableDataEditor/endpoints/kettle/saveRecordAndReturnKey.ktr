@@ -169,11 +169,11 @@
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Returning auto-generated key disabled&#xa;as not required any more.&#xa;&#xa;NOTE&#x3a; We have to make sure that we&#xa;output the same fields in case of record&#xa;insertion success or error&#x21; When there is&#xa;an error with submitting the record, we have&#xa;to return an empty record.&#xa;In Sparkl we can then check if there is a value &#xa;in the result set or not. If not, we can show an error&#xa;message to the user using something like&#xa;this on the Post Execution function of the&#xa;Query Component&#x3a;&#xa;function&#x28;&#x29;&#x7b;&#xa;    if&#x28;result_generic_update.length &#x3d;&#x3d;&#x3d; 0&#x29;&#x7b;&#xa;        alert&#x28;&#x22;Something went wrong&#x21; Check JavaScript Console and&#x2f;or Server Log.&#x22;&#x29;&#x3b;&#xa;    &#x7d;&#xa;&#x7d;</note>
-      <xloc>672</xloc>
+      <note>NOTE&#x3a; We have to make sure that&#xa;1&#x29; We return a result set - that&#x27;s why we use the auto-generated key&#xa;2&#x29; In case of a DB error there is a error handling path defined so that not the whole ktr crashes&#xa;If there is an error, the &#x27;problem&#x27; will be caught by the dummy step, but there is still an output&#xa;for the &#x27;Output Key&#x27; step - just that this time it is empty&#x21;&#xa;&#xa;In Sparkl we can then check if there is a value &#xa;in the result set or not. If not, we can show an error&#xa;message to the user using something like&#xa;this on the Post Execution function of the&#xa;Query Component&#x3a;&#xa;function&#x28;&#x29;&#x7b;&#xa;    if&#x28;result_generic_update.length &#x3d;&#x3d;&#x3d; 0&#x29;&#x7b;&#xa;        alert&#x28;&#x22;Something went wrong&#x21; Check JavaScript Console and&#x2f;or Server Log.&#x22;&#x29;&#x3b;&#xa;    &#x7d;&#xa;&#x7d;</note>
+      <xloc>576</xloc>
       <yloc>320</yloc>
-      <width>487</width>
-      <heigth>280</heigth>
+      <width>552</width>
+      <heigth>250</heigth>
       <fontname>Arial</fontname>
       <fontsize>10</fontsize>
       <fontbold>N</fontbold>
@@ -191,7 +191,7 @@
     </notepad>
     <notepad>
       <note>Making sure we pass&#xa;empty record on error</note>
-      <xloc>448</xloc>
+      <xloc>576</xloc>
       <yloc>256</yloc>
       <width>134</width>
       <heigth>40</heigth>
@@ -211,50 +211,6 @@
       <drawshadow>Y</drawshadow>
     </notepad>
   </notepads>
-  <connection>
-    <name>backoffice</name>
-    <server>&#x24;&#x7b;VAR_DB_BACKOFFICE_HOST&#x7d;</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>&#x24;&#x7b;VAR_DB_BACKOFFICE_NAME&#x7d;</database>
-    <port>&#x24;&#x7b;VAR_DB_BACKOFFICE_PORT&#x7d;</port>
-    <username>&#x24;&#x7b;VAR_DB_BACKOFFICE_USER&#x7d;</username>
-    <password>&#x24;&#x7b;VAR_DB_BACKOFFICE_PW&#x7d;</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;VAR_DB_BACKOFFICE_PORT&#x7d;</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
-  <connection>
-    <name>dwh</name>
-    <server>&#x24;&#x7b;VAR_DB_DMA_HOST&#x7d;</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>&#x24;&#x7b;VAR_DB_DMA_NAME&#x7d;</database>
-    <port>&#x24;&#x7b;VAR_DB_DMA_PORT&#x7d;</port>
-    <username>&#x24;&#x7b;VAR_DB_DMA_USER&#x7d;</username>
-    <password>&#x24;&#x7b;VAR_DB_DMA_PW&#x7d;</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;VAR_DB_DMA_PORT&#x7d;</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
   <connection>
     <name>generic</name>
     <server/>
@@ -279,111 +235,33 @@
       <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
     </attributes>
   </connection>
-  <connection>
-    <name>logs</name>
-    <server>&#x24;&#x7b;VAR_DB_LOG_HOST&#x7d;</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>&#x24;&#x7b;VAR_DB_LOG_NAME&#x7d;</database>
-    <port>&#x24;&#x7b;VAR_DB_LOG_PORT&#x7d;</port>
-    <username>&#x24;&#x7b;VAR_DB_LOG_USER&#x7d;</username>
-    <password>&#x24;&#x7b;VAR_DB_LOG_PW&#x7d;</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code><attribute>seq_logging</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;VAR_DB_LOG_PORT&#x7d;</attribute></attribute>
-      <attribute><code>PREFERRED_SCHEMA_NAME</code><attribute>&#x24;&#x7b;VAR_DB_LOG_SCHEMA&#x7d;</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
-  <connection>
-    <name>qa</name>
-    <server>&#x24;&#x7b;VAR_DB_QA_HOST&#x7d;</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>&#x24;&#x7b;VAR_DB_QA_NAME&#x7d;</database>
-    <port>&#x24;&#x7b;VAR_DB_QA_PORT&#x7d;</port>
-    <username>&#x24;&#x7b;VAR_DB_QA_USER&#x7d;</username>
-    <password>&#x24;&#x7b;VAR_DB_QA_PW&#x7d;</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;VAR_DB_QA_PORT&#x7d;</attribute></attribute>
-      <attribute><code>PREFERRED_SCHEMA_NAME</code><attribute>&#x24;&#x7b;VAR_DB_QA_SCHEMA&#x7d;</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
-  <connection>
-    <name>staging</name>
-    <server>&#x24;&#x7b;VAR_DB_STAGING_HOST&#x7d;</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>&#x24;&#x7b;VAR_DB_STAGING_NAME&#x7d;</database>
-    <port>&#x24;&#x7b;VAR_DB_STAGING_PORT&#x7d;</port>
-    <username>&#x24;&#x7b;VAR_DB_STAGING_USER&#x7d;</username>
-    <password>&#x24;&#x7b;VAR_DB_STAGING_PW&#x7d;</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;VAR_DB_STAGING_PORT&#x7d;</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
-  <connection>
-    <name>teradata</name>
-    <server>&#x24;&#x7b;VAR_DB_TERADATA_HOST&#x7d;</server>
-    <type>TERADATA</type>
-    <access>Native</access>
-    <database>&#x24;&#x7b;VAR_DB_TERADATA_NAME&#x7d;</database>
-    <port>&#x24;&#x7b;VAR_DB_TERADATA_PORT&#x7d;</port>
-    <username>&#x24;&#x7b;VAR_DB_TERADATA_USER&#x7d;</username>
-    <password>&#x24;&#x7b;VAR_DB_TERADATA_PW&#x7d;</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>EXTRA_OPTION_TERADATA.DBS_PORT</code><attribute>&#x24;&#x7b;VAR_DB_TERADATA_PORT&#x7d;</attribute></attribute>
-      <attribute><code>EXTRA_OPTION_TERADATA.charset</code><attribute>UTF8</attribute></attribute>
-      <attribute><code>EXTRA_OPTION_TERADATA.tmode</code><attribute>ANSI</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;VAR_DB_TERADATA_PORT&#x7d;</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
   <order>
   <hop> <from>Generate Rows</from><to>Get Variables</to><enabled>Y</enabled> </hop>
   <hop> <from>Get Variables</from><to>Split Fields</to><enabled>Y</enabled> </hop>
   <hop> <from>Split Fields</from><to>Table output</to><enabled>Y</enabled> </hop>
   <hop> <from>Get Variables</from><to>Write to log</to><enabled>Y</enabled> </hop>
   <hop> <from>Table output</from><to>OutputKey</to><enabled>Y</enabled> </hop>
-  <hop> <from>OutputKey</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
-  <hop> <from>Table output</from><to>Filter rows</to><enabled>Y</enabled> </hop>
-  <hop> <from>Filter rows</from><to>Dummy &#x28;do nothing&#x29;</to><enabled>Y</enabled> </hop>
-  <hop> <from>Filter rows</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
+  <hop> <from>Table output</from><to>Dummy &#x28;do nothing&#x29;</to><enabled>Y</enabled> </hop>
   </order>
+  <step>
+    <name>Dummy &#x28;do nothing&#x29;</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>448</xloc>
+      <yloc>320</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
   <step>
     <name>Generate Rows</name>
     <type>RowGenerator</type>
@@ -454,7 +332,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <fields>      <field>        <name>new_record</name>
+    <fields>      <field>        <name>id</name>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
@@ -514,8 +392,8 @@
     <partitioning_monthly>Y</partitioning_monthly>
     <tablename_in_field>N</tablename_in_field>
     <tablename_field/>
-    <tablename_in_table>N</tablename_in_table>
-    <return_keys>N</return_keys>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>Y</return_keys>
     <return_field>id</return_field>
     <fields>
     </fields>
@@ -556,77 +434,10 @@
       </GUI>
     </step>
 
-  <step>
-    <name>OUTPUT</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>448</xloc>
-      <yloc>416</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Filter rows</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<send_true_to>Dummy &#x28;do nothing&#x29;</send_true_to>
-<send_false_to>OUTPUT</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <leftvalue>new_record</leftvalue>
- <function>IS NOT NULL</function>
- <rightvalue/>
- </condition>
-    </compare>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>448</xloc>
-      <yloc>320</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Dummy &#x28;do nothing&#x29;</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>576</xloc>
-      <yloc>320</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
   <step_error_handling>
       <error>
         <source_step>Table output</source_step>
-        <target_step>Filter rows</target_step>
+        <target_step>Dummy &#x28;do nothing&#x29;</target_step>
         <is_enabled>Y</is_enabled>
         <nr_valuename/>
         <descriptions_valuename/>

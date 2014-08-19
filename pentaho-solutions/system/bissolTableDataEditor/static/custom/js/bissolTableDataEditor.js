@@ -36,7 +36,7 @@ function bissolFetchConfig(param_config_id){
     
     
     var mySchemaAndTable = '';
-    if(mySchema !== 'undefined'){
+    if(mySchema !== ''){
         mySchemaAndTable = mySchema + '.' + myTable;
     } else {
         mySchemaAndTable = myTable;
@@ -342,7 +342,6 @@ function bissolNewRecord(){
 }
 
 function bissolRemoveRow() {
-    //.remove-row
     $('#myDeleteButton').on('click', function() { 
         
         //var myId = $(this).parent().parent().find('span[data-name="' + param_id_column + '"]').text();
@@ -353,6 +352,8 @@ function bissolRemoveRow() {
 
         //Dashboards.setParameter('param_db_connection', myJNDI); // not necessary, should be already set
         Dashboards.fireChange('param_sql_update', myQuery);
+        
+        $('#html_table_editor table > tbody > tr > td.row-highlight').parent().remove();
 
     });   
 }

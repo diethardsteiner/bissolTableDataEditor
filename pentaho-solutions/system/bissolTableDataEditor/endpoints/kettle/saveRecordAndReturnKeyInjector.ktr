@@ -86,33 +86,33 @@
         </parameter>
         <parameter>
             <name>param_col_names_delimited</name>
-            <default_value>firstname&#x7c;lastname</default_value>
-            <description/>
+            <default_value/>
+            <description>firstname&#x7c;lastname</description>
         </parameter>
         <parameter>
             <name>param_col_types_delimited</name>
-            <default_value>String&#x7c;String</default_value>
-            <description/>
+            <default_value/>
+            <description>String&#x7c;String</description>
         </parameter>
         <parameter>
             <name>param_db_connection</name>
-            <default_value>psqllocaltest</default_value>
-            <description/>
+            <default_value/>
+            <description>psqllocaltest</description>
         </parameter>
         <parameter>
             <name>param_db_schema</name>
-            <default_value>public</default_value>
-            <description/>
+            <default_value/>
+            <description>public</description>
         </parameter>
         <parameter>
             <name>param_db_table</name>
-            <default_value>employees</default_value>
-            <description/>
+            <default_value/>
+            <description>employees</description>
         </parameter>
         <parameter>
             <name>param_new_record</name>
-            <default_value>rupert&#x7c;fuller</default_value>
-            <description/>
+            <default_value/>
+            <description>rupert&#x7c;fuller</description>
         </parameter>
     </parameters>
     <log>
@@ -199,7 +199,7 @@
       <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Note really necessary&#xa;as can be passed&#xa;as standard parameters</note>
+      <note>Not really necessary&#xa;as can be passed&#xa;as standard parameters</note>
       <xloc>887</xloc>
       <yloc>235</yloc>
       <width>147</width>
@@ -241,6 +241,35 @@
   <hop> <from>Merge Join</from><to>Metadata Inj Input</to><enabled>Y</enabled> </hop>
   <hop> <from>Metadata Inj Input</from><to>ETL Metadata Injection</to><enabled>Y</enabled> </hop>
   </order>
+  <step>
+    <name>Col Names - Add sequence</name>
+    <type>Sequence</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <valuename>idnames</valuename>
+      <use_database>N</use_database>
+      <connection/>
+      <schema/>
+      <seqname>SEQ_</seqname>
+      <use_counter>Y</use_counter>
+      <counter_name>idcounternames</counter_name>
+      <start_at>1</start_at>
+      <increment_by>1</increment_by>
+      <max_value>999999999</max_value>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>319</xloc>
+      <yloc>317</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
   <step>
     <name>Col Names - Generate Rows</name>
     <type>RowGenerator</type>
@@ -375,6 +404,35 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>633</xloc>
       <yloc>135</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Col Types - Add sequence</name>
+    <type>Sequence</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <valuename>idtypes</valuename>
+      <use_database>N</use_database>
+      <connection/>
+      <schema/>
+      <seqname>SEQ_</seqname>
+      <use_counter>Y</use_counter>
+      <counter_name>idcountertypes</counter_name>
+      <start_at>1</start_at>
+      <increment_by>1</increment_by>
+      <max_value>999999999</max_value>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>110</xloc>
+      <yloc>344</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -726,83 +784,6 @@
     </step>
 
   <step>
-    <name>OUTPUT</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>471</xloc>
-      <yloc>490</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Col Types - Add sequence</name>
-    <type>Sequence</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <valuename>idtypes</valuename>
-      <use_database>N</use_database>
-      <connection/>
-      <schema/>
-      <seqname>SEQ_</seqname>
-      <use_counter>Y</use_counter>
-      <counter_name>idcountertypes</counter_name>
-      <start_at>1</start_at>
-      <increment_by>1</increment_by>
-      <max_value>999999999</max_value>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>110</xloc>
-      <yloc>344</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Col Names - Add sequence</name>
-    <type>Sequence</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <valuename>idnames</valuename>
-      <use_database>N</use_database>
-      <connection/>
-      <schema/>
-      <seqname>SEQ_</seqname>
-      <use_counter>Y</use_counter>
-      <counter_name>idcounternames</counter_name>
-      <start_at>1</start_at>
-      <increment_by>1</increment_by>
-      <max_value>999999999</max_value>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>319</xloc>
-      <yloc>317</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
     <name>Merge Join</name>
     <type>MergeJoin</type>
     <description/>
@@ -854,6 +835,25 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>332</xloc>
       <yloc>423</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>OUTPUT</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>471</xloc>
+      <yloc>490</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

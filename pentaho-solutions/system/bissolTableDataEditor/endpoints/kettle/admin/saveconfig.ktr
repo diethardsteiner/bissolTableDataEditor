@@ -110,6 +110,11 @@
             <description>Integer,String,String</description>
         </parameter>
         <parameter>
+            <name>param_config_action</name>
+            <default_value/>
+            <description/>
+        </parameter>
+        <parameter>
             <name>param_config_id</name>
             <default_value/>
             <description>257c7199-3856-49c7-838b-dffbac170b35</description>
@@ -264,7 +269,7 @@
     <optimizationLevel>9</optimizationLevel>
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;function findInArray&#x28;myValue, myArray&#x29;&#x7b;&#xa;	var myResult&#x3d;&#x27;&#x27;&#x3b;&#xa;	if&#x28;myArray.indexOf&#x28;myValue&#x29; &#x3e; -1&#x29;&#x7b;&#xa;		myResult &#x3d; true&#x3b;&#xa;	&#x7d; else &#x7b;&#xa;		myResult &#x3d; false&#x3b;&#xa;	&#x7d;&#xa;	return myResult&#x3b;&#xa;&#x7d;&#xa;&#xa;var json &#x3d; &#x7b;&#x7d;&#x3b;&#xa;&#xa;&#x2f;&#x2f; check if any new config details were sent - if not, it&#x27;s a deletion&#xa;if&#x28;dbConnection &#x21;&#x3d;&#x3d; null&#x29;&#x7b;&#xa;&#xa;&#x2f;&#x2f; connection details&#xa;    json.configId &#x3d; uuid&#x3b;&#xa;    json.dbConnection &#x3d; dbConnection&#x3b;&#xa;    json.dbSchema &#x3d; dbSchema&#x3b;&#xa;    json.dbTable &#x3d; dbTable&#x3b;&#xa;    json.metadata &#x3d; &#x5b;&#x5d;&#x3b; &#x2f;&#x2f; create array to store column definition in it later on&#xa;&#xa;    &#x2f;&#x2f; table metadata&#xa;    var dbColumnsNameArray &#x3d; dbColumnsName.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;    var dbColumnsTypeArray &#x3d; dbColumnsType.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;    var dbColumnsPositionArray &#x3d; dbColumnsPosition.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;    var dbColumnsIsVisibleArray &#x3d; dbColumnsIsVisible.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;    var dbColumnsIsEditableArray &#x3d; dbColumnsIsEditable.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;    var dbColumnsIsPrimaryKeyArray &#x3d; dbColumnsIsPrimaryKey.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;&#xa;&#xa;    for&#x28;i&#x3d;0&#x3b; i&#x3c;dbColumnsNameArray.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;	    var colDetails &#x3d; &#x7b;&#x7d;&#x3b;&#xa;	    colDetails.colIndex &#x3d; dbColumnsPositionArray&#x5b;i&#x5d;&#x3b;&#xa;	    colDetails.colType &#x3d; dbColumnsTypeArray&#x5b;i&#x5d;&#x3b;&#xa;	    colDetails.colName &#x3d; dbColumnsNameArray&#x5b;i&#x5d;&#x3b;&#xa;	    colDetails.isVisible &#x3d; findInArray&#x28;dbColumnsNameArray&#x5b;i&#x5d;, dbColumnsIsVisibleArray&#x29;&#x3b;&#xa;	    colDetails.isEditable &#x3d; findInArray&#x28;dbColumnsNameArray&#x5b;i&#x5d;, dbColumnsIsEditableArray&#x29;&#x3b;&#xa;	    colDetails.isPrimaryKey &#x3d; findInArray&#x28;dbColumnsNameArray&#x5b;i&#x5d;, dbColumnsIsPrimaryKeyArray&#x29;&#x3b;&#xa;	    &#x2f;&#x2f; add to metadata array&#xa;	    json.metadata.push&#x28;colDetails&#x29;&#x3b;&#xa;    &#x7d;&#xa;&#x7d;&#xa;&#xa;&#xa;&#x2f;&#x2f; source existing JSON file&#xa;var workingDir &#x3d; getEnvironmentVar&#x28;&#x27;Internal.Transformation.Filename.Directory&#x27;&#x29;&#x3b;&#xa;var existingJsonFilePath &#x3d; workingDir &#x2b; &#x27;&#x2f;..&#x2f;..&#x2f;..&#x2f;..&#x2f;bissolTableDataEditorConfig&#x2f;bissolTableDataEditorConfig.json&#x27;&#x3b;&#xa;var existingJson&#x3b;&#xa;&#xa;if&#x28;isFile&#x28;existingJsonFilePath&#x29;&#x29;&#x7b;&#xa;	var existingJsonRaw &#x3d; loadFileContent&#x28;existingJsonFilePath&#x29;&#x3b;&#xa;	if&#x28;existingJsonRaw &#x21;&#x3d;&#x3d; &#x27;&#x27;&#x29;&#x7b;&#xa;		existingJson &#x3d; JSON.parse&#x28;existingJsonRaw&#x29;&#x3b;&#xa;	&#x7d; else &#x7b;&#xa;		existingJson &#x3d; &#x5b;&#x5d;&#x3b;		&#xa;	&#x7d;&#xa;&#x7d; else &#x7b;&#xa;	existingJson &#x3d; &#x5b;&#x5d;&#x3b;&#xa;&#x7d;&#xa;&#xa;&#x2f;&#x2f; for existing config details check if this table config already exists&#xa;if&#x28;existingConfigId &#x21;&#x3d;&#x3d; &#x27;new-table-config&#x27;&#x29;&#x7b;&#xa;    for &#x28;var i &#x3d; 0&#x3b; i &#x3c; existingJson.length&#x3b; i&#x2b;&#x2b;&#x29; &#x7b;&#xa;&#xa;        if&#x28;existingJson&#x5b;i&#x5d;.configId &#x3d;&#x3d; existingConfigId&#x29;&#x7b;&#xa;		&#xa;            &#x2f;&#x2f;myJNDI &#x3d; existingJson&#x5b;i&#x5d;.dbConnection&#x3b;&#xa;            &#x2f;&#x2f;mySchema &#x3d; existingJson&#x5b;i&#x5d;.dbSchema&#x3b;&#xa;            &#x2f;&#x2f;myTable &#x3d; existingJson&#x5b;i&#x5d;.dbTable&#x3b;&#xa;            &#x2f;&#x2f;myMetadata &#x3d; existingJson&#x5b;i&#x5d;.metadata&#x3b; &#xa;&#xa;		    &#x2f;&#x2f; delete existing table config details&#xa;            existingJson.splice&#x28;i,1&#x29;&#x3b;    &#xa;        &#x7d;&#xa;    &#x7d;&#xa;&#x7d;&#xa;&#xa;&#x2f;&#x2f; add new table config details - if there are any&#xa;if&#x28;dbConnection &#x21;&#x3d;&#x3d; null&#x29;&#x7b;&#xa;	existingJson.push&#x28;json&#x29;&#x3b;&#xa;&#x7d;&#xa;&#xa;var myDocFinal &#x3d; JSON.stringify&#x28;existingJson&#x29;&#x3b;</jsScript_script>
+        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;function findInArray&#x28;myValue, myArray&#x29;&#x7b;&#xa;	var myResult&#x3d;&#x27;&#x27;&#x3b;&#xa;	if&#x28;myArray.indexOf&#x28;myValue&#x29; &#x3e; -1&#x29;&#x7b;&#xa;		myResult &#x3d; true&#x3b;&#xa;	&#x7d; else &#x7b;&#xa;		myResult &#x3d; false&#x3b;&#xa;	&#x7d;&#xa;	return myResult&#x3b;&#xa;&#x7d;&#xa;&#xa;var json &#x3d; &#x7b;&#x7d;&#x3b;&#xa;&#xa;&#xa;&#xa;&#x2f;&#x2f; connection details&#xa;json.configId &#x3d; uuid&#x3b;&#xa;json.dbConnection &#x3d; dbConnection&#x3b;&#xa;json.dbSchema &#x3d; dbSchema&#x3b;&#xa;json.dbTable &#x3d; dbTable&#x3b;&#xa;json.metadata &#x3d; &#x5b;&#x5d;&#x3b; &#x2f;&#x2f; create array to store column definition in it later on&#xa;&#xa;&#x2f;&#x2f; table metadata&#xa;var dbColumnsNameArray &#x3d; dbColumnsName.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;var dbColumnsTypeArray &#x3d; dbColumnsType.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;var dbColumnsPositionArray &#x3d; dbColumnsPosition.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;var dbColumnsIsVisibleArray &#x3d; dbColumnsIsVisible.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;var dbColumnsIsEditableArray &#x3d; dbColumnsIsEditable.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;var dbColumnsIsPrimaryKeyArray &#x3d; dbColumnsIsPrimaryKey.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;&#xa;&#xa;for&#x28;i&#x3d;0&#x3b; i&#x3c;dbColumnsNameArray.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;    var colDetails &#x3d; &#x7b;&#x7d;&#x3b;&#xa;    colDetails.colIndex &#x3d; dbColumnsPositionArray&#x5b;i&#x5d;&#x3b;&#xa;    colDetails.colType &#x3d; dbColumnsTypeArray&#x5b;i&#x5d;&#x3b;&#xa;    colDetails.colName &#x3d; dbColumnsNameArray&#x5b;i&#x5d;&#x3b;&#xa;    colDetails.isVisible &#x3d; findInArray&#x28;dbColumnsNameArray&#x5b;i&#x5d;, dbColumnsIsVisibleArray&#x29;&#x3b;&#xa;    colDetails.isEditable &#x3d; findInArray&#x28;dbColumnsNameArray&#x5b;i&#x5d;, dbColumnsIsEditableArray&#x29;&#x3b;&#xa;    colDetails.isPrimaryKey &#x3d; findInArray&#x28;dbColumnsNameArray&#x5b;i&#x5d;, dbColumnsIsPrimaryKeyArray&#x29;&#x3b;&#xa;    &#x2f;&#x2f; add to metadata array&#xa;    json.metadata.push&#x28;colDetails&#x29;&#x3b;&#xa;&#x7d;&#xa;&#xa;&#xa;&#xa;&#x2f;&#x2f; source existing JSON file&#xa;var workingDir &#x3d; getEnvironmentVar&#x28;&#x27;Internal.Transformation.Filename.Directory&#x27;&#x29;&#x3b;&#xa;var existingJsonFilePath &#x3d; workingDir &#x2b; &#x27;&#x2f;..&#x2f;..&#x2f;..&#x2f;..&#x2f;bissolTableDataEditorConfig&#x2f;bissolTableDataEditorConfig.json&#x27;&#x3b;&#xa;var existingJson&#x3b;&#xa;&#xa;if&#x28;isFile&#x28;existingJsonFilePath&#x29;&#x29;&#x7b;&#xa;	var existingJsonRaw &#x3d; loadFileContent&#x28;existingJsonFilePath&#x29;&#x3b;&#xa;	if&#x28;existingJsonRaw &#x21;&#x3d;&#x3d; &#x27;&#x27;&#x29;&#x7b;&#xa;		existingJson &#x3d; JSON.parse&#x28;existingJsonRaw&#x29;&#x3b;&#xa;	&#x7d; else &#x7b;&#xa;		existingJson &#x3d; &#x5b;&#x5d;&#x3b;		&#xa;	&#x7d;&#xa;&#x7d; else &#x7b;&#xa;	existingJson &#x3d; &#x5b;&#x5d;&#x3b;&#xa;&#x7d;&#xa;&#xa;&#x2f;&#x2f; for existing config details check if this table config already exists&#xa;if&#x28;existingConfigId &#x21;&#x3d;&#x3d; &#x27;new-table-config&#x27;&#x29;&#x7b;&#xa;    for &#x28;var i &#x3d; 0&#x3b; i &#x3c; existingJson.length&#x3b; i&#x2b;&#x2b;&#x29; &#x7b;&#xa;&#xa;        if&#x28;existingJson&#x5b;i&#x5d;.configId &#x3d;&#x3d; existingConfigId&#x29;&#x7b;&#xa;		&#xa;            &#x2f;&#x2f;myJNDI &#x3d; existingJson&#x5b;i&#x5d;.dbConnection&#x3b;&#xa;            &#x2f;&#x2f;mySchema &#x3d; existingJson&#x5b;i&#x5d;.dbSchema&#x3b;&#xa;            &#x2f;&#x2f;myTable &#x3d; existingJson&#x5b;i&#x5d;.dbTable&#x3b;&#xa;            &#x2f;&#x2f;myMetadata &#x3d; existingJson&#x5b;i&#x5d;.metadata&#x3b; &#xa;&#xa;		    &#x2f;&#x2f; delete existing table config details&#xa;            existingJson.splice&#x28;i,1&#x29;&#x3b;    &#xa;        &#x7d;&#xa;    &#x7d;&#xa;&#x7d;&#xa;&#xa;&#x2f;&#x2f; add new table config details - if there are any&#xa;if&#x28;configAction &#x3d;&#x3d; &#x27;Submit&#x27;&#x29;&#x7b;&#xa;	existingJson.push&#x28;json&#x29;&#x3b;&#xa;&#x7d;&#xa;&#xa;var myDocFinal &#x3d; JSON.stringify&#x28;existingJson&#x29;&#x3b;</jsScript_script>
       </jsScript>    </jsScripts>    <fields>      <field>        <name>myDocFinal</name>
         <rename>myDocFinal</rename>
         <type>String</type>
@@ -495,6 +500,18 @@
         <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
+      <field>
+        <name>configAction</name>
+        <variable>&#x24;&#x7b;param_config_action&#x7d;</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
@@ -634,6 +651,9 @@
       <field>
         <name>existingConfigId</name>
         </field>
+      <field>
+        <name>configAction</name>
+        </field>
       </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
@@ -668,48 +688,6 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>160</xloc>
       <yloc>416</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Create Json Object 2</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;function findInArray&#x28;myValue, myArray&#x29;&#x7b;&#xa;	var myResult&#x3d;&#x27;&#x27;&#x3b;&#xa;	if&#x28;myArray.indexOf&#x28;myValue&#x29; &#x3e; -1&#x29;&#x7b;&#xa;		myResult &#x3d; true&#x3b;&#xa;	&#x7d; else &#x7b;&#xa;		myResult &#x3d; false&#x3b;&#xa;	&#x7d;&#xa;	return myResult&#x3b;&#xa;&#x7d;&#xa;&#xa;var json &#x3d; &#x7b;&#x7d;&#x3b;&#xa;&#xa;&#x2f;&#x2f; connection details&#xa;json.configId &#x3d; uuid&#x3b;&#xa;json.dbConnection &#x3d; dbConnection&#x3b;&#xa;json.dbSchema &#x3d; dbSchema&#x3b;&#xa;json.dbTable &#x3d; dbTable&#x3b;&#xa;json.metadata &#x3d; &#x5b;&#x5d;&#x3b; &#x2f;&#x2f; create array to store column definition in it later on&#xa;&#xa;&#x2f;&#x2f; table metadata&#xa;var dbColumnsNameArray &#x3d; dbColumnsName.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;var dbColumnsTypeArray &#x3d; dbColumnsType.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;var dbColumnsPositionArray &#x3d; dbColumnsPosition.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;var dbColumnsIsVisibleArray &#x3d; dbColumnsIsVisible.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;var dbColumnsIsEditableArray &#x3d; dbColumnsIsEditable.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;var dbColumnsIsPrimaryKeyArray &#x3d; dbColumnsIsPrimaryKey.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;&#xa;&#xa;for&#x28;i&#x3d;0&#x3b; i&#x3c;dbColumnsNameArray.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;	var colDetails &#x3d; &#x7b;&#x7d;&#x3b;&#xa;	colDetails.colIndex &#x3d; dbColumnsPositionArray&#x5b;i&#x5d;&#x3b;&#xa;	colDetails.colType &#x3d; dbColumnsTypeArray&#x5b;i&#x5d;&#x3b;&#xa;	colDetails.colName &#x3d; dbColumnsNameArray&#x5b;i&#x5d;&#x3b;&#xa;	colDetails.isVisible &#x3d; findInArray&#x28;dbColumnsNameArray&#x5b;i&#x5d;, dbColumnsIsVisibleArray&#x29;&#x3b;&#xa;	colDetails.isEditable &#x3d; findInArray&#x28;dbColumnsNameArray&#x5b;i&#x5d;, dbColumnsIsEditableArray&#x29;&#x3b;&#xa;	colDetails.isPrimaryKey &#x3d; findInArray&#x28;dbColumnsNameArray&#x5b;i&#x5d;, dbColumnsIsPrimaryKeyArray&#x29;&#x3b;&#xa;	&#x2f;&#x2f; add to metadata array&#xa;	json.metadata.push&#x28;colDetails&#x29;&#x3b;&#xa;&#x7d;&#xa;&#xa;&#xa;&#x2f;&#x2f; source existing JSON file&#xa;var workingDir &#x3d; getEnvironmentVar&#x28;&#x27;Internal.Transformation.Filename.Directory&#x27;&#x29;&#x3b;&#xa;var existingJsonFilePath &#x3d; workingDir &#x2b; &#x27;&#x2f;..&#x2f;..&#x2f;..&#x2f;..&#x2f;bissolTableDataEditorConfig&#x2f;bissolTableDataEditorConfig.json&#x27;&#x3b;&#xa;var existingJson&#x3b;&#xa;&#xa;if&#x28;isFile&#x28;existingJsonFilePath&#x29;&#x29;&#x7b;&#xa;	var existingJson &#x3d; JSON.parse&#x28;loadFileContent&#x28;existingJsonFilePath&#x29;&#x29;&#x3b;&#xa;&#x7d; else &#x7b;&#xa;	existingJson &#x3d; &#x5b;&#x5d;&#x3b;&#xa;&#x7d;&#xa;&#xa;&#x2f;&#x2f; check if this table config already exists&#xa;var found &#x3d; 0&#x3b;&#xa;&#xa;for &#x28;var i &#x3d; 0&#x3b; i &#x3c; existingJson.length&#x3b; i&#x2b;&#x2b;&#x29; &#x7b;&#xa;	&#xa;    if&#x28;existingJson&#x5b;i&#x5d;.configId &#x3d;&#x3d;&#x3d; configId&#x29;&#x7b;&#xa;		found &#x3d; 1&#x3b;&#xa;        &#x2f;&#x2f;myJNDI &#x3d; existingJson&#x5b;i&#x5d;.dbConnection&#x3b;&#xa;        &#x2f;&#x2f;mySchema &#x3d; existingJson&#x5b;i&#x5d;.dbSchema&#x3b;&#xa;        &#x2f;&#x2f;myTable &#x3d; existingJson&#x5b;i&#x5d;.dbTable&#x3b;&#xa;        &#x2f;&#x2f;myMetadata &#x3d; existingJson&#x5b;i&#x5d;.metadata&#x3b; &#xa;&#xa;		&#x2f;&#x2f; delete existing table config details&#xa;        existingJson.splice&#x28;i,1&#x29;&#x3b;    &#xa;    &#x7d;&#xa;&#x7d;&#xa;&#xa;&#x2f;&#x2f; add new table config details&#xa;existingJson.push&#x28;json&#x29;&#x3b;&#xa;&#xa;var myDocFinal &#x3d; JSON.stringify&#x28;existingJson&#x29;&#x3b;</jsScript_script>
-      </jsScript>    </jsScripts>    <fields>      <field>        <name>myDocFinal</name>
-        <rename>myDocFinal</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>      <field>        <name>workingDir</name>
-        <rename>workingDir</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>      <field>        <name>found</name>
-        <rename>found</rename>
-        <type>Integer</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>384</xloc>
-      <yloc>288</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

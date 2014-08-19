@@ -22,7 +22,7 @@
     </elementTypes> 
     <info>
         <CPK_version>5</CPK_version>
-        <description>This plugin allows editing of small DB tables via the Pentaho web UI. The ideal use case is editing the data of metadata or config table.</description>
+        <description>This plugin allows editing of small DB tables via the Pentaho web UI. The ideal use case is editing the data of metadata or config tables.</description>
         <name>Bissol Table Data Editor</name>
         <author_email>diethard.steiner@gmail.com</author_email>
         <author_name>Diethard Steiner</author_name>
