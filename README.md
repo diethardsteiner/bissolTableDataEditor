@@ -2,6 +2,8 @@
 
 **WARNING**: Do not use in production! This project is in its early stages. Functionality has only been tested with PostgreSQL and MariaDB.
 
+**Note to Testers**: To get started, after downloading the project files just add the `pentaho-solutions/system/bissolTableDataEditor` folder to your biserver and restart the server. You should then find the plugin listed in the **Tools** menu. Please report any bugs via the github project page.
+
 ## Intended Purpose of the Plugin ##
 
 The **Bissol Table Data Editor** (BTDE) Pentaho BI Server Plugin allows you to **update** and **add** data to **small database tables** via an easy-to-use web-interface.
@@ -16,14 +18,19 @@ Example **Use Cases**:
 
 ## Additional Requirements for Installation ##
 
+### BI / BA Server ###
+
+This plugin will only work on biserver v5.1. with the latest version of the C*Tools installed.
+Make sure you have at last on **data source** defined with a user which has **read and write** rights on the specific database.
+
 ### Kettle (PDI) Plugins ###
 
 Currently **Sparkl** does't automatically include dependent PDI plugins. 
 
 Following **Kettle** plugins have to be installed manually into the `pentaho-solutions/system/kettle/plugins/steps` folder. Make sure you get the very latest versions of these plugins:
 
-- BA Server Utils
-- JDBC Metadata
+- [BA Server Utils](https://github.com/webdetails/kettle-baserver-utils)
+- [JDBC Metadata](https://github.com/rpbouman/pentaho-pdi-plugin-jdbc-metadata/wiki/Installation)
 
 ### JDBC Driver
 

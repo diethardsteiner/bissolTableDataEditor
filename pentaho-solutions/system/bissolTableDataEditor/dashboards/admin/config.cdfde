@@ -365,7 +365,7 @@
      },
      {
       "name": "listeners",
-      "value": "[]",
+      "value": "['${p:param_config_action_picker_refresher}']",
       "type": "Listeners"
      },
      {
@@ -493,7 +493,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n\n    if(param_config_id !== 'new-table-config'){\n        bissolFetchConfigServerSide(result_fetch_config);\n    } \n    console.log(param_col_names);\n    Dashboards.fireChange('param_action_picker_selection', 'dummy');\n}",
+      "value": "function(){\n\n    if(param_config_id !== 'new-table-config' && param_config_id !==  null){\n        bissolFetchConfigServerSide(result_fetch_config);\n    } \n    console.log(param_col_names);\n    Dashboards.fireChange('param_action_picker_selection', 'dummy');\n}",
       "type": "JavaScript"
      },
      {
@@ -1287,6 +1287,34 @@
      {
       "name": "name",
       "value": "param_config_action",
+      "type": "Id"
+     },
+     {
+      "name": "propertyValue",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
+     }
+    ]
+   },
+   {
+    "id": "68aefef8-8127-07de-b121-46b258d5cf6b",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_config_action_picker_refresher",
       "type": "Id"
      },
      {
