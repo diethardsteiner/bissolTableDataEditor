@@ -6,7 +6,7 @@
 export PROJECT_ENVIRONMENT=dev
 
 # PROJECT
-export PROJECT_HOME=/home/dsteiner/Dropbox/projects/bissolTableDataEditor
+export PROJECT_HOME=/home/dsteiner/projects/bissolTableDataEditor
 
 # PENTAHO KETTLE
 export PENTAHO_JAVA_HOME=/usr/java/jre1.7.0_45
