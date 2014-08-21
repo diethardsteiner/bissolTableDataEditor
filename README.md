@@ -1,8 +1,18 @@
 # Bissol Table Data Editor
 
-**WARNING**: Do not use in production! This project is in its early stages. Functionality has only been tested with PostgreSQL and MariaDB.
+> **WARNING**: Do not use in production! This project is in its early stages. Functionality has only been tested with PostgreSQL and MariaDB.
 
-**Note to Testers**: To get started, after downloading the project files just add the `pentaho-solutions/system/bissolTableDataEditor` folder to your biserver and restart the server. You should then find the plugin listed in the **Tools** menu. Please report any bugs via the github project page.
+> **NOTE TO BETA TESTERS**: To get started, after downloading the project files just add the `pentaho-solutions/system/bissolTableDataEditor` folder to your biserver, install *all the dependencies* listed below and restart the server. You should then find the plugin listed in the **Tools** menu. Please report any bugs via the github project page in the **Issues** section.
+
+## Screenshots
+
+Admin page to configure tables which should be made available for editing:
+
+![](notes/img/btde-admin-page.png)
+
+Main page which allows standard end users to edit the data (add, update and delete records) of a specific table:
+
+![](notes/img/btde-main-page.png)
 
 ## Intended Purpose of the Plugin ##
 
@@ -42,6 +52,10 @@ The respective JDBC driver have to be installed in `tomcat/lib`. This should alr
 - Only current web browsers are supported. The main editor page makes use of the *contenteditable* attribute which is only supported by recent web browsers.
 - Only one columns is supported for the **primary key**. The primary key has to be defined for the update logic. Note that the primary key has to be properly defined with auto increment on the database side for this to work. 
 - If there is a DB error while adding, updating or removing records, only a generic error is shown in the web UI. This has to do with the fact that currently PDI DB steps do not feed back any DB error message details. A Jira case has been created for this feature to be implemented.
+
+## General Workflow
+
+Once the plugin is installed a user of the role admin can select tables via the **Admin** page and choose which columns can be viewed and edited. Only then a standard end user can edit the data of a specific table via the **Main** page.
 
 ## Configuration
 
