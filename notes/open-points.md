@@ -19,13 +19,6 @@ To get the proper bootstrap styling add following files from the examples packag
 
 use modals: http://getbootstrap.com/javascript/
 
-
-## JSON to form
-
-Make it easy to edit the config. Maybe make use of [jsonform](https://github.com/joshfire/jsonform).
-
-Or [Alpaca](http://www.alpacajs.org/)
-
 ## OrientDB
 
 CDE makes use of [OrientDB](http://www.orientechnologies.com/orientdb/) - is there any chance to use it for this project as well?
