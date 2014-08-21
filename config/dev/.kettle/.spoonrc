@@ -1,5 +1,5 @@
 #Kettle Properties file
-#Tue Aug 19 21:17:20 BST 2014
+#Thu Aug 21 12:05:23 BST 2014
 AskAboutReplacingDatabases=N
 AutoCollapseCoreObjectsTree=Y
 AutoSave=N
@@ -259,7 +259,7 @@ SizeH66=480
 SizeH67=741
 SizeH68=603
 SizeH69=363
-SizeH6=681
+SizeH6=683
 SizeH70=741
 SizeH71=575
 SizeH72=342
@@ -415,7 +415,7 @@ SizeW66=320
 SizeW67=950
 SizeW68=883
 SizeW69=871
-SizeW6=998
+SizeW6=1002
 SizeW70=548
 SizeW71=800
 SizeW72=1089
@@ -611,12 +611,12 @@ lastdir8=
 lastdir9=
 lastfile10=
 lastfile1=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/admin/saveconfig.ktr
-lastfile2=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/fetchConfigTables.ktr
-lastfile3=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/genericupdatequery.ktr
-lastfile4=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/saveRecordAndReturnKeyInjector.ktr
-lastfile5=file\:///home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/saveRecordAndReturnKey.ktr
+lastfile2=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/genericupdatequery.ktr
+lastfile3=file\:///home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/saveRecordAndReturnKey.ktr
+lastfile4=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/admin/fetchDBConnections.ktr
+lastfile5=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/fetchConfigTables.ktr
 lastfile6=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/fetchConfigDataForTable.ktr
-lastfile7=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/admin/fetchDBConnections.ktr
+lastfile7=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/saveRecordAndReturnKeyInjector.ktr
 lastfile8=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/admin/fetchConfigDataForTableRelational.ktr
 lastfile9=/home/dsteiner/apps/pentaho/biserver/biserver-ce-5.1.0/pentaho-solutions/system/bissolTableDataEditor/endpoints/kettle/admin/fetchdbcolumns.ktr
 lastfiles=9
