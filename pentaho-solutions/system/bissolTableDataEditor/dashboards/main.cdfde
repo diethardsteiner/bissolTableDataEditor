@@ -936,7 +936,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    bissolCreateSelect('html_select_table', 'dbTablePicker', 'Choose Table:', result_fetch_config_tables, 'param_config_id');\n}",
+      "value": "function(){\n    \n    if(result_fetch_config_tables.length === 0){\n        alertError =\n        '<div class=\"alert alert-info alert-dismissible\" role=\"alert\">'\n        +'    <button type=\"button\" class=\"close\" data-dismiss=\"alert\">'\n        +'    <span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>'\n        +'    <strong>Note:</strong> No configuration available. Please define table references on the Admin page.' \n        +'</div>'\n        ;\n        \n        $('#content').append(alertError);\n\n    } else {\n        bissolCreateSelect('html_select_table', 'dbTablePicker', 'Choose Table:', result_fetch_config_tables, 'param_config_id');\n    } \n}",
       "type": "JavaScript"
      },
      {
@@ -1019,7 +1019,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    bissolFetchConfigServerSide(result_fetch_config);\n}",
+      "value": "function(){\n\n    bissolFetchConfigServerSide(result_fetch_config);\n}",
       "type": "JavaScript"
      },
      {
@@ -1175,7 +1175,7 @@
      },
      {
       "name": "executeAtStart",
-      "value": "true",
+      "value": "false",
       "type": "Boolean"
      },
      {
@@ -1185,7 +1185,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    if(result_generic_update.length === 0){\n        alert(\"Something went wrong! Check JavaScript Console and/or Server Log.\");\n    }\n}",
+      "value": "function(){\n   \n    // in case database is down\n    if(typeof result_generic_update == 'undefined'){\n        alert('Something went wrong! Check JavaScript Console and/or Server Log.');\n    }\n    \n    // in case database returns error\n    else if(result_generic_update.length > 0){\n        alert('Something went wrong!!!! The database error message is: \"'\n        + result_generic_update[0][0]\n        + ' In addition check JavaScript Console and/or Server Log.');\n    }\n}",
       "type": "JavaScript"
      },
      {
@@ -1312,9 +1312,9 @@
     ]
    },
    {
-    "id": "bc78cba2-4aee-9ef5-42b9-c36bcb257281",
-    "type": "ComponentsbissolTableDataEditor_fetchConfigTables_CPKENDPOINT",
-    "typeDesc": "fetchConfigTables Endpoint",
+    "id": "ad3dd10d-013a-c744-5d1b-fbca877fd653",
+    "type": "ComponentsbissolTableDataEditor_fetchConfigTablesJob_CPKENDPOINT",
+    "typeDesc": "fetchConfigTablesJob Endpoint",
     "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
     "properties": [
      {
@@ -1329,13 +1329,13 @@
      },
      {
       "name": "kettleOutput",
-      "value": "Inferred",
+      "value": "Json",
       "type": "kettleOutputCustom"
      }
     ],
     "meta": "CPK",
     "meta_pluginId": "bissolTableDataEditor",
-    "meta_endpoint": "fetchConfigTables"
+    "meta_endpoint": "fetchConfigTablesJob"
    },
    {
     "id": "fe872214-bc8c-4e8c-cb9e-0ec42d0adae8",
@@ -1381,7 +1381,7 @@
      },
      {
       "name": "kettleOutput",
-      "value": "Inferred",
+      "value": "Json",
       "type": "kettleOutputCustom"
      }
     ],

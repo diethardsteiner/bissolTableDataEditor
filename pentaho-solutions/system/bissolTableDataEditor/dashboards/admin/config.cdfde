@@ -1563,9 +1563,9 @@
     "meta_endpoint": "saveconfig"
    },
    {
-    "id": "faa5c526-8348-ed40-c9da-33c01408dd76",
-    "type": "ComponentsbissolTableDataEditor_fetchConfigTables_CPKENDPOINT",
-    "typeDesc": "fetchConfigTables Endpoint",
+    "id": "936a4523-105d-1184-4394-abf6750d24df",
+    "type": "ComponentsbissolTableDataEditor_fetchConfigTablesJob_CPKENDPOINT",
+    "typeDesc": "fetchConfigTablesJob Endpoint",
     "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
     "properties": [
      {
@@ -1580,13 +1580,13 @@
      },
      {
       "name": "kettleOutput",
-      "value": "Inferred",
+      "value": "Json",
       "type": "kettleOutputCustom"
      }
     ],
     "meta": "CPK",
     "meta_pluginId": "bissolTableDataEditor",
-    "meta_endpoint": "fetchConfigTables"
+    "meta_endpoint": "fetchConfigTablesJob"
    },
    {
     "id": "78964c91-5b90-b6e9-06d0-77d017b6975e",
