@@ -255,7 +255,9 @@ function bissolSaveAction(){
                     $('#html_table_config_container').append(alertSuccess);
                     
                     // refresh main action picker pull down menu
+                    //Dashboards.setParameter('param_config_id','');
                     Dashboards.updateComponent(render_comp_config_action_picker);
+                    
                 }
 
             });
