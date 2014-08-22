@@ -2,7 +2,7 @@
 
 > **WARNING**: Do not use in production! This project is in its early stages. Functionality has only been tested with PostgreSQL and MariaDB.
 
-> **NOTE TO BETA TESTERS**: To get started, after downloading the project files just add the `pentaho-solutions/system/bissolTableDataEditor` folder to your biserver, install *all the dependencies* listed below and restart the server. You should then find the plugin listed in the **Tools** menu. Please report any bugs via the github project page in the **Issues** section.
+> **NOTE TO BETA TESTERS**: To get started, after downloading the project files just add the `pentaho-solutions/system/bissolTableDataEditor` folder to your biserver. Start the biserver - the plugin automatically copies the required Kettle plugins to the dedicated biserver Kettle plugin folder. You should then find the plugin listed in the **Tools** menu. **YOU MUST THEN RESTART THE SERVER NOW TO BE ABLE TO USE THE PLUGIN** so that the Kettle plugins get registered.  Please report any bugs via the github project page in the **Issues** section.
 
 ## Screenshots
 
@@ -21,7 +21,7 @@ The **Bissol Table Data Editor** (BTDE) Pentaho BI Server Plugin allows you to *
 Example **Use Cases**:
 
 - Maintaining attribute fields in **dimension tables**. For some dimensions in a star schema you might ask end-users to add some additional information which is otherwise not available.
-- Maintaining custom **configuration tables**  
+- Maintaining custom **configuration tables**
 - Maintaining custom **metadata tables**
 
 > **Note**: The **emphasis** is on maintaining **small tables**. The definition of **small** is anything that fits on a standard screen, so ideally less than a hundred records. As a safety measure, the BTDE limits the amount of data which can be displayed to 500 records.
@@ -35,9 +35,9 @@ Make sure you have at last on **data source** defined with a user which has **re
 
 ### Kettle (PDI) Plugins ###
 
-Currently **Sparkl** does't automatically include dependent PDI plugins. 
+Currently **Sparkl** does't automatically include dependent PDI plugins. I have implemented a workaround so that these Kettle plugins get automatically installed on the first startup, after which you have to restart the biserver.
 
-Following **Kettle** plugins have to be installed manually into the `pentaho-solutions/system/kettle/plugins/steps` folder. Make sure you get the very latest versions of these plugins:
+Following **Kettle** plugins will be automatically added to the `pentaho-solutions/system/kettle/plugins/steps` folder.
 
 - [BA Server Utils](https://github.com/webdetails/kettle-baserver-utils)
 - [JDBC Metadata](https://github.com/rpbouman/pentaho-pdi-plugin-jdbc-metadata/wiki/Installation)
