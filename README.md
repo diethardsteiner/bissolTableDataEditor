@@ -2,7 +2,7 @@
 
 > **WARNING**: Do not use in production! This project is in its early stages. Functionality has only been tested with PostgreSQL and MariaDB.
 
-> **NOTE TO BETA TESTERS**: To get started, after downloading the project files just add the `pentaho-solutions/system/bissolTableDataEditor` folder to your biserver. Start the biserver - the plugin automatically copies the required Kettle plugins to the dedicated biserver Kettle plugin folder. You should then find the plugin listed in the **Tools** menu. **YOU MUST THEN RESTART THE SERVER TO BE ABLE TO USE THE PLUGIN** so that the Kettle plugins get registered.  Please report any bugs via the github project page in the **Issues** section.
+> **NOTE**: **AFTER INSTALLING THE PLUGIN YOU MUST RESTART THE BISERVER** so that the Kettle plugins get registered.
 
 ## Screenshots
 
