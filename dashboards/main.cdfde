@@ -3,6 +3,29 @@
   "title": "main",
   "rows": [
    {
+    "id": "3b33af01-a6e2-1a6d-6cd5-5713618b9af2",
+    "type": "LayoutResourceFile",
+    "typeDesc": "Resource",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "bissolUtils.js",
+      "type": "Id"
+     },
+     {
+      "name": "resourceFile",
+      "value": "/pentaho/api/repos/bissolTableDataEditor/static/custom/js/bissolUtils.js",
+      "type": "ResourceFile"
+     },
+     {
+      "name": "resourceType",
+      "value": "Javascript",
+      "type": "Label"
+     }
+    ]
+   },
+   {
     "id": "7a536567-1f22-5628-c5d6-681b266464eb",
     "type": "LayoutResourceFile",
     "typeDesc": "Resource",
@@ -936,7 +959,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    \n    if(result_fetch_config_tables.length === 0){\n        alertError =\n        '<div class=\"alert alert-info alert-dismissible\" role=\"alert\">'\n        +'    <button type=\"button\" class=\"close\" data-dismiss=\"alert\">'\n        +'    <span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>'\n        +'    <strong>Note:</strong> No configuration available. Please define table references on the Admin page.' \n        +'</div>'\n        ;\n        \n        $('#content').append(alertError);\n\n    } else {\n        bissolCreateSelect('html_select_table', 'dbTablePicker', 'Choose Table:', result_fetch_config_tables, 'param_config_id');\n    } \n}",
+      "value": "function(){\n    \n    if(result_fetch_config_tables.length === 0){\n        var alertError = bissolCreateAlertMsg('info', '<strong>Note:</strong> No configuration available. Please define table references on the Admin page.');\n        var alertError2 = bissolCreateAlertMsg('info', '<strong>Note:</strong> If you forgot to restart the biserver after installing this plugin please do so now otherwise this plugin will not work properly.');\n\n        $('#content').append(alertError);\n        $('#content').append(alertError2);\n\n    } else {\n        bissolCreateSelect('html_select_table', 'dbTablePicker', 'Choose Table:', result_fetch_config_tables, 'param_config_id');\n    } \n}",
       "type": "JavaScript"
      },
      {

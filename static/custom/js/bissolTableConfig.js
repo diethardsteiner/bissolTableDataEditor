@@ -164,22 +164,6 @@ function bissolSaveAction(){
                 // 2) is the chosen primary key column visible? 
                 // 3) check that only one primary key is defined
 
-
-
-                var alertError = '';
-                function createAlertErrorMsg(msg){
-                    alertError =
-                    '<div class="alert alert-danger alert-dismissible" role="alert">'
-                    +'    <button type="button" class="close" data-dismiss="alert">'
-                    +'    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>'
-                    +'    <strong>Error!</strong> Please correct your configuration details: ' 
-                    + msg
-                    +'</div>'
-                    ;
-                    return alertError;
-                }
-
-
                 var isEditableCheckCounter = 0;
                 $.each(myColsIsVisible,function(i,val){
                     $.each(myColsIsEditable,function(j,value){
@@ -206,31 +190,35 @@ function bissolSaveAction(){
                     primaryKeyIsEditable = 0;
                 }
                 
+                function createAlertErrorMsg(msg){
+                    var alertMsg = bissolCreateAlertMsg('danger','<strong>Error!</strong> Please correct your configuration details: ' + msg);
+                    $('#html_db_table_metadata_picker').prepend(alertMsg);
+                }
                 
                 if(myColsIsPrimaryKey.length === 0){
-                    $('#html_db_table_metadata_picker').prepend(createAlertErrorMsg('You must define a primary key!'));
+                    createAlertErrorMsg('You must define a primary key!');
                 }
 
                 else if(myColsIsPrimaryKey.length > 1){
-                    $('#html_db_table_metadata_picker').prepend(createAlertErrorMsg('You must only define one column as primary key!'));
+                    createAlertErrorMsg('You must only define one column as primary key!');
                 }
 
                 else if(myColsIsVisible.length === 0){
-                    $('#html_db_table_metadata_picker').prepend(createAlertErrorMsg('You must define at least one visible column!'));
+                    createAlertErrorMsg('You must define at least one visible column!');
                 }     
 
                 else if(isPrimaryKeyOkCounter !== 1){
-                    $('#html_db_table_metadata_picker').prepend(createAlertErrorMsg('The primary key column must be visible!'));                
+                    createAlertErrorMsg('The primary key column must be visible!');                
                 }
 
                 else if(myColsIsEditable.length === 0){
-                    $('#html_db_table_metadata_picker').prepend(createAlertErrorMsg('You must define at least one editable column!'));
+                    createAlertErrorMsg('You must define at least one editable column!');
                 }
                 else if(isEditableCheckCounter !== myColsIsEditable.length){
-                    $('#html_db_table_metadata_picker').prepend(createAlertErrorMsg('All editable columns must be visible as well!'));                
+                    createAlertErrorMsg('All editable columns must be visible as well!');                
                 } 
                 else if(primaryKeyIsEditable === 1){
-                    $('#html_db_table_metadata_picker').prepend(createAlertErrorMsg('The primary key column must not be editable!'));                                    
+                    createAlertErrorMsg('The primary key column must not be editable!');                                    
                 }
 
                 else {
@@ -243,13 +231,7 @@ function bissolSaveAction(){
                     Dashboards.setParameter('param_id_column', myColsIsPrimaryKey.join(','));
                     Dashboards.fireChange('param_config_save','save');
 
-                    var alertSuccess =
-                    '<div class="alert alert-success alert-dismissible" role="alert">'
-                    +'    <button type="button" class="close" data-dismiss="alert">'
-                    +'    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>'
-                    +'    <strong>Success!</strong> Configuration details were saved.'
-                    +'</div>'
-                    ;
+                    var alertSuccess = bissolCreateAlertMsg('success', '<strong>Success!</strong> Configuration details were saved.');
 
                     $('#html_table_config_container').empty();
                     $('#html_table_config_container').append(alertSuccess);
