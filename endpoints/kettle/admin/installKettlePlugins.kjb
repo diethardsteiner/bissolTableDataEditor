@@ -137,7 +137,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>192</xloc>
-      <yloc>288</yloc>
+      <yloc>544</yloc>
       </entry>
     <entry>
       <name>Checks if files exist</name>
@@ -172,13 +172,13 @@
       <create_destination_folder>Y</create_destination_folder>
       <fields>
         <field>
-          <source_filefolder>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;..&#x2f;..&#x2f;..&#x2f;kettle&#x2f;plugins&#x2f;steps&#x2f;BAServerUtils</source_filefolder>
-          <destination_filefolder>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;..&#x2f;..&#x2f;..&#x2f;..&#x2f;kettle&#x2f;plugins&#x2f;steps&#x2f;BAServerUtils</destination_filefolder>
+          <source_filefolder>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;..&#x2f;..&#x2f;..&#x2f;kettle&#x2f;plugins&#x2f;steps&#x2f;BAServerUtils.zip</source_filefolder>
+          <destination_filefolder>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;..&#x2f;..&#x2f;..&#x2f;..&#x2f;kettle&#x2f;plugins&#x2f;steps</destination_filefolder>
           <wildcard/>
         </field>
         <field>
-          <source_filefolder>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;..&#x2f;..&#x2f;..&#x2f;kettle&#x2f;plugins&#x2f;steps&#x2f;pentaho-pdi-plugin-jdbc-metadata</source_filefolder>
-          <destination_filefolder>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;..&#x2f;..&#x2f;..&#x2f;..&#x2f;kettle&#x2f;plugins&#x2f;steps&#x2f;pentaho-pdi-plugin-jdbc-metadata</destination_filefolder>
+          <source_filefolder>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;..&#x2f;..&#x2f;..&#x2f;kettle&#x2f;plugins&#x2f;steps&#x2f;pentaho-pdi-plugin-jdbc-metadata.zip</source_filefolder>
+          <destination_filefolder>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;..&#x2f;..&#x2f;..&#x2f;..&#x2f;kettle&#x2f;plugins&#x2f;steps</destination_filefolder>
           <wildcard/>
         </field>
       </fields>
@@ -187,6 +187,90 @@
       <nr>0</nr>
       <xloc>288</xloc>
       <yloc>192</yloc>
+      </entry>
+    <entry>
+      <name>Unzip file</name>
+      <description/>
+      <type>UNZIP</type>
+      <zipfilename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;..&#x2f;..&#x2f;..&#x2f;..&#x2f;kettle&#x2f;plugins&#x2f;steps&#x2f;BAServerUtils.zip</zipfilename>
+      <wildcard/>
+      <wildcardexclude/>
+      <targetdirectory>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;..&#x2f;..&#x2f;..&#x2f;..&#x2f;kettle&#x2f;plugins&#x2f;steps</targetdirectory>
+      <movetodirectory/>
+      <afterunzip>0</afterunzip>
+      <addfiletoresult>N</addfiletoresult>
+      <isfromprevious>N</isfromprevious>
+      <adddate>N</adddate>
+      <addtime>N</addtime>
+      <addOriginalTimestamp>N</addOriginalTimestamp>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <rootzip>Y</rootzip>
+      <createfolder>Y</createfolder>
+      <nr_limit>10</nr_limit>
+      <wildcardSource/>
+      <success_condition>success_if_no_errors</success_condition>
+      <iffileexists>SKIP</iffileexists>
+      <create_move_to_directory>N</create_move_to_directory>
+      <setOriginalModificationDate>N</setOriginalModificationDate>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>288</xloc>
+      <yloc>288</yloc>
+      </entry>
+    <entry>
+      <name>Delete files</name>
+      <description/>
+      <type>DELETE_FILES</type>
+      <arg_from_previous>N</arg_from_previous>
+      <include_subfolders>N</include_subfolders>
+      <fields>
+        <field>
+          <name>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;..&#x2f;..&#x2f;..&#x2f;..&#x2f;kettle&#x2f;plugins&#x2f;steps&#x2f;BAServerUtils.zip</name>
+          <filemask/>
+        </field>
+        <field>
+          <name>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;..&#x2f;..&#x2f;..&#x2f;..&#x2f;kettle&#x2f;plugins&#x2f;steps&#x2f;pentaho-pdi-plugin-jdbc-metadata.zip</name>
+          <filemask/>
+        </field>
+      </fields>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>288</xloc>
+      <yloc>464</yloc>
+      </entry>
+    <entry>
+      <name>Unzip file 2</name>
+      <description/>
+      <type>UNZIP</type>
+      <zipfilename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;..&#x2f;..&#x2f;..&#x2f;..&#x2f;kettle&#x2f;plugins&#x2f;steps&#x2f;pentaho-pdi-plugin-jdbc-metadata.zip</zipfilename>
+      <wildcard/>
+      <wildcardexclude/>
+      <targetdirectory>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;..&#x2f;..&#x2f;..&#x2f;..&#x2f;kettle&#x2f;plugins&#x2f;steps</targetdirectory>
+      <movetodirectory/>
+      <afterunzip>0</afterunzip>
+      <addfiletoresult>N</addfiletoresult>
+      <isfromprevious>N</isfromprevious>
+      <adddate>N</adddate>
+      <addtime>N</addtime>
+      <addOriginalTimestamp>N</addOriginalTimestamp>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <rootzip>Y</rootzip>
+      <createfolder>Y</createfolder>
+      <nr_limit>10</nr_limit>
+      <wildcardSource/>
+      <success_condition>success_if_no_errors</success_condition>
+      <iffileexists>SKIP</iffileexists>
+      <create_move_to_directory>N</create_move_to_directory>
+      <setOriginalModificationDate>N</setOriginalModificationDate>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>288</xloc>
+      <yloc>384</yloc>
       </entry>
   </entries>
   <hops>
@@ -219,7 +303,34 @@
     </hop>
     <hop>
       <from>Copy Files</from>
+      <to>Unzip file</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Delete files</from>
       <to>Success</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Unzip file</from>
+      <to>Unzip file 2</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Unzip file 2</from>
+      <to>Delete files</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
