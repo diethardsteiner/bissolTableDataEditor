@@ -159,50 +159,6 @@
   <notepads>
   </notepads>
   <connection>
-    <name>backoffice</name>
-    <server>&#x24;&#x7b;VAR_DB_BACKOFFICE_HOST&#x7d;</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>&#x24;&#x7b;VAR_DB_BACKOFFICE_NAME&#x7d;</database>
-    <port>&#x24;&#x7b;VAR_DB_BACKOFFICE_PORT&#x7d;</port>
-    <username>&#x24;&#x7b;VAR_DB_BACKOFFICE_USER&#x7d;</username>
-    <password>&#x24;&#x7b;VAR_DB_BACKOFFICE_PW&#x7d;</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;VAR_DB_BACKOFFICE_PORT&#x7d;</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
-  <connection>
-    <name>dwh</name>
-    <server>&#x24;&#x7b;VAR_DB_DMA_HOST&#x7d;</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>&#x24;&#x7b;VAR_DB_DMA_NAME&#x7d;</database>
-    <port>&#x24;&#x7b;VAR_DB_DMA_PORT&#x7d;</port>
-    <username>&#x24;&#x7b;VAR_DB_DMA_USER&#x7d;</username>
-    <password>&#x24;&#x7b;VAR_DB_DMA_PW&#x7d;</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;VAR_DB_DMA_PORT&#x7d;</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
-  <connection>
     <name>generic</name>
     <server>localhost</server>
     <type>GENERIC</type>
@@ -226,100 +182,6 @@
       <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
     </attributes>
   </connection>
-  <connection>
-    <name>logs</name>
-    <server>&#x24;&#x7b;VAR_DB_LOG_HOST&#x7d;</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>&#x24;&#x7b;VAR_DB_LOG_NAME&#x7d;</database>
-    <port>&#x24;&#x7b;VAR_DB_LOG_PORT&#x7d;</port>
-    <username>&#x24;&#x7b;VAR_DB_LOG_USER&#x7d;</username>
-    <password>&#x24;&#x7b;VAR_DB_LOG_PW&#x7d;</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code><attribute>seq_logging</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;VAR_DB_LOG_PORT&#x7d;</attribute></attribute>
-      <attribute><code>PREFERRED_SCHEMA_NAME</code><attribute>&#x24;&#x7b;VAR_DB_LOG_SCHEMA&#x7d;</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
-  <connection>
-    <name>qa</name>
-    <server>&#x24;&#x7b;VAR_DB_QA_HOST&#x7d;</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>&#x24;&#x7b;VAR_DB_QA_NAME&#x7d;</database>
-    <port>&#x24;&#x7b;VAR_DB_QA_PORT&#x7d;</port>
-    <username>&#x24;&#x7b;VAR_DB_QA_USER&#x7d;</username>
-    <password>&#x24;&#x7b;VAR_DB_QA_PW&#x7d;</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;VAR_DB_QA_PORT&#x7d;</attribute></attribute>
-      <attribute><code>PREFERRED_SCHEMA_NAME</code><attribute>&#x24;&#x7b;VAR_DB_QA_SCHEMA&#x7d;</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
-  <connection>
-    <name>staging</name>
-    <server>&#x24;&#x7b;VAR_DB_STAGING_HOST&#x7d;</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>&#x24;&#x7b;VAR_DB_STAGING_NAME&#x7d;</database>
-    <port>&#x24;&#x7b;VAR_DB_STAGING_PORT&#x7d;</port>
-    <username>&#x24;&#x7b;VAR_DB_STAGING_USER&#x7d;</username>
-    <password>&#x24;&#x7b;VAR_DB_STAGING_PW&#x7d;</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;VAR_DB_STAGING_PORT&#x7d;</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
-  <connection>
-    <name>teradata</name>
-    <server>&#x24;&#x7b;VAR_DB_TERADATA_HOST&#x7d;</server>
-    <type>TERADATA</type>
-    <access>Native</access>
-    <database>&#x24;&#x7b;VAR_DB_TERADATA_NAME&#x7d;</database>
-    <port>&#x24;&#x7b;VAR_DB_TERADATA_PORT&#x7d;</port>
-    <username>&#x24;&#x7b;VAR_DB_TERADATA_USER&#x7d;</username>
-    <password>&#x24;&#x7b;VAR_DB_TERADATA_PW&#x7d;</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>EXTRA_OPTION_TERADATA.DBS_PORT</code><attribute>&#x24;&#x7b;VAR_DB_TERADATA_PORT&#x7d;</attribute></attribute>
-      <attribute><code>EXTRA_OPTION_TERADATA.charset</code><attribute>UTF8</attribute></attribute>
-      <attribute><code>EXTRA_OPTION_TERADATA.tmode</code><attribute>ANSI</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;VAR_DB_TERADATA_PORT&#x7d;</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
   <order>
   <hop> <from>Generate Rows</from><to>Get Variables</to><enabled>Y</enabled> </hop>
   <hop> <from>Get Variables</from><to>Write to log</to><enabled>Y</enabled> </hop>
@@ -330,6 +192,54 @@
   <hop> <from>Filter rows</from><to>Select values</to><enabled>Y</enabled> </hop>
   <hop> <from>Select values</from><to>Write to log 2</to><enabled>Y</enabled> </hop>
   </order>
+  <step>
+    <name>Dummy &#x28;do nothing&#x29;</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>288</xloc>
+      <yloc>288</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Filter rows</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>Select values</send_true_to>
+<send_false_to>Dummy &#x28;do nothing&#x29;</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>TABLE_TYPE</leftvalue>
+ <function>&#x3d;</function>
+ <rightvalue/>
+ <value><name>constant</name><type>String</type><text>TABLE</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value> </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>128</xloc>
+      <yloc>288</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
   <step>
     <name>Generate Rows</name>
     <type>RowGenerator</type>
@@ -352,102 +262,6 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>448</xloc>
       <yloc>64</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Get Variables</name>
-    <type>GetVariable</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
-      <field>
-        <name>param_db_connection</name>
-        <variable>&#x24;&#x7b;param_db_connection&#x7d;</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>param_db_schema</name>
-        <variable>&#x24;&#x7b;param_db_schema&#x7d;</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>448</xloc>
-      <yloc>160</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>OUTPUT</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>128</xloc>
-      <yloc>608</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Write to log</name>
-    <type>WriteToLog</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <loglevel>log_level_basic</loglevel>
-      <displayHeader>Y</displayHeader>
-      <limitRows>N</limitRows>
-      <limitRowsNumber>0</limitRowsNumber>
-      <logmessage>&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;FETCHDBTABLES&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;</logmessage>
-    <fields>
-      <field>
-        <name>param_db_connection</name>
-        </field>
-      <field>
-        <name>param_db_schema</name>
-        </field>
-      </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>448</xloc>
-      <yloc>256</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -525,8 +339,8 @@
     </step>
 
   <step>
-    <name>Write to log 2</name>
-    <type>WriteToLog</type>
+    <name>Get Variables</name>
+    <type>GetVariable</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -535,55 +349,42 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-      <loglevel>log_level_basic</loglevel>
-      <displayHeader>Y</displayHeader>
-      <limitRows>N</limitRows>
-      <limitRowsNumber>0</limitRowsNumber>
-      <logmessage>&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;FETCHDBTABLES - OUTPUT&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;</logmessage>
     <fields>
       <field>
-        <name>tablename</name>
-        </field>
-      </fields>
+        <name>param_db_connection</name>
+        <variable>&#x24;&#x7b;param_db_connection&#x7d;</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>param_db_schema</name>
+        <variable>&#x24;&#x7b;param_db_schema&#x7d;</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>128</xloc>
-      <yloc>480</yloc>
+      <xloc>448</xloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Filter rows</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<send_true_to>Select values</send_true_to>
-<send_false_to>Dummy &#x28;do nothing&#x29;</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <leftvalue>TABLE_TYPE</leftvalue>
- <function>&#x3d;</function>
- <rightvalue/>
- <value><name>constant</name><type>String</type><text>TABLE</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value> </condition>
-    </compare>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>128</xloc>
-      <yloc>288</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Dummy &#x28;do nothing&#x29;</name>
+    <name>OUTPUT</name>
     <type>Dummy</type>
     <description/>
     <distribute>Y</distribute>
@@ -595,8 +396,8 @@
            </partitioning>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>288</xloc>
-      <yloc>288</yloc>
+      <xloc>128</xloc>
+      <yloc>608</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -621,6 +422,67 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>128</xloc>
       <yloc>384</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Write to log</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <loglevel>log_level_basic</loglevel>
+      <displayHeader>Y</displayHeader>
+      <limitRows>N</limitRows>
+      <limitRowsNumber>0</limitRowsNumber>
+      <logmessage>&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;FETCHDBTABLES&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;</logmessage>
+    <fields>
+      <field>
+        <name>param_db_connection</name>
+        </field>
+      <field>
+        <name>param_db_schema</name>
+        </field>
+      </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>448</xloc>
+      <yloc>256</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Write to log 2</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <loglevel>log_level_basic</loglevel>
+      <displayHeader>Y</displayHeader>
+      <limitRows>N</limitRows>
+      <limitRowsNumber>0</limitRowsNumber>
+      <logmessage>&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;FETCHDBTABLES - OUTPUT&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;</logmessage>
+    <fields>
+      <field>
+        <name>tablename</name>
+        </field>
+      </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>128</xloc>
+      <yloc>480</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

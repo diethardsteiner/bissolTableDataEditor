@@ -154,50 +154,6 @@
   <notepads>
   </notepads>
   <connection>
-    <name>backoffice</name>
-    <server>&#x24;&#x7b;VAR_DB_BACKOFFICE_HOST&#x7d;</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>&#x24;&#x7b;VAR_DB_BACKOFFICE_NAME&#x7d;</database>
-    <port>&#x24;&#x7b;VAR_DB_BACKOFFICE_PORT&#x7d;</port>
-    <username>&#x24;&#x7b;VAR_DB_BACKOFFICE_USER&#x7d;</username>
-    <password>&#x24;&#x7b;VAR_DB_BACKOFFICE_PW&#x7d;</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;VAR_DB_BACKOFFICE_PORT&#x7d;</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
-  <connection>
-    <name>dwh</name>
-    <server>&#x24;&#x7b;VAR_DB_DMA_HOST&#x7d;</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>&#x24;&#x7b;VAR_DB_DMA_NAME&#x7d;</database>
-    <port>&#x24;&#x7b;VAR_DB_DMA_PORT&#x7d;</port>
-    <username>&#x24;&#x7b;VAR_DB_DMA_USER&#x7d;</username>
-    <password>&#x24;&#x7b;VAR_DB_DMA_PW&#x7d;</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;VAR_DB_DMA_PORT&#x7d;</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
-  <connection>
     <name>generic</name>
     <server>localhost</server>
     <type>GENERIC</type>
@@ -218,100 +174,6 @@
       <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
       <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
       <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
-  <connection>
-    <name>logs</name>
-    <server>&#x24;&#x7b;VAR_DB_LOG_HOST&#x7d;</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>&#x24;&#x7b;VAR_DB_LOG_NAME&#x7d;</database>
-    <port>&#x24;&#x7b;VAR_DB_LOG_PORT&#x7d;</port>
-    <username>&#x24;&#x7b;VAR_DB_LOG_USER&#x7d;</username>
-    <password>&#x24;&#x7b;VAR_DB_LOG_PW&#x7d;</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>EXTRA_OPTION_POSTGRESQL.SEQUENCE_FOR_BATCH_ID</code><attribute>seq_logging</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;VAR_DB_LOG_PORT&#x7d;</attribute></attribute>
-      <attribute><code>PREFERRED_SCHEMA_NAME</code><attribute>&#x24;&#x7b;VAR_DB_LOG_SCHEMA&#x7d;</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
-  <connection>
-    <name>qa</name>
-    <server>&#x24;&#x7b;VAR_DB_QA_HOST&#x7d;</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>&#x24;&#x7b;VAR_DB_QA_NAME&#x7d;</database>
-    <port>&#x24;&#x7b;VAR_DB_QA_PORT&#x7d;</port>
-    <username>&#x24;&#x7b;VAR_DB_QA_USER&#x7d;</username>
-    <password>&#x24;&#x7b;VAR_DB_QA_PW&#x7d;</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;VAR_DB_QA_PORT&#x7d;</attribute></attribute>
-      <attribute><code>PREFERRED_SCHEMA_NAME</code><attribute>&#x24;&#x7b;VAR_DB_QA_SCHEMA&#x7d;</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
-  <connection>
-    <name>staging</name>
-    <server>&#x24;&#x7b;VAR_DB_STAGING_HOST&#x7d;</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>&#x24;&#x7b;VAR_DB_STAGING_NAME&#x7d;</database>
-    <port>&#x24;&#x7b;VAR_DB_STAGING_PORT&#x7d;</port>
-    <username>&#x24;&#x7b;VAR_DB_STAGING_USER&#x7d;</username>
-    <password>&#x24;&#x7b;VAR_DB_STAGING_PW&#x7d;</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;VAR_DB_STAGING_PORT&#x7d;</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
-  <connection>
-    <name>teradata</name>
-    <server>&#x24;&#x7b;VAR_DB_TERADATA_HOST&#x7d;</server>
-    <type>TERADATA</type>
-    <access>Native</access>
-    <database>&#x24;&#x7b;VAR_DB_TERADATA_NAME&#x7d;</database>
-    <port>&#x24;&#x7b;VAR_DB_TERADATA_PORT&#x7d;</port>
-    <username>&#x24;&#x7b;VAR_DB_TERADATA_USER&#x7d;</username>
-    <password>&#x24;&#x7b;VAR_DB_TERADATA_PW&#x7d;</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>EXTRA_OPTION_TERADATA.DBS_PORT</code><attribute>&#x24;&#x7b;VAR_DB_TERADATA_PORT&#x7d;</attribute></attribute>
-      <attribute><code>EXTRA_OPTION_TERADATA.charset</code><attribute>UTF8</attribute></attribute>
-      <attribute><code>EXTRA_OPTION_TERADATA.tmode</code><attribute>ANSI</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;VAR_DB_TERADATA_PORT&#x7d;</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
       <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
     </attributes>
   </connection>
@@ -344,6 +206,70 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>352</xloc>
       <yloc>96</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Generate Rows 2</name>
+    <type>RowGenerator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+    </fields>
+    <limit>1</limit>
+    <never_ending>N</never_ending>
+    <interval_in_ms>5000</interval_in_ms>
+    <row_time_field>now</row_time_field>
+    <last_time_field>FiveSecondsAgo</last_time_field>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>160</xloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Get JDBC Metadata</name>
+    <type>jdbcMetaData</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connectionSource>Connection</connectionSource>
+    <connectionName>generic</connectionName>
+    <connectionField/>
+    <jdbcDriverField/>
+    <jdbcUrlField/>
+    <jdbcUserField/>
+    <jdbcPasswordField/>
+    <alwaysPassInputRow>N</alwaysPassInputRow>
+    <methodName>getSchemas</methodName>
+    <removeArgumentFields>N</removeArgumentFields>
+    <argumentSourceFields>N</argumentSourceFields>
+    <arguments>
+    </arguments>
+    <outputFields>
+        <outputField>
+            <name>TABLE_SCHEM</name>
+            <rename>schema</rename>
+        </outputField>
+    </outputFields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>160</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -425,70 +351,6 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>352</xloc>
       <yloc>304</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Generate Rows 2</name>
-    <type>RowGenerator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
-    </fields>
-    <limit>1</limit>
-    <never_ending>N</never_ending>
-    <interval_in_ms>5000</interval_in_ms>
-    <row_time_field>now</row_time_field>
-    <last_time_field>FiveSecondsAgo</last_time_field>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>160</xloc>
-      <yloc>32</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Get JDBC Metadata</name>
-    <type>jdbcMetaData</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connectionSource>Connection</connectionSource>
-    <connectionName>generic</connectionName>
-    <connectionField/>
-    <jdbcDriverField/>
-    <jdbcUrlField/>
-    <jdbcUserField/>
-    <jdbcPasswordField/>
-    <alwaysPassInputRow>N</alwaysPassInputRow>
-    <methodName>getSchemas</methodName>
-    <removeArgumentFields>N</removeArgumentFields>
-    <argumentSourceFields>N</argumentSourceFields>
-    <arguments>
-    </arguments>
-    <outputFields>
-        <outputField>
-            <name>TABLE_SCHEM</name>
-            <rename>schema</rename>
-        </outputField>
-    </outputFields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>160</xloc>
-      <yloc>128</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
