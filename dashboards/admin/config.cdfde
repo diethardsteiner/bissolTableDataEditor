@@ -971,9 +971,9 @@
     ]
    },
    {
-    "id": "3612a3c1-a234-0f5c-8316-c99e5b6a4161",
-    "type": "ComponentsDateParameter",
-    "typeDesc": "Date Parameter",
+    "id": "8491b90d-dde3-3b9b-d099-89973d6007bd",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
     "parent": "GENERIC",
     "properties": [
      {
@@ -982,9 +982,14 @@
       "type": "Id"
      },
      {
-      "name": "propertyDateValue",
+      "name": "propertyValue",
       "value": "",
-      "type": "Date"
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
      },
      {
       "name": "bookmarkable",
@@ -1612,9 +1617,9 @@
     "meta_endpoint": "fetchConfigTablesJob"
    },
    {
-    "id": "78964c91-5b90-b6e9-06d0-77d017b6975e",
-    "type": "ComponentsbissolTableDataEditor_fetchConfigDataForTable_CPKENDPOINT",
-    "typeDesc": "fetchConfigDataForTable Endpoint",
+    "id": "7f95c977-7aa9-9135-da48-d5c49820bfba",
+    "type": "ComponentsbissolTableDataEditor_fetchConfigDataForTableJob_CPKENDPOINT",
+    "typeDesc": "fetchConfigDataForTableJob Endpoint",
     "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
     "properties": [
      {
@@ -1629,13 +1634,13 @@
      },
      {
       "name": "kettleOutput",
-      "value": "Inferred",
+      "value": "Json",
       "type": "kettleOutputCustom"
      }
     ],
     "meta": "CPK",
     "meta_pluginId": "bissolTableDataEditor",
-    "meta_endpoint": "fetchConfigDataForTable"
+    "meta_endpoint": "fetchConfigDataForTableJob"
    }
   ]
  },

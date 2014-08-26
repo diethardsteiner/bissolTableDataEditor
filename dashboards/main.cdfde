@@ -1439,9 +1439,9 @@
     "meta_endpoint": "saveRecordAndReturnKeyInjector"
    },
    {
-    "id": "393c73f5-f2ca-24de-cdd0-b6179919243e",
-    "type": "ComponentsbissolTableDataEditor_fetchConfigDataForTable_CPKENDPOINT",
-    "typeDesc": "fetchConfigDataForTable Endpoint",
+    "id": "69b43f3f-8d58-07fa-8323-677cbe8c23e6",
+    "type": "ComponentsbissolTableDataEditor_fetchConfigDataForTableJob_CPKENDPOINT",
+    "typeDesc": "fetchConfigDataForTableJob Endpoint",
     "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
     "properties": [
      {
@@ -1456,13 +1456,13 @@
      },
      {
       "name": "kettleOutput",
-      "value": "Inferred",
+      "value": "Json",
       "type": "kettleOutputCustom"
      }
     ],
     "meta": "CPK",
     "meta_pluginId": "bissolTableDataEditor",
-    "meta_endpoint": "fetchConfigDataForTable"
+    "meta_endpoint": "fetchConfigDataForTableJob"
    }
   ]
  },
