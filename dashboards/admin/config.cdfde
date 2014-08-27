@@ -599,7 +599,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    //cdeBootstrapSelect('html_db_connection_picker', 'dbConnectionPicker', 'Choose Connection:', result_fetch_db_connections);\n    //establishListeners('dbConnectionPicker', 'param_db_connection');\n    \n    $('#html_table_config_container').empty();\n    $('#html_table_config_container').append(\n    '<div id=\"bissolTableConfigContainer\">'\n    + ' <div class=\"col-lg-4\">'\n    + '     <div class=\"panel panel-default bissolConfigBox\">'\n    + '         <div class=\"panel-heading\">'\n    + '             <h3 class=\"panel-title\">Connection Properties</h3>'\n    + '         </div>'\n    + '         <div class=\"panel-body\">'\n    + '             <div id=\"html_db_connection_picker\"></div>'\n    + '             <div id=\"html_db_schema_picker\"></div>'\n    + '             <div id=\"html_db_table_picker\"></div>'\n    + '         </div>'\n    + '     </div>'\n    + ' </div>'\n    + ' <div class=\"col-lg-8\">'\n    + '     <div id=\"bissolTablePropertiesContainer\"></div>'\n    + ' </div>'\n    + '</div>'\n    );\n    \n    bissolCreateSelect('html_db_connection_picker', 'dbConnectionPicker', 'Choose Connection:', result_fetch_db_connections, 'param_db_connection');\n    // if editing an existing table config\n    if(result_fetch_config.length > 0){\n            Dashboards.fireChange('param_db_connection', param_db_connection);\n            $('#dbConnectionPicker').prepend(\n                '<option selected value=\"'\n                + param_db_connection\n                + '\">' + param_db_connection + '</option>'\n            )\n    }\n}",
+      "value": "function(){\n    //cdeBootstrapSelect('html_db_connection_picker', 'dbConnectionPicker', 'Choose Connection:', result_fetch_db_connections);\n    //establishListeners('dbConnectionPicker', 'param_db_connection');\n    \n    $('#html_table_config_container').empty();\n    $('#html_table_config_container').append(\n    '<div id=\"bissolTableConfigContainer\">'\n    + ' <div class=\"col-lg-4\">'\n    + '     <div class=\"panel panel-default bissolConfigBox\">'\n    + '         <div class=\"panel-heading\">'\n    + '             <h3 class=\"panel-title\">Connection Properties</h3>'\n    + '         </div>'\n    + '         <div class=\"panel-body\">'\n    + '             <div id=\"html_db_connection_picker\"></div>'\n    + '             <div id=\"html_db_schema_picker\"></div>'\n    + '             <div id=\"html_db_table_picker\"></div>'\n    + '         </div>'\n    + '     </div>'\n    + ' </div>'\n    + ' <div class=\"col-lg-8\">'\n    + '     <div id=\"bissolTablePropertiesContainer\"></div>'\n    + ' </div>'\n    + '</div>'\n    );\n\nconsole.log('------');\nconsole.log(result_fetch_db_connections);\n\n    bissolCreateSelect('html_db_connection_picker', 'dbConnectionPicker', 'Choose Connection:', result_fetch_db_connections, 'param_db_connection');\n    // if editing an existing table config\n    if(result_fetch_config.length > 0){\n            Dashboards.fireChange('param_db_connection', param_db_connection);\n            $('#dbConnectionPicker').prepend(\n                '<option selected value=\"'\n                + param_db_connection\n                + '\">' + param_db_connection + '</option>'\n            )\n    }\n}",
       "type": "JavaScript"
      },
      {
@@ -1478,7 +1478,7 @@
      },
      {
       "name": "kettleOutput",
-      "value": "Inferred",
+      "value": "Json",
       "type": "kettleOutputCustom"
      }
     ],
@@ -1504,7 +1504,7 @@
      },
      {
       "name": "kettleOutput",
-      "value": "Inferred",
+      "value": "Json",
       "type": "kettleOutputCustom"
      }
     ],
@@ -1530,7 +1530,7 @@
      },
      {
       "name": "kettleOutput",
-      "value": "Inferred",
+      "value": "Json",
       "type": "kettleOutputCustom"
      }
     ],
