@@ -1125,7 +1125,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    //buildTable('tableeditor','myTableEditor',select_result,this.metadata);\n    //buildTable('tableeditor','myTableEditor',select_result, result_fetch_metadata);\n    bissolBuildTable(select_result);\n    //console.log(this);\n    $('#myTableEditor').dataTable();\n}",
+      "value": "function(){\n    //buildTable('tableeditor','myTableEditor',select_result,this.metadata);\n    //buildTable('tableeditor','myTableEditor',select_result, result_fetch_metadata);\n\n    if(select_result.length === 0){\n        bissolCreateModal(\n            'html_select_table'\n            , 'mySelectWentWrong'\n            , 'System Error'\n            , 'Something went wrong! Check JavaScript Console and/or Server.'\n            , 'myCloseButton1'\n            , 'Close'\n        );\n        $('#mySelectWentWrong').modal('show');\n    }\n    bissolBuildTable(select_result);\n    //console.log(this);\n    $('#myTableEditor').dataTable();\n}",
       "type": "JavaScript"
      },
      {
@@ -1208,7 +1208,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n   \n    // in case database is down\n    if(typeof result_generic_update == 'undefined'){\n        alert('Something went wrong! Check JavaScript Console and/or Server Log.');\n    }\n    \n    // in case database returns error\n    else if(result_generic_update.length > 0){\n        alert('Something went wrong!!!! The database error message is: \"'\n        + result_generic_update[0][0]\n        + ' In addition check JavaScript Console and/or Server Log.');\n    }\n}",
+      "value": "function(){\n   \n    // in case database is down\n    if(typeof result_generic_update == 'undefined'){\n        alert('Something went wrong! Check JavaScript Console and/or Server Log.');\n    }\n    \n    // in case database returns error\n    else if(result_generic_update.length > 0){      \n        var myErrorMsg = 'Something went wrong. The database error message is: \"'\n            + result_generic_update[0][0]\n            + '\". In addition check JavaScript Console and/or Server Log.'\n        ;\n        \n        bissolCreateModal(\n            'html_select_table'\n            , 'myUpdateWentWrong'\n            , 'System Error'\n            , myErrorMsg\n            , 'myCloseButton1'\n            , 'Close'\n        );\n        $('#myUpdateWentWrong').modal('show');\n    }\n}",
       "type": "JavaScript"
      },
      {
@@ -1291,7 +1291,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    if(result_new_id.length === 0){\n        alert(\"Something went wrong! Check JavaScript Console and/or Server Log.\");\n    }\n}",
+      "value": "function(){\n    if(result_new_id.length === 0){\n        bissolCreateAlertMsg(\n    \t\t'Something went wrong! Check JavaScript Console and/or Server.'\n\t\t\t,\t'danger'\t\n\t\t); \n    }\n}",
       "type": "JavaScript"
      },
      {
