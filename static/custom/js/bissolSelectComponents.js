@@ -1,4 +1,12 @@
-function bissolCreateSelect(myCdeContainerId, myDashboardObjectId, myLabelText, myData, cdeParam){
+//function bissolCreateSelect(myCdeContainerId, myDashboardObjectId, myLabelText, myData, cdeParam){
+function bissolCreateSelect(options){
+
+    var myCdeContainerId = options.myCdeContainerId;
+    var myDashboardObjectId = options.myDashboardObjectId;
+    var myLabelText = options.myLabelText;
+    var myData = options.myData;
+    var cdeParam = options.cdeParam;
+
 //NOTE: if myData has more than one column, the first one will then we used as the id and the second on as value 
     
     console.log(myDashboardObjectId + " with following values: " + JSON.stringify(myData));
@@ -45,7 +53,13 @@ function bissolCreateSelect(myCdeContainerId, myDashboardObjectId, myLabelText, 
 
 //---------------------- checkbox -----------------------//
 
-function bissolCreateCheckboxSet(myCdeContainerId, myDashboardObjectId, myLabelText, myData, cdeParam){
+//function bissolCreateCheckboxSet(myCdeContainerId, myDashboardObjectId, myLabelText, myData, cdeParam){
+function bissolCreateCheckboxSet(options){
+    var myCdeContainerId = options.myCdeContainerId;
+    var myDashboardObjectId = options.myDashboardObjectId;
+    var myLabelText = options.myLabelText;
+    var myData = options.myData;
+    var cdeParam = options.cdeParam;
     
     // create main container which holds all the checkboxes
     var myCheckboxSetContainer = '<div id="' + myDashboardObjectId + '"><label>' + myLabelText + '</label></div>';
@@ -100,8 +114,15 @@ function bissolCreateCheckboxSet(myCdeContainerId, myDashboardObjectId, myLabelT
  * in the Custom Script property
  **/
  
-function bissolCreateButton(myCdeContainerId, myDashboardObjectId, myLabelText, cdeParamIncoming, cdeParam){
+//function bissolCreateButton(myCdeContainerId, myDashboardObjectId, myLabelText, cdeParamIncoming, cdeParam){
+function bissolCreateButton(options){
 
+    var myCdeContainerId = options.myCdeContainerId;
+    var myDashboardObjectId = options.myDashboardObjectId;
+    var myLabelText = options.myLabelText;
+    var cdeParamIncoming = options.cdeParamIncoming
+    var cdeParam = options.cdeParam;
+    
     var myExistingButtons = $('#' + myDashboardObjectId);
     
     if(!!Dashboards.getParameterValue(cdeParamIncoming) && Dashboards.getParameterValue(cdeParamIncoming).length > 0){

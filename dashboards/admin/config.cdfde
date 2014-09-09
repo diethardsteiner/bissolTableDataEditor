@@ -433,7 +433,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    \n    if(result_fetch_config_tables.length > 0){\n        bissolCreateSelect('html_config_action_picker', 'configActionPicker', 'Choose Action:', result_fetch_config_tables, 'param_config_id');       \n    } else {\n        // in case no table was set up there will be no result so provide workaround\n        // very nasty workaround\n        var fakeSet = [];\n        fakeSet.push(\"1\");\n        bissolCreateSelect('html_config_action_picker', 'configActionPicker', 'Choose Action:', fakeSet, 'param_config_id'); \n        $('#configActionPicker > option:nth-child(2)')\n        .attr('disabled','').text('--- NO TABLE CONFIGURED ---');\n    }\n    \n   \n    // add new element at the beginning\n    $('#configActionPicker').prepend(\n            '<option disabled selected>PICK AN ACTION</option>'\n            + '<option value=\"new-table-config\">Configure new table</option>' \n            );\n    // override descriptive text of the 2nd option\n    $('#configActionPicker > option:nth-child(3)').text('Or choose to edit a configured table below:');\n   \n}",
+      "value": "function(){\n    \n    if(result_fetch_config_tables.length > 0){\n        bissolCreateSelect(\n            {\n                myCdeContainerId: 'html_config_action_picker'\n                , myDashboardObjectId: 'configActionPicker'\n                , myLabelText: 'Choose Action:'\n                , myData: result_fetch_config_tables\n                , cdeParam: 'param_config_id'\n            }\n        );      \n    } else {\n        // in case no table was set up there will be no result so provide workaround\n        // very nasty workaround\n        var fakeSet = [];\n        fakeSet.push(\"1\");\n        bissolCreateSelect(\n            {\n                myCdeContainerId: 'html_config_action_picker'\n                , myDashboardObjectId: 'configActionPicker'\n                , myLabelText: 'Choose Action:'\n                , myData: fakeSet\n                , cdeParam: 'param_config_id'\n            }            \n        ); \n        $('#configActionPicker > option:nth-child(2)')\n        .attr('disabled','').text('--- NO TABLE CONFIGURED ---');\n    }\n    \n   \n    // add new element at the beginning\n    $('#configActionPicker').prepend(\n            '<option disabled selected>PICK AN ACTION</option>'\n            + '<option value=\"new-table-config\">Configure new table</option>' \n            );\n    // override descriptive text of the 2nd option\n    $('#configActionPicker > option:nth-child(3)').text('Or choose to edit a configured table below:');\n   \n}",
       "type": "JavaScript"
      },
      {
@@ -599,7 +599,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    //cdeBootstrapSelect('html_db_connection_picker', 'dbConnectionPicker', 'Choose Connection:', result_fetch_db_connections);\n    //establishListeners('dbConnectionPicker', 'param_db_connection');\n    \n    $('#html_table_config_container').empty();\n    $('#html_table_config_container').append(\n    '<div id=\"bissolTableConfigContainer\">'\n    + ' <div class=\"col-lg-4\">'\n    + '     <div class=\"panel panel-default bissolConfigBox\">'\n    + '         <div class=\"panel-heading\">'\n    + '             <h3 class=\"panel-title\">Connection Properties</h3>'\n    + '         </div>'\n    + '         <div class=\"panel-body\">'\n    + '             <div id=\"html_db_connection_picker\"></div>'\n    + '             <div id=\"html_db_schema_picker\"></div>'\n    + '             <div id=\"html_db_table_picker\"></div>'\n    + '         </div>'\n    + '     </div>'\n    + ' </div>'\n    + ' <div class=\"col-lg-8\">'\n    + '     <div id=\"bissolTablePropertiesContainer\"></div>'\n    + ' </div>'\n    + '</div>'\n    );\n\nconsole.log('------');\nconsole.log(result_fetch_db_connections);\n\n    bissolCreateSelect('html_db_connection_picker', 'dbConnectionPicker', 'Choose Connection:', result_fetch_db_connections, 'param_db_connection');\n    // if editing an existing table config\n    if(result_fetch_config.length > 0){\n            Dashboards.fireChange('param_db_connection', param_db_connection);\n            $('#dbConnectionPicker').prepend(\n                '<option selected value=\"'\n                + param_db_connection\n                + '\">' + param_db_connection + '</option>'\n            )\n    }\n}",
+      "value": "function(){\n    //cdeBootstrapSelect('html_db_connection_picker', 'dbConnectionPicker', 'Choose Connection:', result_fetch_db_connections);\n    //establishListeners('dbConnectionPicker', 'param_db_connection');\n    \n    $('#html_table_config_container').empty();\n    $('#html_table_config_container').append(\n    '<div id=\"bissolTableConfigContainer\">'\n    + ' <div class=\"col-lg-4\">'\n    + '     <div class=\"panel panel-default bissolConfigBox\">'\n    + '         <div class=\"panel-heading\">'\n    + '             <h3 class=\"panel-title\">Connection Properties</h3>'\n    + '         </div>'\n    + '         <div class=\"panel-body\">'\n    + '             <div id=\"html_db_connection_picker\"></div>'\n    + '             <div id=\"html_db_schema_picker\"></div>'\n    + '             <div id=\"html_db_table_picker\"></div>'\n    + '         </div>'\n    + '     </div>'\n    + ' </div>'\n    + ' <div class=\"col-lg-8\">'\n    + '     <div id=\"bissolTablePropertiesContainer\"></div>'\n    + ' </div>'\n    + '</div>'\n    );\n\nconsole.log('------');\nconsole.log(result_fetch_db_connections);\n\n    bissolCreateSelect(\n            {\n                myCdeContainerId: 'html_db_connection_picker'\n                , myDashboardObjectId: 'dbConnectionPicker'\n                , myLabelText: 'Choose Connection:'\n                , myData: result_fetch_db_connections\n                , cdeParam: 'param_db_connection'\n            }\n    );\n    \n    // if editing an existing table config\n    if(result_fetch_config.length > 0){\n            Dashboards.fireChange('param_db_connection', param_db_connection);\n            $('#dbConnectionPicker').prepend(\n                '<option selected value=\"'\n                + param_db_connection\n                + '\">' + param_db_connection + '</option>'\n            )\n    }\n}",
       "type": "JavaScript"
      },
      {
@@ -682,7 +682,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    bissolCreateSelect('html_db_schema_picker','dbSchemaPicker', 'Choose Schema:', result_fetch_db_schemas, 'param_db_schema');\n    // if editing an existing table config\n    if(result_fetch_config.length > 0){\n            Dashboards.fireChange('param_db_schema', param_db_schema);\n                $('#dbSchemaPicker').prepend(\n                '<option selected value=\"'\n                + param_db_schema\n                + '\">' + param_db_schema + '</option>'\n            )\n    }\n}",
+      "value": "function(){\n    bissolCreateSelect(\n        {\n            myCdeContainerId: 'html_db_schema_picker'\n            , myDashboardObjectId: 'dbSchemaPicker'\n            , myLabelText: 'Choose Schema:'\n            , myData: result_fetch_db_schemas\n            , cdeParam: 'param_db_schema'\n        }    \n    );\n    // if editing an existing table config\n    if(result_fetch_config.length > 0){\n            Dashboards.fireChange('param_db_schema', param_db_schema);\n                $('#dbSchemaPicker').prepend(\n                '<option selected value=\"'\n                + param_db_schema\n                + '\">' + param_db_schema + '</option>'\n            )\n    }\n}",
       "type": "JavaScript"
      },
      {
@@ -765,7 +765,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    bissolCreateSelect('html_db_table_picker','dbTablePicker', 'Choose Table:', result_fetch_db_tables, 'param_db_table');\n    // if editing an existing table config\n    if(result_fetch_config.length > 0){\n            Dashboards.fireChange('param_db_table', param_db_table);\n            $('#dbTablePicker').prepend(\n                '<option selected value=\"'\n                + param_db_table\n                + '\">' + param_db_table + '</option>'\n            )\n    }\n}",
+      "value": "function(){\n    bissolCreateSelect(\n        {\n            myCdeContainerId: 'html_db_table_picker'\n            , myDashboardObjectId: 'dbTablePicker'\n            , myLabelText: 'Choose Table:'\n            , myData: result_fetch_db_tables\n            , cdeParam: 'param_db_table'\n        }\n    );\n\n    // if editing an existing table config\n    if(result_fetch_config.length > 0){\n            Dashboards.fireChange('param_db_table', param_db_table);\n            $('#dbTablePicker').prepend(\n                '<option selected value=\"'\n                + param_db_table\n                + '\">' + param_db_table + '</option>'\n            )\n    }\n}",
       "type": "JavaScript"
      },
      {
@@ -1463,7 +1463,7 @@
    {
     "id": "419ed39b-3d06-0446-198a-f47bc6b9df43",
     "type": "ComponentsbissolTableDataEditor_fetchDBConnections_CPKENDPOINT",
-    "typeDesc": "fetchDBConnections Endpoint",
+    "typeDesc": "? ComponentsbissolTableDataEditor_fetchDBConnections_CPKENDPOINT",
     "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
     "properties": [
      {
@@ -1489,7 +1489,7 @@
    {
     "id": "464b80c3-f27c-68e2-af3e-b5bc311874c4",
     "type": "ComponentsbissolTableDataEditor_fetchdbschemas_CPKENDPOINT",
-    "typeDesc": "fetchdbschemas Endpoint",
+    "typeDesc": "? ComponentsbissolTableDataEditor_fetchdbschemas_CPKENDPOINT",
     "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
     "properties": [
      {
@@ -1515,7 +1515,7 @@
    {
     "id": "f5942c1a-3053-60bf-aed8-42d178f1bcf2",
     "type": "ComponentsbissolTableDataEditor_fetchdbtables_CPKENDPOINT",
-    "typeDesc": "fetchdbtables Endpoint",
+    "typeDesc": "? ComponentsbissolTableDataEditor_fetchdbtables_CPKENDPOINT",
     "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
     "properties": [
      {
@@ -1541,7 +1541,7 @@
    {
     "id": "5c75bf19-7140-de88-291b-4e47655d4910",
     "type": "ComponentsbissolTableDataEditor_fetchdbcolumns_CPKENDPOINT",
-    "typeDesc": "fetchdbcolumns Endpoint",
+    "typeDesc": "? ComponentsbissolTableDataEditor_fetchdbcolumns_CPKENDPOINT",
     "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
     "properties": [
      {
