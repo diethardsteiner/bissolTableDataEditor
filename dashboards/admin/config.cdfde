@@ -891,7 +891,7 @@
      },
      {
       "name": "parameters",
-      "value": "[[\"param_db_connection\",\"param_db_connection\"],[\"param_db_schema\",\"param_db_schema\"],[\"param_db_table\",\"param_db_table\"],[\"param_col_names\",\"param_col_names\"],[\"param_col_types\",\"param_col_types\"],[\"param_col_positions\",\"param_col_positions\"],[\"param_col_names_visible\",\"param_col_names_visible\"],[\"param_col_names_editable\",\"param_col_names_editable\"],[\"param_id_column\",\"param_id_column\"],[\"param_config_id\",\"param_config_id\"],[\"param_config_action\",\"param_config_action\"]]",
+      "value": "[[\"param_db_connection\",\"param_db_connection\"],[\"param_db_schema\",\"param_db_schema\"],[\"param_db_table\",\"param_db_table\"],[\"param_col_names\",\"param_col_names\"],[\"param_col_types\",\"param_col_types\"],[\"param_col_positions\",\"param_col_positions\"],[\"param_col_names_visible\",\"param_col_names_visible\"],[\"param_col_names_editable\",\"param_col_names_editable\"],[\"param_id_column\",\"param_id_column\"],[\"param_config_id\",\"param_config_id\"],[\"param_config_action\",\"param_config_action\"],[\"param_is_auto_increment\",\"param_is_auto_increment\"]]",
       "type": "ValuesArray"
      },
      {
@@ -1361,6 +1361,34 @@
       "type": "Boolean"
      }
     ]
+   },
+   {
+    "id": "2cbc2ea4-f0d2-f192-c347-8565d96c4084",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_is_auto_increment",
+      "type": "Id"
+     },
+     {
+      "name": "propertyValue",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
+     }
+    ]
    }
   ]
  },
@@ -1463,7 +1491,7 @@
    {
     "id": "419ed39b-3d06-0446-198a-f47bc6b9df43",
     "type": "ComponentsbissolTableDataEditor_fetchDBConnections_CPKENDPOINT",
-    "typeDesc": "? ComponentsbissolTableDataEditor_fetchDBConnections_CPKENDPOINT",
+    "typeDesc": "fetchDBConnections Endpoint",
     "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
     "properties": [
      {
@@ -1489,7 +1517,7 @@
    {
     "id": "464b80c3-f27c-68e2-af3e-b5bc311874c4",
     "type": "ComponentsbissolTableDataEditor_fetchdbschemas_CPKENDPOINT",
-    "typeDesc": "? ComponentsbissolTableDataEditor_fetchdbschemas_CPKENDPOINT",
+    "typeDesc": "fetchdbschemas Endpoint",
     "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
     "properties": [
      {
@@ -1515,7 +1543,7 @@
    {
     "id": "f5942c1a-3053-60bf-aed8-42d178f1bcf2",
     "type": "ComponentsbissolTableDataEditor_fetchdbtables_CPKENDPOINT",
-    "typeDesc": "? ComponentsbissolTableDataEditor_fetchdbtables_CPKENDPOINT",
+    "typeDesc": "fetchdbtables Endpoint",
     "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
     "properties": [
      {
@@ -1541,7 +1569,7 @@
    {
     "id": "5c75bf19-7140-de88-291b-4e47655d4910",
     "type": "ComponentsbissolTableDataEditor_fetchdbcolumns_CPKENDPOINT",
-    "typeDesc": "? ComponentsbissolTableDataEditor_fetchdbcolumns_CPKENDPOINT",
+    "typeDesc": "fetchdbcolumns Endpoint",
     "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
     "properties": [
      {

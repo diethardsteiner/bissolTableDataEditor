@@ -74,7 +74,8 @@ function bissolCreateTableConfigPicker(myData){
         +'            <th>PDI Col Type</th>'
         +'            <th>Is Visible?</th>'
         +'            <th>Is Editable?</th>'
-        +'            <th>Is Primary Key?</th>'        
+        +'            <th>Is Primary Key?</th>'  
+        +'            <th>Is Auto Increment?</th>'       
         +'        </tr>'
         +'    </thead>'
         +'    <tbody>'
@@ -90,6 +91,7 @@ function bissolCreateTableConfigPicker(myData){
             +'            <td><input type="checkbox" name="isVisible" value="' + val[0] + '"/></td>'
             +'            <td><input type="checkbox" name="isEditable" value="' + val[0] + '"/></td>'
             +'            <td><input type="checkbox" name="isPrimaryKey" value="' + val[0] + '" ' + (val[4]==='YES' ? ' checked ' : ' ') + ' />'
+            +'            <td><input type="checkbox" name="isAutoIncrement" value="' + val[0] + '" ' + (val[6]==='YES' ? ' checked ' : ' ') + ' disabled />'
             +'        </tr>'
             ;
 
@@ -106,6 +108,7 @@ function bissolCreateTableConfigPicker(myData){
         Dashboards.setParameter('param_col_names', myColsName.join(','));
         Dashboards.setParameter('param_col_types', myColsType.join(','));
         Dashboards.setParameter('param_col_positions', myColsPosition.join(','));
+
 
         $('#html_db_table_metadata_picker').append(myConfigTable);
 
@@ -155,9 +158,18 @@ function bissolSaveAction(){
                 $( 'input[name="isPrimaryKey"]:checkbox:checked' ).each(function() {
                     myColsIsPrimaryKey.push($(this).val());
                 });
-
-                console.log('my cols is primary key:');
+                
+                console.log('my cols primary key:');
                 console.log(myColsIsPrimaryKey);
+                
+                var myColsIsAutoIncrement = [];
+                
+                $( 'input[name="isAutoIncrement"]:checkbox:checked' ).each(function() {
+                    myColsIsAutoIncrement.push($(this).val());
+                });               
+
+                console.log('my cols auto increment:');
+                console.log(myColsIsAutoIncrement);
 
                 // Add a few checks
                 // 1) are all chosen is_editable cols as well is_visible?
@@ -229,6 +241,7 @@ function bissolSaveAction(){
                     Dashboards.setParameter('param_col_names_visible', myColsIsVisible.join(','));
                     Dashboards.setParameter('param_col_names_editable', myColsIsEditable.join(','));
                     Dashboards.setParameter('param_id_column', myColsIsPrimaryKey.join(','));
+                    Dashboards.setParameter('param_is_auto_increment', myColsIsAutoIncrement.join(','));
                     Dashboards.fireChange('param_config_save','save');
 
                     var alertSuccess = bissolCreateAlertMsg('success', '<strong>Success!</strong> Configuration details were saved.');
