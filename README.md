@@ -81,7 +81,8 @@ The structure of the JSON object looks like this:
         "colName": "id",
         "isVisible": true,
         "isEditable": false,
-        "isPrimaryKey": true
+        "isPrimaryKey": true,
+        "isAutoIncrement":true
       },
       {
         "colIndex": 1,
@@ -89,7 +90,8 @@ The structure of the JSON object looks like this:
         "colName": "firstname",
         "isVisible": true,
         "isEditable": true,
-        "isPrimaryKey": false
+        "isPrimaryKey": false,
+        "isAutoIncrement":false
       },
       {
         "colIndex": 2,
@@ -97,7 +99,8 @@ The structure of the JSON object looks like this:
         "colName": "lastname",
         "isVisible": true,
         "isEditable": true,
-        "isPrimaryKey": false
+        "isPrimaryKey": false,
+        "isAutoIncrement":false
       }
     ]
   },
@@ -113,7 +116,8 @@ The structure of the JSON object looks like this:
         "colName": "id",
         "isVisible": true,
         "isEditable": false,
-        "isPrimaryKey": true
+        "isPrimaryKey": true,
+        "isAutoIncrement": false
       },
       {
         "colIndex": 1,
@@ -121,7 +125,8 @@ The structure of the JSON object looks like this:
         "colName": "name",
         "isVisible": true,
         "isEditable": true,
-        "isPrimaryKey": false
+        "isPrimaryKey": false,
+        "isAutoIncrement": false
       }
     ]
   }
