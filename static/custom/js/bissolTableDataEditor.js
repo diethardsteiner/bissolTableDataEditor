@@ -143,6 +143,7 @@ function bissolFetchConfigServerSide(result_metadata){
     var myColNamesEditableDelimited = result_fetch_config[0][8];
     var myColTypesEditableDelimited = result_fetch_config[0][9];
     var myGenericSelectQuery = result_fetch_config[0][10];
+    var myColIsAutoIncrement = result_fetch_config[0][11];
     
     var myColNames = myColNamesDelimited.split(',');
     var myColTypes = myColTypesDelimited.split(',');
@@ -151,7 +152,8 @@ function bissolFetchConfigServerSide(result_metadata){
     var myColTypesEditable = myColTypesEditableDelimited.split(',');
     
     console.log('Fetching config data for table: ' + myTable);
-    console.log('The id column is: ' + myIdColumn);    
+    console.log('The id column is: ' + myIdColumn);  
+    console.log('The auto increment col is: ' + myColIsAutoIncrement);  
     console.log('Generating SQL select query: ' + myGenericSelectQuery);
     
     
@@ -170,6 +172,7 @@ function bissolFetchConfigServerSide(result_metadata){
     Dashboards.setParameter('param_col_types_editable_delimited', myColTypesEditableDelimited);
     Dashboards.setParameter('param_col_types', myColTypes);
     Dashboards.setParameter('param_id_column', myIdColumn);
+    Dashboards.setParameter('param_is_auto_increment', myColIsAutoIncrement);
     
     Dashboards.fireChange('param_sql_select', myGenericSelectQuery);
     
@@ -292,17 +295,29 @@ function bissolNewRecord(){
         
         // create input elements
         var myFormInput = '';
+        
+        if(param_is_auto_increment == ''){
+                myFormInput +=
+                '<div class="form-group">'
+                + '    <label for="' + param_id_column + '">' + param_id_column + '</label>'
+                + '    <input class="form-control" '
+                + ' id="' + param_id_column + '" '
+                + ' placeholder="Enter ' + param_id_column + '" '
+                + ' data-type="Integer"/>' 
+                +'</div>';          
+        }
 
         $.each(param_col_names_editable, function(i, val){    
             
                 myFormInput +=
                 '<div class="form-group">'
                 + '    <label for="' + val + '">' + val + '</label>'
-                + '    <input type="email" class="form-control" '
+                + '    <input class="form-control" '
                 + ' id="' + val + '" '
                 + ' placeholder="Enter ' + val + '" '
                 + ' data-type="' + param_col_types_editable[i] + '"/>' 
                 +'</div>';
+                
         });
         
         $('#new-record-panel div.panel-body').append(myFormInput); 
@@ -317,19 +332,25 @@ function bissolNewRecord(){
             var myNewRecordColTypes = [];
             var myNewRecordColNames = [];
             
+            if(param_is_auto_increment == ''){
+                myNewRecordData.push($('#new-record-panel #' + param_id_column).val());
+                myNewRecordColTypes.push('Integer');
+                myNewRecordColNames.push(param_id_column);           
+            }
+            
             $.each(param_col_names_editable, function(i, val){ 
                     
-                    myNewRecordData.push($('#new-record-panel #' + val).val());
-                    myNewRecordColTypes.push(param_col_types_editable[i]);
-                    myNewRecordColNames.push(val);
+                myNewRecordData.push($('#new-record-panel #' + val).val());
+                myNewRecordColTypes.push(param_col_types_editable[i]);
+                myNewRecordColNames.push(val);
 
             });  
 
             //Dashboards.setParameter('param_db_connection', myJNDI); // should be already set
-            Dashboards.fireChange('param_new_record', myNewRecordData.join('|'));
+
             Dashboards.setParameter('param_col_types_delimited', myNewRecordColTypes.join('|'));
             Dashboards.setParameter('param_col_names_delimited', myNewRecordColNames.join('|'));
-
+            Dashboards.fireChange('param_new_record', myNewRecordData.join('|'));
             // clear new record table and display standard table editor again
             $('#new-record-panel').remove();
             Dashboards.fireChange('param_sql_select', param_sql_select);

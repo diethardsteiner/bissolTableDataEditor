@@ -156,8 +156,8 @@
       <note>To test JSON paths&#x3a; http&#x3a;&#x2f;&#x2f;ashphy.com&#x2f;JSONPathOnlineEvaluator&#x2f;</note>
       <xloc>556</xloc>
       <yloc>20</yloc>
-      <width>394</width>
-      <heigth>25</heigth>
+      <width>401</width>
+      <heigth>26</heigth>
       <fontname>Arial</fontname>
       <fontsize>10</fontsize>
       <fontbold>N</fontbold>
@@ -183,6 +183,25 @@
   <hop> <from>Modified Java Script Value</from><to>Final Selection</to><enabled>Y</enabled> </hop>
   <hop> <from>Final Selection</from><to>Copy rows to result</to><enabled>Y</enabled> </hop>
   </order>
+  <step>
+    <name>Copy rows to result</name>
+    <type>RowsToResult</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>416</xloc>
+      <yloc>496</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
   <step>
     <name>Dummy &#x28;do nothing&#x29; 2</name>
     <type>Dummy</type>
@@ -283,6 +302,10 @@
         <length>-2</length>
         <precision>-2</precision>
       </field>      <field>        <name>myGenericSelectQuery</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>myColIsAutoIncrement</name>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
@@ -418,7 +441,7 @@
     <optimizationLevel>9</optimizationLevel>
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;var json &#x3d;  JSON.parse&#x28;tableConfig&#x29;&#x3b;&#xa;&#xa;var myJNDI &#x3d; json.dbConnection&#x3b;&#xa;var mySchema &#x3d; json.dbSchema&#x3b;&#xa;var myTable &#x3d; json.dbTable&#x3b;&#xa;&#x2f;&#x2f;var myMetadata &#x3d; JSON.stringify&#x28;json.metadata&#x29;&#x3b;&#xa;var myMetadata &#x3d; json.metadata&#x3b;&#xa;&#xa;    var mySchemaAndTable &#x3d; &#x27;&#x27;&#x3b;&#xa;    if&#x28;mySchema &#x21;&#x3d;&#x3d; &#x27;&#x27;&#x29;&#x7b;&#xa;        mySchemaAndTable &#x3d; mySchema &#x2b; &#x27;.&#x27; &#x2b; myTable&#x3b;&#xa;    &#x7d; else &#x7b;&#xa;        mySchemaAndTable &#x3d; myTable&#x3b;&#xa;    &#x7d;&#xa;&#xa;	&#x2f;&#x2f; col names&#xa;&#xa;    var myColNames &#x3d; &#x5b;&#x5d;&#x3b;&#xa;    &#xa;    for&#x28;i&#x3d;0&#x3b; i&#x3c;myMetadata.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;        myColNames.push&#x28;myMetadata&#x5b;i&#x5d;.colName&#x29;&#x3b;&#xa;    &#x7d;&#xa;&#xa;	var myColNamesDelimited &#x3d; myColNames.join&#x28;&#x27;,&#x27;&#x29;&#x3b; &#xa;&#xa;	&#x2f;&#x2f; col types&#xa;&#xa;    var myColTypes &#x3d; &#x5b;&#x5d;&#x3b;&#xa;    &#xa;    for&#x28;i&#x3d;0&#x3b; i&#x3c;myMetadata.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;        myColTypes.push&#x28;myMetadata&#x5b;i&#x5d;.colType&#x29;&#x3b;&#xa;    &#x7d;&#xa;&#xa;	var myColTypesDelimited &#x3d; myColTypes.join&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;&#xa;	&#x2f;&#x2f; id column&#xa;&#xa;    var myIdColumn &#x3d; &#x5b;&#x5d;&#x3b;&#xa;    &#xa;    for&#x28;i&#x3d;0&#x3b; i&#x3c;myMetadata.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;        if&#x28;myMetadata&#x5b;i&#x5d;.isPrimaryKey&#x29;&#x7b;&#xa;            myIdColumn.push&#x28;myMetadata&#x5b;i&#x5d;.colName&#x29;&#x3b;&#xa;        &#x7d;&#xa;    &#x7d;&#xa;&#xa;	&#x2f;&#x2f; col names visible&#xa;&#xa;    var myColNamesVisible &#x3d; &#x5b;&#x5d;&#x3b;&#xa;    &#xa;    for&#x28;i&#x3d;0&#x3b; i&#x3c;myMetadata.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;        if&#x28;myMetadata&#x5b;i&#x5d;.isVisible&#x29;&#x7b;&#xa;            myColNamesVisible.push&#x28;myMetadata&#x5b;i&#x5d;.colName&#x29;&#x3b;&#xa;        &#x7d;&#xa;    &#x7d;&#xa;&#xa;	var myColNamesVisibleDelimited &#x3d; myColNamesVisible.join&#x28;&#x27;,&#x27;&#x29;&#x3b; &#xa;&#xa;	&#x2f;&#x2f; col names editable&#xa;&#xa;    var myColNamesEditable &#x3d; &#x5b;&#x5d;&#x3b;&#xa;    &#xa;    for&#x28;i&#x3d;0&#x3b; i&#x3c;myMetadata.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;        if&#x28;myMetadata&#x5b;i&#x5d;.isEditable&#x29;&#x7b;&#xa;            myColNamesEditable.push&#x28;myMetadata&#x5b;i&#x5d;.colName&#x29;&#x3b;&#xa;        &#x7d;&#xa;    &#x7d;&#xa;&#xa;	var myColNamesEditableDelimited &#x3d; myColNamesEditable.join&#x28;&#x27;,&#x27;&#x29;&#x3b; &#xa;&#xa;	&#x2f;&#x2f; col types editable&#xa;&#xa;    var myColTypesEditable &#x3d; &#x5b;&#x5d;&#x3b;&#xa;    &#xa;    for&#x28;i&#x3d;0&#x3b; i&#x3c;myMetadata.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;        if&#x28;myMetadata&#x5b;i&#x5d;.isEditable&#x29;&#x7b;&#xa;            myColTypesEditable.push&#x28;myMetadata&#x5b;i&#x5d;.colType&#x29;&#x3b;&#xa;        &#x7d;&#xa;    &#x7d;&#xa;&#xa;	var myColTypesEditableDelimited &#x3d; myColTypesEditable.join&#x28;&#x27;,&#x27;&#x29;&#x3b; &#xa;&#xa;var myGenericSelectQuery &#x3d; &#x22;SELECT &#x22; &#x2b; myColNamesVisibleDelimited &#x2b; &#x22; FROM &#x22; &#x2b; mySchemaAndTable&#x3b;</jsScript_script>
+        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;var json &#x3d;  JSON.parse&#x28;tableConfig&#x29;&#x3b;&#xa;&#xa;var myJNDI &#x3d; json.dbConnection&#x3b;&#xa;var mySchema &#x3d; json.dbSchema&#x3b;&#xa;var myTable &#x3d; json.dbTable&#x3b;&#xa;&#x2f;&#x2f;var myMetadata &#x3d; JSON.stringify&#x28;json.metadata&#x29;&#x3b;&#xa;var myMetadata &#x3d; json.metadata&#x3b;&#xa;&#xa;    var mySchemaAndTable &#x3d; &#x27;&#x27;&#x3b;&#xa;    if&#x28;mySchema &#x21;&#x3d;&#x3d; &#x27;&#x27;&#x29;&#x7b;&#xa;        mySchemaAndTable &#x3d; mySchema &#x2b; &#x27;.&#x27; &#x2b; myTable&#x3b;&#xa;    &#x7d; else &#x7b;&#xa;        mySchemaAndTable &#x3d; myTable&#x3b;&#xa;    &#x7d;&#xa;&#xa;	&#x2f;&#x2f; col names&#xa;&#xa;    var myColNames &#x3d; &#x5b;&#x5d;&#x3b;&#xa;    &#xa;    for&#x28;i&#x3d;0&#x3b; i&#x3c;myMetadata.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;        myColNames.push&#x28;myMetadata&#x5b;i&#x5d;.colName&#x29;&#x3b;&#xa;    &#x7d;&#xa;&#xa;	var myColNamesDelimited &#x3d; myColNames.join&#x28;&#x27;,&#x27;&#x29;&#x3b; &#xa;&#xa;	&#x2f;&#x2f; col types&#xa;&#xa;    var myColTypes &#x3d; &#x5b;&#x5d;&#x3b;&#xa;    &#xa;    for&#x28;i&#x3d;0&#x3b; i&#x3c;myMetadata.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;        myColTypes.push&#x28;myMetadata&#x5b;i&#x5d;.colType&#x29;&#x3b;&#xa;    &#x7d;&#xa;&#xa;	var myColTypesDelimited &#x3d; myColTypes.join&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;&#xa;	&#x2f;&#x2f; id column&#xa;&#xa;    var myIdColumn &#x3d; &#x5b;&#x5d;&#x3b;&#xa;    &#xa;    for&#x28;i&#x3d;0&#x3b; i&#x3c;myMetadata.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;        if&#x28;myMetadata&#x5b;i&#x5d;.isPrimaryKey&#x29;&#x7b;&#xa;            myIdColumn.push&#x28;myMetadata&#x5b;i&#x5d;.colName&#x29;&#x3b;&#xa;        &#x7d;&#xa;    &#x7d;&#xa;&#xa;	&#x2f;&#x2f; is auto increment&#xa;&#xa;    var myColIsAutoIncrement &#x3d; &#x5b;&#x5d;&#x3b;&#xa;    &#xa;    for&#x28;i&#x3d;0&#x3b; i&#x3c;myMetadata.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;        if&#x28;myMetadata&#x5b;i&#x5d;.isAutoIncrement&#x29;&#x7b;&#xa;            myColIsAutoIncrement.push&#x28;myMetadata&#x5b;i&#x5d;.colName&#x29;&#x3b;&#xa;        &#x7d;&#xa;    &#x7d;&#xa;&#xa;	&#x2f;&#x2f; col names visible&#xa;&#xa;    var myColNamesVisible &#x3d; &#x5b;&#x5d;&#x3b;&#xa;    &#xa;    for&#x28;i&#x3d;0&#x3b; i&#x3c;myMetadata.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;        if&#x28;myMetadata&#x5b;i&#x5d;.isVisible&#x29;&#x7b;&#xa;            myColNamesVisible.push&#x28;myMetadata&#x5b;i&#x5d;.colName&#x29;&#x3b;&#xa;        &#x7d;&#xa;    &#x7d;&#xa;&#xa;	var myColNamesVisibleDelimited &#x3d; myColNamesVisible.join&#x28;&#x27;,&#x27;&#x29;&#x3b; &#xa;&#xa;	&#x2f;&#x2f; col names editable&#xa;&#xa;    var myColNamesEditable &#x3d; &#x5b;&#x5d;&#x3b;&#xa;    &#xa;    for&#x28;i&#x3d;0&#x3b; i&#x3c;myMetadata.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;        if&#x28;myMetadata&#x5b;i&#x5d;.isEditable&#x29;&#x7b;&#xa;            myColNamesEditable.push&#x28;myMetadata&#x5b;i&#x5d;.colName&#x29;&#x3b;&#xa;        &#x7d;&#xa;    &#x7d;&#xa;&#xa;	var myColNamesEditableDelimited &#x3d; myColNamesEditable.join&#x28;&#x27;,&#x27;&#x29;&#x3b; &#xa;&#xa;	&#x2f;&#x2f; col types editable&#xa;&#xa;    var myColTypesEditable &#x3d; &#x5b;&#x5d;&#x3b;&#xa;    &#xa;    for&#x28;i&#x3d;0&#x3b; i&#x3c;myMetadata.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;        if&#x28;myMetadata&#x5b;i&#x5d;.isEditable&#x29;&#x7b;&#xa;            myColTypesEditable.push&#x28;myMetadata&#x5b;i&#x5d;.colType&#x29;&#x3b;&#xa;        &#x7d;&#xa;    &#x7d;&#xa;&#xa;	var myColTypesEditableDelimited &#x3d; myColTypesEditable.join&#x28;&#x27;,&#x27;&#x29;&#x3b; &#xa;&#xa;var myGenericSelectQuery &#x3d; &#x22;SELECT &#x22; &#x2b; myColNamesVisibleDelimited &#x2b; &#x22; FROM &#x22; &#x2b; mySchemaAndTable&#x3b;</jsScript_script>
       </jsScript>    </jsScripts>    <fields>      <field>        <name>myJNDI</name>
         <rename>myJNDI</rename>
         <type>String</type>
@@ -485,6 +508,12 @@
         <length>-1</length>
         <precision>-1</precision>
         <replace>N</replace>
+      </field>      <field>        <name>myColIsAutoIncrement</name>
+        <rename>myColIsAutoIncrement</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
       </field>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>416</xloc>
@@ -513,25 +542,6 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>416</xloc>
       <yloc>176</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Copy rows to result</name>
-    <type>RowsToResult</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>416</xloc>
-      <yloc>496</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
