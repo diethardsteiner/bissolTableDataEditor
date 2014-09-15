@@ -5,9 +5,6 @@ var removeIcon = '<span class="glyphicon glyphicon-minus-sign remove-row" data-t
 var saveIcon = '<span class="glyphicon glyphicon-floppy-disk save-row" data-toggle="modal" data-target="#myUpdateModal"></span>';
 
 function bissolFetchConfig(param_config_id){
-
-    // NOT USED ANY MORE
-
     // the CDA metadata object is empty in case there are no records returned by the query
     console.log('The config id is: ' +  param_config_id);
     //testing
@@ -154,8 +151,6 @@ function bissolFetchConfigServerSide(result_metadata){
     var myColNamesEditable = myColNamesEditableDelimited.split(',');
     var myColTypesEditable = myColTypesEditableDelimited.split(',');
     
-    var myMaxIdQuery = "SELECT MAX(" + myIdColumn + ") AS max_id FROM " + mySchemaAndTable;
-    
     console.log('Fetching config data for table: ' + myTable);
     console.log('The id column is: ' + myIdColumn);  
     console.log('The auto increment col is: ' + myColIsAutoIncrement);  
@@ -178,7 +173,6 @@ function bissolFetchConfigServerSide(result_metadata){
     Dashboards.setParameter('param_col_types', myColTypes);
     Dashboards.setParameter('param_id_column', myIdColumn);
     Dashboards.setParameter('param_is_auto_increment', myColIsAutoIncrement);
-    Dashboards.setParameter('param_sql_max_id', myMaxIdQuery);
     
     Dashboards.fireChange('param_sql_select', myGenericSelectQuery);
     
@@ -303,17 +297,13 @@ function bissolNewRecord(){
         var myFormInput = '';
         
         if(param_is_auto_increment == ''){
-        
-                // get max col id - quite a dummy action but does the purpose
-                Dashboards.fireChange('param_id_column', param_id_column);
-                
                 myFormInput +=
                 '<div class="form-group">'
                 + '    <label for="' + param_id_column + '">' + param_id_column + '</label>'
                 + '    <input class="form-control" '
                 + ' id="' + param_id_column + '" '
                 + ' placeholder="Enter ' + param_id_column + '" '
-                + ' data-type="Integer"></input>' 
+                + ' data-type="Integer"/>' 
                 +'</div>';          
         }
 
@@ -331,12 +321,6 @@ function bissolNewRecord(){
         });
         
         $('#new-record-panel div.panel-body').append(myFormInput); 
- 
-         if(param_is_auto_increment == ''){
-        
-                // get max col id - quite a dummy action but does the purpose
-                Dashboards.fireChange('param_id_column', param_id_column);
-         }
         
         // add Save Record button
         $('#new-record-panel').append('<div id="new-record-save-button-div"><button type="button" class="btn btn-primary btn-lg btn-block" id="new-record-save-button">Save Record</button><div>');

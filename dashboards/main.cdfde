@@ -916,6 +916,34 @@
     ]
    },
    {
+    "id": "f4f4ad99-7a45-a78c-7223-22fab68d502d",
+    "type": "ComponentsParameter",
+    "typeDesc": "Simple parameter",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "value": "param_sql_max_id",
+      "type": "Id"
+     },
+     {
+      "name": "propertyValue",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "parameterViewRole",
+      "value": "unused",
+      "type": "parameterViewRoleCustom"
+     },
+     {
+      "name": "bookmarkable",
+      "value": "false",
+      "type": "Boolean"
+     }
+    ]
+   },
+   {
     "id": "OTHERCOMPONENTS",
     "name": "Others",
     "type": "Label",
@@ -1343,6 +1371,89 @@
       "type": "Html"
      }
     ]
+   },
+   {
+    "id": "12a084b0-1be1-1c40-7c06-b0266afa0fd7",
+    "type": "ComponentsQuery",
+    "typeDesc": "Query Component",
+    "parent": "OTHERCOMPONENTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "comp_fetch_max_id",
+      "type": "Id"
+     },
+     {
+      "name": "listeners",
+      "value": "['${p:param_id_column}']",
+      "type": "Listeners"
+     },
+     {
+      "name": "parameters",
+      "value": "[[\"param_sql_max_id\",\"param_sql_max_id\"],[\"param_db_connection\",\"param_db_connection\"]]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "resultvar",
+      "value": "result_max_id",
+      "type": "Result"
+     },
+     {
+      "name": "dataSource",
+      "value": "qry_fetch_max_id",
+      "type": "Datasource"
+     },
+     {
+      "name": "refreshPeriod",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "priority",
+      "value": 5,
+      "type": "Integer"
+     },
+     {
+      "name": "htmlObject",
+      "value": "",
+      "type": "HtmlObject"
+     },
+     {
+      "name": "executeAtStart",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "preExecution",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postExecution",
+      "value": "function(){\n    $('#' + param_id_column).val(result_max_id[0][0]+1);\n}",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postFetch",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "preChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "tooltip",
+      "value": "",
+      "type": "Html"
+     }
+    ]
    }
   ]
  },
@@ -1491,6 +1602,32 @@
     "meta": "CPK",
     "meta_pluginId": "bissolTableDataEditor",
     "meta_endpoint": "fetchConfigDataForTableJob"
+   },
+   {
+    "id": "361dd021-1297-263f-fc0e-6df771ded5c7",
+    "type": "ComponentsbissolTableDataEditor_fetchMaxIdQuery_CPKENDPOINT",
+    "typeDesc": "fetchMaxIdQuery Endpoint",
+    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "qry_fetch_max_id",
+      "type": "Id"
+     },
+     {
+      "name": "stepName",
+      "value": "OUTPUT",
+      "type": "String"
+     },
+     {
+      "name": "kettleOutput",
+      "value": "Json",
+      "type": "kettleOutputCustom"
+     }
+    ],
+    "meta": "CPK",
+    "meta_pluginId": "bissolTableDataEditor",
+    "meta_endpoint": "fetchMaxIdQuery"
    }
   ]
  },
