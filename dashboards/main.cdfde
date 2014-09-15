@@ -1319,7 +1319,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    if(result_new_id.length === 0){\n        bissolCreateAlertMsg(\n    \t\t'Something went wrong! Check JavaScript Console and/or Server.'\n\t\t\t,\t'danger'\t\n\t\t); \n    }\n}",
+      "value": "function(){\n    // in case database is down\n    if(typeof result_new_id == 'undefined'){\n        alert('Something went wrong! Check JavaScript Console and/or Server Log.');\n    }\n    \n    // in case database returns error\n    else if(result_new_id.length > 0){      \n        var myErrorMsg = 'Something went wrong. The database error message is: \"'\n            + result_new_id[0][0]\n            + '\". In addition check JavaScript Console and/or Server Log.'\n        ;\n        \n        bissolCreateModal(\n            'html_select_table'\n            , 'myInsertWentWrong'\n            , 'System Error'\n            , myErrorMsg\n            , 'myCloseButton1'\n            , 'Close'\n        );\n        $('#myInsertWentWrong').modal('show');\n    }\n}",
       "type": "JavaScript"
      },
      {

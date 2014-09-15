@@ -181,8 +181,8 @@
       <note>Bug prevents metadata injection&#xa;from more than one step&#xa;http&#x3a;&#x2f;&#x2f;jira.pentaho.com&#x2f;browse&#x2f;PDI-12667&#xa;Workaround&#x3a; join them</note>
       <xloc>184</xloc>
       <yloc>216</yloc>
-      <width>249</width>
-      <heigth>70</heigth>
+      <width>252</width>
+      <heigth>74</heigth>
       <fontname>Arial</fontname>
       <fontsize>10</fontsize>
       <fontbold>N</fontbold>
@@ -203,7 +203,7 @@
       <xloc>887</xloc>
       <yloc>235</yloc>
       <width>147</width>
-      <heigth>55</heigth>
+      <heigth>58</heigth>
       <fontname>Arial</fontname>
       <fontsize>10</fontsize>
       <fontbold>N</fontbold>
@@ -756,9 +756,9 @@
     <trans_name/>
     <filename>&#x24;&#x7b;Internal.Transformation.Filename.Directory&#x7d;&#x2f;saveRecordAndReturnKey.ktr</filename>
     <directory_path/>
-    <source_step>OutputKey</source_step>
-    <source_output_fields>      <source_output_field>        <source_output_field_name>id</source_output_field_name>
-        <source_output_field_type>Integer</source_output_field_type>
+    <source_step>OUTPUT</source_step>
+    <source_output_fields>      <source_output_field>        <source_output_field_name>db_error_msg</source_output_field_name>
+        <source_output_field_type>String</source_output_field_type>
         <source_output_field_length>-1</source_output_field_length>
         <source_output_field_precision>-1</source_output_field_precision>
       </source_output_field>    </source_output_fields>    <target_file/>
