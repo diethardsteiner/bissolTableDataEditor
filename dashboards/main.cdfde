@@ -1181,7 +1181,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    //buildTable('tableeditor','myTableEditor',select_result,this.metadata);\n    //buildTable('tableeditor','myTableEditor',select_result, result_fetch_metadata);\n\n    if(select_result.length === 0){\n        bissolCreateModal(\n            'html_select_table'\n            , 'mySelectWentWrong'\n            , 'System Error'\n            , 'Something went wrong! Check JavaScript Console and/or Server. Ignore this message if there is actually no data at all in your table.'\n            , 'myCloseButton1'\n            , 'Close'\n        );\n        $('#mySelectWentWrong').modal('show');\n    }\n    bissolBuildTable(select_result);\n    //console.log(this);\n    $('#myTableEditor').dataTable();\n}",
+      "value": "function(){\n    //buildTable('tableeditor','myTableEditor',select_result,this.metadata);\n    //buildTable('tableeditor','myTableEditor',select_result, result_fetch_metadata);\n    \n\n    if(!Array.isArray(select_result)){\n        bissolCreateModal(\n            'html_select_table'\n            , 'mySelectWentWrong'\n            , 'System Error'\n            , 'Something went wrong! Check JavaScript Console and/or Server.'\n            , 'myCloseButton1'\n            , 'Close'\n        );\n        $('#mySelectWentWrong').modal('show');\n    }\n    bissolBuildTable(select_result);\n    //console.log(this);\n    $('#myTableEditor').dataTable();\n}",
       "type": "JavaScript"
      },
      {
@@ -1517,7 +1517,7 @@
      },
      {
       "name": "kettleOutput",
-      "value": "Inferred",
+      "value": "Json",
       "type": "kettleOutputCustom"
      }
     ],
