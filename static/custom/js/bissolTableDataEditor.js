@@ -237,20 +237,15 @@ function bissolBuildTable(data) {
         $.each(myData[i], function( j, value ){
         
             // add cells within row    
-            //if(param_metadata[j].isEditable){
             if($.inArray(param_col_names_visible[j], param_col_names_editable) > -1){
                 $('#html_table_editor > table > tbody > tr:last')
                 .append('<td><span contenteditable title="Content editable"'
-                //+ ' data-name="'  + param_metadata[j].colName + '"'
-                //+ ' data-type="' + param_metadata[j].colType + '">' 
                 + ' data-name="'  + param_col_names[j] + '"'
                 + ' data-type="' + param_col_types[j] + '">'
                 + value + '</span></td>');
             } else {
                 $('#html_table_editor > table > tbody > tr:last')
-                .append('<td><span class="content-non-editable" title="Content not editable"'
-                //+ ' data-name="'  + param_metadata[j].colName + '"'
-                //+ ' data-type="' + param_metadata[j].colType + '">'  
+                .append('<td><span class="content-non-editable" title="Content not editable"'  
                 + ' data-name="'  + param_col_names[j] + '"'
                 + ' data-type="' + param_col_types[j] + '">'  
                 + value + '</span></td>');                
@@ -378,23 +373,6 @@ function bissolNewRecord(){
      
 }
 
-function bissolRemoveRow() {
-    $('#myDeleteButton').on('click', function() { 
-        
-        //var myId = $(this).parent().parent().find('span[data-name="' + param_id_column + '"]').text();
-        //console.log($('#html_table_editor table > tbody > tr > td.row-highlight'));
-        var myId = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span[data-name="' + param_id_column + '"]').text();
-        var myQuery = 'DELETE FROM ' + param_db_schematable + ' WHERE ' + param_id_column + ' = ' + myId;
-        console.log('The query to submit is: ' + myQuery);
-
-        //Dashboards.setParameter('param_db_connection', myJNDI); // not necessary, should be already set
-        Dashboards.fireChange('param_sql_update', myQuery);
-        
-        $('#html_table_editor table > tbody > tr > td.row-highlight').parent().remove();
-
-    });   
-}
-
 function bissolSaveRow() { 
     //.save-row
     $('#myUpdateButton').on('click', function() { 
@@ -449,4 +427,21 @@ function bissolSaveRow() {
         
     }); 
 
+}
+
+function bissolRemoveRow() {
+    $('#myDeleteButton').on('click', function() { 
+        
+        //var myId = $(this).parent().parent().find('span[data-name="' + param_id_column + '"]').text();
+        //console.log($('#html_table_editor table > tbody > tr > td.row-highlight'));
+        var myId = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span[data-name="' + param_id_column + '"]').text();
+        var myQuery = 'DELETE FROM ' + param_db_schematable + ' WHERE ' + param_id_column + ' = ' + myId;
+        console.log('The query to submit is: ' + myQuery);
+
+        //Dashboards.setParameter('param_db_connection', myJNDI); // not necessary, should be already set
+        Dashboards.fireChange('param_sql_update', myQuery);
+        
+        $('#html_table_editor table > tbody > tr > td.row-highlight').parent().remove();
+
+    });   
 }
