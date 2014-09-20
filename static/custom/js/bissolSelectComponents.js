@@ -1,11 +1,11 @@
 //function bissolCreateSelect(myCdeContainerId, myDashboardObjectId, myLabelText, myData, cdeParam){
 function bissolCreateSelect(options){
 
-    var myCdeContainerId = options.myCdeContainerId;
-    var myDashboardObjectId = options.myDashboardObjectId;
-    var myLabelText = options.myLabelText;
-    var myData = options.myData;
-    var cdeParam = options.cdeParam;
+    var myCdeContainerId = options.myCdeContainerId; // required, can be id or class, so prefix selector accordingly
+    var myDashboardObjectId = options.myDashboardObjectId; // optional, do not prefix with #
+    var myLabelText = options.myLabelText; // optional
+    var myData = options.myData; // required
+    var cdeParam = options.cdeParam; // optional
 
 //NOTE: if myData has more than one column, the first one will then we used as the id and the second on as value 
     
@@ -14,7 +14,11 @@ function bissolCreateSelect(options){
     // 1. Check if data is available
     if(myData.length > 0){ 
         
-        var myLabel = '<label for="' + myDashboardObjectId + '">' + myLabelText + '</label>';
+        var myLabel = '';
+        
+        if(typeof myLabelText !== 'undefined'){
+            myLabel += '<label for="' + myDashboardObjectId + '">' + myLabelText + '</label>';
+        }
         
         var myOptions = '<option disabled selected>Please select an option...</option>';
         
@@ -27,27 +31,37 @@ function bissolCreateSelect(options){
             
         });      
         
-        var mySelect = '<select id="' + myDashboardObjectId  + '" class="form-control">' 
+        mySelectId = myDashboardObjectId !== 'undefined' ? myDashboardObjectId : '';
+        
+        var mySelect = '<select id="' + mySelectId  + '" class="form-control">' 
             + myOptions + '</select>';
             
         // Check if select exists 
         // if it exists ...
-        if($('#' + myDashboardObjectId).length){
+        if($(myDashboardObjectId).length){
             Dashboards.fireChange(cdeParam,null);
         } 
                        
-        $('#' + myCdeContainerId).empty(); // empty in case there is already a select
-        $('#' + myCdeContainerId).append(myLabel + mySelect);
+        $(myCdeContainerId).empty(); // empty in case there is already a select
+        $(myCdeContainerId).append(myLabel + mySelect);
         
-        $('#' + myDashboardObjectId).on('change', function(){
-            mySelectedValue = $( this ).find('option:selected').val();
-            Dashboards.fireChange(cdeParam, mySelectedValue);      
-        });
+        
+        if(typeof cdeParam !== 'undefined'){
+        
+            $('#' + myDashboardObjectId).on('change', function(){
+                mySelectedValue = $( this ).find('option:selected').val();
+                Dashboards.fireChange(cdeParam, mySelectedValue);    
+                console.log(cdeParam + 'set to: ' + mySelectedValue);
+            });
+        
+        }
     } 
     // if no data is available remove any existing selects
     else {
-        $('#' + myCdeContainerId).empty();
-        Dashboards.fireChange(cdeParam,null);
+        $(myCdeContainerId).empty();
+        if(typeof cdeParam !== 'undefined'){
+            Dashboards.fireChange(cdeParam,null);
+        }
     }   
 }
 

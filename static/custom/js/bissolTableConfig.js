@@ -75,11 +75,21 @@ function bissolCreateTableConfigPicker(myData){
         +'            <th>Is Visible?</th>'
         +'            <th>Is Editable?</th>'
         +'            <th>Is Primary Key?</th>'  
-        +'            <th>Is Auto Increment?</th>'       
+        +'            <th>Is Auto Increment?</th>'  
+        +'            <th>Validation Type</th>'  
+        +'            <th>Validation Min Number</th>' 
+        +'            <th>Validation Max Number</th>' 
+        +'            <th>Validation Max Char Length</th>' 
+        +'            <th>Validation Step Intervals</th>' 
+        +'            <th>Validation Default Value</th>' 
+        +'            <th>Validation Pattern</th>' 
+        +'            <th>Validation Pattern Description</th>' 
         +'        </tr>'
         +'    </thead>'
         +'    <tbody>'
         ;
+        
+        
 
         $.each(myData, function(i, val){
             myConfigTable +=
@@ -90,8 +100,16 @@ function bissolCreateTableConfigPicker(myData){
             +'            <td>' + val[5] + '</td>'
             +'            <td><input type="checkbox" name="isVisible" value="' + val[0] + '"/></td>'
             +'            <td><input type="checkbox" name="isEditable" value="' + val[0] + '"/></td>'
-            +'            <td><input type="checkbox" name="isPrimaryKey" value="' + val[0] + '" ' + (val[4]==='YES' ? ' checked ' : ' ') + ' />'
-            +'            <td><input type="checkbox" name="isAutoIncrement" value="' + val[0] + '" ' + (val[6]==='YES' ? ' checked ' : ' ') + ' disabled />'
+            +'            <td><input type="checkbox" name="isPrimaryKey" value="' + val[0] + '" ' + (val[4]==='YES' ? ' checked ' : ' ') + ' /></td>'
+            +'            <td><input type="checkbox" name="isAutoIncrement" value="' + val[0] + '" ' + (val[6]==='YES' ? ' checked ' : ' ') + ' disabled /></td>'
+            +'            <td class="myValidationTypesPickerContainer"></td>'
+            +'            <td><input type="text" name="min"></td>'
+            +'            <td><input type="text" name="max"></td>'
+            +'            <td><input type="text" name="maxlength"></td>'
+            +'            <td><input type="text" name="value"></td>'
+            +'            <td><input type="text" name="step"></td>'
+            +'            <td><input type="text" name="pattern"></td>'
+            +'            <td><input type="text" name="title"></td>'
             +'        </tr>'
             ;
 
@@ -104,6 +122,7 @@ function bissolCreateTableConfigPicker(myData){
         '    </tbody>'
         +'</table>'
         ;
+
         
         Dashboards.setParameter('param_col_names', myColsName.join(','));
         Dashboards.setParameter('param_col_types', myColsType.join(','));
@@ -111,6 +130,20 @@ function bissolCreateTableConfigPicker(myData){
 
 
         $('#html_db_table_metadata_picker').append(myConfigTable);
+
+        // validation config details
+        
+        var myValidationTypes = [];
+        myValidationTypes.push(['none'],['text'],['number'],['range'],['date'],['datetime'],['datetime-local'],['time']
+                ,['week'],['month'],['color'],['email'],['tel'],['url'],['password']);
+            
+        var myValidationTypesPicker =  bissolCreateSelect(
+                {
+                    myCdeContainerId: '.myValidationTypesPickerContainer'
+                    , myData: myValidationTypes
+                }
+            );
+
 
         // add submit button
 
