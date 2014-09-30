@@ -94,10 +94,10 @@ function bissolCreateTableConfigPicker(myData){
         $.each(myData, function(i, val){
             myConfigTable +=
             '        <tr>'
-            +'            <td>' + val[3] + '</td>'
-            +'            <td>' + val[0] + '</td>'
+            +'            <td class="colIndex">' + val[3] + '</td>'
+            +'            <td class="colName">' + val[0] + '</td>'
             +'            <td>' + val[1] + '</td>'
-            +'            <td>' + val[5] + '</td>'
+            +'            <td class="colType">' + val[5] + '</td>'
             +'            <td><input type="checkbox" name="isVisible" value="' + val[0] + '"/></td>'
             +'            <td><input type="checkbox" name="isEditable" value="' + val[0] + '"/></td>'
             +'            <td><input type="checkbox" name="isPrimaryKey" value="' + val[0] + '" ' + (val[4]==='YES' ? ' checked ' : ' ') + ' /></td>'
@@ -122,7 +122,7 @@ function bissolCreateTableConfigPicker(myData){
         '    </tbody>'
         +'</table>'
         ;
-
+        
         
         Dashboards.setParameter('param_col_names', myColsName.join(','));
         Dashboards.setParameter('param_col_types', myColsType.join(','));
@@ -153,6 +153,39 @@ function bissolCreateTableConfigPicker(myData){
 
             bissolSaveAction();
         }
+        
+        // BUILD JSON CONFIG - NEW: NOT USED YET ANYWHERE ELSE
+        var metadata = [];
+        var metadataRows = $('#html_db_table_metadata_picker > table > tbody > tr');
+        
+        // create one object by row
+        $.each(metadataRows, function(i, val){
+            var metadataRow = {};
+            metadataRow.colIndex = $( val ).find( 'td.colIndex').text();
+            metadataRow.colName = $( val ).find( 'td.colName').text();
+            metadataRow.colType = $( val ).find( 'td.colType').text();
+            metadataRow.isVisible = $( val ).find( 'input[name="isVisible"]').is(':checked' );
+            metadataRow.isEditable = $( val ).find( 'input[name="isEditable"]').is(':checked' );
+            metadataRow.isPrimaryKey = $( val ).find( 'input[name="isPrimaryKey"]').is(':checked' );
+            metadataRow.isAutoIncrement = $( val ).find( 'input[name="isAutoIncrement"]').is(':checked' );
+            metadataRow.validationType = $( val ).find( 'td.myValidationTypesPickerContainer > select option:selected').val();
+            metadataRow.validationMin = $( val ).find( 'input[name="min"]').val();
+            metadataRow.validationMax = $( val ).find( 'input[name="max"]').val();
+            metadataRow.validationMaxLength = $( val ).find( 'input[name="maxLength"]').val();
+            metadataRow.validationValue = $( val ).find( 'input[name="value"]').val();
+            metadataRow.validationStep = $( val ).find( 'input[name="step"]').val();
+            metadataRow.validationPattern = $( val ).find( 'input[name="pattern"]').val();
+            metadataRow.validationTitle = $( val ).find( 'input[name="title"]').val();
+            metadata.push(metadataRow);
+        });
+        
+        var btdeConfigInstance = {};
+        btdeConfigInstance.dbConnection = param_db_connection;
+        btdeConfigInstance.dbSchema = param_db_schema;
+        btdeConfigInstance.dbTable = param_db_table;
+        btdeConfigInstance.metadata = metadata;
+        
+        // OPEN: 1) Send only btdeConfigInstance to ETL 2) Adjust form error hanlding 3) Remove all redundant parameters and adjust dependencies
     }
 }
 
