@@ -37,3 +37,56 @@ DB files are stored in `pentaho-solutions/system/.orient`.
 [Kettle: Return DB error/status message](http://jira.pentaho.com/browse/PDI-12719)
 
 [DB Schema Names are shown instead of DB Connection Names](https://github.com/webdetails/kettle-baserver-utils/issues/2)
+
+[Persistant storage: Document DB](http://jira.pentaho.com/browse/SPARKL-96)
+
+# Validation
+
+input type ... this will render a date picker automatically
+http://diveintohtml5.info/forms.html
+excellent article also describing fallback strategies
+
+
+http://www.w3schools.com/html/html5_form_input_types.asp
+
+
+text
+
+number
+range
+
+date
+datetime
+datetime-local
+time
+week
+month
+
+color
+email
+tel
+url
+
+
+pattern (is text as well as input type, so just for display purposes)
+
+
+
+Input Restrictions
+
+disabled	Specifies that an input field should be disabled
+max	Specifies the maximum value for an input field
+maxlength	Specifies the maximum number of character for an input field
+min	Specifies the minimum value for an input field
+pattern	Specifies a regular expression to check the input value against
+readonly	Specifies that an input field is read only (cannot be changed)
+required	Specifies that an input field is required (must be filled out)
+size	Specifies the width (in characters) of an input field
+step	Specifies the legal number intervals for an input field
+value	Specifies the default value for an input field
+
+pattern:
+Country code: `<input type="text" name="country_code" pattern="[A-Za-z]{3}" title="Three letter country code">`
+Use the global title attribute to describe the pattern to help the user.
+
+required
