@@ -886,12 +886,12 @@
      },
      {
       "name": "listeners",
-      "value": "['${p:param_config_save}']",
+      "value": "['${p:param_config}']",
       "type": "Listeners"
      },
      {
       "name": "parameters",
-      "value": "[[\"param_db_connection\",\"param_db_connection\"],[\"param_db_schema\",\"param_db_schema\"],[\"param_db_table\",\"param_db_table\"],[\"param_col_names\",\"param_col_names\"],[\"param_col_types\",\"param_col_types\"],[\"param_col_positions\",\"param_col_positions\"],[\"param_col_names_visible\",\"param_col_names_visible\"],[\"param_col_names_editable\",\"param_col_names_editable\"],[\"param_id_column\",\"param_id_column\"],[\"param_config_id\",\"param_config_id\"],[\"param_config_action\",\"param_config_action\"],[\"param_is_auto_increment\",\"param_is_auto_increment\"]]",
+      "value": "[[\"param_config\",\"param_config\"],[\"param_config_action\",\"param_config_action\"]]",
       "type": "ValuesArray"
      },
      {
@@ -1083,174 +1083,6 @@
     ]
    },
    {
-    "id": "e762dc42-0385-75cf-0d6a-9c03f5e0755f",
-    "type": "ComponentsParameter",
-    "typeDesc": "Simple parameter",
-    "parent": "GENERIC",
-    "properties": [
-     {
-      "name": "name",
-      "value": "param_col_names",
-      "type": "Id"
-     },
-     {
-      "name": "propertyValue",
-      "value": "",
-      "type": "String"
-     },
-     {
-      "name": "parameterViewRole",
-      "value": "unused",
-      "type": "parameterViewRoleCustom"
-     },
-     {
-      "name": "bookmarkable",
-      "value": "false",
-      "type": "Boolean"
-     }
-    ]
-   },
-   {
-    "id": "d17a5141-0b09-c411-0484-88af5491680d",
-    "type": "ComponentsParameter",
-    "typeDesc": "Simple parameter",
-    "parent": "GENERIC",
-    "properties": [
-     {
-      "name": "name",
-      "value": "param_col_types",
-      "type": "Id"
-     },
-     {
-      "name": "propertyValue",
-      "value": "",
-      "type": "String"
-     },
-     {
-      "name": "parameterViewRole",
-      "value": "unused",
-      "type": "parameterViewRoleCustom"
-     },
-     {
-      "name": "bookmarkable",
-      "value": "false",
-      "type": "Boolean"
-     }
-    ]
-   },
-   {
-    "id": "f5666e36-00e2-225d-d07c-6c904cb14456",
-    "type": "ComponentsParameter",
-    "typeDesc": "Simple parameter",
-    "parent": "GENERIC",
-    "properties": [
-     {
-      "name": "name",
-      "value": "param_col_positions",
-      "type": "Id"
-     },
-     {
-      "name": "propertyValue",
-      "value": "",
-      "type": "String"
-     },
-     {
-      "name": "parameterViewRole",
-      "value": "unused",
-      "type": "parameterViewRoleCustom"
-     },
-     {
-      "name": "bookmarkable",
-      "value": "false",
-      "type": "Boolean"
-     }
-    ]
-   },
-   {
-    "id": "f8a92c7b-3cf0-b357-25f4-3f7588ead85b",
-    "type": "ComponentsParameter",
-    "typeDesc": "Simple parameter",
-    "parent": "GENERIC",
-    "properties": [
-     {
-      "name": "name",
-      "value": "param_col_names_visible",
-      "type": "Id"
-     },
-     {
-      "name": "propertyValue",
-      "value": "",
-      "type": "String"
-     },
-     {
-      "name": "parameterViewRole",
-      "value": "unused",
-      "type": "parameterViewRoleCustom"
-     },
-     {
-      "name": "bookmarkable",
-      "value": "false",
-      "type": "Boolean"
-     }
-    ]
-   },
-   {
-    "id": "0b1bca5d-7b55-86a1-cc64-536d104ac94d",
-    "type": "ComponentsParameter",
-    "typeDesc": "Simple parameter",
-    "parent": "GENERIC",
-    "properties": [
-     {
-      "name": "name",
-      "value": "param_col_names_editable",
-      "type": "Id"
-     },
-     {
-      "name": "propertyValue",
-      "value": "",
-      "type": "String"
-     },
-     {
-      "name": "parameterViewRole",
-      "value": "unused",
-      "type": "parameterViewRoleCustom"
-     },
-     {
-      "name": "bookmarkable",
-      "value": "false",
-      "type": "Boolean"
-     }
-    ]
-   },
-   {
-    "id": "e10e65c3-e2a3-3122-4b13-c4e67a14047a",
-    "type": "ComponentsParameter",
-    "typeDesc": "Simple parameter",
-    "parent": "GENERIC",
-    "properties": [
-     {
-      "name": "name",
-      "value": "param_id_column",
-      "type": "Id"
-     },
-     {
-      "name": "propertyValue",
-      "value": "",
-      "type": "String"
-     },
-     {
-      "name": "parameterViewRole",
-      "value": "unused",
-      "type": "parameterViewRoleCustom"
-     },
-     {
-      "name": "bookmarkable",
-      "value": "false",
-      "type": "Boolean"
-     }
-    ]
-   },
-   {
     "id": "f16ae32e-19bd-6af5-8102-8d94d50c3505",
     "type": "ComponentsParameter",
     "typeDesc": "Simple parameter",
@@ -1258,7 +1090,7 @@
     "properties": [
      {
       "name": "name",
-      "value": "param_config_save",
+      "value": "param_config",
       "type": "Id"
      },
      {
@@ -1343,34 +1175,6 @@
      {
       "name": "name",
       "value": "param_config_action_picker_refresher",
-      "type": "Id"
-     },
-     {
-      "name": "propertyValue",
-      "value": "",
-      "type": "String"
-     },
-     {
-      "name": "parameterViewRole",
-      "value": "unused",
-      "type": "parameterViewRoleCustom"
-     },
-     {
-      "name": "bookmarkable",
-      "value": "false",
-      "type": "Boolean"
-     }
-    ]
-   },
-   {
-    "id": "2cbc2ea4-f0d2-f192-c347-8565d96c4084",
-    "type": "ComponentsParameter",
-    "typeDesc": "Simple parameter",
-    "parent": "GENERIC",
-    "properties": [
-     {
-      "name": "name",
-      "value": "param_is_auto_increment",
       "type": "Id"
      },
      {

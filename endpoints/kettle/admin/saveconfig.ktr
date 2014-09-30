@@ -85,62 +85,12 @@
             <description>The webapp folder. This value is automatically set at runtime if &#x27;&#x23;&#x27; is removed from variable name.</description>
         </parameter>
         <parameter>
-            <name>param_col_names</name>
-            <default_value/>
-            <description>id,firstname,lastname</description>
-        </parameter>
-        <parameter>
-            <name>param_col_names_editable</name>
-            <default_value/>
-            <description>firstname,lastname</description>
-        </parameter>
-        <parameter>
-            <name>param_col_names_visible</name>
-            <default_value/>
-            <description>id,firstname,lastname</description>
-        </parameter>
-        <parameter>
-            <name>param_col_positions</name>
-            <default_value/>
-            <description>1,2,3</description>
-        </parameter>
-        <parameter>
-            <name>param_col_types</name>
-            <default_value/>
-            <description>Integer,String,String</description>
-        </parameter>
-        <parameter>
-            <name>param_config_action</name>
+            <name>param_config</name>
             <default_value/>
             <description/>
         </parameter>
         <parameter>
-            <name>param_config_id</name>
-            <default_value/>
-            <description>257c7199-3856-49c7-838b-dffbac170b35</description>
-        </parameter>
-        <parameter>
-            <name>param_db_connection</name>
-            <default_value/>
-            <description>psqllocaltest</description>
-        </parameter>
-        <parameter>
-            <name>param_db_schema</name>
-            <default_value/>
-            <description>public</description>
-        </parameter>
-        <parameter>
-            <name>param_db_table</name>
-            <default_value/>
-            <description>employees</description>
-        </parameter>
-        <parameter>
-            <name>param_id_column</name>
-            <default_value/>
-            <description>id</description>
-        </parameter>
-        <parameter>
-            <name>param_is_auto_increment</name>
+            <name>param_config_action</name>
             <default_value/>
             <description/>
         </parameter>
@@ -274,7 +224,7 @@
     <optimizationLevel>9</optimizationLevel>
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;function findInArray&#x28;myValue, myArray&#x29;&#x7b;&#xa;	var myResult&#x3d;&#x27;&#x27;&#x3b;&#xa;	if&#x28;myArray.indexOf&#x28;myValue&#x29; &#x3e; -1&#x29;&#x7b;&#xa;		myResult &#x3d; true&#x3b;&#xa;	&#x7d; else &#x7b;&#xa;		myResult &#x3d; false&#x3b;&#xa;	&#x7d;&#xa;	return myResult&#x3b;&#xa;&#x7d;&#xa;&#xa;var json &#x3d; &#x7b;&#x7d;&#x3b;&#xa;&#xa;&#xa;&#xa;&#x2f;&#x2f; connection details&#xa;json.configId &#x3d; uuid&#x3b;&#xa;json.dbConnection &#x3d; dbConnection&#x3b;&#xa;json.dbSchema &#x3d; dbSchema&#x3b;&#xa;json.dbTable &#x3d; dbTable&#x3b;&#xa;json.metadata &#x3d; &#x5b;&#x5d;&#x3b; &#x2f;&#x2f; create array to store column definition in it later on&#xa;&#xa;&#x2f;&#x2f; table metadata&#xa;var dbColumnsNameArray &#x3d; dbColumnsName.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;var dbColumnsTypeArray &#x3d; dbColumnsType.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;var dbColumnsPositionArray &#x3d; dbColumnsPosition.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;var dbColumnsIsVisibleArray &#x3d; dbColumnsIsVisible.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;var dbColumnsIsEditableArray &#x3d; dbColumnsIsEditable.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;var dbColumnsIsPrimaryKeyArray &#x3d; dbColumnsIsPrimaryKey.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;var dbColumnsIsAutoIncrementArray &#x3d; dbColumnsIsAutoIncrement.split&#x28;&#x27;,&#x27;&#x29;&#x3b;&#xa;&#xa;&#xa;for&#x28;i&#x3d;0&#x3b; i&#x3c;dbColumnsNameArray.length&#x3b; i&#x2b;&#x2b;&#x29;&#x7b;&#xa;    var colDetails &#x3d; &#x7b;&#x7d;&#x3b;&#xa;    colDetails.colIndex &#x3d; dbColumnsPositionArray&#x5b;i&#x5d;&#x3b;&#xa;    colDetails.colType &#x3d; dbColumnsTypeArray&#x5b;i&#x5d;&#x3b;&#xa;    colDetails.colName &#x3d; dbColumnsNameArray&#x5b;i&#x5d;&#x3b;&#xa;    colDetails.isVisible &#x3d; findInArray&#x28;dbColumnsNameArray&#x5b;i&#x5d;, dbColumnsIsVisibleArray&#x29;&#x3b;&#xa;    colDetails.isEditable &#x3d; findInArray&#x28;dbColumnsNameArray&#x5b;i&#x5d;, dbColumnsIsEditableArray&#x29;&#x3b;&#xa;    colDetails.isPrimaryKey &#x3d; findInArray&#x28;dbColumnsNameArray&#x5b;i&#x5d;, dbColumnsIsPrimaryKeyArray&#x29;&#x3b;&#xa;    colDetails.isAutoIncrement &#x3d; findInArray&#x28;dbColumnsNameArray&#x5b;i&#x5d;, dbColumnsIsAutoIncrementArray&#x29;&#x3b;&#xa;    &#x2f;&#x2f; add to metadata array&#xa;    json.metadata.push&#x28;colDetails&#x29;&#x3b;&#xa;&#x7d;&#xa;&#xa;&#xa;&#xa;&#x2f;&#x2f; source existing JSON file&#xa;var workingDir &#x3d; getEnvironmentVar&#x28;&#x27;Internal.Transformation.Filename.Directory&#x27;&#x29;&#x3b;&#xa;var existingJsonFilePath &#x3d; workingDir &#x2b; &#x27;&#x2f;..&#x2f;..&#x2f;..&#x2f;..&#x2f;bissolTableDataEditorConfig&#x2f;bissolTableDataEditorConfig.json&#x27;&#x3b;&#xa;var existingJson&#x3b;&#xa;&#xa;if&#x28;isFile&#x28;existingJsonFilePath&#x29;&#x29;&#x7b;&#xa;	var existingJsonRaw &#x3d; loadFileContent&#x28;existingJsonFilePath&#x29;&#x3b;&#xa;	if&#x28;existingJsonRaw &#x21;&#x3d;&#x3d; &#x27;&#x27;&#x29;&#x7b;&#xa;		existingJson &#x3d; JSON.parse&#x28;existingJsonRaw&#x29;&#x3b;&#xa;	&#x7d; else &#x7b;&#xa;		existingJson &#x3d; &#x5b;&#x5d;&#x3b;		&#xa;	&#x7d;&#xa;&#x7d; else &#x7b;&#xa;	existingJson &#x3d; &#x5b;&#x5d;&#x3b;&#xa;&#x7d;&#xa;&#xa;&#x2f;&#x2f; for existing config details check if this table config already exists&#xa;if&#x28;existingConfigId &#x21;&#x3d;&#x3d; &#x27;new-table-config&#x27;&#x29;&#x7b;&#xa;    for &#x28;var i &#x3d; 0&#x3b; i &#x3c; existingJson.length&#x3b; i&#x2b;&#x2b;&#x29; &#x7b;&#xa;&#xa;        if&#x28;existingJson&#x5b;i&#x5d;.configId &#x3d;&#x3d; existingConfigId&#x29;&#x7b;&#xa;		&#xa;            &#x2f;&#x2f;myJNDI &#x3d; existingJson&#x5b;i&#x5d;.dbConnection&#x3b;&#xa;            &#x2f;&#x2f;mySchema &#x3d; existingJson&#x5b;i&#x5d;.dbSchema&#x3b;&#xa;            &#x2f;&#x2f;myTable &#x3d; existingJson&#x5b;i&#x5d;.dbTable&#x3b;&#xa;            &#x2f;&#x2f;myMetadata &#x3d; existingJson&#x5b;i&#x5d;.metadata&#x3b; &#xa;&#xa;		    &#x2f;&#x2f; delete existing table config details&#xa;            existingJson.splice&#x28;i,1&#x29;&#x3b;    &#xa;        &#x7d;&#xa;    &#x7d;&#xa;&#x7d;&#xa;&#xa;&#x2f;&#x2f; add new table config details - if there are any&#xa;if&#x28;configAction &#x3d;&#x3d; &#x27;Submit&#x27;&#x29;&#x7b;&#xa;	existingJson.push&#x28;json&#x29;&#x3b;&#xa;&#x7d;&#xa;&#xa;var myDocFinal &#x3d; JSON.stringify&#x28;existingJson&#x29;&#x3b;</jsScript_script>
+        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;&#xa;var tableConfigJson &#x3d; JSON.parse&#x28;config&#x29;&#x3b;&#xa;&#xa;&#x2f;&#x2f; assign uuid for new config details&#xa;if&#x28;tableConfigJson.configId &#x3d;&#x3d;&#x3d; &#x27;new-table-config&#x27;&#x29;&#x7b;&#xa;	tableConfigJson.configId &#x3d; uuid&#x3b;&#xa;&#x7d;&#xa;&#xa;&#x2f;&#x2f; source existing JSON file&#xa;var workingDir &#x3d; getEnvironmentVar&#x28;&#x27;Internal.Transformation.Filename.Directory&#x27;&#x29;&#x3b;&#xa;var existingJsonFilePath &#x3d; workingDir &#x2b; &#x27;&#x2f;..&#x2f;..&#x2f;..&#x2f;..&#x2f;bissolTableDataEditorConfig&#x2f;bissolTableDataEditorConfig.json&#x27;&#x3b;&#xa;var existingJson&#x3b;&#xa;&#xa;if&#x28;isFile&#x28;existingJsonFilePath&#x29;&#x29;&#x7b;&#xa;	var existingJsonRaw &#x3d; loadFileContent&#x28;existingJsonFilePath&#x29;&#x3b;&#xa;	if&#x28;existingJsonRaw &#x21;&#x3d;&#x3d; &#x27;&#x27;&#x29;&#x7b;&#xa;		existingJson &#x3d; JSON.parse&#x28;existingJsonRaw&#x29;&#x3b;&#xa;	&#x7d; else &#x7b;&#xa;		existingJson &#x3d; &#x5b;&#x5d;&#x3b;		&#xa;	&#x7d;&#xa;&#x7d; else &#x7b;&#xa;	existingJson &#x3d; &#x5b;&#x5d;&#x3b;&#xa;&#x7d;&#xa;&#xa;&#x2f;&#x2f; for existing config details check if this table config already exists&#xa;if&#x28;tableConfigJson.configId &#x21;&#x3d;&#x3d; &#x27;new-table-config&#x27;&#x29;&#x7b;&#xa;    for &#x28;var i &#x3d; 0&#x3b; i &#x3c; existingJson.length&#x3b; i&#x2b;&#x2b;&#x29; &#x7b;&#xa;&#xa;        if&#x28;existingJson&#x5b;i&#x5d;.configId &#x3d;&#x3d; tableConfigJson.configId&#x29;&#x7b;&#xa;&#xa;		    &#x2f;&#x2f; delete existing table config details&#xa;            existingJson.splice&#x28;i,1&#x29;&#x3b;    &#xa;        &#x7d;&#xa;    &#x7d;&#xa;&#x7d;&#xa;&#xa;&#x2f;&#x2f; add new table config details - if there are any&#xa;if&#x28;configAction &#x3d;&#x3d; &#x27;Submit&#x27;&#x29;&#x7b;&#xa;	existingJson.push&#x28;tableConfigJson&#x29;&#x3b;&#xa;&#x7d;&#xa;&#xa;var myDocFinal &#x3d; JSON.stringify&#x28;existingJson&#x29;&#x3b;</jsScript_script>
       </jsScript>    </jsScripts>    <fields>      <field>        <name>myDocFinal</name>
         <rename>myDocFinal</rename>
         <type>String</type>
@@ -386,126 +336,6 @@
            </partitioning>
     <fields>
       <field>
-        <name>dbConnection</name>
-        <variable>&#x24;&#x7b;param_db_connection&#x7d;</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>dbTable</name>
-        <variable>&#x24;&#x7b;param_db_table&#x7d;</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>dbSchema</name>
-        <variable>&#x24;&#x7b;param_db_schema&#x7d;</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>dbColumnsName</name>
-        <variable>&#x24;&#x7b;param_col_names&#x7d;</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>dbColumnsType</name>
-        <variable>&#x24;&#x7b;param_col_types&#x7d;</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>dbColumnsPosition</name>
-        <variable>&#x24;&#x7b;param_col_positions&#x7d;</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>dbColumnsIsVisible</name>
-        <variable>&#x24;&#x7b;param_col_names_visible&#x7d;</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>dbColumnsIsEditable</name>
-        <variable>&#x24;&#x7b;param_col_names_editable&#x7d;</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>dbColumnsIsPrimaryKey</name>
-        <variable>&#x24;&#x7b;param_id_column&#x7d;</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>existingConfigId</name>
-        <variable>&#x24;&#x7b;param_config_id&#x7d;</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
         <name>configAction</name>
         <variable>&#x24;&#x7b;param_config_action&#x7d;</variable>
         <type>String</type>
@@ -518,8 +348,8 @@
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>dbColumnsIsAutoIncrement</name>
-        <variable>&#x24;&#x7b;param_is_auto_increment&#x7d;</variable>
+        <name>config</name>
+        <variable>&#x24;&#x7b;param_config&#x7d;</variable>
         <type>String</type>
         <format/>
         <currency/>
@@ -639,40 +469,10 @@
       <logmessage>&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d; Received following parameter values &#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;</logmessage>
     <fields>
       <field>
-        <name>dbConnection</name>
-        </field>
-      <field>
-        <name>dbTable</name>
-        </field>
-      <field>
-        <name>dbSchema</name>
-        </field>
-      <field>
-        <name>dbColumnsName</name>
-        </field>
-      <field>
-        <name>dbColumnsType</name>
-        </field>
-      <field>
-        <name>dbColumnsPosition</name>
-        </field>
-      <field>
-        <name>dbColumnsIsVisible</name>
-        </field>
-      <field>
-        <name>dbColumnsIsEditable</name>
-        </field>
-      <field>
-        <name>dbColumnsIsPrimaryKey</name>
-        </field>
-      <field>
-        <name>existingConfigId</name>
-        </field>
-      <field>
         <name>configAction</name>
         </field>
       <field>
-        <name>dbColumnsIsAutoIncrement</name>
+        <name>config</name>
         </field>
       </fields>
      <cluster_schema/>

@@ -143,8 +143,7 @@ function bissolCreateTableConfigPicker(myData){
                     , myData: myValidationTypes
                 }
             );
-
-
+  
         // add submit button
 
         if($('#bissol-table-properties-submit').length === 0){    
@@ -153,39 +152,6 @@ function bissolCreateTableConfigPicker(myData){
 
             bissolSaveAction();
         }
-        
-        // BUILD JSON CONFIG - NEW: NOT USED YET ANYWHERE ELSE
-        var metadata = [];
-        var metadataRows = $('#html_db_table_metadata_picker > table > tbody > tr');
-        
-        // create one object by row
-        $.each(metadataRows, function(i, val){
-            var metadataRow = {};
-            metadataRow.colIndex = $( val ).find( 'td.colIndex').text();
-            metadataRow.colName = $( val ).find( 'td.colName').text();
-            metadataRow.colType = $( val ).find( 'td.colType').text();
-            metadataRow.isVisible = $( val ).find( 'input[name="isVisible"]').is(':checked' );
-            metadataRow.isEditable = $( val ).find( 'input[name="isEditable"]').is(':checked' );
-            metadataRow.isPrimaryKey = $( val ).find( 'input[name="isPrimaryKey"]').is(':checked' );
-            metadataRow.isAutoIncrement = $( val ).find( 'input[name="isAutoIncrement"]').is(':checked' );
-            metadataRow.validationType = $( val ).find( 'td.myValidationTypesPickerContainer > select option:selected').val();
-            metadataRow.validationMin = $( val ).find( 'input[name="min"]').val();
-            metadataRow.validationMax = $( val ).find( 'input[name="max"]').val();
-            metadataRow.validationMaxLength = $( val ).find( 'input[name="maxLength"]').val();
-            metadataRow.validationValue = $( val ).find( 'input[name="value"]').val();
-            metadataRow.validationStep = $( val ).find( 'input[name="step"]').val();
-            metadataRow.validationPattern = $( val ).find( 'input[name="pattern"]').val();
-            metadataRow.validationTitle = $( val ).find( 'input[name="title"]').val();
-            metadata.push(metadataRow);
-        });
-        
-        var btdeConfigInstance = {};
-        btdeConfigInstance.dbConnection = param_db_connection;
-        btdeConfigInstance.dbSchema = param_db_schema;
-        btdeConfigInstance.dbTable = param_db_table;
-        btdeConfigInstance.metadata = metadata;
-        
-        // OPEN: 1) Send only btdeConfigInstance to ETL 2) Adjust form error hanlding 3) Remove all redundant parameters and adjust dependencies
     }
 }
 
@@ -194,132 +160,193 @@ function bissolSaveAction(){
     //$('#bissol-table-properties-submit').on('click', function(){
     $('#html_db_table_metadata_picker > button').on('click', function(){
                 
-                var action = $(this).text();
-                console.log('The action chosen is: ' + action);
-                Dashboards.setParameter('param_config_action', action);
+        var action = $(this).text();
+        console.log('The action chosen is: ' + action);
+        Dashboards.setParameter('param_config_action', action);
+
+        // remove any exsiting alert messages
+        $('#bissol-table-properties div .alert').remove();
                 
-                // remove any exsiting alert messages
-                $('#bissol-table-properties div .alert').remove();
-
-                var myColsIsVisible = [];
-
-                $( 'input[name="isVisible"]:checkbox:checked' ).each(function() {
-                    myColsIsVisible.push($(this).val());
-                });
-
-                console.log('my cols is visible:');
-                console.log(myColsIsVisible);
-
-                var myColsIsEditable = [];
-
-                $( 'input[name="isEditable"]:checkbox:checked' ).each(function() {
-                    myColsIsEditable.push($(this).val());
-                });
-
-                console.log('my cols is editable:');
-                console.log(myColsIsEditable);
-
-                var myColsIsPrimaryKey = [];
-
-                $( 'input[name="isPrimaryKey"]:checkbox:checked' ).each(function() {
-                    myColsIsPrimaryKey.push($(this).val());
-                });
+        // BUILD JSON CONFIG OBJECT
+        var metadata = [];
+        var metadataRows = $('#html_db_table_metadata_picker > table > tbody > tr');
+        
+        // create one object by row
+        $.each(metadataRows, function(i, val){
+            var metadataRow = {};
+            metadataRow.colIndex = $( val ).find( 'td.colIndex' ).text();
+            metadataRow.colName = $( val ).find( 'td.colName' ).text();
+            metadataRow.colType = $( val ).find( 'td.colType' ).text();
+            metadataRow.isVisible = $( val ).find( 'input[name="isVisible"]' ).is( ':checked' );
+            metadataRow.isEditable = $( val ).find( 'input[name="isEditable"]' ).is( ':checked' );
+            metadataRow.isPrimaryKey = $( val ).find( 'input[name="isPrimaryKey"]' ).is( ':checked' );
+            metadataRow.isAutoIncrement = $( val ).find( 'input[name="isAutoIncrement"]' ).is( ':checked' );
+            metadataRow.validationType = $( val ).find( 'td.myValidationTypesPickerContainer > select option:selected' ).val();
+            metadataRow.validationMin = $( val ).find( 'input[name="min"]' ).val();
+            metadataRow.validationMax = $( val ).find( 'input[name="max"]' ).val();
+            metadataRow.validationMaxLength = $( val ).find( 'input[name="maxLength"]' ).val();
+            metadataRow.validationValue = $( val ).find( 'input[name="value"]' ).val();
+            metadataRow.validationStep = $( val ).find( 'input[name="step"]' ).val();
+            metadataRow.validationPattern = $( val ).find( 'input[name="pattern"]' ).val();
+            metadataRow.validationTitle = $( val ).find( 'input[name="title"]' ).val();
+            metadata.push(metadataRow);
+        });
+        
+        var btdeConfigInstance = {};
+        btdeConfigInstance.configId = param_config_id;
+        btdeConfigInstance.dbConnection = param_db_connection;
+        btdeConfigInstance.dbSchema = param_db_schema;
+        btdeConfigInstance.dbTable = param_db_table;
+        btdeConfigInstance.metadata = metadata;                
                 
-                console.log('my cols primary key:');
-                console.log(myColsIsPrimaryKey);
-                
-                var myColsIsAutoIncrement = [];
-                
-                $( 'input[name="isAutoIncrement"]:checkbox:checked' ).each(function() {
-                    myColsIsAutoIncrement.push($(this).val());
-                });               
+        /**
+        var myColsIsVisible = [];
 
-                console.log('my cols auto increment:');
-                console.log(myColsIsAutoIncrement);
+        $( 'input[name="isVisible"]:checkbox:checked' ).each(function() {
+            myColsIsVisible.push($(this).val());
+        });
 
-                // Add a few checks
-                // 1) are all chosen is_editable cols as well is_visible?
-                // 2) is the chosen primary key column visible? 
-                // 3) check that only one primary key is defined
+        console.log('my cols is visible:');
+        console.log(myColsIsVisible);
 
-                var isEditableCheckCounter = 0;
-                $.each(myColsIsVisible,function(i,val){
-                    $.each(myColsIsEditable,function(j,value){
-                        if(val === value) {
-                        isEditableCheckCounter++;
-                        }    
-                    });
-                });
+        var myColsIsEditable = [];
 
+        $( 'input[name="isEditable"]:checkbox:checked' ).each(function() {
+            myColsIsEditable.push($(this).val());
+        });
 
-                var isPrimaryKeyOkCounter = 0;
-                if(myColsIsPrimaryKey.length === 1){
-                    $.each(myColsIsVisible,function(i,val){
-                        if(val === myColsIsPrimaryKey[0]) {
-                            isPrimaryKeyOkCounter++;
-                        }
-                    });
-                }
-                
-                var primaryKeyIsEditable = 0;
-                if($.inArray(myColsIsPrimaryKey[0], myColsIsEditable) > -1){
-                    primaryKeyIsEditable = 1;
-                } else {
-                    primaryKeyIsEditable = 0;
-                }
-                
-                function createAlertErrorMsg(msg){
-                    var alertMsg = bissolCreateAlertMsg('danger','<strong>Error!</strong> Please correct your configuration details: ' + msg);
-                    $('#html_db_table_metadata_picker').prepend(alertMsg);
-                }
-                
-                if(myColsIsPrimaryKey.length === 0){
-                    createAlertErrorMsg('You must define a primary key!');
-                }
+        console.log('my cols is editable:');
+        console.log(myColsIsEditable);
 
-                else if(myColsIsPrimaryKey.length > 1){
-                    createAlertErrorMsg('You must only define one column as primary key!');
-                }
+        var myColsIsPrimaryKey = [];
 
-                else if(myColsIsVisible.length === 0){
-                    createAlertErrorMsg('You must define at least one visible column!');
-                }     
+        $( 'input[name="isPrimaryKey"]:checkbox:checked' ).each(function() {
+            myColsIsPrimaryKey.push($(this).val());
+        });
 
-                else if(isPrimaryKeyOkCounter !== 1){
-                    createAlertErrorMsg('The primary key column must be visible!');                
-                }
+        console.log('my cols primary key:');
+        console.log(myColsIsPrimaryKey);
 
-                else if(myColsIsEditable.length === 0){
-                    createAlertErrorMsg('You must define at least one editable column!');
-                }
-                else if(isEditableCheckCounter !== myColsIsEditable.length){
-                    createAlertErrorMsg('All editable columns must be visible as well!');                
-                } 
-                else if(primaryKeyIsEditable === 1){
-                    createAlertErrorMsg('The primary key column must not be editable!');                                    
-                }
+        var myColsIsAutoIncrement = [];
 
-                else {
-                    
-                    //Dashboards.setParameter('param_col_names', myColsName.join(','));
-                    //Dashboards.setParameter('param_col_types', myColsType.join(','));
-                    //Dashboards.setParameter('param_col_positions', myColsPosition.join(','));
-                    Dashboards.setParameter('param_col_names_visible', myColsIsVisible.join(','));
-                    Dashboards.setParameter('param_col_names_editable', myColsIsEditable.join(','));
-                    Dashboards.setParameter('param_id_column', myColsIsPrimaryKey.join(','));
-                    Dashboards.setParameter('param_is_auto_increment', myColsIsAutoIncrement.join(','));
-                    Dashboards.fireChange('param_config_save','save');
+        $( 'input[name="isAutoIncrement"]:checkbox:checked' ).each(function() {
+            myColsIsAutoIncrement.push($(this).val());
+        });               
 
-                    var alertSuccess = bissolCreateAlertMsg('success', '<strong>Success!</strong> Configuration details were saved.');
+        console.log('my cols auto increment:');
+        console.log(myColsIsAutoIncrement);
 
-                    $('#html_table_config_container').empty();
-                    $('#html_table_config_container').append(alertSuccess);
-                    
-                    // refresh main action picker pull down menu
-                    //Dashboards.setParameter('param_config_id','');
-                    Dashboards.updateComponent(render_comp_config_action_picker);
-                    
-                }
+        **/
 
+        // Add a few checks
+        // 1) are all chosen is_editable cols as well is_visible?
+        // 2) is the chosen primary key column visible? 
+        // 3) check that only one primary key is defined
+
+        /**
+        var isEditableCheckCounter = 0;
+        $.each(myColsIsVisible,function(i,val){
+            $.each(myColsIsEditable,function(j,value){
+                if(val === value) {
+                isEditableCheckCounter++;
+                }    
             });
+        });
+
+        var isPrimaryKeyOkCounter = 0;
+        if(myColsIsPrimaryKey.length === 1){
+            $.each(myColsIsVisible,function(i,val){
+                if(val === myColsIsPrimaryKey[0]) {
+                    isPrimaryKeyOkCounter++;
+                }
+            });
+        }
+        
+        var primaryKeyIsEditable = 0;
+        if($.inArray(myColsIsPrimaryKey[0], myColsIsEditable) > -1){
+            primaryKeyIsEditable = 1;
+        } else {
+            primaryKeyIsEditable = 0;
+        }
+        **/
+  
+        var isEditableCounter = 0;
+        var isEditableAndVisibleCounter = 0;
+        var isPrimaryKeyCounter = 0;
+        var isVisibleCounter = 0;
+        var primaryKeyIsVisible = false;
+        var primaryKeyIsEditable = false;
+        
+        $.each(metadata, function(i, val){
+           // check if there are any editable columns defined
+           isEditableCounter += val.isEditable ? 1 : 0;
+           // check if all editable columns are visible
+           isEditableAndVisibleCounter += val.isEditable && val.isVisible ? 1 : 0;
+           // count how many primary keys are defined
+           isPrimaryKeyCounter += val.isPrimaryKey ? 1 : 0;
+           // count how many visible fields are defined
+           isVisibleCounter += val.isVisible ? 1 : 0;
+           // check if the primar key is visible
+           primaryKeyIsVisible += val.isPrimaryKey && val.isVisible ? true : false;
+           // check if primary key column is specified as editable
+           primaryKeyIsEditable += val.isPrimaryKey && val.isEditable ? true : false;
+        });
+
+
+        function createAlertErrorMsg(msg){
+            var alertMsg = bissolCreateAlertMsg('danger','<strong>Error!</strong> Please correct your configuration details: ' + msg);
+            $('#html_db_table_metadata_picker').prepend(alertMsg);
+        }
+
+        if(isPrimaryKeyCounter === 0){
+            createAlertErrorMsg('You must define a primary key!');
+        }
+
+        else if(isPrimaryKeyCounter > 1){
+            createAlertErrorMsg('You must only define one column as primary key!');
+        }
+
+        else if(isVisibleCounter === 0){
+            createAlertErrorMsg('You must define at least one visible column!');
+        }     
+
+        else if(!primaryKeyIsVisible){
+            createAlertErrorMsg('The primary key column must be visible!');                
+        }
+
+        else if(isEditableCounter === 0){
+            createAlertErrorMsg('You must define at least one editable column!');
+        }
+        else if(isEditableCounter !== isEditableAndVisibleCounter){
+            createAlertErrorMsg('All editable columns must be visible as well!');                
+        } 
+        else if(primaryKeyIsEditable){
+            createAlertErrorMsg('The primary key column must not be editable!');                                    
+        }
+
+        else {
+
+            //Dashboards.setParameter('param_col_names', myColsName.join(','));
+            //Dashboards.setParameter('param_col_types', myColsType.join(','));
+            //Dashboards.setParameter('param_col_positions', myColsPosition.join(','));
+            //Dashboards.setParameter('param_col_names_visible', myColsIsVisible.join(','));
+            //Dashboards.setParameter('param_col_names_editable', myColsIsEditable.join(','));
+            //Dashboards.setParameter('param_id_column', myColsIsPrimaryKey.join(','));
+            //Dashboards.setParameter('param_is_auto_increment', myColsIsAutoIncrement.join(','));
+            //Dashboards.fireChange('param_config_save','save');
+            
+            Dashboards.fireChange('param_config', JSON.stringify(btdeConfigInstance));
+
+            var alertSuccess = bissolCreateAlertMsg('success', '<strong>Success!</strong> Configuration details were saved.');
+
+            $('#html_table_config_container').empty();
+            $('#html_table_config_container').append(alertSuccess);
+
+            // refresh main action picker pull down menu
+            //Dashboards.setParameter('param_config_id','');
+            Dashboards.updateComponent(render_comp_config_action_picker);
+
+        }
+
+    });
 }
