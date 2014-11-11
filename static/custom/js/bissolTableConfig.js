@@ -36,9 +36,9 @@ function bissolMapDbTypeToPdiType(myDbType){
 }
 **/
 
-function bissolCreateTableConfigPicker(myData){
+function bissolCreateTableConfigPicker(myData){    
     
-    if(myData.length > 0){ 
+    if(!$.isEmptyObject(myData)){ 
     
         if($('#bissol-table-properties').length){
             $('#bissol-table-properties').remove();
@@ -88,20 +88,18 @@ function bissolCreateTableConfigPicker(myData){
         +'    </thead>'
         +'    <tbody>'
         ;
-        
-        
 
-        $.each(myData, function(i, val){
+        $.each(myData.metadata, function(i, val){
             myConfigTable +=
             '        <tr>'
-            +'            <td class="colIndex">' + val[3] + '</td>'
-            +'            <td class="colName">' + val[0] + '</td>'
-            +'            <td>' + val[1] + '</td>'
-            +'            <td class="colType">' + val[5] + '</td>'
-            +'            <td><input type="checkbox" name="isVisible" value="' + val[0] + '"/></td>'
-            +'            <td><input type="checkbox" name="isEditable" value="' + val[0] + '"/></td>'
-            +'            <td><input type="checkbox" name="isPrimaryKey" value="' + val[0] + '" ' + (val[4]==='YES' ? ' checked ' : ' ') + ' /></td>'
-            +'            <td><input type="checkbox" name="isAutoIncrement" value="' + val[0] + '" ' + (val[6]==='YES' ? ' checked ' : ' ') + ' disabled /></td>'
+            +'            <td class="colIndex">' + val.colIndex + '</td>'
+            +'            <td class="colName">' + val.colName + '</td>'
+            +'            <td>' + val.colPdiType + '</td>'
+            +'            <td class="colType">' + val.colType + '</td>'
+            +'            <td><input type="checkbox" name="isVisible" value="' + val.isVisible + '"/></td>'
+            +'            <td><input type="checkbox" name="isEditable" value="' + val.isEditable + '"/></td>'
+            +'            <td><input type="checkbox" name="isPrimaryKey" value="' + val.colName + '" ' + (val.isPrimaryKey ? ' checked ' : ' ') + ' /></td>'
+            +'            <td><input type="checkbox" name="isAutoIncrement" value="' + val.colName + '" ' + (val.isAutoIncrement ? ' checked ' : ' ') + ' disabled /></td>'
             +'            <td class="myValidationTypesPickerContainer"></td>'
             +'            <td><input type="text" name="min"></td>'
             +'            <td><input type="text" name="max"></td>'
@@ -113,9 +111,9 @@ function bissolCreateTableConfigPicker(myData){
             +'        </tr>'
             ;
 
-            myColsName.push(val[0]);
-            myColsType.push(val[5]); // use pdi col types
-            myColsPosition.push(val[3]);
+            myColsName.push(val.colName);
+            myColsType.push(val.colPdiType); // use pdi col types
+            myColsPosition.push(val.colIndex);
         });
 
         myConfigTable +=

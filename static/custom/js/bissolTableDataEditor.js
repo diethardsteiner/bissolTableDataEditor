@@ -50,8 +50,6 @@ function bissolBuildTable(data) {
     // no reason to define param_config_id as a function arguement as it is already set as a parameter value
 
     var myData = data;
-    console.log('------------');
-    console.log(myData);
     
     // empty in case table already exists
     $('#html_table_editor').empty();
@@ -182,6 +180,7 @@ function bissolNewRecord(){
                '<div class="form-group">'
                + '    <label for="' + elt.colName + '">' + elt.colName + '</label>'
                + '    <input class="form-control" '
+               + ' type="' + elt.validationType == '' ? 'text' : elt.validationType  + '" ' +
                + ' id="' + elt.colName + '" '
                + ' placeholder="Enter ' + elt.colName + '" '
                + ' data-type="' + elt.colType + '"/>' 
