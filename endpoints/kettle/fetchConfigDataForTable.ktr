@@ -179,9 +179,10 @@
   <hop> <from>Json Input 3</from><to>Get Variables 2</to><enabled>Y</enabled> </hop>
   <hop> <from>Filter rows 2</from><to>Dummy &#x28;do nothing&#x29; 2</to><enabled>Y</enabled> </hop>
   <hop> <from>Filter rows 2</from><to>Select values 3</to><enabled>Y</enabled> </hop>
-  <hop> <from>Select values 3</from><to>Modified Java Script Value</to><enabled>Y</enabled> </hop>
-  <hop> <from>Modified Java Script Value</from><to>Final Selection</to><enabled>Y</enabled> </hop>
-  <hop> <from>Final Selection</from><to>Copy rows to result</to><enabled>Y</enabled> </hop>
+  <hop> <from>Select values 3</from><to>Modified Java Script Value</to><enabled>N</enabled> </hop>
+  <hop> <from>Modified Java Script Value</from><to>Final Selection</to><enabled>N</enabled> </hop>
+  <hop> <from>Final Selection</from><to>Copy rows to result</to><enabled>N</enabled> </hop>
+  <hop> <from>Select values 3</from><to>Copy rows to result</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>Copy rows to result</name>
@@ -312,8 +313,8 @@
       </field>        <select_unspecified>N</select_unspecified>
     </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>416</xloc>
-      <yloc>400</yloc>
+      <xloc>317</xloc>
+      <yloc>377</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -516,8 +517,8 @@
         <replace>N</replace>
       </field>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>416</xloc>
-      <yloc>288</yloc>
+      <xloc>320</xloc>
+      <yloc>273</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

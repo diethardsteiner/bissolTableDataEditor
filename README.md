@@ -69,67 +69,62 @@ The structure of the JSON object looks like this:
 
 ```json
 [
-  {
-    "configId": "32s3a343as332sasf3",
-    "dbConnection": "psqllocaltest",
-    "dbSchema": "public",
-    "dbTable": "employees",
-    "metadata": [
-      {
-        "colIndex": 0,
-        "colType": "Integer",
-        "colName": "id",
-        "isVisible": true,
-        "isEditable": false,
-        "isPrimaryKey": true,
-        "isAutoIncrement":true
-      },
-      {
-        "colIndex": 1,
-        "colType": "String",
-        "colName": "firstname",
-        "isVisible": true,
-        "isEditable": true,
-        "isPrimaryKey": false,
-        "isAutoIncrement":false
-      },
-      {
-        "colIndex": 2,
-        "colType": "String",
-        "colName": "lastname",
-        "isVisible": true,
-        "isEditable": true,
-        "isPrimaryKey": false,
-        "isAutoIncrement":false
-      }
-    ]
-  },
-  {
-    "configId": "4352dsg4234dfwe423",
-    "dbConnection": "psqllocaltest",
-    "dbSchema": "public",
-    "dbTable": "pk_test",
-    "metadata": [
-      {
-        "colIndex": 0,
-        "colType": "Integer",
-        "colName": "id",
-        "isVisible": true,
-        "isEditable": false,
-        "isPrimaryKey": true,
-        "isAutoIncrement": false
-      },
-      {
-        "colIndex": 1,
-        "colType": "String",
-        "colName": "name",
-        "isVisible": true,
-        "isEditable": true,
-        "isPrimaryKey": false,
-        "isAutoIncrement": false
-      }
-    ]
-  }
+    {
+        "configId": "30bbd8e2-89d0-4306-992d-b849f98d97b3",
+        "dbConnection": "psqllocaltest",
+        "dbSchema": "public",
+        "dbTable": "employee",
+        "metadata": [
+            {
+                "colIndex": "1",
+                "colName": "employee_id",
+                "colType": "Integer",
+                "isAutoIncrement": true,
+                "isEditable": false,
+                "isPrimaryKey": true,
+                "isVisible": true,
+                "validationMax": "",
+                "validationMin": "",
+                "validationPattern": "",
+                "validationStep": "",
+                "validationTitle": "",
+                "validationType": "Please select an option...",
+                "validationValue": ""
+            },
+            {
+                "colIndex": "2",
+                "colName": "firstname",
+                "colType": "String",
+                "isAutoIncrement": false,
+                "isEditable": true,
+                "isPrimaryKey": false,
+                "isVisible": true,
+                "validationMax": "",
+                "validationMin": "",
+                "validationPattern": "",
+                "validationStep": "",
+                "validationTitle": "",
+                "validationType": "Please select an option...",
+                "validationValue": ""
+            },
+            {
+                "colIndex": "3",
+                "colName": "lastname",
+                "colType": "String",
+                "isAutoIncrement": false,
+                "isEditable": true,
+                "isPrimaryKey": false,
+                "isVisible": true,
+                "validationMax": "",
+                "validationMin": "",
+                "validationPattern": "",
+                "validationStep": "",
+                "validationTitle": "",
+                "validationType": "Please select an option...",
+                "validationValue": ""
+            }
+        ]
+    }
 ]
 ```
 

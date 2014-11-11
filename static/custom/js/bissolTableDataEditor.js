@@ -4,182 +4,44 @@ var removeIcon = '<span class="glyphicon glyphicon-minus-sign remove-row" data-t
 //var addIcon = '<span class="glyphicon glyphicon-plus-sign add-row"></span>';
 var saveIcon = '<span class="glyphicon glyphicon-floppy-disk save-row" data-toggle="modal" data-target="#myUpdateModal"></span>';
 
-function bissolFetchConfig(param_config_id){
 
-    // NOT USED ANY MORE
-
-    // the CDA metadata object is empty in case there are no records returned by the query
-    console.log('The config id is: ' +  param_config_id);
-    //testing
-    /**
-    $.getJSON("http://localhost:8080/pentaho/api/repos/bissolTableDataEditor/static/custom/config/bissolTableDataEditorConfig.json", function(json) {
-        console.log(json); 
-    });
-    **/
-
+function bissolFetchConfigServerSide(conf){
     
+    var config = JSON.parse(conf);
 
-    var myJNDI = '';
-    var mySchema = '';
-    var myTable = '';
-    var myMetadata = [];
-
-    $.getJSON("../../../api/repos/bissolTableDataEditor/static/custom/config/bissolTableDataEditorConfig.json", function(json) {
-        for (var i = 0; i < json.length; i++) {
-            if(json[i].configId === param_config_id){
-                myJNDI = json[i].dbConnection;
-                mySchema = json[i].dbSchema;
-                myTable = json[i].dbTable;
-                myMetadata = json[i].metadata;
-                //console.log('jndi: ' + myJNDI + ', schema: ' + mySchema + ', table: ' + myTable);
-                //console.log(myMetadata);               
-            }
-        }
-    });
+    Dashboards.setParameter('param_config', config);
     
+    var myIdColumn = '';
+    var myColIsAutoIncrement = '';
+    var myColNamesVisible = [];
+    
+    config.metadata.forEach(function(elt, i) {
+        if(elt.isPrimaryKey) myIdColumn = elt.colName;
+        if(elt.isVisible) myColNamesVisible.push(elt.colName);
+        if(elt.isAutoIncrement) myColIsAutoIncrement = elt.colName;
+    });
     
     var mySchemaAndTable = '';
-    if(mySchema !== ''){
-        mySchemaAndTable = mySchema + '.' + myTable;
+    if(config.dbSchema !== ''){
+        mySchemaAndTable = config.dbSchema + '.' + config.dbTable;
     } else {
-        mySchemaAndTable = myTable;
+        mySchemaAndTable = config.dbTable;
     }
-        
- 
-    var myColNames = [];
-    
-    $.each(myMetadata, function(i, val){
-        myColNames.push(val.colName);
-    }); 
-    //console.log(myColNames);
-    
-    var myColTypes = [];
-    $.each(myMetadata, function(i, val){
-        myColTypes.push(val.colType);
-    });  
-    //console.log(myColTypes);
-    
-    //find out which column is the key column
-    var myIdColumn = '';
-    $.each(myMetadata, function(i, val){
-        if(val.isPrimaryKey){
-            myIdColumn = val.colName;
-        }
-    });  
-    
-    var myColNamesVisible = [];
-    $.each(myMetadata, function(i, val){
-        if(val.isVisible){
-            myColNamesVisible.push(val.colName);
-        }
-    });
-    var myColNamesVisibleDelimited = myColNamesVisible.join(','); // comma delimeted for SQL query
 
-    var myColNamesEditable = [];
-    $.each(myMetadata, function(i, val){
-        if(val.isEditable){
-            myColNamesEditable.push(val.colName);
-        }
-    });
-    var myColNamesEditableDelimited = myColNamesEditable.join(','); 
-    
-    var myColTypesEditable = [];
-    $.each(myMetadata, function(i, val){
-        if(val.isEditable){
-            myColNamesEditable.push(val.colType);
-        }
-    });
-    var myColTypesEditableDelimited = myColTypesEditable.join(','); 
-    
-    var myGenericSelectQuery = "SELECT " + param_col_names_visible_delimited + " FROM " + mySchemaAndTable;
-    
-    console.log('Fetching config data for table: ' + myTable);
-    console.log('The id column is: ' + myIdColumn);    
-    console.log('Generating SQL select query: ' + myGenericSelectQuery);
-    
-    
-    // make config values available globally by storing their values in parameters
-    Dashboards.setParameter('param_db_connection', myJNDI);
-    Dashboards.setParameter('param_db_schema', mySchema);
-    Dashboards.setParameter('param_db_table', myTable);
-    Dashboards.setParameter('param_db_schematable', mySchemaAndTable);
-    //Dashboards.setParameter('param_metadata', myMetadata);
-    Dashboards.setParameter('param_col_names', myColNames);
-    Dashboards.setParameter('param_col_names_visible', myColNamesVisible);
-    Dashboards.setParameter('param_col_names_visible_delimited', myColNamesVisibleDelimited);
-    Dashboards.setParameter('param_col_names_editable', myColNamesEditable);
-    Dashboards.setParameter('param_col_names_editable_delimited', myColNamesEditableDelimited);
-    Dashboards.setParameter('param_col_types_editable', myColTypesEditable);
-    Dashboards.setParameter('param_col_types_editable_delimited', myColTypesEditableDelimited);
-    Dashboards.setParameter('param_col_types', myColTypes);
-    Dashboards.setParameter('param_id_column', myIdColumn);
-    
-    Dashboards.fireChange('param_sql_select', myGenericSelectQuery);
-    
-    /**
-    return {
-        myJNDI: myJNDI
-        , mySchema: mySchema
-        , myTable: myTable
-        , mySchemaAndTable: mySchemaAndTable
-        , myMetadata: myMetadata
-        , myColNames: myColNames
-        , myColTypes: myColTypes
-        , myIdColumn: myIdColumn
-    };
-    **/
-    
-}
-
-function bissolFetchConfigServerSide(result_metadata){
-    
-    // in this case we source the config metadata via Kettle server side
-
-    var myJNDI = result_fetch_config[0][0];
-    var mySchema = result_fetch_config[0][1];
-    var myTable = result_fetch_config[0][2];
-    var mySchemaAndTable = result_fetch_config[0][3];
-    var myIdColumn = result_fetch_config[0][4];
-    var myColNamesDelimited = result_fetch_config[0][5];
-    var myColTypesDelimited = result_fetch_config[0][6];
-    var myColNamesVisibleDelimited = result_fetch_config[0][7];
-    var myColNamesEditableDelimited = result_fetch_config[0][8];
-    var myColTypesEditableDelimited = result_fetch_config[0][9];
-    var myGenericSelectQuery = result_fetch_config[0][10];
-    var myColIsAutoIncrement = result_fetch_config[0][11];
-    
-    var myColNames = myColNamesDelimited.split(',');
-    var myColTypes = myColTypesDelimited.split(',');
-    var myColNamesVisible = myColNamesVisibleDelimited.split(',');
-    var myColNamesEditable = myColNamesEditableDelimited.split(',');
-    var myColTypesEditable = myColTypesEditableDelimited.split(',');
     
     var myMaxIdQuery = "SELECT MAX(" + myIdColumn + ") AS max_id FROM " + mySchemaAndTable;
-    
-    console.log('Fetching config data for table: ' + myTable);
-    console.log('The id column is: ' + myIdColumn);  
-    console.log('The auto increment col is: ' + myColIsAutoIncrement);  
-    console.log('Generating SQL select query: ' + myGenericSelectQuery);
+    var myGenericSelectQuery = "SELECT " + myColNamesVisible.join(',') + " FROM " + mySchemaAndTable;
     
     
     // make config values available globally by storing their values in parameters
-    Dashboards.setParameter('param_db_connection', myJNDI);
-    Dashboards.setParameter('param_db_schema', mySchema);
-    Dashboards.setParameter('param_db_table', myTable);
-    Dashboards.setParameter('param_db_schematable', mySchemaAndTable);
-    //Dashboards.setParameter('param_metadata', myMetadata);
-    Dashboards.setParameter('param_col_names', myColNames);
-    Dashboards.setParameter('param_col_names_visible', myColNamesVisible);
-    Dashboards.setParameter('param_col_names_visible_delimited', myColNamesVisibleDelimited);
-    Dashboards.setParameter('param_col_names_editable', myColNamesEditable);
-    Dashboards.setParameter('param_col_names_editable_delimited', myColNamesEditableDelimited);
-    Dashboards.setParameter('param_col_types_editable', myColTypesEditable);
-    Dashboards.setParameter('param_col_types_editable_delimited', myColTypesEditableDelimited);
-    Dashboards.setParameter('param_col_types', myColTypes);
+    Dashboards.setParameter('param_db_connection', config.dbConnection);
+    Dashboards.setParameter('param_db_schema', config.dbSchema);
+    Dashboards.setParameter('param_db_table', config.dbTable);
+    Dashboards.setParameter('param_sql_max_id', myMaxIdQuery);
     Dashboards.setParameter('param_id_column', myIdColumn);
     Dashboards.setParameter('param_is_auto_increment', myColIsAutoIncrement);
-    Dashboards.setParameter('param_sql_max_id', myMaxIdQuery);
-    
+    Dashboards.setParameter('param_db_schematable', mySchemaAndTable);
+        
     Dashboards.fireChange('param_sql_select', myGenericSelectQuery);
     
 }
@@ -188,6 +50,8 @@ function bissolBuildTable(data) {
     // no reason to define param_config_id as a function arguement as it is already set as a parameter value
 
     var myData = data;
+    console.log('------------');
+    console.log(myData);
     
     // empty in case table already exists
     $('#html_table_editor').empty();
@@ -216,42 +80,41 @@ function bissolBuildTable(data) {
     $('#html_table_editor').append('<table id="myTableEditor" class="display"><thead><tr></tr></thead><tbody></tbody></table>');
 
     // add table header cells
-    /**
-    $.each(param_metadata, function( i, val ){
-        if(param_metadata[i].isVisible){
-            $('#html_table_editor table > thead > tr').append('<th>' + val.colName + '</th>');
-        }
-    });
-    **/
-   
-    $.each(param_col_names_visible, function( i, val ){
-        $('#html_table_editor table > thead > tr').append('<th>' + val + '</th>');
+       
+    param_config.metadata.forEach(function(elt, i) {
+        if(elt.isVisible){
+            $('#html_table_editor table > thead > tr').append('<th>' + elt.colName + '</th>');
+        }    
     });
 
     // add table body
-    $.each(myData, function( i, val ){
-
+    myData.forEach(function(myDataRow, j) { 
+    
         // add row
         $('#html_table_editor table > tbody').append('<tr></tr>');
-        
-        $.each(myData[i], function( j, value ){
-        
-            // add cells within row    
-            if($.inArray(param_col_names_visible[j], param_col_names_editable) > -1){
-                $('#html_table_editor > table > tbody > tr:last')
-                .append('<td><span contenteditable title="Content editable"'
-                + ' data-name="'  + param_col_names[j] + '"'
-                + ' data-type="' + param_col_types[j] + '">'
-                + value + '</span></td>');
-            } else {
-                $('#html_table_editor > table > tbody > tr:last')
-                .append('<td><span class="content-non-editable" title="Content not editable"'  
-                + ' data-name="'  + param_col_names[j] + '"'
-                + ' data-type="' + param_col_types[j] + '">'  
-                + value + '</span></td>');                
+    
+        param_config.metadata.forEach(function(elt, i) {     
+            
+            if(elt.isVisible){
+                
+                if(elt.isEditable){
+                    $('#html_table_editor > table > tbody > tr:last')
+                    .append('<td><span contenteditable title="Content editable"'
+                    + ' data-name="'  + elt.colName + '"'
+                    + ' data-type="' + elt.colType + '">'
+                    + myDataRow[i] + '</span></td>');
+                } else {
+                    $('#html_table_editor > table > tbody > tr:last')
+                    .append('<td><span class="content-non-editable" title="Content not editable"'  
+                    + ' data-name="'  + elt.colName + '"'
+                    + ' data-type="' + elt.colType + '">'  
+                    + myDataRow[i] + '</span></td>');
+                }
+                
+                
             }
-        
         });
+    
     });
     
     // add remove and save icon
@@ -311,18 +174,20 @@ function bissolNewRecord(){
                 + ' data-type="Integer"></input>' 
                 +'</div>';          
         }
-
-        $.each(param_col_names_editable, function(i, val){    
-            
-                myFormInput +=
-                '<div class="form-group">'
-                + '    <label for="' + val + '">' + val + '</label>'
-                + '    <input class="form-control" '
-                + ' id="' + val + '" '
-                + ' placeholder="Enter ' + val + '" '
-                + ' data-type="' + param_col_types_editable[i] + '"/>' 
-                +'</div>';
+        
+        param_config.metadata.forEach(function(elt, i) {
+            if(elt.isEditable){
                 
+               myFormInput +=
+               '<div class="form-group">'
+               + '    <label for="' + elt.colName + '">' + elt.colName + '</label>'
+               + '    <input class="form-control" '
+               + ' id="' + elt.colName + '" '
+               + ' placeholder="Enter ' + elt.colName + '" '
+               + ' data-type="' + elt.colType + '"/>' 
+               +'</div>';
+               
+            } 
         });
         
         $('#new-record-panel div.panel-body').append(myFormInput); 
@@ -349,11 +214,14 @@ function bissolNewRecord(){
                 myNewRecordColNames.push(param_id_column);           
             }
             
-            $.each(param_col_names_editable, function(i, val){ 
+            param_config.metadata.forEach(function(elt, i) {
+                if(elt.isEditable){
                     
-                myNewRecordData.push($('#new-record-panel #' + val).val());
-                myNewRecordColTypes.push(param_col_types_editable[i]);
-                myNewRecordColNames.push(val);
+                    myNewRecordData.push($('#new-record-panel #' + elt.colName).val());
+                    myNewRecordColTypes.push(elt.colType);
+                    myNewRecordColNames.push(elt.colName);
+                    
+                }
 
             });  
 
