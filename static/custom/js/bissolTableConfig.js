@@ -36,9 +36,17 @@ function bissolMapDbTypeToPdiType(myDbType){
 }
 **/
 
-function bissolCreateTableConfigPicker(myData){    
+function bissolCreateTableConfigPicker(myData,result_fetch_config){    
     
     if(!$.isEmptyObject(myData)){ 
+        
+        // merge existing config data with new one
+        if(result_fetch_config.length > 0){
+            // OPEN 
+            //var finalData = $.extend(myData,result_fetch_config);
+            // console.log(finalData);
+            // you can then clean up all the rubbish code in the post execution function
+        }
     
         if($('#bissol-table-properties').length){
             $('#bissol-table-properties').remove();
