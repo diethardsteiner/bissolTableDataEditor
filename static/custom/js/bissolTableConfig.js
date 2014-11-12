@@ -123,6 +123,12 @@ function bissolCreateTableConfigPicker(myConfigData,result_fetch_config){
             }
             
             var colTypeDatabase = typeof val.colTypeDb === 'undefined' ? 'n/a' : val.colTypeDb;
+            
+            // validation config details
+            
+            var myValidationTypes = [];
+            myValidationTypes.push(['none'],['text'],['number'],['range'],['date'],['datetime'],['datetime-local'],['time']
+                    ,['week'],['month'],['color'],['email'],['tel'],['url'],['password']);
 
             myConfigTable +=
             '        <tr>'
@@ -135,7 +141,16 @@ function bissolCreateTableConfigPicker(myConfigData,result_fetch_config){
             +'            <td><input type="checkbox" name="isEditable" value="' + val.colName + '" ' + (val.isEditable ? ' checked ' : ' ') + '/></td>'
             +'            <td><input type="checkbox" name="isPrimaryKey" value="' + val.colName + '" ' + (val.isPrimaryKey ? ' checked ' : ' ') + '/></td>'
             +'            <td><input type="checkbox" name="isAutoIncrement" value="' + val.colName + '" ' + (val.isAutoIncrement ? ' checked ' : ' ') + ' disabled /></td>'
-            +'            <td class="myValidationTypesPickerContainer"></td>'
+            +'            <td class="myValidationTypesPickerContainer">' 
+            
+            + bissolCreateSelect(
+                {
+                    myData: myValidationTypes
+                    , myDefaultValue: typeof val.validationType === 'undefined' ? 'none' : val.validationType
+                }
+            )
+
+            +'            </td>'
             +'            <td><input type="text" name="min"></td>'
             +'            <td><input type="text" name="max"></td>'
             +'            <td><input type="text" name="maxlength"></td>'
@@ -164,19 +179,6 @@ function bissolCreateTableConfigPicker(myConfigData,result_fetch_config){
 
         $('#html_db_table_metadata_picker').append(myConfigTable);
 
-        // validation config details
-        
-        var myValidationTypes = [];
-        myValidationTypes.push(['none'],['text'],['number'],['range'],['date'],['datetime'],['datetime-local'],['time']
-                ,['week'],['month'],['color'],['email'],['tel'],['url'],['password']);
-            
-        var myValidationTypesPicker =  bissolCreateSelect(
-                {
-                    myCdeContainerId: '.myValidationTypesPickerContainer'
-                    , myData: myValidationTypes
-                }
-            );
-  
         // add submit button
 
         if($('#bissol-table-properties-submit').length === 0){    

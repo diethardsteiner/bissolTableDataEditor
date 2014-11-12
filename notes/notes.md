@@ -90,3 +90,7 @@ Country code: `<input type="text" name="country_code" pattern="[A-Za-z]{3}" titl
 Use the global title attribute to describe the pattern to help the user.
 
 required
+
+## Polyfill
+
+[HTML5 Form Shim](http://dsheiko.github.io/HTML5-Form-Shim/)
