@@ -36,22 +36,36 @@ function bissolMapDbTypeToPdiType(myDbType){
 }
 **/
 
-function bissolCreateTableConfigPicker(myData,result_fetch_config){    
+function bissolCreateTableConfigPicker(myConfigData,result_fetch_config){    
     
-    if(!$.isEmptyObject(myData)){ 
+    if(!$.isEmptyObject(myConfigData)){ 
         
         // merge existing config data with new one
-        if(result_fetch_config.length > 0){
-            // OPEN 
-            //var finalData = $.extend(myData,result_fetch_config);
-            // console.log(finalData);
-            // you can then clean up all the rubbish code in the post execution function
+        // newer entries will override old ones
+        
+        if($.isEmptyObject(result_fetch_config)){
+          var myMergedConfigData = myConfigData.metadata;
+        } else {
+        
+          var mySavedConfigData = JSON.parse(result_fetch_config);
+        
+          // add configured flag so that we can distinguish the configured fields from the new ones
+          mySavedConfigData.metadata.forEach(function(elt, i) {
+            elt.configured = true;
+          });
+          
+          //console.log(mySavedConfigData.metadata);
+          //console.log(myConfigData.metadata);
+          var myMergedConfigData = $.extend(myConfigData.metadata,mySavedConfigData.metadata);
+          //console.log('-------------');
+          //console.log(myMergedConfigData);
+        
         }
+
     
         if($('#bissol-table-properties').length){
             $('#bissol-table-properties').remove();
         }
-
 
         var basicStructure =
         '<div class="panel panel-default bissolTableMetadataBox" id="bissol-table-properties">'
@@ -76,6 +90,7 @@ function bissolCreateTableConfigPicker(myData,result_fetch_config){
         '<table class="table table-striped">'
         +'    <thead>'
         +'        <tr>'
+        +'            <th></th>'
         +'            <th>#</th>'
         +'            <th>Col Name</th>'
         +'            <th>DB Col Type</th>'
@@ -96,17 +111,29 @@ function bissolCreateTableConfigPicker(myData,result_fetch_config){
         +'    </thead>'
         +'    <tbody>'
         ;
+        
+        $.each(myMergedConfigData, function(i, val){
 
-        $.each(myData.metadata, function(i, val){
+            var configuredLabel = '';
+            
+            if(val.configured){
+              configuredLabel = '<span class="label label-primary bissolConfigLabel">Configured</span>';
+            } else {
+              configuredLabel = '<span class="label label-info bissolConfigLabel">New</span>';
+            }
+            
+            var colTypeDatabase = typeof val.colTypeDb === 'undefined' ? 'n/a' : val.colTypeDb;
+
             myConfigTable +=
             '        <tr>'
+            +'            <td>' + configuredLabel + '</td>'
             +'            <td class="colIndex">' + val.colIndex + '</td>'
             +'            <td class="colName">' + val.colName + '</td>'
-            +'            <td>' + val.colPdiType + '</td>'
+            +'            <td>' + colTypeDatabase + '</td>'
             +'            <td class="colType">' + val.colType + '</td>'
-            +'            <td><input type="checkbox" name="isVisible" value="' + val.isVisible + '"/></td>'
-            +'            <td><input type="checkbox" name="isEditable" value="' + val.isEditable + '"/></td>'
-            +'            <td><input type="checkbox" name="isPrimaryKey" value="' + val.colName + '" ' + (val.isPrimaryKey ? ' checked ' : ' ') + ' /></td>'
+            +'            <td><input type="checkbox" name="isVisible" value="' + val.colName + '" ' + (val.isVisible ? ' checked ' : ' ') + '/></td>'
+            +'            <td><input type="checkbox" name="isEditable" value="' + val.colName + '" ' + (val.isEditable ? ' checked ' : ' ') + '/></td>'
+            +'            <td><input type="checkbox" name="isPrimaryKey" value="' + val.colName + '" ' + (val.isPrimaryKey ? ' checked ' : ' ') + '/></td>'
             +'            <td><input type="checkbox" name="isAutoIncrement" value="' + val.colName + '" ' + (val.isAutoIncrement ? ' checked ' : ' ') + ' disabled /></td>'
             +'            <td class="myValidationTypesPickerContainer"></td>'
             +'            <td><input type="text" name="min"></td>'
@@ -120,7 +147,7 @@ function bissolCreateTableConfigPicker(myData,result_fetch_config){
             ;
 
             myColsName.push(val.colName);
-            myColsType.push(val.colPdiType); // use pdi col types
+            myColsType.push(val.colType);
             myColsPosition.push(val.colIndex);
         });
 
@@ -129,7 +156,7 @@ function bissolCreateTableConfigPicker(myData,result_fetch_config){
         +'</table>'
         ;
         
-        
+                
         Dashboards.setParameter('param_col_names', myColsName.join(','));
         Dashboards.setParameter('param_col_types', myColsType.join(','));
         Dashboards.setParameter('param_col_positions', myColsPosition.join(','));
@@ -155,9 +182,18 @@ function bissolCreateTableConfigPicker(myData,result_fetch_config){
         if($('#bissol-table-properties-submit').length === 0){    
 
             $('#html_db_table_metadata_picker').append('<button type="submit" id="bissol-table-properties-submit" class="btn btn-primary bissolConfigSubmit">Submit</button>');
+            
+            // add delete button in case we have already a config
+            if(!$.isEmptyObject(result_fetch_config)){
+              
+              $('#html_db_table_metadata_picker').append(
+                  '<button type="submit" id="bissol-table-properties-delete" class="btn btn-danger bissolConfigSubmit">Delete</button>'
+                  );
+            }
 
             bissolSaveAction();
         }
+        
     }
 }
 

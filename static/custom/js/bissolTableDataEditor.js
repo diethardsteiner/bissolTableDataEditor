@@ -175,12 +175,14 @@ function bissolNewRecord(){
         
         param_config.metadata.forEach(function(elt, i) {
             if(elt.isEditable){
+            
+              var valType = elt.validationType == '' ? 'text' : elt.validationType;
                 
                myFormInput +=
                '<div class="form-group">'
                + '    <label for="' + elt.colName + '">' + elt.colName + '</label>'
                + '    <input class="form-control" '
-               + ' type="' + elt.validationType == '' ? 'text' : elt.validationType  + '" ' +
+               + ' type="' + valType + '" '
                + ' id="' + elt.colName + '" '
                + ' placeholder="Enter ' + elt.colName + '" '
                + ' data-type="' + elt.colType + '"/>' 
