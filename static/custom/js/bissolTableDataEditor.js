@@ -208,6 +208,9 @@ function bissolNewRecord(){
                + ' type="' + valType + '" '
                + ' id="' + elt.colName + '" '
                + ' placeholder="Enter ' + elt.colName + '" '
+               + (elt.isRequired ? ' required ' : '')
+               + (elt.validationPattern !== '' ? ' pattern="' + elt.validationPattern + '" ' : '')
+               + (elt.validationTitle !== '' ? ' title="' + elt.validationTitle + '" ' : '')
                + ' data-type="' + elt.colType + '"/>' 
                +'</div>';
                
