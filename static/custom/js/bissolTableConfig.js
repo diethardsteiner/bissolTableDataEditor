@@ -1,41 +1,3 @@
-
-// lets provide some mapping to Kettle types
-/** - moved to kettle transformation
-function bissolMapDbTypeToPdiType(myDbType){
-    
-    var myPdiType;
-        
-    if(myDbType.toUpperCase()==='STRING' || myDbType.toUpperCase()==='TEXT' 
-            || myDbType.toUpperCase().indexOf('CHAR') >= 0) {
-        myPdiType = 'String';
-    } 
-    else if(myDbType.toUpperCase().indexOf('INT') >= 0 || myDbType.toUpperCase()==='SERIAL') {
-        myPdiType = 'Integer';
-    }
-    else if(myDbType.toUpperCase()==='DECIMAL' || myDbType.toUpperCase()==='NUMERIC'){
-        myPdiType = 'BigNumber';
-    }
-    else if(myDbType.toUpperCase()==='FLOAT' || myDbType.toUpperCase()==='REAL' 
-            || myDbType.toUpperCase().indexOf('DOUBLE') >= 0){
-        myPdiType = 'Number';
-    }
-    else if(myDbType.toUpperCase().indexOf('BOOL') >= 0){
-        myPdiType = 'Boolean';
-    }
-    else if(myDbType.toUpperCase().indexOf('TIME') >= 0 || myDbType.toUpperCase()==='DATE') {
-        myPdiType = 'Date';
-    }    
-    else if(myDbType.toUpperCase().indexOf('BLOB') >= 0 || myDbType.toUpperCase()==='BINARY'){
-        myPdiType = 'Binary';
-    } 
-    else {
-        myPdiType = 'Unknown - Report bug';
-    }
-    
-    return myPdiType;
-}
-**/
-
 function bissolCreateTableConfigPicker(myConfigData,result_fetch_config){    
     
     if(!$.isEmptyObject(myConfigData)){ 
@@ -99,12 +61,13 @@ function bissolCreateTableConfigPicker(myConfigData,result_fetch_config){
         +'            <th>Is Editable?</th>'
         +'            <th>Is Primary Key?</th>'  
         +'            <th>Is Auto Increment?</th>'  
-        +'            <th>Validation Type</th>'  
-        +'            <th>Validation Min Number</th>' 
-        +'            <th>Validation Max Number</th>' 
-        +'            <th>Validation Max Char Length</th>' 
-        +'            <th>Validation Step Intervals</th>' 
-        +'            <th>Validation Default Value</th>' 
+        +'            <th>Is Required?</th>' 
+        +'            <th>Default Value</th>' 
+        +'            <th>Input Type</th>'         
+        //+'            <th>Validation Min Number</th>' 
+        //+'            <th>Validation Max Number</th>' 
+        //+'            <th>Validation Max Char Length</th>' 
+        //+'            <th>Validation Step Intervals</th>' 
         +'            <th>Validation Pattern</th>' 
         +'            <th>Validation Pattern Description</th>' 
         +'        </tr>'
@@ -126,9 +89,17 @@ function bissolCreateTableConfigPicker(myConfigData,result_fetch_config){
             
             // validation config details
             
-            var myValidationTypes = [];
-            myValidationTypes.push(['none'],['text'],['number'],['range'],['date'],['datetime'],['datetime-local'],['time']
-                    ,['week'],['month'],['color'],['email'],['tel'],['url'],['password']);
+            var myInputTypes = []; // HTML5 input types
+            myInputTypes.push(
+              ['none']
+              ,['text']
+              //,['number']
+              //,['range']
+              ,['date'],['datetime'],['time'],['week'],['month']
+              //,['datetime-local']
+              //,['color']
+              //,['email'],['tel'],['url']
+              ,['password']);
 
             myConfigTable +=
             '        <tr>'
@@ -141,23 +112,24 @@ function bissolCreateTableConfigPicker(myConfigData,result_fetch_config){
             +'            <td><input type="checkbox" name="isEditable" value="' + val.colName + '" ' + (val.isEditable ? ' checked ' : ' ') + '/></td>'
             +'            <td><input type="checkbox" name="isPrimaryKey" value="' + val.colName + '" ' + (val.isPrimaryKey ? ' checked ' : ' ') + '/></td>'
             +'            <td><input type="checkbox" name="isAutoIncrement" value="' + val.colName + '" ' + (val.isAutoIncrement ? ' checked ' : ' ') + ' disabled /></td>'
-            +'            <td class="myValidationTypesPickerContainer">' 
+            +'            <td><input type="text" name="value"></td>'
+            +'            <td><input type="checkbox" name="isRequired" value="' + val.colName + '" ' + (val.isRequired ? ' checked ' : ' ') + '/></td>'
+            +'            <td class="myInputTypesPickerContainer">' 
             
             + bissolCreateSelect(
                 {
-                    myData: myValidationTypes
-                    , myDefaultValue: typeof val.validationType === 'undefined' ? 'none' : val.validationType
+                    myData: myInputTypes
+                    , myDefaultValue: typeof val.inputType === 'undefined' ? 'none' : val.inputType
                 }
             )
 
             +'            </td>'
-            +'            <td><input type="text" name="min"></td>'
-            +'            <td><input type="text" name="max"></td>'
-            +'            <td><input type="text" name="maxlength"></td>'
-            +'            <td><input type="text" name="value"></td>'
-            +'            <td><input type="text" name="step"></td>'
-            +'            <td><input type="text" name="pattern"></td>'
-            +'            <td><input type="text" name="title"></td>'
+            //+'            <td><input type="text" name="min"></td>'
+            //+'            <td><input type="text" name="max"></td>'
+            //+'            <td><input type="text" name="maxlength"></td>'
+            //+'            <td><input type="text" name="step"></td>'
+            +'            <td><input type="text" name="validationPattern"></td>'
+            +'            <td><input type="text" name="validationTitle"></td>'
             +'        </tr>'
             ;
 
@@ -225,14 +197,15 @@ function bissolSaveAction(){
             metadataRow.isEditable = $( val ).find( 'input[name="isEditable"]' ).is( ':checked' );
             metadataRow.isPrimaryKey = $( val ).find( 'input[name="isPrimaryKey"]' ).is( ':checked' );
             metadataRow.isAutoIncrement = $( val ).find( 'input[name="isAutoIncrement"]' ).is( ':checked' );
-            metadataRow.validationType = $( val ).find( 'td.myValidationTypesPickerContainer > select option:selected' ).val();
-            metadataRow.validationMin = $( val ).find( 'input[name="min"]' ).val();
-            metadataRow.validationMax = $( val ).find( 'input[name="max"]' ).val();
-            metadataRow.validationMaxLength = $( val ).find( 'input[name="maxLength"]' ).val();
             metadataRow.validationValue = $( val ).find( 'input[name="value"]' ).val();
-            metadataRow.validationStep = $( val ).find( 'input[name="step"]' ).val();
-            metadataRow.validationPattern = $( val ).find( 'input[name="pattern"]' ).val();
-            metadataRow.validationTitle = $( val ).find( 'input[name="title"]' ).val();
+            metadataRow.isRequired = $( val ).find( 'input[name="isRequired"]' ).is( ':checked' );
+            metadataRow.inputType = $( val ).find( 'td.myInputTypesPickerContainer > select option:selected' ).val();
+            //metadataRow.validationMin = $( val ).find( 'input[name="min"]' ).val();
+            //metadataRow.validationMax = $( val ).find( 'input[name="max"]' ).val();
+            //metadataRow.validationMaxLength = $( val ).find( 'input[name="maxLength"]' ).val();            
+            //metadataRow.validationStep = $( val ).find( 'input[name="step"]' ).val();
+            metadataRow.validationPattern = $( val ).find( 'input[name="validationPattern"]' ).val();
+            metadataRow.validationTitle = $( val ).find( 'input[name="validationTitle"]' ).val();
             metadata.push(metadataRow);
         });
         
