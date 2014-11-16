@@ -7,6 +7,17 @@ function bissolCreateTableConfigPicker(myConfigData,result_fetch_config){
         
         if($.isEmptyObject(result_fetch_config)){
           var myMergedConfigData = myConfigData.metadata;
+          console.log(myConfigData.metadata);
+          
+          // add non db attributes
+          myConfigData.metadata.forEach(function(elt, i) {
+            elt.isRequired = false;
+            elt.defaultValue = '';
+            elt.inputType = 'none';
+            elt.validationPattern = '';
+            elt.validationTitle = '';  
+          });
+          
         } else {
         
           var mySavedConfigData = JSON.parse(result_fetch_config);
@@ -128,8 +139,8 @@ function bissolCreateTableConfigPicker(myConfigData,result_fetch_config){
             //+'            <td><input type="text" name="max"></td>'
             //+'            <td><input type="text" name="maxlength"></td>'
             //+'            <td><input type="text" name="step"></td>'
-            +'            <td><input type="text" name="validationPattern"></td>'
-            +'            <td><input type="text" name="validationTitle"></td>'
+            +'            <td><input type="text" name="validationPattern" value="' + val.validationPattern + '"></td>'
+            +'            <td><input type="text" name="validationTitle" value="' + val.validationTitle + '"></td>'
             +'        </tr>'
             ;
 

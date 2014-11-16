@@ -238,12 +238,11 @@
   <hop> <from>Get JDBC Metadata 2</from><to>Sort rows 2</to><enabled>Y</enabled> </hop>
   <hop> <from>Sort rows</from><to>Merge Join</to><enabled>Y</enabled> </hop>
   <hop> <from>Sort rows 2</from><to>Merge Join</to><enabled>Y</enabled> </hop>
-  <hop> <from>Map to PDI Data Type</from><to>Value Mapper&#x3a; 1 to NO</to><enabled>Y</enabled> </hop>
   <hop> <from>Select values</from><to>Json output</to><enabled>Y</enabled> </hop>
-  <hop> <from>Value Mapper&#x3a; 1 to NO</from><to>Select values</to><enabled>Y</enabled> </hop>
   <hop> <from>Json output</from><to>Final Selection</to><enabled>Y</enabled> </hop>
   <hop> <from>Final Selection</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
   <hop> <from>Merge Join</from><to>Map to PDI Data Type</to><enabled>Y</enabled> </hop>
+  <hop> <from>Map to PDI Data Type</from><to>Select values</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>Final Selection</name>
@@ -503,7 +502,7 @@
     <optimizationLevel>9</optimizationLevel>
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;var isPrimaryKey&#x3b;&#xa;if&#x28;COLUMN_NAME_PRIMARY_KEY &#x21;&#x3d;  null&#x29;&#x7b;&#xa;	&#x2f;&#x2f;isPrimaryKey&#x3d;&#x22;YES&#x22;&#x3b;&#xa;	isPrimaryKey &#x3d; true&#x3b;&#xa;&#x7d; else &#x7b;&#xa;	&#x2f;&#x2f;isPrimaryKey&#x3d;&#x22;NO&#x22;&#x3b;&#xa;	isPrimaryKey &#x3d; false&#x3b;&#xa;&#x7d;&#xa;   &#xa;    var myPdiType&#x3b;&#xa;&#xa;	var myDbType &#x3d; TYPE_NAME&#x3b;&#xa;        &#xa;    if&#x28;myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;STRING&#x27; &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;TEXT&#x27; &#xa;            &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;CHAR&#x27;&#x29; &#x3e;&#x3d; 0&#x29; &#x7b;&#xa;        myPdiType &#x3d; &#x27;String&#x27;&#x3b;&#xa;    &#x7d; &#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;INT&#x27;&#x29; &#x3e;&#x3d; 0 &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;SERIAL&#x27; &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;BIGSERIAL&#x27;&#x29; &#x7b;&#xa;        myPdiType &#x3d; &#x27;Integer&#x27;&#x3b;&#xa;    &#x7d;&#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;DECIMAL&#x27; &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;NUMERIC&#x27;&#x29;&#x7b;&#xa;        myPdiType &#x3d; &#x27;BigNumber&#x27;&#x3b;&#xa;    &#x7d;&#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;FLOAT&#x27; &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;REAL&#x27; &#xa;            &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;DOUBLE&#x27;&#x29; &#x3e;&#x3d; 0&#x29;&#x7b;&#xa;        myPdiType &#x3d; &#x27;Number&#x27;&#x3b;&#xa;    &#x7d;&#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;BOOL&#x27;&#x29; &#x3e;&#x3d; 0&#x29;&#x7b;&#xa;        myPdiType &#x3d; &#x27;Boolean&#x27;&#x3b;&#xa;    &#x7d;&#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;TIME&#x27;&#x29; &#x3e;&#x3d; 0 &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;DATE&#x27;&#x29; &#x7b;&#xa;        myPdiType &#x3d; &#x27;Date&#x27;&#x3b;&#xa;    &#x7d;    &#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;BLOB&#x27;&#x29; &#x3e;&#x3d; 0 &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;BINARY&#x27;&#x29;&#x7b;&#xa;        myPdiType &#x3d; &#x27;Binary&#x27;&#x3b;&#xa;    &#x7d; &#xa;    else &#x7b;&#xa;        myPdiType &#x3d; &#x27;Unknown - Report bug&#x27;&#x3b;&#xa;    &#x7d;&#xa;&#xa;&#xa;</jsScript_script>
+        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;var isPrimaryKey&#x3b;&#xa;if&#x28;COLUMN_NAME_PRIMARY_KEY &#x21;&#x3d;  null&#x29;&#x7b;&#xa;	&#x2f;&#x2f;isPrimaryKey&#x3d;&#x22;YES&#x22;&#x3b;&#xa;	isPrimaryKey &#x3d; true&#x3b;&#xa;&#x7d; else &#x7b;&#xa;	&#x2f;&#x2f;isPrimaryKey&#x3d;&#x22;NO&#x22;&#x3b;&#xa;	isPrimaryKey &#x3d; false&#x3b;&#xa;&#x7d;&#xa;&#xa;var isAutoIncrement &#x3d; IS_AUTOINCREMENT &#x3d;&#x3d;&#x3d; &#x22;YES&#x22; &#x3f; true &#x3a; false&#x3b;&#xa;   &#xa;    var myPdiType&#x3b;&#xa;&#xa;	var myDbType &#x3d; TYPE_NAME&#x3b;&#xa;        &#xa;    if&#x28;myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;STRING&#x27; &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;TEXT&#x27; &#xa;            &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;CHAR&#x27;&#x29; &#x3e;&#x3d; 0&#x29; &#x7b;&#xa;        myPdiType &#x3d; &#x27;String&#x27;&#x3b;&#xa;    &#x7d; &#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;INT&#x27;&#x29; &#x3e;&#x3d; 0 &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;SERIAL&#x27; &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;BIGSERIAL&#x27;&#x29; &#x7b;&#xa;        myPdiType &#x3d; &#x27;Integer&#x27;&#x3b;&#xa;    &#x7d;&#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;DECIMAL&#x27; &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;NUMERIC&#x27;&#x29;&#x7b;&#xa;        myPdiType &#x3d; &#x27;BigNumber&#x27;&#x3b;&#xa;    &#x7d;&#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;FLOAT&#x27; &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;REAL&#x27; &#xa;            &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;DOUBLE&#x27;&#x29; &#x3e;&#x3d; 0&#x29;&#x7b;&#xa;        myPdiType &#x3d; &#x27;Number&#x27;&#x3b;&#xa;    &#x7d;&#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;BOOL&#x27;&#x29; &#x3e;&#x3d; 0&#x29;&#x7b;&#xa;        myPdiType &#x3d; &#x27;Boolean&#x27;&#x3b;&#xa;    &#x7d;&#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;TIME&#x27;&#x29; &#x3e;&#x3d; 0 &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;DATE&#x27;&#x29; &#x7b;&#xa;        myPdiType &#x3d; &#x27;Date&#x27;&#x3b;&#xa;    &#x7d;    &#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;BLOB&#x27;&#x29; &#x3e;&#x3d; 0 &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;BINARY&#x27;&#x29;&#x7b;&#xa;        myPdiType &#x3d; &#x27;Binary&#x27;&#x3b;&#xa;    &#x7d; &#xa;    else &#x7b;&#xa;        myPdiType &#x3d; &#x27;Unknown - Report bug&#x27;&#x3b;&#xa;    &#x7d;&#xa;&#xa;&#xa;</jsScript_script>
       </jsScript>    </jsScripts>    <fields>      <field>        <name>myPdiType</name>
         <rename>myPdiType</rename>
         <type>String</type>
@@ -512,6 +511,12 @@
         <replace>N</replace>
       </field>      <field>        <name>isPrimaryKey</name>
         <rename>isPrimaryKey</rename>
+        <type>Boolean</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>isAutoIncrement</name>
+        <rename>isAutoIncrement</rename>
         <type>Boolean</type>
         <length>-1</length>
         <precision>-1</precision>
@@ -606,8 +611,8 @@
         <rename>colType</rename>
         <length>-2</length>
         <precision>-2</precision>
-      </field>      <field>        <name>IS_AUTOINCREMENT</name>
-        <rename>isAutoIncrement</rename>
+      </field>      <field>        <name>isAutoIncrement</name>
+        <rename/>
         <length>-2</length>
         <precision>-2</precision>
       </field>        <select_unspecified>N</select_unspecified>
@@ -683,34 +688,6 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>352</xloc>
       <yloc>224</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Value Mapper&#x3a; 1 to NO</name>
-    <type>ValueMapper</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <field_to_use>IS_AUTOINCREMENT</field_to_use>
-    <target_field/>
-    <non_match_default/>
-    <fields>
-      <field>
-        <source_value>1</source_value>
-        <target_value>NO</target_value>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>256</xloc>
-      <yloc>480</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
