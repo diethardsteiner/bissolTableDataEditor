@@ -94,3 +94,13 @@ required
 ## Polyfill
 
 [HTML5 Form Shim](http://dsheiko.github.io/HTML5-Form-Shim/)
+
+### Bootstrap Date Picker
+[Info1](http://bootstrap-datepicker.readthedocs.org/en/release/)
+[Info2](https://github.com/eternicode/bootstrap-datepicker/blob/release/docs/index.rst)
+[Github](https://github.com/eternicode/bootstrap-datepicker/) repo
+[Here](http://eternicode.github.io/bootstrap-datepicker/?markup=component&format=yyyy-mm-dd&weekStart=&startDate=&endDate=&startView=0&minViewMode=0&todayBtn=false&language=en&orientation=auto&multidate=&multidateSeparator=&keyboardNavigation=on&forceParse=on#sandbox) you can just tick the options you need and it will output the code.
+
+THIS ONE SEEMS TO BE EVEN BETTER AND STILL MAINTAINED:
+http://eonasdan.github.io/bootstrap-datetimepicker/
+https://github.com/Eonasdan/bootstrap-datetimepicker

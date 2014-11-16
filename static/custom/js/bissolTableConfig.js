@@ -112,8 +112,8 @@ function bissolCreateTableConfigPicker(myConfigData,result_fetch_config){
             +'            <td><input type="checkbox" name="isEditable" value="' + val.colName + '" ' + (val.isEditable ? ' checked ' : ' ') + '/></td>'
             +'            <td><input type="checkbox" name="isPrimaryKey" value="' + val.colName + '" ' + (val.isPrimaryKey ? ' checked ' : ' ') + '/></td>'
             +'            <td><input type="checkbox" name="isAutoIncrement" value="' + val.colName + '" ' + (val.isAutoIncrement ? ' checked ' : ' ') + ' disabled /></td>'
-            +'            <td><input type="text" name="value"></td>'
             +'            <td><input type="checkbox" name="isRequired" value="' + val.colName + '" ' + (val.isRequired ? ' checked ' : ' ') + '/></td>'
+            +'            <td><input type="text" name="defaultValue" value="' + val.defaultValue + '"/></td>'
             +'            <td class="myInputTypesPickerContainer">' 
             
             + bissolCreateSelect(
@@ -197,7 +197,7 @@ function bissolSaveAction(){
             metadataRow.isEditable = $( val ).find( 'input[name="isEditable"]' ).is( ':checked' );
             metadataRow.isPrimaryKey = $( val ).find( 'input[name="isPrimaryKey"]' ).is( ':checked' );
             metadataRow.isAutoIncrement = $( val ).find( 'input[name="isAutoIncrement"]' ).is( ':checked' );
-            metadataRow.validationValue = $( val ).find( 'input[name="value"]' ).val();
+            metadataRow.defaultValue = $( val ).find( 'input[name="defaultValue"]' ).val();
             metadataRow.isRequired = $( val ).find( 'input[name="isRequired"]' ).is( ':checked' );
             metadataRow.inputType = $( val ).find( 'td.myInputTypesPickerContainer > select option:selected' ).val();
             //metadataRow.validationMin = $( val ).find( 'input[name="min"]' ).val();

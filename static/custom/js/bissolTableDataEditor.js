@@ -173,6 +173,29 @@ function bissolNewRecord(){
                 +'</div>';          
         }
         
+        // FORM INPUT COMPONENTS -- START
+        /**
+        switch (elt.valType) {
+            
+            case 'date':
+            
+                '<div class="input-group date">
+                  <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                </div>';
+                
+                $('#sandbox-container .input-group.date').datepicker({
+                    format: "yyyy-mm-dd",
+                    autoclose: true,
+                    todayHighlight: true
+                });
+                
+                break;
+ 
+        }
+        **/
+        
+        // FORM INPUT COMPONENTS -- END
+        
         param_config.metadata.forEach(function(elt, i) {
             if(elt.isEditable){
             
