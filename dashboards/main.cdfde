@@ -3,6 +3,52 @@
   "title": "main",
   "rows": [
    {
+    "id": "4a42bc83-0075-3bd9-bf43-051c5f652b96",
+    "type": "LayoutResourceFile",
+    "typeDesc": "Resource",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "dataTables.css",
+      "type": "Id"
+     },
+     {
+      "name": "resourceFile",
+      "value": "${system:/static/custom/dataTables/css/jquery.dataTables.min.css}",
+      "type": "ResourceFile"
+     },
+     {
+      "name": "resourceType",
+      "value": "Css",
+      "type": "Label"
+     }
+    ]
+   },
+   {
+    "id": "e37af6df-19ba-e6e9-4436-1f84fd56f54a",
+    "type": "LayoutResourceFile",
+    "typeDesc": "Resource",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "dataTables.js",
+      "type": "Id"
+     },
+     {
+      "name": "resourceFile",
+      "value": "${system:/static/custom/dataTables/js/jquery.dataTables.js}",
+      "type": "ResourceFile"
+     },
+     {
+      "name": "resourceType",
+      "value": "Javascript",
+      "type": "Label"
+     }
+    ]
+   },
+   {
     "id": "3b33af01-a6e2-1a6d-6cd5-5713618b9af2",
     "type": "LayoutResourceFile",
     "typeDesc": "Resource",
@@ -15,7 +61,7 @@
      },
      {
       "name": "resourceFile",
-      "value": "/pentaho/api/repos/bissolTableDataEditor/static/custom/js/bissolUtils.js",
+      "value": "${system:/static/custom/js/bissolUtils.js}",
       "type": "ResourceFile"
      },
      {
@@ -38,7 +84,7 @@
      },
      {
       "name": "resourceFile",
-      "value": "/pentaho/api/repos/bissolTableDataEditor/static/custom/js/dataTables.bootstrap.js",
+      "value": "${system:/static/custom/dataTables/js/dataTables.bootstrap.js}",
       "type": "ResourceFile"
      },
      {
@@ -61,7 +107,7 @@
      },
      {
       "name": "resourceFile",
-      "value": "/pentaho/api/repos/bissolTableDataEditor/static/custom/css/dataTables.bootstrap.css",
+      "value": "${system:/static/custom/dataTables/css/dataTables.bootstrap.css}",
       "type": "ResourceFile"
      },
      {
@@ -84,7 +130,7 @@
      },
      {
       "name": "resourceFile",
-      "value": "/pentaho/api/repos/bissolTableDataEditor/static/custom/js/bissolSelectComponents.js",
+      "value": "${system:/static/custom/js/bissolSelectComponents.js}",
       "type": "ResourceFile"
      },
      {
@@ -107,7 +153,7 @@
      },
      {
       "name": "resourceFile",
-      "value": "/pentaho/api/repos/bissolTableDataEditor/static/custom/js/bissolTableDataEditor.js",
+      "value": "${system:/static/custom/js/bissolTableDataEditor.js}",
       "type": "ResourceFile"
      },
      {
@@ -130,7 +176,7 @@
      },
      {
       "name": "resourceFile",
-      "value": "/pentaho/api/repos/bissolTableDataEditor/static/custom/css/bissolTableDataEditor.css",
+      "value": "${system:/static/custom/css/bissolTableDataEditor.css}",
       "type": "ResourceFile"
      },
      {

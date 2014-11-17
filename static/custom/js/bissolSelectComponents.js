@@ -166,3 +166,19 @@ function bissolCreateButton(options){
     }
 
 }
+
+//-------------------- date pickers -----------------------//
+
+/**
+
+source: https://github.com/Eonasdan/bootstrap-datetimepicker/tree/development
+dependencies:
+- jquery.js: included in CDF
+- moment.js
+- bootstrap.js: included in CDF
+- bootstrap.css: included in CDF
+
+dependencies are referenced in Sparkl pluglin template
+
+**/
+

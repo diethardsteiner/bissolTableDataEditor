@@ -173,57 +173,83 @@ function bissolNewRecord(){
                 +'</div>';          
         }
         
-        // FORM INPUT COMPONENTS -- START
-        /**
-        switch (elt.valType) {
-            
-            case 'date':
-            
-                '<div class="input-group date">
-                  <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-                </div>';
-                
-                $('#sandbox-container .input-group.date').datepicker({
-                    format: "yyyy-mm-dd",
-                    autoclose: true,
-                    todayHighlight: true
-                });
-                
-                break;
- 
-        }
-        **/
-        
-        // FORM INPUT COMPONENTS -- END
-        
+        var inputTypes = ['date','datetime','week','time'];
         param_config.metadata.forEach(function(elt, i) {
             if(elt.isEditable){
-            
-              var valType = elt.validationType == '' ? 'text' : elt.validationType;
                 
-               myFormInput +=
-               '<div class="form-group">'
-               + '    <label for="' + elt.colName + '">' + elt.colName + '</label>'
-               + '    <input class="form-control" '
-               + ' type="' + valType + '" '
-               + ' id="' + elt.colName + '" '
-               + ' placeholder="Enter ' + elt.colName + '" '
-               + (elt.isRequired ? ' required ' : '')
-               + (elt.validationPattern !== '' ? ' pattern="' + elt.validationPattern + '" ' : '')
-               + (elt.validationTitle !== '' ? ' title="' + elt.validationTitle + '" ' : '')
-               + ' data-type="' + elt.colType + '"/>' 
-               +'</div>';
+                if(inputTypes.indexOf(elt.inputType) > -1){
+                    myFormInput +=
+                    '<div class="form-group">'
+                    + '    <label for="' + elt.colName + '">' + elt.colName + '</label>'
+                    + '    <div class="input-group date" id="' + elt.colName + '">'
+                    + '         <input type="text" class="form-control"' 
+                       + (elt.isRequired ? ' required ' : '') + ' data-type="' + elt.colType + '"/>'
+                    + '          <span class="input-group-addon">'
+                    + '               <span class="glyphicon glyphicon-calendar"></span>'
+                    + '           </span>'
+                    + '     </div>'
+                    + '</div>'
+                    ;
+                } else {
+                    var valType = elt.inputType == '' ? 'text' : elt.inputType;
+                    
+                    myFormInput +=
+                    '<div class="form-group">'
+                    + '    <label for="' + elt.colName + '">' + elt.colName + '</label>'
+                    + '    <input class="form-control" '
+                    + ' type="' + valType + '" '
+                    + ' id="' + elt.colName + '" '
+                    + ' placeholder="Enter ' + elt.colName + '" '
+                    + (elt.isRequired ? ' required ' : '')
+                    + (elt.validationPattern !== '' ? ' pattern="' + elt.validationPattern + '" ' : '')
+                    + (elt.validationTitle !== '' ? ' title="' + elt.validationTitle + '" ' : '')
+                    + ' data-type="' + elt.colType + '"/>' 
+                    +'</div>';    
+                }
                
             } 
         });
         
         $('#new-record-panel div.panel-body').append(myFormInput); 
- 
-         if(param_is_auto_increment == ''){
         
-                // get max col id - quite a dummy action but does the purpose
-                Dashboards.fireChange('param_id_column', param_id_column);
-         }
+        //initialize date pickers -- not an ideal solution right now
+        param_config.metadata.forEach(function(elt, i) {
+            if(elt.isEditable){
+                if(elt.inputType === 'date'){
+                    $('#' + elt.colName).datetimepicker({
+                        pickTime: false
+                        , format: 'YYYY-MM-DD'
+                    });
+                } 
+                else if(elt.inputType === 'datetime'){
+                    $('#' + elt.colName).datetimepicker({
+                        format: 'YYYY-MM-DD HH:mm:00'
+                    });
+                } 
+                else if(elt.inputType === 'time'){
+                    $('#' + elt.colName).datetimepicker({
+                        pickDate: false
+                        , format: 'HH:mm:00'
+                    });
+                } 
+                else if(elt.inputType === 'week'){
+                    $('#' + elt.colName).datetimepicker({
+                        format: 'YYYY-ww'
+                    });
+                } 
+                else if(elt.inputType === 'month'){
+                    $('#' + elt.colName).datetimepicker({
+                        format: 'YYYY-MM'
+                    });
+                } 
+            }         
+        });
+        
+        if(param_is_auto_increment == ''){
+        
+            // get max col id - quite a dummy action but does the purpose
+            Dashboards.fireChange('param_id_column', param_id_column);
+        }
         
         // add Save Record button
         $('#new-record-panel').append('<div id="new-record-save-button-div"><button type="button" class="btn btn-primary btn-lg btn-block" id="new-record-save-button">Save Record</button><div>');
