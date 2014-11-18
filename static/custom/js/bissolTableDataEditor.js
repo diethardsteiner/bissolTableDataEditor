@@ -181,7 +181,7 @@ function bissolNewRecord(){
                 if(datetimeInputTypes.indexOf(elt.inputType) > -1){
                     myFormInput +=
                     '<div class="form-group">'
-                    + '    <label for="' + elt.colName + '">' + elt.colName + elt.inputType +'</label>'
+                    + '    <label for="' + elt.colName + '">' + elt.colName + '</label>'
                     + '    <div class="input-group date" id="' + elt.colName + '">'
                     + '         <input type="text" class="form-control"' 
                        + (elt.isRequired ? ' required ' : '') + ' data-type="' + elt.colType + '"/>'
