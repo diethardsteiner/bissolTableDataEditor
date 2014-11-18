@@ -173,19 +173,20 @@ function bissolNewRecord(){
                 +'</div>';          
         }
         
-        var inputTypes = ['date','datetime','week','time'];
+        var datetimeInputTypes = ['date','datetime','week','time'];
+        var timeInputTypes = ['datetime','time'];
         param_config.metadata.forEach(function(elt, i) {
             if(elt.isEditable){
                 
-                if(inputTypes.indexOf(elt.inputType) > -1){
+                if(datetimeInputTypes.indexOf(elt.inputType) > -1){
                     myFormInput +=
                     '<div class="form-group">'
-                    + '    <label for="' + elt.colName + '">' + elt.colName + '</label>'
+                    + '    <label for="' + elt.colName + '">' + elt.colName + elt.inputType +'</label>'
                     + '    <div class="input-group date" id="' + elt.colName + '">'
                     + '         <input type="text" class="form-control"' 
                        + (elt.isRequired ? ' required ' : '') + ' data-type="' + elt.colType + '"/>'
                     + '          <span class="input-group-addon">'
-                    + '               <span class="glyphicon glyphicon-calendar"></span>'
+                    + '               <span class="glyphicon glyphicon-' + (timeInputTypes.indexOf(elt.inputType) > -1 ? 'time' : 'calendar') + '"></span>'
                     + '           </span>'
                     + '     </div>'
                     + '</div>'
