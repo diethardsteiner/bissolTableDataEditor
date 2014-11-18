@@ -3,19 +3,19 @@
   "title": "main",
   "rows": [
    {
-    "id": "4a42bc83-0075-3bd9-bf43-051c5f652b96",
+    "id": "b6cd3aed-72d1-e0d3-6bca-61faf5b6ba28",
     "type": "LayoutResourceFile",
     "typeDesc": "Resource",
     "parent": "UnIqEiD",
     "properties": [
      {
       "name": "name",
-      "value": "dataTables.css",
+      "value": "datetimepicker.min.css",
       "type": "Id"
      },
      {
       "name": "resourceFile",
-      "value": "${system:/static/custom/dataTables/css/jquery.dataTables.min.css}",
+      "value": "${system:/static/custom/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css}",
       "type": "ResourceFile"
      },
      {
@@ -26,19 +26,65 @@
     ]
    },
    {
-    "id": "e37af6df-19ba-e6e9-4436-1f84fd56f54a",
+    "id": "79f6fec2-ea05-ed16-72b9-2e5a711740f0",
     "type": "LayoutResourceFile",
     "typeDesc": "Resource",
     "parent": "UnIqEiD",
     "properties": [
      {
       "name": "name",
-      "value": "dataTables.js",
+      "value": "bootstrap.min.js",
       "type": "Id"
      },
      {
       "name": "resourceFile",
-      "value": "${system:/static/custom/dataTables/js/jquery.dataTables.js}",
+      "value": "${system:/static/custom/bootstrap/js/bootstrap.min.js}",
+      "type": "ResourceFile"
+     },
+     {
+      "name": "resourceType",
+      "value": "Javascript",
+      "type": "Label"
+     }
+    ]
+   },
+   {
+    "id": "67e5b210-da77-47e1-93e3-750963314dc2",
+    "type": "LayoutResourceFile",
+    "typeDesc": "Resource",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "moment.js",
+      "type": "Id"
+     },
+     {
+      "name": "resourceFile",
+      "value": "${system:/static/custom/bootstrap-datetimepicker/js/moment.js}",
+      "type": "ResourceFile"
+     },
+     {
+      "name": "resourceType",
+      "value": "Javascript",
+      "type": "Label"
+     }
+    ]
+   },
+   {
+    "id": "aaa8eada-ed78-58c7-6fa6-c42dfdad23a8",
+    "type": "LayoutResourceFile",
+    "typeDesc": "Resource",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "datetimepicker.js",
+      "type": "Id"
+     },
+     {
+      "name": "resourceFile",
+      "value": "${system:/static/custom/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js}",
       "type": "ResourceFile"
      },
      {
