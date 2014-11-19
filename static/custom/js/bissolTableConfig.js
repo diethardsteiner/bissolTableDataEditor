@@ -106,7 +106,8 @@ function bissolCreateTableConfigPicker(myConfigData,result_fetch_config){
               ,['text']
               //,['number']
               //,['range']
-              ,['date'],['datetime'],['time'],['week'],['month']
+              ,['date'],['datetime'],['time']
+              //,['week'],['month'] -- not enabled yet as I still have to test if they are saved to DB properly
               //,['datetime-local']
               //,['color']
               //,['email'],['tel'],['url']

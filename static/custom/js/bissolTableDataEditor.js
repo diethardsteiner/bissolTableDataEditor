@@ -156,7 +156,12 @@ function bissolNewRecord(){
         $('#html_new_record').append(myNewRecordPanel); 
         
         // create input elements
-        var myFormInput = '<form>';
+        var myFormInput = '<form id="btdeNewRecordForm" ' 
+            // bootstrapValidator options
+            + 'data-bv-feedbackicons-valid="glyphicon glyphicon-ok" '
+            + 'data-bv-feedbackicons-invalid="glyphicon glyphicon-remove" '
+            + 'data-bv-feedbackicons-validating="glyphicon glyphicon-refresh" '
+            + '>';
         
         if(param_is_auto_increment == ''){
         
@@ -178,13 +183,34 @@ function bissolNewRecord(){
         param_config.metadata.forEach(function(elt, i) {
             if(elt.isEditable){
                 
+                var validation = '';
+                
+                if(elt.isRequired){
+                    validation += ' data-bv-notempty="true"';
+                    validation += ' data-bv-notempty-message="The ' + elt.colName + ' is required"';
+                }
+                
+                
+                if(elt.validationPattern != ''){
+                    validation += ' data-bv-regexp="true"';
+                    validation += ' data-bv-regexp-regexp="' + elt.validationPattern + '"';
+                    validation += ' data-bv-regexp-message="' + elt.validationTitle + '"';
+                }
+                
                 if(datetimeInputTypes.indexOf(elt.inputType) > -1){
                     myFormInput +=
                     '<div class="form-group">'
                     + '    <label for="' + elt.colName + '">' + elt.colName + '</label>'
                     + '    <div class="input-group date">'
-                    + '         <input type="text" class="form-control" id="' + elt.colName + '" '
-                       + (elt.isRequired ? ' required ' : '') + ' data-type="' + elt.colType + '"/>'
+                    + '         <input type="text" class="form-control" '
+                        + ' id="' + elt.colName + '" '
+                        + ' data-type="' + elt.colType + '" '
+                        //required for boostrapValidator:
+                        + ' name="' + elt.colName + '" ' 
+                        + validation
+                        + ' data-bv-date="true"'
+                        + ' data-bv-date-format="' + elt.colFormat.toUpperCase() + '"'
+                        + ' />'
                     + '          <span class="input-group-addon">'
                     + '               <span class="glyphicon glyphicon-' + (timeInputTypes.indexOf(elt.inputType) > -1 ? 'time' : 'calendar') + '"></span>'
                     + '           </span>'
@@ -198,13 +224,18 @@ function bissolNewRecord(){
                     '<div class="form-group">'
                     + '    <label for="' + elt.colName + '">' + elt.colName + '</label>'
                     + '    <input class="form-control" '
-                    + ' type="' + valType + '" '
-                    + ' id="' + elt.colName + '" '
-                    + ' placeholder="Enter ' + elt.colName + '" '
-                    + (elt.isRequired ? ' required ' : '')
-                    + (elt.validationPattern !== '' ? ' pattern="' + elt.validationPattern + '" ' : '')
-                    + (elt.validationTitle !== '' ? ' title="' + elt.validationTitle + '" ' : '')
-                    + ' data-type="' + elt.colType + '"/>' 
+                        + ' type="' + valType + '" '
+                        + ' id="' + elt.colName + '" '
+                        + ' placeholder="Enter ' + elt.colName + '" '
+                        + ' data-type="' + elt.colType + '" '                       
+                        //required for boostrapValidator:
+                        + ' name="' + elt.colName + '" '
+                        + validation
+                        // HTML 5 standard validation attributes - currently not used as not supported by all browsers
+                        // + (elt.isRequired ? ' required ' : '')
+                        // + (elt.validationPattern !== '' ? ' pattern="' + elt.validationPattern + '" ' : '')
+                        // + (elt.validationTitle !== '' ? ' title="' + elt.validationTitle + '" ' : '')
+                        + '/>' 
                     +'</div>';    
                 }
                
@@ -255,46 +286,55 @@ function bissolNewRecord(){
         }
         
         // add Save Record button
-        $('#new-record-panel form').append('<div id="new-record-save-button-div"><button type="submit" class="btn btn-primary btn-lg btn-block" id="new-record-save-button">Save Record</button><div>');
+        //$('#btdeNewRecordForm').append('<div id="new-record-save-button-div"><button type="submit" class="btn btn-primary btn-lg btn-block" id="new-record-save-button">Save Record</button></div>');
+
+        $('#btdeNewRecordForm').append('<div class="form-group"><div><button type="submit" class="btn btn-primary btn-lg btn-block" id="new-record-save-button">Save Record</button></div></div>');
 
         // add Save Record button event
         //$('#new-record-save-button').on('click', function() {
-        $('form').on('submit', function(e){
-
-            e.preventDefault();
-            
-            var myNewRecordData = [];
-            var myNewRecordColTypes = [];
-            var myNewRecordColNames = [];
-            
-            if(param_is_auto_increment == ''){
-                myNewRecordData.push($('#new-record-panel #' + param_id_column).val());
-                myNewRecordColTypes.push('Integer');
-                myNewRecordColNames.push(param_id_column);           
-            }
-            
-            param_config.metadata.forEach(function(elt, i) {
-                if(elt.isEditable){
-                    
-                    myNewRecordData.push($('#new-record-panel #' + elt.colName).val());
-                    console.log('The value for ' + elt.colName + ' is: ' + $('#new-record-panel #' + elt.colName).val() );
-                    myNewRecordColTypes.push(elt.colType);
-                    myNewRecordColNames.push(elt.colName);
-                    
-                }
-
-            });  
-
-            //Dashboards.setParameter('param_db_connection', myJNDI); // should be already set
-
-            Dashboards.setParameter('param_col_types_delimited', myNewRecordColTypes.join('|'));
-            Dashboards.setParameter('param_col_names_delimited', myNewRecordColNames.join('|'));
-            Dashboards.fireChange('param_new_record', myNewRecordData.join('|'));
-            // clear new record table and display standard table editor again
-            $('#new-record-panel').remove();
-            Dashboards.fireChange('param_sql_select', param_sql_select);
+   
+        // $('#btdeNewRecordForm').on('submit', function(e){
+        // 
+        //     e.preventDefault();
+        // 
+        //     var myNewRecordData = [];
+        //     var myNewRecordColTypes = [];
+        //     var myNewRecordColNames = [];
+        //     
+        //     if(param_is_auto_increment == ''){
+        //         myNewRecordData.push($('#new-record-panel #' + param_id_column).val());
+        //         myNewRecordColTypes.push('Integer');
+        //         myNewRecordColNames.push(param_id_column);           
+        //     }
+        //     
+        //     param_config.metadata.forEach(function(elt, i) {
+        //         if(elt.isEditable){
+        //             
+        //             myNewRecordData.push($('#new-record-panel #' + elt.colName).val());
+        //             console.log('The value for ' + elt.colName + ' is: ' + $('#new-record-panel #' + elt.colName).val() );
+        //             myNewRecordColTypes.push(elt.colType);
+        //             myNewRecordColNames.push(elt.colName);
+        //             
+        //         }
+        //     
+        //     });  
+        //     
+        //     //Dashboards.setParameter('param_db_connection', myJNDI); // should be already set
+        //     
+        //     Dashboards.setParameter('param_col_types_delimited', myNewRecordColTypes.join('|'));
+        //     Dashboards.setParameter('param_col_names_delimited', myNewRecordColNames.join('|'));
+        //     Dashboards.fireChange('param_new_record', myNewRecordData.join('|'));
+        //     // clear new record table and display standard table editor again
+        //     $('#new-record-panel').remove();
+        //     Dashboards.fireChange('param_sql_select', param_sql_select);
+        // 
+        // 
+        // });
+        
         
 
+        $(document).ready(function() {
+                $('#btdeNewRecordForm').bootstrapValidator();
         });
 
 

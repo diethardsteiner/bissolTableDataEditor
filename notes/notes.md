@@ -109,3 +109,7 @@ dependencies:
 ### Bootstrap Data Range Picker ###
 
 https://github.com/dangrossman/bootstrap-daterangepicker
+
+### Bootstrap Form Validation
+
+http://bootstrapvalidator.com/getting-started/

@@ -49,6 +49,52 @@
     ]
    },
    {
+    "id": "577e3aeb-99d3-8449-2552-0fb0600c8ac4",
+    "type": "LayoutResourceFile",
+    "typeDesc": "Resource",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "bootstrapValidator.min.css",
+      "type": "Id"
+     },
+     {
+      "name": "resourceFile",
+      "value": "${system:/static/custom/bootstrapValidator/css/bootstrapValidator.min.css}",
+      "type": "ResourceFile"
+     },
+     {
+      "name": "resourceType",
+      "value": "Css",
+      "type": "Label"
+     }
+    ]
+   },
+   {
+    "id": "7bbdaa6a-7f0b-c411-ba0d-4853ea0f1f38",
+    "type": "LayoutResourceFile",
+    "typeDesc": "Resource",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "bootstrapValidator.min.js",
+      "type": "Id"
+     },
+     {
+      "name": "resourceFile",
+      "value": "${system:/static/custom/bootstrapValidator/js/bootstrapValidator.min.js}",
+      "type": "ResourceFile"
+     },
+     {
+      "name": "resourceType",
+      "value": "Javascript",
+      "type": "Label"
+     }
+    ]
+   },
+   {
     "id": "67e5b210-da77-47e1-93e3-750963314dc2",
     "type": "LayoutResourceFile",
     "typeDesc": "Resource",
@@ -223,6 +269,29 @@
      {
       "name": "resourceFile",
       "value": "${system:/static/custom/css/bissolTableDataEditor.css}",
+      "type": "ResourceFile"
+     },
+     {
+      "name": "resourceType",
+      "value": "Css",
+      "type": "Label"
+     }
+    ]
+   },
+   {
+    "id": "b7b50373-840f-6f06-e0b8-3125c86b3bd3",
+    "type": "LayoutResourceFile",
+    "typeDesc": "Resource",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "fontawesome.min.css",
+      "type": "Id"
+     },
+     {
+      "name": "resourceFile",
+      "value": "${system:/static/custom/font-awesome/css/font-awesome.min.css}",
       "type": "ResourceFile"
      },
      {
@@ -1049,7 +1118,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    //buildTable('tableeditor','myTableEditor',select_result,this.metadata);\n    //buildTable('tableeditor','myTableEditor',select_result, result_fetch_metadata);\n    \n\n    if(!Array.isArray(select_result)){\n        bissolCreateModal(\n            'html_select_table'\n            , 'mySelectWentWrong'\n            , 'System Error'\n            , 'Something went wrong! Check JavaScript Console and/or Server.'\n            , 'myCloseButton1'\n            , 'Close'\n        );\n        $('#mySelectWentWrong').modal('show');\n    }\n    bissolBuildTable(select_result);\n    //console.log(this);\n    $('#myTableEditor').dataTable();\n}",
+      "value": "function(){\n    //console.log(select_result);\n    //buildTable('tableeditor','myTableEditor',select_result,this.metadata);\n    //buildTable('tableeditor','myTableEditor',select_result, result_fetch_metadata);\n    \n\n    if(!Array.isArray(select_result)){\n        bissolCreateModal(\n            'html_select_table'\n            , 'mySelectWentWrong'\n            , 'System Error'\n            , 'Something went wrong! Check JavaScript Console and/or Server.'\n            , 'myCloseButton1'\n            , 'Close'\n        );\n        $('#mySelectWentWrong').modal('show');\n    }\n    bissolBuildTable(select_result);\n    //console.log(this);\n    $('#myTableEditor').dataTable();\n} ",
       "type": "JavaScript"
      },
      {
@@ -1496,6 +1565,32 @@
     "meta": "CPK",
     "meta_pluginId": "bissolTableDataEditor",
     "meta_endpoint": "fetchMaxIdQuery"
+   },
+   {
+    "id": "d706deaf-5ad1-af99-c797-38a0875593e2",
+    "type": "ComponentsbissolTableDataEditor_fetchTableRecordsInjector_CPKENDPOINT",
+    "typeDesc": "fetchTableRecordsInjector Endpoint",
+    "parent": "BISSOLTABLEDATAEDITOR_CPKENDPOINTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "qry_fetch_table_records",
+      "type": "Id"
+     },
+     {
+      "name": "stepName",
+      "value": "OUTPUT",
+      "type": "String"
+     },
+     {
+      "name": "kettleOutput",
+      "value": "Json",
+      "type": "kettleOutputCustom"
+     }
+    ],
+    "meta": "CPK",
+    "meta_pluginId": "bissolTableDataEditor",
+    "meta_endpoint": "fetchTableRecordsInjector"
    }
   ]
  },
