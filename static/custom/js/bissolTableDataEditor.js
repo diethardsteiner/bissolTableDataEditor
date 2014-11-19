@@ -156,7 +156,7 @@ function bissolNewRecord(){
         $('#html_new_record').append(myNewRecordPanel); 
         
         // create input elements
-        var myFormInput = '';
+        var myFormInput = '<form>';
         
         if(param_is_auto_increment == ''){
         
@@ -170,7 +170,7 @@ function bissolNewRecord(){
                 + ' id="' + param_id_column + '" '
                 + ' placeholder="Enter ' + param_id_column + '" '
                 + ' data-type="Integer"></input>' 
-                +'</div>';          
+                + '</div>';          
         }
         
         var datetimeInputTypes = ['date','datetime','week','time'];
@@ -182,8 +182,8 @@ function bissolNewRecord(){
                     myFormInput +=
                     '<div class="form-group">'
                     + '    <label for="' + elt.colName + '">' + elt.colName + '</label>'
-                    + '    <div class="input-group date" id="' + elt.colName + '">'
-                    + '         <input type="text" class="form-control"' 
+                    + '    <div class="input-group date">'
+                    + '         <input type="text" class="form-control" id="' + elt.colName + '" '
                        + (elt.isRequired ? ' required ' : '') + ' data-type="' + elt.colType + '"/>'
                     + '          <span class="input-group-addon">'
                     + '               <span class="glyphicon glyphicon-' + (timeInputTypes.indexOf(elt.inputType) > -1 ? 'time' : 'calendar') + '"></span>'
@@ -210,6 +210,8 @@ function bissolNewRecord(){
                
             } 
         });
+        
+        myFormInput += '</form>';
         
         $('#new-record-panel div.panel-body').append(myFormInput); 
         
@@ -253,10 +255,13 @@ function bissolNewRecord(){
         }
         
         // add Save Record button
-        $('#new-record-panel').append('<div id="new-record-save-button-div"><button type="button" class="btn btn-primary btn-lg btn-block" id="new-record-save-button">Save Record</button><div>');
+        $('#new-record-panel form').append('<div id="new-record-save-button-div"><button type="submit" class="btn btn-primary btn-lg btn-block" id="new-record-save-button">Save Record</button><div>');
 
         // add Save Record button event
-        $('#new-record-save-button').on('click', function() {
+        //$('#new-record-save-button').on('click', function() {
+        $('form').on('submit', function(e){
+
+            e.preventDefault();
             
             var myNewRecordData = [];
             var myNewRecordColTypes = [];
@@ -272,6 +277,7 @@ function bissolNewRecord(){
                 if(elt.isEditable){
                     
                     myNewRecordData.push($('#new-record-panel #' + elt.colName).val());
+                    console.log('The value for ' + elt.colName + ' is: ' + $('#new-record-panel #' + elt.colName).val() );
                     myNewRecordColTypes.push(elt.colType);
                     myNewRecordColNames.push(elt.colName);
                     
@@ -287,6 +293,7 @@ function bissolNewRecord(){
             // clear new record table and display standard table editor again
             $('#new-record-panel').remove();
             Dashboards.fireChange('param_sql_select', param_sql_select);
+        
 
         });
 

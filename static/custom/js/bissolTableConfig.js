@@ -210,13 +210,33 @@ function bissolSaveAction(){
             metadataRow.isAutoIncrement = $( val ).find( 'input[name="isAutoIncrement"]' ).is( ':checked' );
             metadataRow.defaultValue = $( val ).find( 'input[name="defaultValue"]' ).val();
             metadataRow.isRequired = $( val ).find( 'input[name="isRequired"]' ).is( ':checked' );
-            metadataRow.inputType = $( val ).find( 'td.myInputTypesPickerContainer > select option:selected' ).val();
+            
+            var inputTypeChosen = $( val ).find( 'td.myInputTypesPickerContainer > select option:selected' ).val();
+            
+            metadataRow.inputType = inputTypeChosen;
+            
+            switch (inputTypeChosen) {
+                case 'date':
+                    metadataRow.colFormat = 'yyyy-MM-dd';
+                    break;
+                case 'datetime':
+                    metadataRow.colFormat = 'yyyy-MM-dd HH:mm:ss';
+                    break;
+                case 'time':
+                    metadataRow.colFormat = 'HH:mm:ss';
+                    break;
+                // [OPEN]: List other types                       
+                default:
+                    metadataRow.colFormat = '';
+            }
+            
             //metadataRow.validationMin = $( val ).find( 'input[name="min"]' ).val();
             //metadataRow.validationMax = $( val ).find( 'input[name="max"]' ).val();
             //metadataRow.validationMaxLength = $( val ).find( 'input[name="maxLength"]' ).val();            
             //metadataRow.validationStep = $( val ).find( 'input[name="step"]' ).val();
             metadataRow.validationPattern = $( val ).find( 'input[name="validationPattern"]' ).val();
             metadataRow.validationTitle = $( val ).find( 'input[name="validationTitle"]' ).val();
+            
             metadata.push(metadataRow);
         });
         
