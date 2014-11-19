@@ -180,6 +180,7 @@ function bissolNewRecord(){
         
         var datetimeInputTypes = ['date','datetime','week','time'];
         var timeInputTypes = ['datetime','time'];
+        
         param_config.metadata.forEach(function(elt, i) {
             if(elt.isEditable){
                 
@@ -190,14 +191,39 @@ function bissolNewRecord(){
                     validation += ' data-bv-notempty-message="The ' + elt.colName + ' is required"';
                 }
                 
+                var momentJsDateFormat = '';
+                
+                switch (elt.inputType) {
+                    case 'date':
+                        momentJsDateFormat = elt.colFormat.toUpperCase();
+                        break;    
+                    case 'datetime':
+                        momentJsDateFormat = 'YYYY-MM-DD HH:mm:ss';
+                        break;
+                    // time not support by momentjs - using regex instead
+                    // case 'time':
+                    //     momentJsDateFormat = elt.colFormat;
+                    //     break;
+                }
                 
                 if(elt.validationPattern != ''){
                     validation += ' data-bv-regexp="true"';
                     validation += ' data-bv-regexp-regexp="' + elt.validationPattern + '"';
                     validation += ' data-bv-regexp-message="' + elt.validationTitle + '"';
+                } 
+                else if (elt.inputType === 'time' && elt.validationPattern === '') {
+                    validation += ' data-bv-regexp="true"';
+                    validation += ' data-bv-regexp-regexp="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$"';
+                    validation += ' data-bv-regexp-message="Time must be specified in this format: ' + elt.colFormat + '"';                    
+                }
+                
+                if(elt.inputType === 'date' || elt.inputType === 'datetime'){
+                    validation += ' data-bv-date="true"';
+                    validation += ' data-bv-date-format="' + momentJsDateFormat + '"';
                 }
                 
                 if(datetimeInputTypes.indexOf(elt.inputType) > -1){
+ 
                     myFormInput +=
                     '<div class="form-group">'
                     + '    <label for="' + elt.colName + '">' + elt.colName + '</label>'
@@ -208,8 +234,6 @@ function bissolNewRecord(){
                         //required for boostrapValidator:
                         + ' name="' + elt.colName + '" ' 
                         + validation
-                        + ' data-bv-date="true"'
-                        + ' data-bv-date-format="' + elt.colFormat.toUpperCase() + '"'
                         + ' />'
                     + '          <span class="input-group-addon">'
                     + '               <span class="glyphicon glyphicon-' + (timeInputTypes.indexOf(elt.inputType) > -1 ? 'time' : 'calendar') + '"></span>'
@@ -290,21 +314,68 @@ function bissolNewRecord(){
 
         $('#btdeNewRecordForm').append('<div class="form-group"><div><button type="submit" class="btn btn-primary btn-lg btn-block" id="new-record-save-button">Save Record</button></div></div>');
 
+        // this bit was partly sourced from http://bootstrapvalidator.com/examples/ajax-submit/
+        $(document).ready(function() {
+                $('#btdeNewRecordForm')
+                    .bootstrapValidator()
+                    .on('success.form.bv', function(e) {
+                        // Prevent form submission
+                        e.preventDefault();
+                        // Get the form instance
+                        // var $form = $(e.target);
+                        // Get the BootstrapValidator instance
+                        // var bv = $form.data('bootstrapValidator');
+                        // console.log(bv);
+                        
+                        var myNewRecordData = [];
+                        // var myNewRecordColTypes = [];
+                        // var myNewRecordColNames = [];
+                        
+                        if(param_is_auto_increment == ''){
+                            myNewRecordData.push($('#new-record-panel #' + param_id_column).val());
+                            // myNewRecordColTypes.push('Integer');
+                            // myNewRecordColNames.push(param_id_column);           
+                        }
+                        
+                        param_config.metadata.forEach(function(elt, i) {
+                            if(elt.isEditable){
+                                
+                                myNewRecordData.push($('#new-record-panel #' + elt.colName).val());
+                                console.log('The value for ' + elt.colName + ' is: ' + $('#new-record-panel #' + elt.colName).val() );
+                                // myNewRecordColTypes.push(elt.colType);
+                                // myNewRecordColNames.push(elt.colName);
+                                
+                            }
+                        
+                        });  
+                        
+                        //Dashboards.setParameter('param_db_connection', myJNDI); // should be already set
+                        
+                        // Dashboards.setParameter('param_col_types_delimited', myNewRecordColTypes.join('|'));
+                        // Dashboards.setParameter('param_col_names_delimited', myNewRecordColNames.join('|'));
+                        Dashboards.fireChange('param_new_record', myNewRecordData.join('|'));
+                        // clear new record table and display standard table editor again
+                        $('#new-record-panel').remove();
+                        Dashboards.fireChange('param_sql_select', param_sql_select);
+
+                    })
+                    ;
+        });
+
         // add Save Record button event
-        //$('#new-record-save-button').on('click', function() {
-   
-        // $('#btdeNewRecordForm').on('submit', function(e){
         // 
+        // $('#btdeNewRecordForm').on('submit', function(e){
+        //     
         //     e.preventDefault();
         // 
         //     var myNewRecordData = [];
-        //     var myNewRecordColTypes = [];
-        //     var myNewRecordColNames = [];
+        //     // var myNewRecordColTypes = [];
+        //     // var myNewRecordColNames = [];
         //     
         //     if(param_is_auto_increment == ''){
         //         myNewRecordData.push($('#new-record-panel #' + param_id_column).val());
-        //         myNewRecordColTypes.push('Integer');
-        //         myNewRecordColNames.push(param_id_column);           
+        //         // myNewRecordColTypes.push('Integer');
+        //         // myNewRecordColNames.push(param_id_column);           
         //     }
         //     
         //     param_config.metadata.forEach(function(elt, i) {
@@ -312,8 +383,8 @@ function bissolNewRecord(){
         //             
         //             myNewRecordData.push($('#new-record-panel #' + elt.colName).val());
         //             console.log('The value for ' + elt.colName + ' is: ' + $('#new-record-panel #' + elt.colName).val() );
-        //             myNewRecordColTypes.push(elt.colType);
-        //             myNewRecordColNames.push(elt.colName);
+        //             // myNewRecordColTypes.push(elt.colType);
+        //             // myNewRecordColNames.push(elt.colName);
         //             
         //         }
         //     
@@ -321,8 +392,8 @@ function bissolNewRecord(){
         //     
         //     //Dashboards.setParameter('param_db_connection', myJNDI); // should be already set
         //     
-        //     Dashboards.setParameter('param_col_types_delimited', myNewRecordColTypes.join('|'));
-        //     Dashboards.setParameter('param_col_names_delimited', myNewRecordColNames.join('|'));
+        //     // Dashboards.setParameter('param_col_types_delimited', myNewRecordColTypes.join('|'));
+        //     // Dashboards.setParameter('param_col_names_delimited', myNewRecordColNames.join('|'));
         //     Dashboards.fireChange('param_new_record', myNewRecordData.join('|'));
         //     // clear new record table and display standard table editor again
         //     $('#new-record-panel').remove();
@@ -330,13 +401,7 @@ function bissolNewRecord(){
         // 
         // 
         // });
-        
-        
-
-        $(document).ready(function() {
-                $('#btdeNewRecordForm').bootstrapValidator();
-        });
-
+        // 
 
     });
      
