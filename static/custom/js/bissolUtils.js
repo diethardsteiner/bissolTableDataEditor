@@ -34,8 +34,12 @@ function bissolCreateModal(myDashboardObjectId,myModalId,myModalTitle,myModalTex
     + '    </div>'
     ;
     
-    $('#' + myDashboardObjectId).append(myModal);
+    $(myDashboardObjectId).append(myModal);
 
 }
+
+// Note: The attributes data-dismiss="modal" takes care of closing the modal (only required in this file)
+// Note: The attributes data-toggle="modal" data-target="#myModal" can be used
+// with a button in example so that on click the respective modal show up
 
 // useful jQuery functions for modal: $('#myModal').modal('toggle'); $('#myModal').modal('show'); $('#myModal').modal('hide');

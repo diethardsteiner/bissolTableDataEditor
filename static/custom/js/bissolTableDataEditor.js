@@ -4,6 +4,12 @@ var removeIcon = '<span class="glyphicon glyphicon-minus-sign remove-row" data-t
 //var addIcon = '<span class="glyphicon glyphicon-plus-sign add-row"></span>';
 var saveIcon = '<span class="glyphicon glyphicon-floppy-disk save-row" data-toggle="modal" data-target="#myUpdateModal"></span>';
 
+// font-awesome icons: added fa-fw for fixed width
+// var addIcon = '<i class="fa fa-plus-square fa-fw"></i>'; // two options: fa-plus-square or fa-plus
+// var editIcon = '<i class="fa fa-pencil fa-fw"></i>';
+// var saveIcon = '<i class="fa fa-save fa-fw"></i>';
+// var deleteIcon= '<i class="fa fa-times fa-fw"></i>'; // two options: fa-times or fa-trash
+
 
 function bissolFetchConfigServerSide(conf){
     
@@ -57,7 +63,7 @@ function bissolBuildTable(data) {
     
     // create modals
     bissolCreateModal(
-        'html_table_editor'
+        'body'
         , 'myDeleteModal'
         , 'Deletion'
         , 'Do you really want to delete this record?'
@@ -66,7 +72,7 @@ function bissolBuildTable(data) {
     );
     
     bissolCreateModal(
-        'html_table_editor'
+        'body'
         , 'myUpdateModal'
         , 'Update'
         , 'Do you really want to update this record?'

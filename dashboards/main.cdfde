@@ -26,29 +26,6 @@
     ]
    },
    {
-    "id": "79f6fec2-ea05-ed16-72b9-2e5a711740f0",
-    "type": "LayoutResourceFile",
-    "typeDesc": "Resource",
-    "parent": "UnIqEiD",
-    "properties": [
-     {
-      "name": "name",
-      "value": "bootstrap.min.js",
-      "type": "Id"
-     },
-     {
-      "name": "resourceFile",
-      "value": "${system:/static/custom/bootstrap/js/bootstrap.min.js}",
-      "type": "ResourceFile"
-     },
-     {
-      "name": "resourceType",
-      "value": "Javascript",
-      "type": "Label"
-     }
-    ]
-   },
-   {
     "id": "577e3aeb-99d3-8449-2552-0fb0600c8ac4",
     "type": "LayoutResourceFile",
     "typeDesc": "Resource",
