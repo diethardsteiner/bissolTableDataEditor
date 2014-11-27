@@ -40,6 +40,7 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
             $('#bissol-table-properties').remove();
         }
 
+        
         var basicStructure =
         '<div class="panel panel-default bissolTableMetadataBox" id="bissol-table-properties">'
         +'  <div class="panel-heading">'
@@ -47,6 +48,16 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
         +'  </div>'
         +'  <div class="panel-body">'
         +'    <div id="html_db_table_metadata_picker">'
+        // --- table mode picker --- start
+        +'<div class="btn-group" data-toggle="buttons">'
+        +'	<label class="btn btn-primary active">'
+        +'		<input type="radio" name="options" id="option1" autocomplete="off" checked> Simple '
+        +'	</label>'
+        +'	<label class="btn btn-primary">'
+        +'		<input type="radio" name="options" id="option2" autocomplete="off"> Complex '
+        +'	</label>'
+        +'</div>'
+        // --- table mode picker --- end
         +'    </div>'
         +'  </div>'
         +'  <div id="html_submit"></div>'

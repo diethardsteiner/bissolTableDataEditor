@@ -3,6 +3,7 @@
 var removeIcon = '<span class="glyphicon glyphicon-minus-sign remove-row" data-toggle="modal" data-target="#myDeleteModal"></span>';
 //var addIcon = '<span class="glyphicon glyphicon-plus-sign add-row"></span>';
 var saveIcon = '<span class="glyphicon glyphicon-floppy-disk save-row" data-toggle="modal" data-target="#myUpdateModal"></span>';
+var editIcon = '<span class="glyphicon glyphicon-pencil save-row"></span>';
 
 // font-awesome icons: added fa-fw for fixed width
 // var addIcon = '<i class="fa fa-plus-square fa-fw"></i>'; // two options: fa-plus-square or fa-plus
@@ -54,6 +55,9 @@ function bissolFetchConfigServerSide(conf){
 
 function bissolBuildTable(data) {
     // no reason to define param_config_id as a function arguement as it is already set as a parameter value
+    
+    var tableMode = 'simple'; // possible values: simple, complex. [OPEN]: not finished
+    // [OPEN] this should be a property in the config file
 
     var myData = data;
     
@@ -90,6 +94,8 @@ function bissolBuildTable(data) {
             $('#html_table_editor table > thead > tr').append('<th>' + elt.colName + '</th>');
         }    
     });
+    
+    var contentEditable = '';
 
     // add table body
     myData.forEach(function(myDataRow, j) { 
@@ -97,13 +103,15 @@ function bissolBuildTable(data) {
         // add row
         $('#html_table_editor table > tbody').append('<tr></tr>');
     
-        param_config.metadata.forEach(function(elt, i) {     
+        param_config.metadata.forEach(function(elt, i) {   
+          
+            contentEditable = tableMode === 'complex' ? 'contenteditable' : '';  
             
             if(elt.isVisible){
                 
                 if(elt.isEditable){
                     $('#html_table_editor > table > tbody > tr:last')
-                    .append('<td><span contenteditable title="Content editable"'
+                    .append('<td><span ' + contentEditable + ' title="Content editable"'
                     + ' data-name="'  + elt.colName + '"'
                     + ' data-type="' + elt.colType + '">'
                     + myDataRow[i] + '</span></td>');
@@ -121,11 +129,21 @@ function bissolBuildTable(data) {
     
     });
     
-    // add remove and save icon
+    // add row icons
     $('#html_table_editor table > thead > tr > th:first').before('<th></th>'); // add extra cell to header
-    $('#html_table_editor table > tbody > tr').find('td:first').before('<td>' + removeIcon + saveIcon + '</td>');
+    
+    var rowIcons = '';
+    
+    if(tableMode === 'simple'){        
+        rowIcons = removeIcon + saveIcon;
+    } else {
+        rowIcons = editIcon + removeIcon;
+    }
+
+    $('#html_table_editor table > tbody > tr').find('td:first').before('<td>' + rowIcons + '</td>');
  
     // for base table
+    // [OPEN] has to be adjusted according to table mode
     bissolSaveRow();
     bissolRemoveRow();
     bissolNewRecord();
