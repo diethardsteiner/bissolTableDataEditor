@@ -1,16 +1,16 @@
-function bissolCreateTableConfigPicker(myConfigData,result_fetch_config){    
+function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){    
     
-    if(!$.isEmptyObject(myConfigData)){ 
+    if(!$.isEmptyObject(myNewConfigData)){ 
         
         // merge existing config data with new one
         // newer entries will override old ones
         
-        if($.isEmptyObject(result_fetch_config)){
-          var myMergedConfigData = myConfigData.metadata;
-          console.log(myConfigData.metadata);
+        if($.isEmptyObject(myOldConfigData)){
+          var myMergedConfigData = myNewConfigData.metadata;
+          console.log(myNewConfigData.metadata);
           
           // add non db attributes
-          myConfigData.metadata.forEach(function(elt, i) {
+          myNewConfigData.metadata.forEach(function(elt, i) {
             elt.isRequired = false;
             elt.defaultValue = '';
             elt.inputType = 'none';
@@ -20,7 +20,7 @@ function bissolCreateTableConfigPicker(myConfigData,result_fetch_config){
           
         } else {
         
-          var mySavedConfigData = JSON.parse(result_fetch_config);
+          var mySavedConfigData = JSON.parse(myOldConfigData);
         
           // add configured flag so that we can distinguish the configured fields from the new ones
           mySavedConfigData.metadata.forEach(function(elt, i) {
@@ -28,8 +28,8 @@ function bissolCreateTableConfigPicker(myConfigData,result_fetch_config){
           });
           
           //console.log(mySavedConfigData.metadata);
-          //console.log(myConfigData.metadata);
-          var myMergedConfigData = $.extend(myConfigData.metadata,mySavedConfigData.metadata);
+          //console.log(myNewConfigData.metadata);
+          var myMergedConfigData = $.extend(myNewConfigData.metadata,mySavedConfigData.metadata);
           //console.log('-------------');
           //console.log(myMergedConfigData);
         
@@ -170,7 +170,7 @@ function bissolCreateTableConfigPicker(myConfigData,result_fetch_config){
             $('#html_db_table_metadata_picker').append('<button type="submit" id="bissol-table-properties-submit" class="btn btn-primary bissolConfigSubmit">Submit</button>');
             
             // add delete button in case we have already a config
-            if(!$.isEmptyObject(result_fetch_config)){
+            if(!$.isEmptyObject(myOldConfigData)){
               
               $('#html_db_table_metadata_picker').append(
                   '<button type="submit" id="bissol-table-properties-delete" class="btn btn-danger bissolConfigSubmit">Delete</button>'

@@ -318,6 +318,7 @@ function bissolNewRecord(){
         $(document).ready(function() {
                 $('#btdeNewRecordForm')
                     .bootstrapValidator()
+                    // specific check if all form validation checks were successfully passed
                     .on('success.form.bv', function(e) {
                         // Prevent form submission
                         e.preventDefault();
@@ -328,13 +329,9 @@ function bissolNewRecord(){
                         // console.log(bv);
                         
                         var myNewRecordData = [];
-                        // var myNewRecordColTypes = [];
-                        // var myNewRecordColNames = [];
                         
                         if(param_is_auto_increment == ''){
-                            myNewRecordData.push($('#new-record-panel #' + param_id_column).val());
-                            // myNewRecordColTypes.push('Integer');
-                            // myNewRecordColNames.push(param_id_column);           
+                            myNewRecordData.push($('#new-record-panel #' + param_id_column).val());          
                         }
                         
                         param_config.metadata.forEach(function(elt, i) {
@@ -342,17 +339,11 @@ function bissolNewRecord(){
                                 
                                 myNewRecordData.push($('#new-record-panel #' + elt.colName).val());
                                 console.log('The value for ' + elt.colName + ' is: ' + $('#new-record-panel #' + elt.colName).val() );
-                                // myNewRecordColTypes.push(elt.colType);
-                                // myNewRecordColNames.push(elt.colName);
                                 
                             }
                         
                         });  
                         
-                        //Dashboards.setParameter('param_db_connection', myJNDI); // should be already set
-                        
-                        // Dashboards.setParameter('param_col_types_delimited', myNewRecordColTypes.join('|'));
-                        // Dashboards.setParameter('param_col_names_delimited', myNewRecordColNames.join('|'));
                         Dashboards.fireChange('param_new_record', myNewRecordData.join('|'));
                         // clear new record table and display standard table editor again
                         $('#new-record-panel').remove();

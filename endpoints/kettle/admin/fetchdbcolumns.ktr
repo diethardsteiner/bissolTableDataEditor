@@ -86,17 +86,17 @@
         </parameter>
         <parameter>
             <name>param_db_connection</name>
-            <default_value>psqllocaltest</default_value>
+            <default_value/>
             <description/>
         </parameter>
         <parameter>
             <name>param_db_schema</name>
-            <default_value>public</default_value>
+            <default_value/>
             <description/>
         </parameter>
         <parameter>
             <name>param_db_table</name>
-            <default_value>employee</default_value>
+            <default_value/>
             <description/>
         </parameter>
     </parameters>
@@ -238,11 +238,14 @@
   <hop> <from>Get JDBC Metadata 2</from><to>Sort rows 2</to><enabled>Y</enabled> </hop>
   <hop> <from>Sort rows</from><to>Merge Join</to><enabled>Y</enabled> </hop>
   <hop> <from>Sort rows 2</from><to>Merge Join</to><enabled>Y</enabled> </hop>
-  <hop> <from>Select values</from><to>Json output</to><enabled>Y</enabled> </hop>
   <hop> <from>Json output</from><to>Final Selection</to><enabled>Y</enabled> </hop>
-  <hop> <from>Final Selection</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
   <hop> <from>Merge Join</from><to>Map to PDI Data Type</to><enabled>Y</enabled> </hop>
   <hop> <from>Map to PDI Data Type</from><to>Select values</to><enabled>Y</enabled> </hop>
+  <hop> <from>Generate Rows 3</from><to>Get Variables</to><enabled>Y</enabled> </hop>
+  <hop> <from>Get Variables</from><to>Write to log 3</to><enabled>Y</enabled> </hop>
+  <hop> <from>Select values</from><to>Sort rows by colPosition</to><enabled>Y</enabled> </hop>
+  <hop> <from>Sort rows by colPosition</from><to>Json output</to><enabled>Y</enabled> </hop>
+  <hop> <from>Final Selection</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>Final Selection</name>
@@ -316,6 +319,32 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>352</xloc>
       <yloc>32</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Generate Rows 3</name>
+    <type>RowGenerator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+    </fields>
+    <limit>1</limit>
+    <never_ending>N</never_ending>
+    <interval_in_ms>5000</interval_in_ms>
+    <row_time_field>now</row_time_field>
+    <last_time_field>FiveSecondsAgo</last_time_field>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>592</xloc>
+      <yloc>288</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -420,6 +449,63 @@
     </step>
 
   <step>
+    <name>Get Variables</name>
+    <type>GetVariable</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>param_db_connection</name>
+        <variable>&#x24;&#x7b;param_db_connection&#x7d;</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>param_db_schema</name>
+        <variable>&#x24;&#x7b;param_db_schema&#x7d;</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>param_db_table</name>
+        <variable>&#x24;&#x7b;param_db_table&#x7d;</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>592</xloc>
+      <yloc>368</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Json output</name>
     <type>JsonOutput</type>
     <description/>
@@ -502,7 +588,7 @@
     <optimizationLevel>9</optimizationLevel>
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;var isPrimaryKey&#x3b;&#xa;if&#x28;COLUMN_NAME_PRIMARY_KEY &#x21;&#x3d;  null&#x29;&#x7b;&#xa;	&#x2f;&#x2f;isPrimaryKey&#x3d;&#x22;YES&#x22;&#x3b;&#xa;	isPrimaryKey &#x3d; true&#x3b;&#xa;&#x7d; else &#x7b;&#xa;	&#x2f;&#x2f;isPrimaryKey&#x3d;&#x22;NO&#x22;&#x3b;&#xa;	isPrimaryKey &#x3d; false&#x3b;&#xa;&#x7d;&#xa;&#xa;var isAutoIncrement &#x3d; IS_AUTOINCREMENT &#x3d;&#x3d;&#x3d; &#x22;YES&#x22; &#x3f; true &#x3a; false&#x3b;&#xa;   &#xa;    var myPdiType&#x3b;&#xa;&#xa;	var myDbType &#x3d; TYPE_NAME&#x3b;&#xa;        &#xa;    if&#x28;myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;STRING&#x27; &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;TEXT&#x27; &#xa;            &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;CHAR&#x27;&#x29; &#x3e;&#x3d; 0&#x29; &#x7b;&#xa;        myPdiType &#x3d; &#x27;String&#x27;&#x3b;&#xa;    &#x7d; &#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;INT&#x27;&#x29; &#x3e;&#x3d; 0 &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;SERIAL&#x27; &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;BIGSERIAL&#x27;&#x29; &#x7b;&#xa;        myPdiType &#x3d; &#x27;Integer&#x27;&#x3b;&#xa;    &#x7d;&#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;DECIMAL&#x27; &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;NUMERIC&#x27;&#x29;&#x7b;&#xa;        myPdiType &#x3d; &#x27;BigNumber&#x27;&#x3b;&#xa;    &#x7d;&#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;FLOAT&#x27; &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;REAL&#x27; &#xa;            &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;DOUBLE&#x27;&#x29; &#x3e;&#x3d; 0&#x29;&#x7b;&#xa;        myPdiType &#x3d; &#x27;Number&#x27;&#x3b;&#xa;    &#x7d;&#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;BOOL&#x27;&#x29; &#x3e;&#x3d; 0&#x29;&#x7b;&#xa;        myPdiType &#x3d; &#x27;Boolean&#x27;&#x3b;&#xa;    &#x7d;&#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;TIME&#x27;&#x29; &#x3e;&#x3d; 0 &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;DATE&#x27;&#x29; &#x7b;&#xa;        myPdiType &#x3d; &#x27;Date&#x27;&#x3b;&#xa;    &#x7d;    &#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;BLOB&#x27;&#x29; &#x3e;&#x3d; 0 &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;BINARY&#x27;&#x29;&#x7b;&#xa;        myPdiType &#x3d; &#x27;Binary&#x27;&#x3b;&#xa;    &#x7d; &#xa;    else &#x7b;&#xa;        myPdiType &#x3d; &#x27;Unknown - Report bug&#x27;&#x3b;&#xa;    &#x7d;&#xa;&#xa;&#xa;</jsScript_script>
+        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;var isPrimaryKey&#x3b;&#xa;if&#x28;COLUMN_NAME_PRIMARY_KEY &#x21;&#x3d;  null&#x29;&#x7b;&#xa;	&#x2f;&#x2f;isPrimaryKey&#x3d;&#x22;YES&#x22;&#x3b;&#xa;	isPrimaryKey &#x3d; true&#x3b;&#xa;&#x7d; else &#x7b;&#xa;	&#x2f;&#x2f;isPrimaryKey&#x3d;&#x22;NO&#x22;&#x3b;&#xa;	isPrimaryKey &#x3d; false&#x3b;&#xa;&#x7d;&#xa;&#xa;var isAutoIncrement &#x3d; IS_AUTOINCREMENT &#x3d;&#x3d; &#x22;YES&#x22; &#x3f; true &#x3a; false&#x3b;&#xa;   &#xa;    var myPdiType&#x3b;&#xa;&#xa;	var myDbType &#x3d; TYPE_NAME&#x3b;&#xa;        &#xa;    if&#x28;myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;STRING&#x27; &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;TEXT&#x27; &#xa;            &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;CHAR&#x27;&#x29; &#x3e;&#x3d; 0&#x29; &#x7b;&#xa;        myPdiType &#x3d; &#x27;String&#x27;&#x3b;&#xa;    &#x7d; &#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;INT&#x27;&#x29; &#x3e;&#x3d; 0 &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;SERIAL&#x27; &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;BIGSERIAL&#x27;&#x29; &#x7b;&#xa;        myPdiType &#x3d; &#x27;Integer&#x27;&#x3b;&#xa;    &#x7d;&#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;DECIMAL&#x27; &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;NUMERIC&#x27;&#x29;&#x7b;&#xa;        myPdiType &#x3d; &#x27;BigNumber&#x27;&#x3b;&#xa;    &#x7d;&#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;FLOAT&#x27; &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;REAL&#x27; &#xa;            &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;DOUBLE&#x27;&#x29; &#x3e;&#x3d; 0&#x29;&#x7b;&#xa;        myPdiType &#x3d; &#x27;Number&#x27;&#x3b;&#xa;    &#x7d;&#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;BOOL&#x27;&#x29; &#x3e;&#x3d; 0&#x29;&#x7b;&#xa;        myPdiType &#x3d; &#x27;Boolean&#x27;&#x3b;&#xa;    &#x7d;&#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;TIME&#x27;&#x29; &#x3e;&#x3d; 0 &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;DATE&#x27;&#x29; &#x7b;&#xa;        myPdiType &#x3d; &#x27;Date&#x27;&#x3b;&#xa;    &#x7d;    &#xa;    else if&#x28;myDbType.toUpperCase&#x28;&#x29;.indexOf&#x28;&#x27;BLOB&#x27;&#x29; &#x3e;&#x3d; 0 &#x7c;&#x7c; myDbType.toUpperCase&#x28;&#x29;&#x3d;&#x3d;&#x3d;&#x27;BINARY&#x27;&#x29;&#x7b;&#xa;        myPdiType &#x3d; &#x27;Binary&#x27;&#x3b;&#xa;    &#x7d; &#xa;    else &#x7b;&#xa;        myPdiType &#x3d; &#x27;Unknown - Report bug&#x27;&#x3b;&#xa;    &#x7d;&#xa;&#xa;&#xa;</jsScript_script>
       </jsScript>    </jsScripts>    <fields>      <field>        <name>myPdiType</name>
         <rename>myPdiType</rename>
         <type>String</type>
@@ -571,7 +657,7 @@
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>256</xloc>
-      <yloc>864</yloc>
+      <yloc>880</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -619,7 +705,7 @@
     </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>256</xloc>
-      <yloc>576</yloc>
+      <yloc>480</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -693,6 +779,40 @@
     </step>
 
   <step>
+    <name>Sort rows by colPosition</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
+      <prefix>out</prefix>
+      <sort_size>1000000</sort_size>
+      <free_memory/>
+      <compress>N</compress>
+      <compress_variable/>
+      <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>colPosition</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>256</xloc>
+      <yloc>576</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Write to log</name>
     <type>WriteToLog</type>
     <description/>
@@ -758,6 +878,41 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>464</xloc>
       <yloc>128</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Write to log 3</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <loglevel>log_level_basic</loglevel>
+      <displayHeader>Y</displayHeader>
+      <limitRows>N</limitRows>
+      <limitRowsNumber>0</limitRowsNumber>
+      <logmessage>&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;FETCHDBCOLUMNS DB CONNECTION&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;&#x3d;</logmessage>
+    <fields>
+      <field>
+        <name>param_db_connection</name>
+        </field>
+      <field>
+        <name>param_db_schema</name>
+        </field>
+      <field>
+        <name>param_db_table</name>
+        </field>
+      </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>592</xloc>
+      <yloc>464</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

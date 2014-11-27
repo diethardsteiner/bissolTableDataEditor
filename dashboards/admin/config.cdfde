@@ -848,7 +848,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    //bissolCreateCheckboxSet('html_db_column_picker','dbColumnPicker', 'Choose Columns:', result_fetch_db_columns, 'param_db_column');\n    bissolCreateTableConfigPicker(result_fetch_db_columns,result_fetch_config);\n    \n} ",
+      "value": "function(){\n    bissolCreateTableConfigPicker(result_fetch_db_columns,result_fetch_config);\n    \n} ",
       "type": "JavaScript"
      },
      {

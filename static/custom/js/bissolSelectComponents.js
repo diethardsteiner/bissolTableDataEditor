@@ -45,7 +45,7 @@ function bissolCreateSelect(options){
         // Check if select exists 
         // if it exists ...
         if($(myDashboardObjectId).length){
-            Dashboards.fireChange(cdeParam,null);
+            Dashboards.fireChange(cdeParam,'');
         } 
         
         if(typeof myCdeContainerId !== 'undefined'){               
@@ -71,7 +71,7 @@ function bissolCreateSelect(options){
         if(typeof myCdeContainerId !== 'undefined'){  
             $(myCdeContainerId).empty();
             if(typeof cdeParam !== 'undefined'){
-                Dashboards.fireChange(cdeParam,null);
+                Dashboards.fireChange(cdeParam,'');
             }
         }
     }   
