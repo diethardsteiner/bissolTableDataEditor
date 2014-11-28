@@ -5,9 +5,11 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
         // merge existing config data with new one
         // newer entries will override old ones
         
+        var mySavedConfigData = {};
+        
         if($.isEmptyObject(myOldConfigData)){
           var myMergedConfigData = myNewConfigData.metadata;
-          console.log(myNewConfigData.metadata);
+          //console.log(myNewConfigData.metadata);
           
           // add non db attributes
           myNewConfigData.metadata.forEach(function(elt, i) {
@@ -20,7 +22,7 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
           
         } else {
         
-          var mySavedConfigData = JSON.parse(myOldConfigData);
+          mySavedConfigData = JSON.parse(myOldConfigData);
         
           // add configured flag so that we can distinguish the configured fields from the new ones
           mySavedConfigData.metadata.forEach(function(elt, i) {
@@ -39,7 +41,7 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
         if($('#bissol-table-properties').length){
             $('#bissol-table-properties').remove();
         }
-
+        
         
         var basicStructure =
         '<div class="panel panel-default bissolTableMetadataBox" id="bissol-table-properties">'
@@ -49,14 +51,18 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
         +'  <div class="panel-body">'
         +'    <div id="html_db_table_metadata_picker">'
         // --- table mode picker --- start
+        //+'<label>Bissol Editor Type</label>'
+        //+'<div class="highlight">'
+        // NOTE: active state has to be set on label level not input level!
         +'<div class="btn-group" data-toggle="buttons">'
-        +'	<label class="btn btn-primary active">'
-        +'		<input type="radio" name="options" id="option1" autocomplete="off" checked> Simple '
+        +'	<label class="btn btn-primary active" id="editorSimple">'
+        +'		<input type="radio" name="editorType" id="editorSimple" autocomplete="off"> Simple Bissol Editor '
         +'	</label>'
-        +'	<label class="btn btn-primary">'
-        +'		<input type="radio" name="options" id="option2" autocomplete="off"> Complex '
+        +'	<label class="btn btn-primary" id="editorComplex">'
+        +'		<input type="radio" name="editorType" autocomplete="off"> Complex Bissol Editor '
         +'	</label>'
         +'</div>'
+        //+'</div>'
         // --- table mode picker --- end
         +'    </div>'
         +'  </div>'
@@ -65,7 +71,11 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
         ;
 
         $('#bissolTablePropertiesContainer').append(basicStructure);
-
+        
+        if(mySavedConfigData.editorType === 'complex'){
+            //$('#editorSimple').button('toggle');
+            $('#editorComplex').button('toggle');
+        } 
         var myColsName = [];
         var myColsType = [];
         var myColsPosition = [];
@@ -257,6 +267,7 @@ function bissolSaveAction(){
         btdeConfigInstance.dbConnection = param_db_connection;
         btdeConfigInstance.dbSchema = param_db_schema;
         btdeConfigInstance.dbTable = param_db_table;
+        btdeConfigInstance.editorType = $('#editorSimple').hasClass('active') ? 'simple' : 'complex';
         btdeConfigInstance.metadata = metadata;                
                 
         /**

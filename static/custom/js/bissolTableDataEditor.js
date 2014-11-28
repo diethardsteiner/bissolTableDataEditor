@@ -15,6 +15,9 @@ var editIcon = '<span class="glyphicon glyphicon-pencil save-row"></span>';
 function bissolFetchConfigServerSide(conf){
     
     var config = JSON.parse(conf);
+    
+    // for backwards compatibility add new attributes which might not be in old configs and are required now
+    if(typeof config.editorType === 'undefined') config.editorType = 'simple';
 
     Dashboards.setParameter('param_config', config);
     
@@ -55,9 +58,6 @@ function bissolFetchConfigServerSide(conf){
 
 function bissolBuildTable(data) {
     // no reason to define param_config_id as a function arguement as it is already set as a parameter value
-    
-    var tableMode = 'simple'; // possible values: simple, complex. [OPEN]: not finished
-    // [OPEN] this should be a property in the config file
 
     var myData = data;
     
@@ -105,7 +105,7 @@ function bissolBuildTable(data) {
     
         param_config.metadata.forEach(function(elt, i) {   
           
-            contentEditable = tableMode === 'complex' ? 'contenteditable' : '';  
+            contentEditable = param_config.editorType === 'simple' ? 'contenteditable' : '';  
             
             if(elt.isVisible){
                 
@@ -134,14 +134,26 @@ function bissolBuildTable(data) {
     
     var rowIcons = '';
     
-    if(tableMode === 'simple'){        
+    if(param_config.editorType === 'simple'){        
         rowIcons = removeIcon + saveIcon;
     } else {
         rowIcons = editIcon + removeIcon;
     }
 
     $('#html_table_editor table > tbody > tr').find('td:first').before('<td>' + rowIcons + '</td>');
- 
+    
+    // datatables
+    if(param_config.editorType === 'complex'){
+        $('#myTableEditor').dataTable(); 
+    } else {
+        $('#myTableEditor').dataTable( {
+            "paging": false,
+            "bFilter": false
+            //"ordering": false,
+            //"info":     false
+        } );
+    }
+
     // for base table
     // [OPEN] has to be adjusted according to table mode
     bissolSaveRow();
