@@ -1344,7 +1344,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    $('#' + param_id_column).val(result_max_id[0][0]+1);\n}",
+      "value": "function(){\n    // only add id value if it is a new record\n    if(param_record_edit_type === 'New') {\n        $('#' + param_id_column).val(result_max_id[0][0]+1);\n    }\n} ",
       "type": "JavaScript"
      },
      {

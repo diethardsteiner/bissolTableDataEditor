@@ -112,9 +112,9 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
             var configuredLabel = '';
             
             if(val.configured){
-              configuredLabel = '<span class="label label-primary bissolConfigLabel">Configured</span>';
+              configuredLabel = '<span class="label label-primary bissolConfigLabel"><i class="fa fa-thumbs-o-up"></i></span>';
             } else {
-              configuredLabel = '<span class="label label-info bissolConfigLabel">New</span>';
+              configuredLabel = '<span class="label label-info bissolConfigLabel"><i class="fa fa-thumbs-o-down"></i></span>';
             }
             
             var colTypeDatabase = typeof val.colTypeDb === 'undefined' ? 'n/a' : val.colTypeDb;
