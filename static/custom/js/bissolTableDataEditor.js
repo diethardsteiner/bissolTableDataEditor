@@ -40,6 +40,8 @@ function bissolFetchConfigServerSide(conf){
 
     
     var myMaxIdQuery = "SELECT MAX(" + myIdColumn + ") AS max_id FROM " + mySchemaAndTable;
+    // NOTE: The max id is set in the web input form via the 
+    // post execution function of the comp_fetch_max_id component
     var myGenericSelectQuery = "SELECT " + myColNamesVisible.join(',') + " FROM " + mySchemaAndTable;
     
     
@@ -56,15 +58,30 @@ function bissolFetchConfigServerSide(conf){
     
 }
 
-function bissolGetRowValues(myRowDataCells){
+function bissolGetRowValues(myRowDataCells, method){
     // reads out the data values, types etc from the spans of an html tabe row
     // must include editable and non editable cells
+    // method: insert, update
 
     var btdeRow = {};
 
     //var myEditableCells = $(myRowDataCells).find('[data-editable="true"]');
-    var myEditableCells = myRowDataCells.filter('[data-editable="true"]');
-
+    
+    var myEditableCells = '';
+    
+    console.log('-------');
+    console.log('The editor type is: ' + param_config.editorType);
+    console.log('The data method is: ' + method);
+    
+    if(param_config.editorType === 'simple' && method === 'insert'){
+        // we get all values now as the new id is already present in the UI
+        myEditableCells = myRowDataCells.filter('[data-name]');
+    } else {
+        myEditableCells = myRowDataCells.filter('[data-editable="true"]'); 
+    }
+    
+    console.log(myEditableCells);
+    
     var myValueArray = [];
     var myColTypesArray = [];
     var myColNamesArray = [];
@@ -249,10 +266,13 @@ function generateNewRow(){
     //lastRow.find('td:first').removeAttr('class');
     // remove any text
     lastRow.find('span').text('');
-    // remove icons
-    lastRow.find('td:first').empty();
-    // add new icon
-    lastRow.find('td:first').append(addIcon);
+    // replace icons
+    lastRow.find('td:first')
+        .empty()
+        .append(addIcon);
+    // get max id 
+    Dashboards.fireChange('param_id_column', param_id_column);
+    
     $('#html_table_editor table > tbody').append(lastRow);
     // add on click action
     bissolInsertRow();
@@ -528,7 +548,10 @@ function bissolCreateRecordScreen(buttonRef, editType){
                         myId = $('#new-record-panel #' + param_id_column).val();
                         
                         if(param_is_auto_increment === '' && editType === 'New'){
-                            myColValues.push(myId);          
+                            myColValues.push(myId);  
+                            // could be used in future
+                            // myColNames.push(param_id_column);
+                            // myColTypes.push('Integer');        
                         }
                         
                         param_config.metadata.forEach(function(elt, i) {
@@ -616,54 +639,52 @@ function bissolCreateRecordScreen(buttonRef, editType){
     });
      
 }
+// not used any more - but kept in case we should once need it again
+// function bissolCreateInsertQuery(myRow){
+//     
+//     var myQuery = '';
+//     var myInsertStringCols = '';
+//     var myInsertStringValues = '';
+// 
+//     $.each(myRow.myColValues, function(i, val){
+//         
+//         myInsertStringCols += myRow.myColNames[i];
+//         
+//         if(myRow.myColTypes[i].toUpperCase()==='STRING' || myRow.myColTypes[i].toUpperCase()==='DATE'){ 
+//             myInsertStringValues += "'" + val + "'";
+//         } else {
+//             myInsertStringValues +=  val;
+//         }
+//         
+//         if( i < (myRow.myColValues.length - 1)) {
+//             myInsertStringValues += ", ";
+//             myInsertStringCols += ", ";
+//         }
+//     });
+// 
+//     myQuery = 'INSERT INTO ' + param_db_schematable + ' (' + myInsertStringCols + ') VALUES (' + myInsertStringValues + ')';    
+// 
+//     console.log('This query will be executed: ' + myQuery);
+// 
+//     Dashboards.fireChange('param_sql_update', myQuery);
+// 
+// }
 
-function bissolCreateInsertQuery(myRow){
-    
-    var myQuery = '';
-    var myInsertStringCols = '';
-    var myInsertStringValues = '';
-
-    $.each(myRow.myColValues, function(i, val){
-        
-        myInsertStringCols += myRow.myColNames[i];
-        
-        if(myRow.myColTypes[i].toUpperCase()==='STRING' || myRow.myColTypes[i].toUpperCase()==='DATE'){ 
-            myInsertStringValues += "'" + val + "'";
-        } else {
-            myInsertStringValues +=  val;
-        }
-        
-        if( i < (myRow.myColValues.length - 1)) {
-            myInsertStringValues += ", ";
-            myInsertStringCols += ", ";
-        }
-    });
-
-    myQuery = 'INSERT INTO ' + param_db_schematable + ' (' + myInsertStringCols + ') VALUES (' + myInsertStringValues + ')';    
-
-    console.log('This query will be executed: ' + myQuery);
-
-    Dashboards.fireChange('param_sql_update', myQuery);
-
-}
 // currently used for simple editor only:
 function bissolInsertRow() { 
-
-    // [OPEN]: use this in future - this will allow the retrieval of the new id as well
-    // Dashboards.fireChange('param_new_record', myColValues.join('|'));
-    // but we should really pass the colNames as well
-    // we do not need the insert sql generator either then
     
     $('#insert-row-button').on('click', function() { 
 
         // get data from html table
         //var mySpanArray = $(this).parent().parent().find('span[contenteditable]');
         var mySpanArray = '';
-        var mySpanArray = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span[contenteditable]');
+        //var mySpanArray = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span[contenteditable]');
+        var mySpanArray = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span');
 
-        var myRow = bissolGetRowValues(mySpanArray);
+        var myRow = bissolGetRowValues(mySpanArray, 'insert');
 
-        bissolCreateInsertQuery(myRow);
+        //bissolCreateInsertQuery(myRow);
+        Dashboards.fireChange('param_new_record', myRow.myColValues.join('|'));
         
         // replace icons
         $('#html_table_editor table > tbody > tr:last > td:first')
@@ -711,7 +732,7 @@ function bissolUpdateRow() {
         //var mySpanArray = $(this).parent().parent().find('span[contenteditable]');
         //var mySpanArray = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span[contenteditable]');
         var mySpanArray = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span');
-        var myRow = bissolGetRowValues(mySpanArray);
+        var myRow = bissolGetRowValues(mySpanArray, 'update');
         
         bissolCreateUpdateQuery(myRow);
         
@@ -724,6 +745,8 @@ function bissolRemoveRow() {
         //var myId = $(this).parent().parent().find('span[data-name="' + param_id_column + '"]').text();
         //console.log($('#html_table_editor table > tbody > tr > td.row-highlight'));
         var myId = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span[data-name="' + param_id_column + '"]').text();
+        console.log('------');
+        console.log('Deleting record with following id: ' + myId);
         var myQuery = 'DELETE FROM ' + param_db_schematable + ' WHERE ' + param_id_column + ' = ' + myId;
         console.log('The query to submit is: ' + myQuery);
 

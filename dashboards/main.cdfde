@@ -1344,7 +1344,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    // only add id value if it is a new record\n    if(param_record_edit_type === 'New') {\n        $('#' + param_id_column).val(result_max_id[0][0]+1);\n    }\n} ",
+      "value": "function(){\n    // only add id value if it is a new record\n    var newId = result_max_id[0][0]+1;\n    \n    if(param_config.editorType === 'complex' && param_record_edit_type === 'New') {\n        $('#' + param_id_column).val(newId);\n    } else if(param_config.editorType === 'simple'){\n        $('#html_table_editor table > tbody > tr:last')\n            .find('[data-name=\"' + param_id_column + '\"]')\n            .text(newId);\n    }\n} ",
       "type": "JavaScript"
      },
      {
