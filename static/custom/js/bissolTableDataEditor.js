@@ -110,6 +110,77 @@ function bissolGetRowValues(myRowDataCells, method){
 
 }
 
+// -- basic row structure for reuse --
+// creates row for the table editor for any type and can as well 
+// create rows with no values in it for new record entry 
+function btdeCreateRow(options){
+    // cellValues: value from DB table cell
+    // cellValues is optional so that we can as well create blank rows for new entries for the simple editor mode
+    // rowType: currently only 'empty' for completely new record entry for the simple editor
+    
+    var cellValues = options.cellValues; 
+    var rowType = options.rowType;
+    
+    var cellValuesLocal = typeof cellValues === 'undefined' ? [] : cellValues;
+
+    var myRow = '';
+    
+    // add cell for action icons 
+    var rowIcons = '';
+    
+    if(typeof rowType !== 'undefined'){
+        rowIcons = addIcon;    
+    }
+    else if(param_config.editorType === 'simple'){        
+        rowIcons = removeIcon + saveIcon;
+    } else {
+        rowIcons = editIcon + removeIcon;
+    }
+
+    var contentEditable = '';
+    contentEditable = param_config.editorType === 'simple' ? 'contenteditable' : '';
+    
+    myRow = '<tr><td>' + rowIcons + '</td>';
+    
+    // actual cells for data        
+    param_config.metadata.forEach(function(elt, i) {   
+    
+        var cellValue = typeof cellValuesLocal[i] === 'undefined' ? '' : cellValuesLocal[i];
+    
+        if(elt.isVisible){
+            
+            if(elt.isEditable){
+                myRow +=
+                    '<td><span ' + contentEditable + ' title="Content editable"'
+                    + ' data-editable="'  + elt.isEditable + '"'
+                    + ' data-name="'  + elt.colName + '"'
+                    + ' data-type="' + elt.colType + '">'
+                    + cellValue
+                    + '</span></td>'
+                ;
+            } else {
+                myRow +=
+                    '<td><span class="content-non-editable" title="Content not editable"'  
+                    + ' data-editable="'  + elt.isEditable + '"'
+                    + ' data-name="'  + elt.colName + '"'
+                    + ' data-type="' + elt.colType + '">'  
+                    + cellValue 
+                    + '</span></td>'
+                ;
+            }  
+        }
+        
+    });
+    
+    myRow += '</tr>';
+    
+    $('#html_table_editor table > tbody').append(myRow);
+    
+    if(rowType === 'empty'){
+        // add max id
+        Dashboards.fireChange('param_id_column', param_id_column);
+    }
+}
 
 function bissolBuildTable(data) {
     // no reason to define param_config_id as a function arguement as it is already set as a parameter value
@@ -127,7 +198,10 @@ function bissolBuildTable(data) {
     $('#html_table_editor').empty();
     $('#html_new_record').empty(); 
     
-    // create modals
+    // ------------------------------------
+    
+    // CREATE MODALS
+    
     bissolCreateModal(
         'body'
         , 'myDeleteModal'
@@ -145,10 +219,17 @@ function bissolBuildTable(data) {
         , 'myUpdateButton'
         , 'Update'
     );
+    
+    // ------------------------------------
    
-    // prepare table basic structure
+    // PREPARE BASIC TABLE STRUCTURE
+    
     $('#html_table_editor').append('<table id="myTableEditor" class="display"><thead><tr></tr></thead><tbody></tbody></table>');
 
+    // ------------------------------------
+    
+    // TABLE HEADER
+    
     // add table header cells
        
     param_config.metadata.forEach(function(elt, i) {
@@ -157,54 +238,29 @@ function bissolBuildTable(data) {
         }    
     });
     
-    var contentEditable = '';
-
-    // add table body
-    myData.forEach(function(myDataRow, j) { 
+    // add extra cell to header for row icons
+    $('#html_table_editor table > thead > tr > th:first').before('<th></th>');
     
-        // add row
-        $('#html_table_editor table > tbody').append('<tr></tr>');
+    // ------------------------------------
     
-        param_config.metadata.forEach(function(elt, i) {   
-          
-            contentEditable = param_config.editorType === 'simple' ? 'contenteditable' : '';  
-            
-            if(elt.isVisible){
-                
-                if(elt.isEditable){
-                    $('#html_table_editor > table > tbody > tr:last')
-                    .append('<td><span ' + contentEditable + ' title="Content editable"'
-                    + ' data-editable="'  + elt.isEditable + '"'
-                    + ' data-name="'  + elt.colName + '"'
-                    + ' data-type="' + elt.colType + '">'
-                    + myDataRow[i] + '</span></td>');
-                } else {
-                    $('#html_table_editor > table > tbody > tr:last')
-                    .append('<td><span class="content-non-editable" title="Content not editable"'  
-                    + ' data-editable="'  + elt.isEditable + '"'
-                    + ' data-name="'  + elt.colName + '"'
-                    + ' data-type="' + elt.colType + '">'  
-                    + myDataRow[i] + '</span></td>');
-                }
-                
-                
-            }
-        });
+    // TABLE BODY
     
-    });
-    
-    // add row icons
-    $('#html_table_editor table > thead > tr > th:first').before('<th></th>'); // add extra cell to header
-    
-    var rowIcons = '';
-    
-    if(param_config.editorType === 'simple'){        
-        rowIcons = removeIcon + saveIcon;
-    } else {
-        rowIcons = editIcon + removeIcon;
+    if($.isEmptyObject(data) && param_config.editorType === 'simple'){
+        var options = {};
+        options.rowType = 'empty';
+        btdeCreateRow(options);    
     }
 
-    $('#html_table_editor table > tbody > tr').find('td:first').before('<td>' + rowIcons + '</td>');
+    // add table body (with data)
+    myData.forEach(function(val, j) {
+        var options = {};
+        options.cellValues = val;
+        btdeCreateRow(options);
+    });
+    
+    // ------------------------------------
+    
+    // FORMATTING
     
     // datatables
     if(param_config.editorType === 'complex'){
@@ -223,6 +279,10 @@ function bissolBuildTable(data) {
         $('#myTableEditor')
         
     }
+    
+    // ------------------------------------
+    
+    // ACTIONS
 
     // for base table
     if(param_config.editorType === 'complex'){
@@ -235,15 +295,18 @@ function bissolBuildTable(data) {
         // new record:
         bissolCreateRecordScreen('#new-record-button','New'); 
     } else {
-        generateNewRow();
+        var options = {};
+        options.rowType = 'empty';
+        btdeCreateRow(options);
         bissolUpdateRow();
         bissolRemoveRow();
+        bissolInsertRow();
     }
 
 
     highlightRow();
 
-}
+} 
 
 function highlightRow(){
     $('#html_table_editor table > tbody > tr').on('click', function() {
@@ -258,26 +321,26 @@ function highlightRow(){
    
    
 // for simple editor mode only:
-function generateNewRow(){
-    // add new row -- simply clone a row without the content
-    var lastRow = $('#html_table_editor table > tbody > tr:last').clone();
-    // remove any dataTables styling
-    //lastRow.removeAttr('role class');
-    //lastRow.find('td:first').removeAttr('class');
-    // remove any text
-    lastRow.find('span').text('');
-    // replace icons
-    lastRow.find('td:first')
-        .empty()
-        .append(addIcon);
-    // get max id 
-    Dashboards.fireChange('param_id_column', param_id_column);
-    
-    $('#html_table_editor table > tbody').append(lastRow);
-    // add on click action
-    bissolInsertRow();
-    highlightRow();
-};
+// function generateNewRow(){
+//     // add new row -- simply clone a row without the content
+//     var lastRow = $('#html_table_editor table > tbody > tr:last').clone();
+//     // remove any dataTables styling
+//     //lastRow.removeAttr('role class');
+//     //lastRow.find('td:first').removeAttr('class');
+//     // remove any text
+//     lastRow.find('span').text('');
+//     // replace icons
+//     lastRow.find('td:first')
+//         .empty()
+//         .append(addIcon);
+//     // get max id 
+//     Dashboards.fireChange('param_id_column', param_id_column);
+//     
+//     $('#html_table_editor table > tbody').append(lastRow);
+//     // add on click action
+//     bissolInsertRow();
+//     highlightRow();
+// };
    
    
 function bissolCreateRecordScreen(buttonRef, editType){
@@ -694,7 +757,9 @@ function bissolInsertRow() {
             ;
             
         // add new empty row
-        generateNewRow();
+        var options = {};
+        options.rowType = 'empty';
+        btdeCreateRow(options);
 
     }); 
 
