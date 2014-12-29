@@ -202,8 +202,9 @@ function bissolBuildTable(data) {
     
     // CREATE MODALS
     
+    $('#myDeleteModal').remove(); // removing any pre-existing models 
     bissolCreateModal(
-        'body'
+        '#html_table_editor'
         , 'myDeleteModal'
         , 'Deletion'
         , 'Do you really want to delete this record?'
@@ -211,8 +212,9 @@ function bissolBuildTable(data) {
         , 'Delete'
     );
     
+    $('#myUpdateModel').remove();
     bissolCreateModal(
-        'body'
+        '#html_table_editor'
         , 'myUpdateModal'
         , 'Update'
         , 'Do you really want to update this record?'
@@ -245,11 +247,11 @@ function bissolBuildTable(data) {
     
     // TABLE BODY
     
-    if($.isEmptyObject(data) && param_config.editorType === 'simple'){
-        var options = {};
-        options.rowType = 'empty';
-        btdeCreateRow(options);    
-    }
+    // if($.isEmptyObject(data) && param_config.editorType === 'simple'){
+    //     var options = {};
+    //     options.rowType = 'empty';
+    //     btdeCreateRow(options);    
+    // }
 
     // add table body (with data)
     myData.forEach(function(val, j) {
@@ -294,6 +296,7 @@ function bissolBuildTable(data) {
         // new record:
         bissolCreateRecordScreen('#new-record-button','New'); 
     } else {
+        // add blank input row for simple editor
         var options = {};
         options.rowType = 'empty';
         btdeCreateRow(options);
@@ -316,7 +319,9 @@ function bissolBuildTable(data) {
         ;
     
     // attached modal actions on a higher level
-    $('html')
+    $('#html_table_editor')
+        // deregister any prev events
+        .off('click', '#myDeleteButton')
         .on(
             {
                 click: function btdeRemoveRow(e) {
@@ -340,6 +345,8 @@ function bissolBuildTable(data) {
     // currently used for simple editor only:
     if(param_config.editorType === 'simple'){
         $('#html_table_editor table')
+            // deregister any prev events
+            .off('click', '#insert-row-button')
             .on(
                 {
                     click: function btdeInsertRow(e) { 
@@ -371,7 +378,9 @@ function bissolBuildTable(data) {
             ;
         
         // attach event to a higher level for modal
-        $('html')
+        $('#html_table_editor')
+            // deregister any prev events
+            .off('click', '#myUpdateButton')
             .on(
                 {
                     click: function btdeUpdateRow(e){
