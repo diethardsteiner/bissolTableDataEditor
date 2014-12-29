@@ -69,9 +69,9 @@ function bissolGetRowValues(myRowDataCells, method){
     
     var myEditableCells = '';
     
-    console.log('-------');
-    console.log('The editor type is: ' + param_config.editorType);
-    console.log('The data method is: ' + method);
+    // console.log('-------');
+    // console.log('The editor type is: ' + param_config.editorType);
+    // console.log('The data method is: ' + method);
     
     if(param_config.editorType === 'simple' && method === 'insert'){
         // we get all values now as the new id is already present in the UI
@@ -80,7 +80,7 @@ function bissolGetRowValues(myRowDataCells, method){
         myEditableCells = myRowDataCells.filter('[data-editable="true"]'); 
     }
     
-    console.log(myEditableCells);
+    // console.log(myEditableCells);
     
     var myValueArray = [];
     var myColTypesArray = [];
@@ -289,7 +289,6 @@ function bissolBuildTable(data) {
         // ADD NEW RECORD BUTTON
         $('#html_new_record').prepend('<button type="button" class="btn btn-primary btn-lg btn-block btde-button" id="new-record-button">New Record</button>');
         // BUTTON ACTIONS
-        bissolRemoveRow();
         // edit:
         bissolCreateRecordScreen('.editIcon','Edit');
         // new record:
@@ -298,50 +297,99 @@ function bissolBuildTable(data) {
         var options = {};
         options.rowType = 'empty';
         btdeCreateRow(options);
-        bissolUpdateRow();
-        bissolRemoveRow();
-        bissolInsertRow();
     }
 
 
-    highlightRow();
-
-} 
-
-function highlightRow(){
-    $('#html_table_editor table > tbody > tr').on('click', function() {
+    // use event delegation to make sure existing and future new rows get all the events
+    $('#html_table_editor table')
+        .on(
+            {
+                click: function highlightRow(e) {
+                    // remove existing hightlight
+                    $('#html_table_editor table > tbody > tr > td').removeClass( "row-highlight" );
+                    // highligh this row
+                    $(this).find("td").addClass( "row-highlight" );
+                }
+            }
+            , 'tbody > tr'
+        )
+        ;
+    
+    // attached modal actions on a higher level
+    $('html')
+        .on(
+            {
+                click: function btdeRemoveRow(e) {
+                    //var myId = $(this).parent().parent().find('span[data-name="' + param_id_column + '"]').text();
+                    //console.log($('#html_table_editor table > tbody > tr > td.row-highlight'));
+                    var myId = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span[data-name="' + param_id_column + '"]').text();
+                    // console.log('------');
+                    // console.log('Deleting record with following id: ' + myId);
+                    var myQuery = 'DELETE FROM ' + param_db_schematable + ' WHERE ' + param_id_column + ' = ' + myId;
+                    console.log('The query to submit is: ' + myQuery);
+                    
+                    //Dashboards.setParameter('param_db_connection', myJNDI); // not necessary, should be already set
+                    Dashboards.fireChange('param_sql_update', myQuery);
+                    
+                    $('#html_table_editor table > tbody > tr > td.row-highlight').parent().remove(); 
+                }
+            }
+            , '#myDeleteButton'    
+        );  
+    
+    // currently used for simple editor only:
+    if(param_config.editorType === 'simple'){
+        $('#html_table_editor table')
+            .on(
+                {
+                    click: function btdeInsertRow(e) { 
+                    
+                        // get data from html table
+                        //var mySpanArray = $(this).parent().parent().find('span[contenteditable]');
+                        var mySpanArray = '';
+                        //var mySpanArray = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span[contenteditable]');
+                        var mySpanArray = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span');
+                        var myRow = bissolGetRowValues(mySpanArray, 'insert');
+                        
+                        Dashboards.fireChange('param_new_record', myRow.myColValues.join('|'));
+                        
+                        // replace icons
+                        $('#html_table_editor table > tbody > tr:last > td:first')
+                            .empty()
+                            .append(removeIcon)
+                            .append(saveIcon)
+                            ;
+                        
+                        // add new empty row
+                        var options = {};
+                        options.rowType = 'empty';
+                        btdeCreateRow(options);
+                    }
+                }
+                , '#insert-row-button'
+            )
+            ;
         
-        // remove existing hightlight
-        $('#html_table_editor table > tbody > tr > td').removeClass( "row-highlight" );
-        // highligh this row
-        $(this).find("td").addClass( "row-highlight" );
-        
-    });
-}
-   
-   
-// for simple editor mode only:
-// function generateNewRow(){
-//     // add new row -- simply clone a row without the content
-//     var lastRow = $('#html_table_editor table > tbody > tr:last').clone();
-//     // remove any dataTables styling
-//     //lastRow.removeAttr('role class');
-//     //lastRow.find('td:first').removeAttr('class');
-//     // remove any text
-//     lastRow.find('span').text('');
-//     // replace icons
-//     lastRow.find('td:first')
-//         .empty()
-//         .append(addIcon);
-//     // get max id 
-//     Dashboards.fireChange('param_id_column', param_id_column);
-//     
-//     $('#html_table_editor table > tbody').append(lastRow);
-//     // add on click action
-//     bissolInsertRow();
-//     highlightRow();
-// };
-   
+        // attach event to a higher level for modal
+        $('html')
+            .on(
+                {
+                    click: function btdeUpdateRow(e){
+                        // get data from html table
+                        //var mySpanArray = $(this).parent().parent().find('span[contenteditable]');
+                        //var mySpanArray = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span[contenteditable]');
+                        var mySpanArray = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span');
+                        var myRow = bissolGetRowValues(mySpanArray, 'update');
+                        
+                        bissolCreateUpdateQuery(myRow);
+                    }
+                }
+                , '#myUpdateButton'    
+            )
+            ;   
+    } 
+
+}    
    
 function bissolCreateRecordScreen(buttonRef, editType){
     //editType: Edit, New    
@@ -733,37 +781,6 @@ function bissolCreateRecordScreen(buttonRef, editType){
 // 
 // }
 
-// currently used for simple editor only:
-function bissolInsertRow() { 
-    
-    $('#insert-row-button').on('click', function() { 
-
-        // get data from html table
-        //var mySpanArray = $(this).parent().parent().find('span[contenteditable]');
-        var mySpanArray = '';
-        //var mySpanArray = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span[contenteditable]');
-        var mySpanArray = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span');
-
-        var myRow = bissolGetRowValues(mySpanArray, 'insert');
-
-        //bissolCreateInsertQuery(myRow);
-        Dashboards.fireChange('param_new_record', myRow.myColValues.join('|'));
-        
-        // replace icons
-        $('#html_table_editor table > tbody > tr:last > td:first')
-            .empty()
-            .append(removeIcon)
-            .append(saveIcon)
-            ;
-            
-        // add new empty row
-        var options = {};
-        options.rowType = 'empty';
-        btdeCreateRow(options);
-
-    }); 
-
-}
 
 function bissolCreateUpdateQuery(myRow){
     
@@ -787,38 +804,4 @@ function bissolCreateUpdateQuery(myRow){
     
     Dashboards.fireChange('param_sql_update', myQuery);
 
-}
-
-function bissolUpdateRow() { 
-
-    $('#myUpdateButton').on('click', function() { 
-        
-        // get data from html table
-        //var mySpanArray = $(this).parent().parent().find('span[contenteditable]');
-        //var mySpanArray = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span[contenteditable]');
-        var mySpanArray = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span');
-        var myRow = bissolGetRowValues(mySpanArray, 'update');
-        
-        bissolCreateUpdateQuery(myRow);
-        
-    }); 
-
-}
-
-function bissolRemoveRow() {
-    $('#myDeleteButton').on('click', function() { 
-        //var myId = $(this).parent().parent().find('span[data-name="' + param_id_column + '"]').text();
-        //console.log($('#html_table_editor table > tbody > tr > td.row-highlight'));
-        var myId = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span[data-name="' + param_id_column + '"]').text();
-        console.log('------');
-        console.log('Deleting record with following id: ' + myId);
-        var myQuery = 'DELETE FROM ' + param_db_schematable + ' WHERE ' + param_id_column + ' = ' + myId;
-        console.log('The query to submit is: ' + myQuery);
-
-        //Dashboards.setParameter('param_db_connection', myJNDI); // not necessary, should be already set
-        Dashboards.fireChange('param_sql_update', myQuery);
-        
-        $('#html_table_editor table > tbody > tr > td.row-highlight').parent().remove();
-
-    });   
 }
