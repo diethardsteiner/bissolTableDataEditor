@@ -445,7 +445,7 @@ function bissolCreateRecordScreen(buttonRef, editType){
             + 'data-bv-feedbackicons-validating="glyphicon glyphicon-refresh" '
             + '>';
         
-        if(param_is_auto_increment === ''){
+        if(param_is_auto_increment === '' || param_is_auto_increment !== '' && editType === 'Edit'){
         
                 // get max col id - quite a dummy action but does the purpose
                 Dashboards.setParameter('param_record_edit_type', editType);
@@ -454,7 +454,7 @@ function bissolCreateRecordScreen(buttonRef, editType){
                 var myRecordId = '';
                 var myRecordIdEditDisabled = '';
                 
-                if(!$.isEmptyObject(existingData)) {
+                if(!$.isEmptyObject(existingData) || param_is_auto_increment !== '') {
                     myRecordId = ' value="' + existingData.myId  + '" ';
                     myRecordIdEditDisabled = 'disabled';
                 }
@@ -668,10 +668,7 @@ function bissolCreateRecordScreen(buttonRef, editType){
                         myId = $('#new-record-panel #' + param_id_column).val();
                         
                         if(param_is_auto_increment === '' && editType === 'New'){
-                            myColValues.push(myId);  
-                            // could be used in future
-                            // myColNames.push(param_id_column);
-                            // myColTypes.push('Integer');        
+                            myColValues.push(myId);       
                         }
                         
                         param_config.metadata.forEach(function(elt, i) {
@@ -695,21 +692,21 @@ function bissolCreateRecordScreen(buttonRef, editType){
                         
                         
                         if(editType === 'New'){
-                            Dashboards.fireChange('param_new_record', myColValues.join('|'));
-                            Dashboards.fireChange('param_sql_select', param_sql_select);
+                            Dashboards.fireChange('param_new_record', myColValues.join('|'));  
                         } else { //Update                      
                             bissolCreateUpdateQuery(//myRecord -- expects literal object
                                 {
-                                    myColValues: myColValues,
-                                    myColTypes: myColTypes,
-                                    myColNames: myColNames,
-                                    myId: myId
+                                    myColValues: myColValues
+                                    , myColTypes: myColTypes
+                                    , myColNames: myColNames
+                                    , myId: myId
                                 }
                                 );
                         }
                         
                         // clear new record table and display standard table editor again
                         $('#new-record-panel').remove();
+                        Dashboards.fireChange('param_sql_select', param_sql_select);
         
                     })
                     ;
@@ -797,6 +794,8 @@ function bissolCreateUpdateQuery(myRow){
     var myUpdateString = '';
     
     $.each(myRow.myColValues, function(i, val){
+        console.log(myRow.myColTypes[i]);
+        
         if(myRow.myColTypes[i].toUpperCase()==='STRING' || myRow.myColTypes[i].toUpperCase()==='DATE'){ 
             myUpdateString += myRow.myColNames[i] + "='" + val + "'";
         } else {
