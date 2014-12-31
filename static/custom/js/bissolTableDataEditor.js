@@ -73,7 +73,7 @@ function bissolGetRowValues(myRowDataCells, method){
     // console.log('The editor type is: ' + param_config.editorType);
     // console.log('The data method is: ' + method);
     
-    if(param_config.editorType === 'simple' && method === 'insert'){
+    if(param_config.editorType === 'simple' && method === 'insert' && param_is_auto_increment === ''){
         // we get all values now as the new id is already present in the UI
         myEditableCells = myRowDataCells.filter('[data-name]');
     } else {
@@ -178,7 +178,15 @@ function btdeCreateRow(options){
     
     if(rowType === 'empty'){
         // add max id
-        Dashboards.fireChange('param_id_column', param_id_column);
+        if(param_is_auto_increment === ''){
+            Dashboards.fireChange('param_id_column', param_id_column);
+            // all additional actions defined in CDE > Components > comp_fetch_max_id > Post Execution
+        } else {
+            $('#html_table_editor table > tbody > tr:last')
+                .find('[data-name="' + param_id_column + '"]')
+                .text('n/a');
+            // all additional actions defined in CDE > Components > comp_save_new_record > Post Execution
+        }
     }
 }
 
