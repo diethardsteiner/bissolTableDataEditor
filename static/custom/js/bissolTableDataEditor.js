@@ -194,11 +194,12 @@ function bissolBuildTable(data) {
     // no reason to define param_config_id as a function arguement as it is already set as a parameter value
     
     // simple table mode:
-    // - must have auto-increment primary key??? [OPEN] enforce on config screen
     // - no pagination
     // - no search
     // - inline editing
     // - inline new rew/record
+    // - no validation
+    // - no input helpers (date picker etc)
 
     var myData = data;
     
@@ -596,14 +597,12 @@ function bissolCreateRecordScreen(buttonRef, editType){
         // required because we use datetime input widget
         // http://bootstrapvalidator.com/validators/date/#datetime-picker-example
         // http://bootstrapvalidator.com/examples/#compatibility
-        // THIS IS NOT WORKING YET PROPERLY -- SOLUTION: ADD FURTHER DOWN WHERE FORM IS SUBMITTED
-        // there is already a .bootstrapValidator()
         dateTimeCols.forEach(function(elt, i) {
-            console.log('Adding bootstrapValidator Revalidation for field: ' + elt);
             $('#btdeNewRecordForm')
                 .bootstrapValidator()
                 // Revalitate fields
                 .on('change','[name="' + elt + '"]', function(e){
+                    console.log('Adding bootstrapValidator Revalidation for field: ' + elt);
                     $('#btdeNewRecordForm').bootstrapValidator('revalidateField', elt);
                 })
                 ;

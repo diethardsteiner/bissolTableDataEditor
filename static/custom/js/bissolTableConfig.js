@@ -80,41 +80,48 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
         var myColsType = [];
         var myColsPosition = [];
 
-        var myConfigTable=
-        '<table class="table table-striped">'
-        +'    <thead>'
-        +'        <tr>'
-        +'            <th></th>'
-        +'            <th>#</th>'
-        +'            <th>Col Name</th>'
-        +'            <th>DB Col Type</th>'
-        +'            <th>PDI Col Type</th>'
-        +'            <th>Is Visible?</th>'
-        +'            <th>Is Editable?</th>'
-        +'            <th>Is Primary Key?</th>'  
-        +'            <th>Is Auto Increment?</th>'  
-        +'            <th>Is Required?</th>' 
-        +'            <th>Default Value</th>' 
-        +'            <th>Input Type</th>'         
-        //+'            <th>Validation Min Number</th>' 
-        //+'            <th>Validation Max Number</th>' 
-        //+'            <th>Validation Max Char Length</th>' 
-        //+'            <th>Validation Step Intervals</th>' 
-        +'            <th>Validation Pattern</th>' 
-        +'            <th>Validation Pattern Description</th>' 
-        +'        </tr>'
-        +'    </thead>'
-        +'    <tbody>'
+        var myMetadataConfigForm=
+        // '<table class="table table-striped">'
+        // +'    <thead>'
+        // +'        <tr>'
+        // +'            <th></th>'
+        // +'            <th>#</th>'
+        // +'            <th>Col Name</th>'
+        // +'            <th>DB Col Type</th>'
+        // +'            <th>PDI Col Type</th>'
+        // +'            <th>Is Visible?</th>'
+        // +'            <th>Is Editable?</th>'
+        // +'            <th>Is Primary Key?</th>'  
+        // +'            <th>Is Auto Increment?</th>'  
+        // +'            <th>Is Required?</th>' 
+        // +'            <th>Default Value</th>' 
+        // +'            <th>Input Type</th>'         
+        // //+'            <th>Validation Min Number</th>' 
+        // //+'            <th>Validation Max Number</th>' 
+        // //+'            <th>Validation Max Char Length</th>' 
+        // //+'            <th>Validation Step Intervals</th>' 
+        // +'            <th>Validation Pattern</th>' 
+        // +'            <th>Validation Pattern Description</th>' 
+        // +'        </tr>'
+        // +'    </thead>'
+        // +'    <tbody>'
+        '<form class="form-horizontal">';
         ;
         
         $.each(myMergedConfigData, function(i, val){
 
             var configuredLabel = '';
             
+            // if(val.configured){
+            //   configuredLabel = '<span class="label label-primary bissolConfigLabel"><i class="fa fa-thumbs-o-up"></i></span>';
+            // } else {
+            //   configuredLabel = '<span class="label label-info bissolConfigLabel"><i class="fa fa-thumbs-o-down"></i></span>';
+            // }
+            
             if(val.configured){
-              configuredLabel = '<span class="label label-primary bissolConfigLabel"><i class="fa fa-thumbs-o-up"></i></span>';
+              configuredLabel = '<span class="label label-primary bissolConfigLabel">Configured</span>';
             } else {
-              configuredLabel = '<span class="label label-info bissolConfigLabel"><i class="fa fa-thumbs-o-down"></i></span>';
+              configuredLabel = '<span class="label label-info bissolConfigLabel">New</span>';
             }
             
             var colTypeDatabase = typeof val.colTypeDb === 'undefined' ? 'n/a' : val.colTypeDb;
@@ -134,36 +141,67 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
               //,['email'],['tel'],['url']
               ,['password']);
 
-            myConfigTable +=
-            '        <tr>'
-            +'            <td>' + configuredLabel + '</td>'
-            +'            <td class="colIndex">' + val.colIndex + '</td>'
-            +'            <td class="colName">' + val.colName + '</td>'
-            +'            <td>' + colTypeDatabase + '</td>'
-            +'            <td class="colType">' + val.colType + '</td>'
-            +'            <td><input type="checkbox" name="isVisible" value="' + val.colName + '" ' + (val.isVisible ? ' checked ' : ' ') + '/></td>'
-            +'            <td><input type="checkbox" name="isEditable" value="' + val.colName + '" ' + (val.isEditable ? ' checked ' : ' ') + '/></td>'
-            +'            <td><input type="checkbox" name="isPrimaryKey" value="' + val.colName + '" ' + (val.isPrimaryKey ? ' checked ' : ' ') + '/></td>'
-            +'            <td><input type="checkbox" name="isAutoIncrement" value="' + val.colName + '" ' + (val.isAutoIncrement ? ' checked ' : ' ') + ' disabled /></td>'
-            +'            <td><input type="checkbox" name="isRequired" value="' + val.colName + '" ' + (val.isRequired ? ' checked ' : ' ') + '/></td>'
-            +'            <td><input type="text" name="defaultValue" value="' + val.defaultValue + '"/></td>'
-            +'            <td class="myInputTypesPickerContainer">' 
+            myMetadataConfigForm +=
+            // '        <tr>'
+            // +'            <td>' + configuredLabel + '</td>'
+            // +'            <td class="colIndex">' + val.colIndex + '</td>'
+            // +'            <td class="colName">' + val.colName + '</td>'
+            // +'            <td>' + colTypeDatabase + '</td>'
+            // +'            <td class="colType">' + val.colType + '</td>'
+            // +'            <td><input type="checkbox" name="isVisible" value="' + val.colName + '" ' + (val.isVisible ? ' checked ' : ' ') + '/></td>'
+            // +'            <td><input type="checkbox" name="isEditable" value="' + val.colName + '" ' + (val.isEditable ? ' checked ' : ' ') + '/></td>'
+            // +'            <td><input type="checkbox" name="isPrimaryKey" value="' + val.colName + '" ' + (val.isPrimaryKey ? ' checked ' : ' ') + '/></td>'
+            // +'            <td><input type="checkbox" name="isAutoIncrement" value="' + val.colName + '" ' + (val.isAutoIncrement ? ' checked ' : ' ') + ' disabled /></td>'
+            // +'            <td><input type="checkbox" name="isRequired" value="' + val.colName + '" ' + (val.isRequired ? ' checked ' : ' ') + '/></td>'
+            // +'            <td><input type="text" name="defaultValue" value="' + val.defaultValue + '"/></td>'
+            // +'            <td class="myInputTypesPickerContainer">' 
+            // 
+            // + bissolCreateSelect(
+            //     {
+            //         myData: myInputTypes
+            //         , myDefaultValue: typeof val.inputType === 'undefined' ? 'none' : val.inputType
+            //     }
+            // )
+            // 
+            // +'            </td>'
+            // //+'            <td><input type="text" name="min"></td>'
+            // //+'            <td><input type="text" name="max"></td>'
+            // //+'            <td><input type="text" name="maxlength"></td>'
+            // //+'            <td><input type="text" name="step"></td>'
+            // +'            <td><input type="text" name="validationPattern" value="' + val.validationPattern + '"></td>'
+            // +'            <td><input type="text" name="validationTitle" value="' + val.validationTitle + '"></td>'
+            // +'        </tr>'
+            // ;
+
+            // [OPEN] just loop over param_config.metadata entries instead of hardcoding everything as below:
+
+            '<h2>' + val.colName + '</h2>'
+            + configuredLabel 
+            + '<div class="form-group form-group-sm colIndex"><label class="col-sm-2 control-label" for="colIndex">Position</label><div class="col-sm-10">' + val.colIndex + '</div></div>'
+            + '<div class="form-group form-group-sm colName"><label class="col-sm-2 control-label" for="colName">Column Name</label><div class="col-sm-10">' + val.colName + '</div></div>'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="colDbType">Column DB Type</label><div class="col-sm-10">' + colTypeDatabase + '</div></div>'
+            + '<div class="form-group form-group-sm colType"><label class="col-sm-2 control-label" for="colType">PDI Column Type</label><div class="col-sm-10">' + val.colType + '</div></div>'
             
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="isVisible">Is Visible?</label><div class="col-sm-10"><input type="checkbox" name="isVisible" value="' + val.colName + '" ' + (val.isVisible ? ' checked ' : ' ') + '/></div></div>'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="isEditable">Is Editable?</label><div class="col-sm-10"><input type="checkbox" name="isEditable" value="' + val.colName + '" ' + (val.isEditable ? ' checked ' : ' ') + '/></div></div>'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="isPrimaryKey">Is Primary Key?</label><div class="col-sm-10"><input type="checkbox" name="isPrimaryKey" value="' + val.colName + '" ' + (val.isPrimaryKey ? ' checked ' : ' ') + '/></div></div>'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="isAutoIncrement">Is Auto Increment?</label><div class="col-sm-10"><input type="checkbox" name="isAutoIncrement" value="' + val.colName + '" ' + (val.isAutoIncrement ? ' checked ' : ' ') + ' disabled /></div></div>'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="isRequired">Is Required?</label><div class="col-sm-10"><input type="checkbox" name="isRequired" value="' + val.colName + '" ' + (val.isRequired ? ' checked ' : ' ') + '/></div></div>'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="defaultValue">Default Value</label><div class="col-sm-10"><input type="text" name="defaultValue" value="' + val.defaultValue + '"/></div></div>'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="inputType">Input Type</label><div class="col-sm-10">'
             + bissolCreateSelect(
                 {
                     myData: myInputTypes
                     , myDefaultValue: typeof val.inputType === 'undefined' ? 'none' : val.inputType
                 }
             )
-
-            +'            </td>'
+            + '</div></div>'
             //+'            <td><input type="text" name="min"></td>'
             //+'            <td><input type="text" name="max"></td>'
             //+'            <td><input type="text" name="maxlength"></td>'
             //+'            <td><input type="text" name="step"></td>'
-            +'            <td><input type="text" name="validationPattern" value="' + val.validationPattern + '"></td>'
-            +'            <td><input type="text" name="validationTitle" value="' + val.validationTitle + '"></td>'
-            +'        </tr>'
+            +'<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="isVisible">Validation Pattern</label><div class="col-sm-10"><input type="text" name="validationPattern" value="' + val.validationPattern + '"></div></div>'
+            +'<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="isVisible">Validation Pattern Description</label><div class="col-sm-10"><input type="text" name="validationTitle" value="' + val.validationTitle + '"></div></div>'
             ;
 
             myColsName.push(val.colName);
@@ -171,10 +209,7 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
             myColsPosition.push(val.colIndex);
         });
 
-        myConfigTable +=
-        '    </tbody>'
-        +'</table>'
-        ;
+        myMetadataConfigForm += '</form>';
         
                 
         Dashboards.setParameter('param_col_names', myColsName.join(','));
@@ -182,7 +217,7 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
         Dashboards.setParameter('param_col_positions', myColsPosition.join(','));
 
 
-        $('#html_db_table_metadata_picker').append(myConfigTable);
+        $('#html_db_table_metadata_picker').append(myMetadataConfigForm);
 
         // add submit button
 
