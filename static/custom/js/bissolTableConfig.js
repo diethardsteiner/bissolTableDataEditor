@@ -17,7 +17,7 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
             elt.defaultValue = '';
             elt.inputType = 'none';
             elt.validationPattern = '';
-            elt.validationTitle = '';  
+            elt.validationMessage = '';  
           });
           
         } else {
@@ -124,8 +124,6 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
               configuredLabel = '<span class="label label-info bissolConfigLabel">New</span>';
             }
             
-            var colTypeDatabase = typeof val.colTypeDb === 'undefined' ? 'n/a' : val.colTypeDb;
-            
             // validation config details
             
             var myInputTypes = []; // HTML5 input types
@@ -142,45 +140,13 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
               ,['password']);
 
             myMetadataConfigForm +=
-            // '        <tr>'
-            // +'            <td>' + configuredLabel + '</td>'
-            // +'            <td class="colIndex">' + val.colIndex + '</td>'
-            // +'            <td class="colName">' + val.colName + '</td>'
-            // +'            <td>' + colTypeDatabase + '</td>'
-            // +'            <td class="colType">' + val.colType + '</td>'
-            // +'            <td><input type="checkbox" name="isVisible" value="' + val.colName + '" ' + (val.isVisible ? ' checked ' : ' ') + '/></td>'
-            // +'            <td><input type="checkbox" name="isEditable" value="' + val.colName + '" ' + (val.isEditable ? ' checked ' : ' ') + '/></td>'
-            // +'            <td><input type="checkbox" name="isPrimaryKey" value="' + val.colName + '" ' + (val.isPrimaryKey ? ' checked ' : ' ') + '/></td>'
-            // +'            <td><input type="checkbox" name="isAutoIncrement" value="' + val.colName + '" ' + (val.isAutoIncrement ? ' checked ' : ' ') + ' disabled /></td>'
-            // +'            <td><input type="checkbox" name="isRequired" value="' + val.colName + '" ' + (val.isRequired ? ' checked ' : ' ') + '/></td>'
-            // +'            <td><input type="text" name="defaultValue" value="' + val.defaultValue + '"/></td>'
-            // +'            <td class="myInputTypesPickerContainer">' 
-            // 
-            // + bissolCreateSelect(
-            //     {
-            //         myData: myInputTypes
-            //         , myDefaultValue: typeof val.inputType === 'undefined' ? 'none' : val.inputType
-            //     }
-            // )
-            // 
-            // +'            </td>'
-            // //+'            <td><input type="text" name="min"></td>'
-            // //+'            <td><input type="text" name="max"></td>'
-            // //+'            <td><input type="text" name="maxlength"></td>'
-            // //+'            <td><input type="text" name="step"></td>'
-            // +'            <td><input type="text" name="validationPattern" value="' + val.validationPattern + '"></td>'
-            // +'            <td><input type="text" name="validationTitle" value="' + val.validationTitle + '"></td>'
-            // +'        </tr>'
-            // ;
-
-            // [OPEN] just loop over param_config.metadata entries instead of hardcoding everything as below:
 
             '<h2>' + val.colName + '</h2>'
             + configuredLabel 
-            + '<div class="form-group form-group-sm colIndex"><label class="col-sm-2 control-label" for="colIndex">Position</label><div class="col-sm-10">' + val.colIndex + '</div></div>'
-            + '<div class="form-group form-group-sm colName"><label class="col-sm-2 control-label" for="colName">Column Name</label><div class="col-sm-10">' + val.colName + '</div></div>'
-            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="colDbType">Column DB Type</label><div class="col-sm-10">' + colTypeDatabase + '</div></div>'
-            + '<div class="form-group form-group-sm colType"><label class="col-sm-2 control-label" for="colType">PDI Column Type</label><div class="col-sm-10">' + val.colType + '</div></div>'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="colIndex">Position</label><div class="col-sm-10"><input type="text" name="colIndex" value="' + val.colIndex + '" disabled></div></div>'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="colName">Column Name</label><div class="col-sm-10"><input type="text" name="colName" value="' + val.colName + '" disabled></div></div>'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="colDbType">Column DB Type</label><div class="col-sm-10"><input type="text" name="val.colTypeDb" value="' + val.colTypeDb + '" disabled></div></div>'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="colType">PDI Column Type</label><div class="col-sm-10"><input type="text" name="colType" value="' + val.colType + '" disabled></div></div>'
             
             + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="isVisible">Is Visible?</label><div class="col-sm-10"><input type="checkbox" name="isVisible" value="' + val.colName + '" ' + (val.isVisible ? ' checked ' : ' ') + '/></div></div>'
             + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="isEditable">Is Editable?</label><div class="col-sm-10"><input type="checkbox" name="isEditable" value="' + val.colName + '" ' + (val.isEditable ? ' checked ' : ' ') + '/></div></div>'
@@ -200,8 +166,8 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
             //+'            <td><input type="text" name="max"></td>'
             //+'            <td><input type="text" name="maxlength"></td>'
             //+'            <td><input type="text" name="step"></td>'
-            +'<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="isVisible">Validation Pattern</label><div class="col-sm-10"><input type="text" name="validationPattern" value="' + val.validationPattern + '"></div></div>'
-            +'<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="isVisible">Validation Pattern Description</label><div class="col-sm-10"><input type="text" name="validationTitle" value="' + val.validationTitle + '"></div></div>'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="isVisible">Validation Pattern</label><div class="col-sm-10"><input type="text" name="validationPattern" value="' + val.validationPattern + '"></div></div>'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="isVisible">Validation Message</label><div class="col-sm-10"><input type="text" name="validationMessage" value="' + val.validationMessage + '"></div></div>'
             ;
 
             myColsName.push(val.colName);
@@ -253,49 +219,111 @@ function bissolSaveAction(){
                 
         // BUILD JSON CONFIG OBJECT
         var metadata = [];
-        var metadataRows = $('#html_db_table_metadata_picker > table > tbody > tr');
         
-        // create one object by row
-        $.each(metadataRows, function(i, val){
-            var metadataRow = {};
-            metadataRow.colIndex = $( val ).find( 'td.colIndex' ).text();
-            metadataRow.colName = $( val ).find( 'td.colName' ).text();
-            metadataRow.colType = $( val ).find( 'td.colType' ).text();
-            metadataRow.isVisible = $( val ).find( 'input[name="isVisible"]' ).is( ':checked' );
-            metadataRow.isEditable = $( val ).find( 'input[name="isEditable"]' ).is( ':checked' );
-            metadataRow.isPrimaryKey = $( val ).find( 'input[name="isPrimaryKey"]' ).is( ':checked' );
-            metadataRow.isAutoIncrement = $( val ).find( 'input[name="isAutoIncrement"]' ).is( ':checked' );
-            metadataRow.defaultValue = $( val ).find( 'input[name="defaultValue"]' ).val();
-            metadataRow.isRequired = $( val ).find( 'input[name="isRequired"]' ).is( ':checked' );
+        var colIndexArrayInput = [];
+        $( '#html_db_table_metadata_picker input[name="colIndex"]' ).each(function() { 
+            colIndexArrayInput.push($(this).val());
+        });
+        
+        var colNameArrayInput = [];
+        $( '#html_db_table_metadata_picker input[name="colName"]' ).each(function() { 
+            colNameArrayInput.push($(this).val());
+        });
+        
+        var colDbTypeArrayInput = [];
+        $( '#html_db_table_metadata_picker input[name="colDBType"]' ).each(function() { 
+            colDbTypeArrayInput.push($(this).val());
+        });
+        
+        var colTypeArrayInput = [];
+        $( '#html_db_table_metadata_picker input[name="colType"]' ).each(function() { 
+            colTypeArrayInput.push($(this).val());
+        });
+        
+        var isVisibleArrayInput = [];
+        $( '#html_db_table_metadata_picker input[name="isVisible"]' ).each(function() { 
+            isVisibleArrayInput.push($(this).is(':checked'));
+        });
+        
+        var isEditableArrayInput = [];
+        $( '#html_db_table_metadata_picker input[name="isEditable"]' ).each(function() { 
+            isEditableArrayInput.push($(this).is(':checked'));
+        });
+        
+        var isPrimaryKeyArrayInput = [];
+        $( '#html_db_table_metadata_picker input[name="isPrimaryKey"]' ).each(function() { 
+            isPrimaryKeyArrayInput.push($(this).is(':checked'));
+        });
+        
+        var isAutoIncrementArrayInput = [];
+        $( '#html_db_table_metadata_picker input[name="isAutoIncrement"]' ).each(function() { 
+            isAutoIncrementArrayInput.push($(this).is(':checked'));
+        });
+        
+        var defaultValueArrayInput = [];
+        $( '#html_db_table_metadata_picker input[name="defaultValue"]' ).each(function() { 
+            defaultValueArrayInput.push($(this).val());
+        });
+        
+        var isRequiredArrayInput = [];
+        $( '#html_db_table_metadata_picker input[name="isRequired"]' ).each(function() { 
+            isRequiredArrayInput.push($(this).is(':checked'));
+        });
+        
+        var validationPatternArrayInput = [];
+        $( '#html_db_table_metadata_picker input[name="validationPattern"]' ).each(function() { 
+            validationPatternArrayInput.push($(this).val());
+        });
+        
+        var validationMessageArrayInput = [];
+        $( '#html_db_table_metadata_picker input[name="validationMessage"]' ).each(function() { 
+            validationMessageArrayInput.push($(this).val());
+        });
+        
+        var inputTypeChosenArrayInput = [];
+        $( '#html_db_table_metadata_picker myInputTypesPickerContainer' ).each(function() { 
+            inputTypeChosenArrayInput.push($(this).find('select option:selected'));
+        });
+
+        // create one object for each column
+        // form has no sections, hence we have to use another way to separate the col metadata
+        // how many cols are there?
+        for(i=0;i<colNameArrayInput.length;i++){
+
+            var metadataInstance = {};
+            metadataInstance.colIndex = colIndexArrayInput[i];
+            metadataInstance.colName = colNameArrayInput[i];
+            metadataInstance.colDbType = colDbTypeArrayInput[i];
+            metadataInstance.colType = colTypeArrayInput[i];
+            metadataInstance.isVisible = isVisibleArrayInput[i];
+            metadataInstance.isEditable = isEditableArrayInput[i];
+            metadataInstance.isPrimaryKey = isPrimaryKeyArrayInput[i];
+            metadataInstance.isAutoIncrement = isAutoIncrementArrayInput[i];
+            metadataInstance.defaultValue = defaultValueArrayInput[i];
+            metadataInstance.isRequired = isRequiredArrayInput[i];
+            metadataInstance.validationPattern = validationPatternArrayInput[i];
+            metadataInstance.validationMessage = validationMessageArrayInput[i];
             
-            var inputTypeChosen = $( val ).find( 'td.myInputTypesPickerContainer > select option:selected' ).val();
-            
-            metadataRow.inputType = inputTypeChosen;
+            var inputTypeChosen = inputTypeChosenArrayInput[i];
+            metadataInstance.inputType = inputTypeChosen;
             
             switch (inputTypeChosen) {
                 case 'date':
-                    metadataRow.colFormat = 'yyyy-MM-dd';
+                    metadataInstance.colFormat = 'yyyy-MM-dd';
                     break;
                 case 'datetime':
-                    metadataRow.colFormat = 'yyyy-MM-dd HH:mm:ss';
+                    metadataInstance.colFormat = 'yyyy-MM-dd HH:mm:ss';
                     break;
                 case 'time':
-                    metadataRow.colFormat = 'HH:mm:ss';
+                    metadataInstance.colFormat = 'HH:mm:ss';
                     break;
                 // [OPEN]: List other types                       
                 default:
-                    metadataRow.colFormat = '';
+                    metadataInstance.colFormat = '';
             }
             
-            //metadataRow.validationMin = $( val ).find( 'input[name="min"]' ).val();
-            //metadataRow.validationMax = $( val ).find( 'input[name="max"]' ).val();
-            //metadataRow.validationMaxLength = $( val ).find( 'input[name="maxLength"]' ).val();            
-            //metadataRow.validationStep = $( val ).find( 'input[name="step"]' ).val();
-            metadataRow.validationPattern = $( val ).find( 'input[name="validationPattern"]' ).val();
-            metadataRow.validationTitle = $( val ).find( 'input[name="validationTitle"]' ).val();
-            
-            metadata.push(metadataRow);
-        });
+            metadata.push(metadataInstance);
+        };
         
         var btdeConfigInstance = {};
         btdeConfigInstance.configId = param_config_id;
@@ -304,78 +332,14 @@ function bissolSaveAction(){
         btdeConfigInstance.dbTable = param_db_table;
         btdeConfigInstance.editorType = $('#editorSimple').hasClass('active') ? 'simple' : 'complex';
         btdeConfigInstance.metadata = metadata;                
-                
-        /**
-        var myColsIsVisible = [];
-
-        $( 'input[name="isVisible"]:checkbox:checked' ).each(function() {
-            myColsIsVisible.push($(this).val());
-        });
-
-        console.log('my cols is visible:');
-        console.log(myColsIsVisible);
-
-        var myColsIsEditable = [];
-
-        $( 'input[name="isEditable"]:checkbox:checked' ).each(function() {
-            myColsIsEditable.push($(this).val());
-        });
-
-        console.log('my cols is editable:');
-        console.log(myColsIsEditable);
-
-        var myColsIsPrimaryKey = [];
-
-        $( 'input[name="isPrimaryKey"]:checkbox:checked' ).each(function() {
-            myColsIsPrimaryKey.push($(this).val());
-        });
-
-        console.log('my cols primary key:');
-        console.log(myColsIsPrimaryKey);
-
-        var myColsIsAutoIncrement = [];
-
-        $( 'input[name="isAutoIncrement"]:checkbox:checked' ).each(function() {
-            myColsIsAutoIncrement.push($(this).val());
-        });               
-
-        console.log('my cols auto increment:');
-        console.log(myColsIsAutoIncrement);
-
-        **/
 
         // Add a few checks
         // 1) are all chosen is_editable cols as well is_visible?
         // 2) is the chosen primary key column visible? 
         // 3) check that only one primary key is defined
 
-        /**
-        var isEditableCheckCounter = 0;
-        $.each(myColsIsVisible,function(i,val){
-            $.each(myColsIsEditable,function(j,value){
-                if(val === value) {
-                isEditableCheckCounter++;
-                }    
-            });
-        });
-
-        var isPrimaryKeyOkCounter = 0;
-        if(myColsIsPrimaryKey.length === 1){
-            $.each(myColsIsVisible,function(i,val){
-                if(val === myColsIsPrimaryKey[0]) {
-                    isPrimaryKeyOkCounter++;
-                }
-            });
-        }
-        
-        var primaryKeyIsEditable = 0;
-        if($.inArray(myColsIsPrimaryKey[0], myColsIsEditable) > -1){
-            primaryKeyIsEditable = 1;
-        } else {
-            primaryKeyIsEditable = 0;
-        }
-        **/
-  
+        console.log('--------');
+        console.log(metadata);
         var isEditableCounter = 0;
         var isEditableAndVisibleCounter = 0;
         var isPrimaryKeyCounter = 0;
