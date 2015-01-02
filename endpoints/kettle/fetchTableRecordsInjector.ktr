@@ -86,17 +86,17 @@
         </parameter>
         <parameter>
             <name>param_config</name>
-            <default_value>&#x7b;&#x22;configId&#x22;&#x3a;&#x22;4a66a1aa-f49f-4813-9808-9fafaa5f1532&#x22;,&#x22;dbConnection&#x22;&#x3a;&#x22;psqllocaltest&#x22;,&#x22;dbSchema&#x22;&#x3a;&#x22;public&#x22;,&#x22;dbTable&#x22;&#x3a;&#x22;employee&#x22;,&#x22;metadata&#x22;&#x3a;&#x5b;&#x7b;&#x22;colIndex&#x22;&#x3a;&#x22;1&#x22;,&#x22;colName&#x22;&#x3a;&#x22;employee_id&#x22;,&#x22;colType&#x22;&#x3a;&#x22;Integer&#x22;,&#x22;isVisible&#x22;&#x3a;true,&#x22;isEditable&#x22;&#x3a;false,&#x22;isPrimaryKey&#x22;&#x3a;true,&#x22;isAutoIncrement&#x22;&#x3a;false,&#x22;defaultValue&#x22;&#x3a;&#x22;&#x22;,&#x22;isRequired&#x22;&#x3a;false,&#x22;inputType&#x22;&#x3a;&#x22;none&#x22;,&#x22;colFormat&#x22;&#x3a;&#x22;&#x22;,&#x22;validationPattern&#x22;&#x3a;&#x22;&#x22;,&#x22;validationTitle&#x22;&#x3a;&#x22;&#x22;&#x7d;,&#x7b;&#x22;colIndex&#x22;&#x3a;&#x22;2&#x22;,&#x22;colName&#x22;&#x3a;&#x22;firstname&#x22;,&#x22;colType&#x22;&#x3a;&#x22;String&#x22;,&#x22;isVisible&#x22;&#x3a;true,&#x22;isEditable&#x22;&#x3a;true,&#x22;isPrimaryKey&#x22;&#x3a;false,&#x22;isAutoIncrement&#x22;&#x3a;false,&#x22;defaultValue&#x22;&#x3a;&#x22;Tom&#x22;,&#x22;isRequired&#x22;&#x3a;true,&#x22;inputType&#x22;&#x3a;&#x22;text&#x22;,&#x22;colFormat&#x22;&#x3a;&#x22;&#x22;,&#x22;validationPattern&#x22;&#x3a;&#x22;&#x5b;a-z&#x5d;&#x22;,&#x22;validationTitle&#x22;&#x3a;&#x22;test&#x22;&#x7d;,&#x7b;&#x22;colIndex&#x22;&#x3a;&#x22;3&#x22;,&#x22;colName&#x22;&#x3a;&#x22;lastname&#x22;,&#x22;colType&#x22;&#x3a;&#x22;String&#x22;,&#x22;isVisible&#x22;&#x3a;true,&#x22;isEditable&#x22;&#x3a;true,&#x22;isPrimaryKey&#x22;&#x3a;false,&#x22;isAutoIncrement&#x22;&#x3a;false,&#x22;defaultValue&#x22;&#x3a;&#x22;&#x22;,&#x22;isRequired&#x22;&#x3a;false,&#x22;inputType&#x22;&#x3a;&#x22;none&#x22;,&#x22;colFormat&#x22;&#x3a;&#x22;&#x22;,&#x22;validationPattern&#x22;&#x3a;&#x22;&#x22;,&#x22;validationTitle&#x22;&#x3a;&#x22;&#x22;&#x7d;,&#x7b;&#x22;colIndex&#x22;&#x3a;&#x22;4&#x22;,&#x22;colName&#x22;&#x3a;&#x22;startdate&#x22;,&#x22;colType&#x22;&#x3a;&#x22;Date&#x22;,&#x22;isVisible&#x22;&#x3a;true,&#x22;isEditable&#x22;&#x3a;true,&#x22;isPrimaryKey&#x22;&#x3a;false,&#x22;isAutoIncrement&#x22;&#x3a;false,&#x22;defaultValue&#x22;&#x3a;&#x22;&#x22;,&#x22;isRequired&#x22;&#x3a;false,&#x22;inputType&#x22;&#x3a;&#x22;date&#x22;,&#x22;colFormat&#x22;&#x3a;&#x22;yyyy-MM-dd&#x22;,&#x22;validationPattern&#x22;&#x3a;&#x22;&#x22;,&#x22;validationTitle&#x22;&#x3a;&#x22;&#x22;&#x7d;,&#x7b;&#x22;colIndex&#x22;&#x3a;&#x22;5&#x22;,&#x22;colName&#x22;&#x3a;&#x22;starttime&#x22;,&#x22;colType&#x22;&#x3a;&#x22;Date&#x22;,&#x22;isVisible&#x22;&#x3a;true,&#x22;isEditable&#x22;&#x3a;true,&#x22;isPrimaryKey&#x22;&#x3a;false,&#x22;isAutoIncrement&#x22;&#x3a;false,&#x22;defaultValue&#x22;&#x3a;&#x22;undefined&#x22;,&#x22;isRequired&#x22;&#x3a;false,&#x22;inputType&#x22;&#x3a;&#x22;datetime&#x22;,&#x22;colFormat&#x22;&#x3a;&#x22;yyyy-MM-dd HH&#x3a;mm&#x3a;ss&#x22;,&#x22;validationPattern&#x22;&#x3a;&#x22;undefined&#x22;,&#x22;validationTitle&#x22;&#x3a;&#x22;undefined&#x22;&#x7d;,&#x7b;&#x22;colIndex&#x22;&#x3a;&#x22;6&#x22;,&#x22;colName&#x22;&#x3a;&#x22;time&#x22;,&#x22;colType&#x22;&#x3a;&#x22;Date&#x22;,&#x22;isVisible&#x22;&#x3a;true,&#x22;isEditable&#x22;&#x3a;true,&#x22;isPrimaryKey&#x22;&#x3a;false,&#x22;isAutoIncrement&#x22;&#x3a;false,&#x22;defaultValue&#x22;&#x3a;&#x22;undefined&#x22;,&#x22;isRequired&#x22;&#x3a;true,&#x22;inputType&#x22;&#x3a;&#x22;time&#x22;,&#x22;colFormat&#x22;&#x3a;&#x22;HH&#x3a;mm&#x3a;ss&#x22;,&#x22;validationPattern&#x22;&#x3a;&#x22;undefined&#x22;,&#x22;validationTitle&#x22;&#x3a;&#x22;undefined&#x22;&#x7d;&#x5d;&#x7d;</default_value>
+            <default_value/>
             <description/>
         </parameter>
         <parameter>
             <name>param_db_connection</name>
-            <default_value>psqllocaltest</default_value>
+            <default_value/>
             <description/>
         </parameter>
         <parameter>
             <name>param_sql_select</name>
-            <default_value>SELECT &#x2a; FROM public.employee</default_value>
+            <default_value/>
             <description/>
         </parameter>
     </parameters>
@@ -191,10 +191,13 @@
   <hop> <from>Col Types - Generate Rows</from><to>Col Types - Get Variables</to><enabled>Y</enabled> </hop>
   <hop> <from>Json Input - Retrieve fields</from><to>Select values 2</to><enabled>Y</enabled> </hop>
   <hop> <from>Select values</from><to>Json Input - Retrieve fields</to><enabled>Y</enabled> </hop>
-  <hop> <from>Select values 2</from><to>Reinstate correct col order</to><enabled>Y</enabled> </hop>
   <hop> <from>Col Types - Get Variables</from><to>Json Input - Retrieve conneciton details</to><enabled>Y</enabled> </hop>
   <hop> <from>Json Input - Retrieve conneciton details</from><to>Select values</to><enabled>Y</enabled> </hop>
   <hop> <from>Reinstate correct col order</from><to>ETL Metadata Injection</to><enabled>Y</enabled> </hop>
+  <hop> <from>ETL Metadata Injection</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
+  <hop> <from>Select values 2</from><to>Filter rows</to><enabled>Y</enabled> </hop>
+  <hop> <from>Filter rows</from><to>Reinstate correct col order</to><enabled>Y</enabled> </hop>
+  <hop> <from>Filter rows</from><to>Dummy &#x28;do nothing&#x29;</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>Col Types - Generate Rows</name>
@@ -271,7 +274,7 @@
     <trans_name/>
     <filename>&#x24;&#x7b;Internal.Transformation.Filename.Directory&#x7d;&#x2f;fetchTableRecords.ktr</filename>
     <directory_path/>
-    <source_step/>
+    <source_step>OUTPUT</source_step>
     <source_output_fields>    </source_output_fields>    <target_file/>
     <no_execution>N</no_execution>
     <stream_source_step/>
@@ -319,7 +322,7 @@
       </mapping>    </mappings>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>320</xloc>
-      <yloc>592</yloc>
+      <yloc>704</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -607,7 +610,7 @@
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>320</xloc>
-      <yloc>528</yloc>
+      <yloc>640</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -712,6 +715,73 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>320</xloc>
       <yloc>448</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>OUTPUT</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>320</xloc>
+      <yloc>800</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Filter rows</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>Reinstate correct col order</send_true_to>
+<send_false_to>Dummy &#x28;do nothing&#x29;</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>isVisible</leftvalue>
+ <function>&#x3d;</function>
+ <rightvalue/>
+ <value><name>constant</name><type>Boolean</type><text>Y</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value> </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>320</xloc>
+      <yloc>528</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Dummy &#x28;do nothing&#x29;</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>480</xloc>
+      <yloc>528</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

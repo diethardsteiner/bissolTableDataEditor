@@ -70,59 +70,40 @@ The structure of the JSON object looks like this:
 ```json
 [
     {
-        "configId": "30bbd8e2-89d0-4306-992d-b849f98d97b3",
-        "dbConnection": "psqllocaltest",
-        "dbSchema": "public",
-        "dbTable": "employee",
-        "metadata": [
-            {
-                "colIndex": "1",
-                "colName": "employee_id",
-                "colType": "Integer",
-                "isAutoIncrement": true,
-                "isEditable": false,
-                "isPrimaryKey": true,
-                "isVisible": true,
-                "validationMax": "",
-                "validationMin": "",
-                "validationPattern": "",
-                "validationStep": "",
-                "validationTitle": "",
-                "validationType": "Please select an option...",
-                "validationValue": ""
-            },
-            {
-                "colIndex": "2",
-                "colName": "firstname",
-                "colType": "String",
-                "isAutoIncrement": false,
-                "isEditable": true,
-                "isPrimaryKey": false,
-                "isVisible": true,
-                "validationMax": "",
-                "validationMin": "",
-                "validationPattern": "",
-                "validationStep": "",
-                "validationTitle": "",
-                "validationType": "Please select an option...",
-                "validationValue": ""
-            },
-            {
-                "colIndex": "3",
-                "colName": "lastname",
-                "colType": "String",
-                "isAutoIncrement": false,
-                "isEditable": true,
-                "isPrimaryKey": false,
-                "isVisible": true,
-                "validationMax": "",
-                "validationMin": "",
-                "validationPattern": "",
-                "validationStep": "",
-                "validationTitle": "",
-                "validationType": "Please select an option...",
-                "validationValue": ""
-            }
+        "configId": "bc07cefa-3141-408b-9012-581111170095"
+      , "dbConnection": "psqllocaltest"
+      , "dbSchema": "public"
+      , "dbTable": "fruits"
+      , "editorType": "simple"
+      , "metadata": [
+          {
+            "colIndex": "1"
+          , "colName": "fruit_id"
+          , "colType": "Integer"
+          , "isVisible": true
+          , "isEditable": false
+          , "isPrimaryKey": true
+          , "isAutoIncrement": true
+          , "defaultValue": ""
+          , "isRequired": true
+          , "validationPattern": ""
+          , "validationMessage": ""
+          , "colFormat": ""
+          }
+        , {
+            "colIndex": "2"
+          , "colName": "fruit_name"
+          , "colType": "String"
+          , "isVisible": true
+          , "isEditable": true
+          , "isPrimaryKey": false
+          , "isAutoIncrement": false
+          , "defaultValue": ""
+          , "isRequired": true
+          , "validationPattern": ""
+          , "validationMessage": ""
+          , "colFormat": ""
+          }
         ]
     }
 ]

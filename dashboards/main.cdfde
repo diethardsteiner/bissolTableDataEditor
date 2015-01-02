@@ -1055,7 +1055,7 @@
      },
      {
       "name": "parameters",
-      "value": "[[\"param_sql_select\",\"param_sql_select\"],[\"param_db_connection\",\"param_db_connection\"]]",
+      "value": "[[\"param_sql_select\",\"param_sql_select\"],[\"param_db_connection\",\"param_db_connection\"],[\"param_config\",\"param_config\"]]",
       "type": "ValuesArray"
      },
      {
@@ -1065,7 +1065,7 @@
      },
      {
       "name": "dataSource",
-      "value": "qry_generic_select",
+      "value": "qry_fetch_table_records",
       "type": "Datasource"
      },
      {
@@ -1095,7 +1095,7 @@
      },
      {
       "name": "postExecution",
-      "value": "function(){\n    //console.log(select_result);\n    //buildTable('tableeditor','myTableEditor',select_result,this.metadata);\n    //buildTable('tableeditor','myTableEditor',select_result, result_fetch_metadata);\n    \n\n    if(!Array.isArray(select_result)){\n        bissolCreateModal(\n            'html_select_table'\n            , 'mySelectWentWrong'\n            , 'System Error'\n            , 'Something went wrong! Check JavaScript Console and/or Server.'\n            , 'myCloseButton1'\n            , 'Close'\n        );\n        $('#mySelectWentWrong').modal('show');\n    }\n    bissolBuildTable(select_result);\n\n} ",
+      "value": "function(){\n    //console.log(select_result);\n    //buildTable('tableeditor','myTableEditor',select_result,this.metadata);\n    //buildTable('tableeditor','myTableEditor',select_result, result_fetch_metadata);\n    \n    console.log('And the records are ...');\n    console.log(select_result);\n\n    if(!Array.isArray(select_result)){\n        bissolCreateModal(\n            'html_select_table'\n            , 'mySelectWentWrong'\n            , 'System Error'\n            , 'Something went wrong! Check JavaScript Console and/or Server.'\n            , 'myCloseButton1'\n            , 'Close'\n        );\n        $('#mySelectWentWrong').modal('show');\n    }\n    bissolBuildTable(select_result);\n\n} ",
       "type": "JavaScript"
      },
      {

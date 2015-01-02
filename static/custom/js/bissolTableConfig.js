@@ -339,7 +339,7 @@ function bissolSaveAction(){
         // 3) check that only one primary key is defined
 
         console.log('--------');
-        console.log(metadata);
+        console.log(btdeConfigInstance);
         var isEditableCounter = 0;
         var isEditableAndVisibleCounter = 0;
         var isPrimaryKeyCounter = 0;
