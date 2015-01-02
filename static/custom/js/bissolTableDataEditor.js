@@ -24,11 +24,23 @@ function bissolFetchConfigServerSide(conf){
     var myIdColumn = '';
     var myColIsAutoIncrement = '';
     var myColNamesVisible = [];
+    var myColNamesVisible4SqlSelect = [];
     
     config.metadata.forEach(function(elt, i) {
         if(elt.isPrimaryKey) myIdColumn = elt.colName;
         if(elt.isVisible) myColNamesVisible.push(elt.colName);
         if(elt.isAutoIncrement) myColIsAutoIncrement = elt.colName;
+        // if(elt.isVisible){
+        //     if(elt.colType === 'Date'){
+        //         myColNamesVisible4SqlSelect.push('TO_CHAR(' + elt.colName + ', ' + elt.colFormat + ')');
+        //         // MySQL
+        //         //myColNamesVisible4SqlSelect = 'DATE_FORMAT(' + elt.colName + ', ' + elt.colFormat + ')';
+        //         // [OPEN] Maybe alternatively you can apply formatting directly on the CDA result set. Would be easier
+        //         // than having to consider all the various DB date format functions
+        //     } else {
+        //         myColNamesVisible4SqlSelect.push(elt.ColName) ;
+        //     }
+        // }
     });
     
     var mySchemaAndTable = '';
@@ -42,6 +54,9 @@ function bissolFetchConfigServerSide(conf){
     var myMaxIdQuery = "SELECT MAX(" + myIdColumn + ") AS max_id FROM " + mySchemaAndTable;
     // NOTE: The max id is set in the web input form via the 
     // post execution function of the comp_fetch_max_id component
+    
+    // for select query convert date values into string
+    
     var myGenericSelectQuery = "SELECT " + myColNamesVisible.join(',') + " FROM " + mySchemaAndTable;
     
     

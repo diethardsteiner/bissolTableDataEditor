@@ -1,5 +1,6 @@
 function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){    
-    
+    console.log('--- -- ---');
+    console.log(myNewConfigData);
     if(!$.isEmptyObject(myNewConfigData)){ 
         
         // merge existing config data with new one
@@ -81,30 +82,6 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
         var myColsPosition = [];
 
         var myMetadataConfigForm=
-        // '<table class="table table-striped">'
-        // +'    <thead>'
-        // +'        <tr>'
-        // +'            <th></th>'
-        // +'            <th>#</th>'
-        // +'            <th>Col Name</th>'
-        // +'            <th>DB Col Type</th>'
-        // +'            <th>PDI Col Type</th>'
-        // +'            <th>Is Visible?</th>'
-        // +'            <th>Is Editable?</th>'
-        // +'            <th>Is Primary Key?</th>'  
-        // +'            <th>Is Auto Increment?</th>'  
-        // +'            <th>Is Required?</th>' 
-        // +'            <th>Default Value</th>' 
-        // +'            <th>Input Type</th>'         
-        // //+'            <th>Validation Min Number</th>' 
-        // //+'            <th>Validation Max Number</th>' 
-        // //+'            <th>Validation Max Char Length</th>' 
-        // //+'            <th>Validation Step Intervals</th>' 
-        // +'            <th>Validation Pattern</th>' 
-        // +'            <th>Validation Pattern Description</th>' 
-        // +'        </tr>'
-        // +'    </thead>'
-        // +'    <tbody>'
         '<form class="form-horizontal">';
         ;
         
@@ -145,7 +122,7 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
             + configuredLabel 
             + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="colIndex">Position</label><div class="col-sm-10"><input type="text" name="colIndex" value="' + val.colIndex + '" disabled></div></div>'
             + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="colName">Column Name</label><div class="col-sm-10"><input type="text" name="colName" value="' + val.colName + '" disabled></div></div>'
-            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="colDbType">Column DB Type</label><div class="col-sm-10"><input type="text" name="val.colTypeDb" value="' + val.colTypeDb + '" disabled></div></div>'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="colTypeDb">Column DB Type</label><div class="col-sm-10"><input type="text" name="colTypeDb" value="' + val.colTypeDb + '" disabled></div></div>'
             + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="colType">PDI Column Type</label><div class="col-sm-10"><input type="text" name="colType" value="' + val.colType + '" disabled></div></div>'
             
             + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="isVisible">Is Visible?</label><div class="col-sm-10"><input type="checkbox" name="isVisible" value="' + val.colName + '" ' + (val.isVisible ? ' checked ' : ' ') + '/></div></div>'
@@ -154,7 +131,7 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
             + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="isAutoIncrement">Is Auto Increment?</label><div class="col-sm-10"><input type="checkbox" name="isAutoIncrement" value="' + val.colName + '" ' + (val.isAutoIncrement ? ' checked ' : ' ') + ' disabled /></div></div>'
             + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="isRequired">Is Required?</label><div class="col-sm-10"><input type="checkbox" name="isRequired" value="' + val.colName + '" ' + (val.isRequired ? ' checked ' : ' ') + '/></div></div>'
             + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="defaultValue">Default Value</label><div class="col-sm-10"><input type="text" name="defaultValue" value="' + val.defaultValue + '"/></div></div>'
-            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="inputType">Input Type</label><div class="col-sm-10">'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="inputType">Input Type</label><div class="col-sm-10 myInputTypesPickerContainer">'
             + bissolCreateSelect(
                 {
                     myData: myInputTypes
@@ -230,9 +207,9 @@ function bissolSaveAction(){
             colNameArrayInput.push($(this).val());
         });
         
-        var colDbTypeArrayInput = [];
-        $( '#html_db_table_metadata_picker input[name="colDBType"]' ).each(function() { 
-            colDbTypeArrayInput.push($(this).val());
+        var colTypeDbArrayInput = [];
+        $( '#html_db_table_metadata_picker input[name="colTypeDb"]' ).each(function() { 
+            colTypeDbArrayInput.push($(this).val());
         });
         
         var colTypeArrayInput = [];
@@ -281,8 +258,8 @@ function bissolSaveAction(){
         });
         
         var inputTypeChosenArrayInput = [];
-        $( '#html_db_table_metadata_picker myInputTypesPickerContainer' ).each(function() { 
-            inputTypeChosenArrayInput.push($(this).find('select option:selected'));
+        $( '#html_db_table_metadata_picker .myInputTypesPickerContainer' ).each(function() { 
+            inputTypeChosenArrayInput.push($(this).find('select option:selected').val());
         });
 
         // create one object for each column
@@ -293,7 +270,7 @@ function bissolSaveAction(){
             var metadataInstance = {};
             metadataInstance.colIndex = colIndexArrayInput[i];
             metadataInstance.colName = colNameArrayInput[i];
-            metadataInstance.colDbType = colDbTypeArrayInput[i];
+            metadataInstance.colTypeDb = colTypeDbArrayInput[i];
             metadataInstance.colType = colTypeArrayInput[i];
             metadataInstance.isVisible = isVisibleArrayInput[i];
             metadataInstance.isEditable = isEditableArrayInput[i];
