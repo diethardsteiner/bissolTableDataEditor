@@ -196,8 +196,9 @@
   <hop> <from>Reinstate correct col order</from><to>ETL Metadata Injection</to><enabled>Y</enabled> </hop>
   <hop> <from>ETL Metadata Injection</from><to>OUTPUT</to><enabled>Y</enabled> </hop>
   <hop> <from>Select values 2</from><to>Filter rows</to><enabled>Y</enabled> </hop>
-  <hop> <from>Filter rows</from><to>Reinstate correct col order</to><enabled>Y</enabled> </hop>
   <hop> <from>Filter rows</from><to>Dummy &#x28;do nothing&#x29;</to><enabled>Y</enabled> </hop>
+  <hop> <from>Filter rows</from><to>Get colTypes for Conversion</to><enabled>Y</enabled> </hop>
+  <hop> <from>Get colTypes for Conversion</from><to>Reinstate correct col order</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>Col Types - Generate Rows</name>
@@ -259,6 +260,25 @@
     </step>
 
   <step>
+    <name>Dummy &#x28;do nothing&#x29;</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>480</xloc>
+      <yloc>528</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>ETL Metadata Injection</name>
     <type>MetaInject</type>
     <description/>
@@ -279,26 +299,31 @@
     <no_execution>N</no_execution>
     <stream_source_step/>
     <stream_target_step/>
-    <mappings>      <mapping>        <target_step_name>Table output</target_step_name>
+    <mappings>      <mapping>        <target_step_name>Select values</target_step_name>
+        <target_attribute_key>META_TYPE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>Reinstate correct col order</source_step>
+        <source_field>colType</source_field>
+      </mapping>      <mapping>        <target_step_name>Table output</target_step_name>
         <target_attribute_key>TARGET_SCHEMA</target_attribute_key>
         <target_detail>N</target_detail>
         <source_step>Reinstate correct col order</source_step>
         <source_field>dbSchema</source_field>
       </mapping>      <mapping>        <target_step_name>Select values</target_step_name>
-        <target_attribute_key>META_TYPE</target_attribute_key>
+        <target_attribute_key>META_NAME</target_attribute_key>
         <target_detail>Y</target_detail>
         <source_step>Reinstate correct col order</source_step>
-        <source_field>colType</source_field>
+        <source_field>colName</source_field>
       </mapping>      <mapping>        <target_step_name>Split Fields</target_step_name>
         <target_attribute_key>FORMAT</target_attribute_key>
         <target_detail>Y</target_detail>
         <source_step>Reinstate correct col order</source_step>
         <source_field>colFormat</source_field>
-      </mapping>      <mapping>        <target_step_name>Select values</target_step_name>
-        <target_attribute_key>META_NAME</target_attribute_key>
+      </mapping>      <mapping>        <target_step_name>Convert Date To String</target_step_name>
+        <target_attribute_key>META_CONVERSION_MASK</target_attribute_key>
         <target_detail>Y</target_detail>
         <source_step>Reinstate correct col order</source_step>
-        <source_field>colName</source_field>
+        <source_field>colFormat</source_field>
       </mapping>      <mapping>        <target_step_name>Split Fields</target_step_name>
         <target_attribute_key>NAME</target_attribute_key>
         <target_detail>Y</target_detail>
@@ -319,10 +344,75 @@
         <target_detail>Y</target_detail>
         <source_step>Reinstate correct col order</source_step>
         <source_field>colFormat</source_field>
+      </mapping>      <mapping>        <target_step_name>Convert Date To String</target_step_name>
+        <target_attribute_key>META_NAME</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>Reinstate correct col order</source_step>
+        <source_field>colName</source_field>
+      </mapping>      <mapping>        <target_step_name>Convert Date To String</target_step_name>
+        <target_attribute_key>META_TYPE</target_attribute_key>
+        <target_detail>Y</target_detail>
+        <source_step>Reinstate correct col order</source_step>
+        <source_field>colTypeConversion</source_field>
       </mapping>    </mappings>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>320</xloc>
-      <yloc>704</yloc>
+      <yloc>880</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Filter rows</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>Get colTypes for Conversion</send_true_to>
+<send_false_to>Dummy &#x28;do nothing&#x29;</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>isVisible</leftvalue>
+ <function>&#x3d;</function>
+ <rightvalue/>
+ <value><name>constant</name><type>Boolean</type><text>Y</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value> </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>320</xloc>
+      <yloc>528</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Get colTypes for Conversion</name>
+    <type>Janino</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+       <formula><field_name>colTypeConversion</field_name>
+<formula_string>colType.equals&#x28;&#x22;Date&#x22;&#x29; &#x3f; &#x22;String&#x22; &#x3a; colType</formula_string>
+<value_type>String</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<replace_field/>
+</formula>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>320</xloc>
+      <yloc>656</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -582,6 +672,25 @@
     </step>
 
   <step>
+    <name>OUTPUT</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>320</xloc>
+      <yloc>976</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Reinstate correct col order</name>
     <type>SortRows</type>
     <description/>
@@ -610,7 +719,7 @@
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>320</xloc>
-      <yloc>640</yloc>
+      <yloc>816</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -715,73 +824,6 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>320</xloc>
       <yloc>448</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>OUTPUT</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>320</xloc>
-      <yloc>800</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Filter rows</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<send_true_to>Reinstate correct col order</send_true_to>
-<send_false_to>Dummy &#x28;do nothing&#x29;</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <leftvalue>isVisible</leftvalue>
- <function>&#x3d;</function>
- <rightvalue/>
- <value><name>constant</name><type>Boolean</type><text>Y</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value> </condition>
-    </compare>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>320</xloc>
-      <yloc>528</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Dummy &#x28;do nothing&#x29;</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>480</xloc>
-      <yloc>528</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
