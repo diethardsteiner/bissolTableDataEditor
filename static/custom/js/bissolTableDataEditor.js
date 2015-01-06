@@ -159,8 +159,8 @@ function btdeCreateRow(options){
     
     // actual cells for data        
     param_config.metadata.forEach(function(elt, i) {   
-    
-        var cellValue = typeof cellValuesLocal[i] === 'undefined' ? '' : cellValuesLocal[i];
+        // PDI returns empty fields with null, so we have to get rid of this here as well
+        var cellValue = typeof cellValuesLocal[i] === 'undefined' || cellValuesLocal[i] == null ? '' : cellValuesLocal[i];
     
         if(elt.isVisible){
             
@@ -552,7 +552,10 @@ function bissolCreateRecordScreen(buttonRef, editType){
                 
                 var existingValueHTML = '';
                 
-                if(typeof existingData.myColValues !== 'undefined') {
+                if(editType === 'New'){
+                    existingValueHTML += ' value="' + elt.defaultValue +'" ';
+                }
+                else if(editType === 'Edit' && typeof existingData.myColValues !== 'undefined') {
                     existingValueHTML = ' value="' + existingData.myColValues[editableCounter] +'" ';    
                 } 
                 

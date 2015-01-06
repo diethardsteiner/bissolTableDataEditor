@@ -1,6 +1,6 @@
 # Bissol Table Data Editor
 
-> **WARNING**: Do not use in production! This project is in its early stages. Functionality has only been tested with PostgreSQL and MariaDB.
+> **WARNING**: Do not use in production! This project is in its early stages. Functionality has only been tested with PostgreSQL and MariaDB/MySQL.
 
 > **NOTE**: **AFTER INSTALLING THE PLUGIN YOU MUST RESTART THE BISERVER** so that the Kettle plugins get registered.
 
@@ -30,8 +30,8 @@ Example **Use Cases**:
 
 ### BI / BA Server ###
 
-This plugin will only work on biserver v5.1. with the latest version of the C*Tools installed.
-Make sure you have at last on **data source** defined with a user which has **read and write** rights on the specific database.
+This plugin will only work on biserver v5.2. with the latest version of the C*Tools installed.
+Make sure you have at last one **data source** defined with a user which has **read and write** rights on the specific database.
 
 ### Kettle (PDI) Plugins ###
 
@@ -44,24 +44,43 @@ Following **Kettle** plugins will be automatically added to the `pentaho-solutio
 
 ### JDBC Driver
 
-The respective JDBC driver have to be installed in `tomcat/lib`. This should already be the case if you defined **data sources** on the Pentaho BA Server.
+The respective JDBC drivers have to be installed in `tomcat/lib`. This should already be the case if you defined **data sources** on the Pentaho BA Server.
 
 ## Current Limitations ##
 
 
 - Only current web browsers are supported. The main editor page makes use of the *contenteditable* attribute which is only supported by recent web browsers.
-- Only one columns is supported for the **primary key**. The primary key has to be defined for the update logic. Note that the primary key has to be properly defined with auto increment on the database side for this to work. 
+- Only one columns is supported for the **primary key**. The primary key has to be defined for the update logic. Note that the primary key has to be properly defined with auto increment on the database side for this to work. New: Also non auto-incremented primary keys are supported.
 - If there is a DB error while adding, updating or removing records, only a generic error is shown in the web UI. This has to do with the fact that currently PDI DB steps do not feed back any DB error message details. A Jira case has been created for this feature to be implemented.
 
 ## General Workflow
 
-Once the plugin is installed a user of the role admin can select tables via the **Admin** page and choose which columns can be viewed and edited. Only then a standard end user can edit the data of a specific table via the **Main** page.
+Once the plugin is installed a user of the role admin can select tables via the **Admin** page and choose which columns of a DB table can be viewed and edited. Only then a standard end user can edit the data of a specific table via the **Main** page.
 
 ## Configuration
 
 Administrators can enter the config information for each table via a dedicated **Admin** page in the **Pentaho User Console**. There is full support for adding, editing and deleting configuration entries. The configuration entries are stored in the `bissolTableDataEditorConfig.json` file on the server in following directory:
 
 `pentaho-solutions/system/bissolTableDataEditorConfig`
+
+### Different Editor Modes
+
+The latest version supports two editor modes: **simple** and **complex**.
+
+The **simple editor** supports inline table date editing. However, it doesn't support any of the following options:
+
+- pagination
+- search
+- validation
+- input helpers (date picker etc)
+
+### Validation
+
+Validation is only support in the **complex editor**. In the configuration you have to specify values for the `inputTye`, `validationPattern` and `validationMessage`.
+
+The `validationPattern` is accepts a **regular expression** like e.g. `^[a-zA-Z]{1,35}$`. Please test your regular expression beforehand.
+
+> Note: Fields of type date, datetime and time get validated automatically in complex editor mode, so do not specify any `validationPattern` for them. 
 
 ### How the configuration is saved to JSON
 
@@ -70,42 +89,110 @@ The structure of the JSON object looks like this:
 ```json
 [
     {
-        "configId": "bc07cefa-3141-408b-9012-581111170095"
-      , "dbConnection": "psqllocaltest"
-      , "dbSchema": "public"
-      , "dbTable": "fruits"
-      , "editorType": "simple"
-      , "metadata": [
-          {
-            "colIndex": "1"
-          , "colName": "fruit_id"
-          , "colType": "Integer"
-          , "isVisible": true
-          , "isEditable": false
-          , "isPrimaryKey": true
-          , "isAutoIncrement": true
-          , "defaultValue": ""
-          , "isRequired": true
-          , "validationPattern": ""
-          , "validationMessage": ""
-          , "colFormat": ""
-          }
-        , {
-            "colIndex": "2"
-          , "colName": "fruit_name"
-          , "colType": "String"
-          , "isVisible": true
-          , "isEditable": true
-          , "isPrimaryKey": false
-          , "isAutoIncrement": false
-          , "defaultValue": ""
-          , "isRequired": true
-          , "validationPattern": ""
-          , "validationMessage": ""
-          , "colFormat": ""
-          }
-        ]
-    }
+    "configId": "76618e1a-d23b-4ae6-830e-601d509ec4e7"
+  , "dbConnection": "psqllocaltest"
+  , "dbSchema": "public"
+  , "dbTable": "employees"
+  , "editorType": "complex"
+  , "metadata": [
+      {
+        "colIndex": "1"
+      , "colName": "employee_id"
+      , "colTypeDb": "serial"
+      , "colType": "Integer"
+      , "isVisible": true
+      , "isEditable": false
+      , "isPrimaryKey": true
+      , "isAutoIncrement": true
+      , "defaultValue": ""
+      , "isRequired": true
+      , "validationPattern": ""
+      , "validationMessage": ""
+      , "inputType": "none"
+      , "colFormat": ""
+      }
+    , {
+        "colIndex": "2"
+      , "colName": "firstname"
+      , "colTypeDb": "varchar"
+      , "colType": "String"
+      , "isVisible": true
+      , "isEditable": true
+      , "isPrimaryKey": false
+      , "isAutoIncrement": false
+      , "defaultValue": "Frank"
+      , "isRequired": true
+      , "validationPattern": "^[a-zA-Z]{1,35}$"
+      , "validationMessage": "Has to be a string"
+      , "inputType": "text"
+      , "colFormat": ""
+      }
+    , {
+        "colIndex": "3"
+      , "colName": "lastname"
+      , "colTypeDb": "varchar"
+      , "colType": "String"
+      , "isVisible": true
+      , "isEditable": true
+      , "isPrimaryKey": false
+      , "isAutoIncrement": false
+      , "defaultValue": ""
+      , "isRequired": false
+      , "validationPattern": ""
+      , "validationMessage": ""
+      , "inputType": "none"
+      , "colFormat": ""
+      }
+    , {
+        "colIndex": "4"
+      , "colName": "start_date"
+      , "colTypeDb": "date"
+      , "colType": "Date"
+      , "isVisible": true
+      , "isEditable": true
+      , "isPrimaryKey": false
+      , "isAutoIncrement": false
+      , "defaultValue": ""
+      , "isRequired": true
+      , "validationPattern": ""
+      , "validationMessage": ""
+      , "inputType": "date"
+      , "colFormat": "yyyy-MM-dd"
+      }
+    , {
+        "colIndex": "5"
+      , "colName": "last_checkin"
+      , "colTypeDb": "timestamp"
+      , "colType": "Date"
+      , "isVisible": true
+      , "isEditable": true
+      , "isPrimaryKey": false
+      , "isAutoIncrement": false
+      , "defaultValue": ""
+      , "isRequired": false
+      , "validationPattern": ""
+      , "validationMessage": ""
+      , "inputType": "datetime"
+      , "colFormat": "yyyy-MM-dd HH:mm:ss"
+      }
+    , {
+        "colIndex": "6"
+      , "colName": "daily_break_time"
+      , "colTypeDb": "time"
+      , "colType": "Date"
+      , "isVisible": true
+      , "isEditable": true
+      , "isPrimaryKey": false
+      , "isAutoIncrement": false
+      , "defaultValue": ""
+      , "isRequired": false
+      , "validationPattern": ""
+      , "validationMessage": ""
+      , "inputType": "time"
+      , "colFormat": "HH:mm:ss"
+      }
+    ]
+  }
 ]
 ```
 
