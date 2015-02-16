@@ -82,6 +82,10 @@ The `validationPattern` is accepts a **regular expression** like e.g. `^[a-zA-Z]
 
 > Note: Fields of type date, datetime and time get validated automatically in complex editor mode, so do not specify any `validationPattern` for them. 
 
+### Editable Primary Key
+
+If for some reason you did not define an auto-incremented primary key for your table, you can define the primary key with the Bissol Editor as editable. This option is only available with the complex editor mode.
+
 ### How the configuration is saved to JSON
 
 The structure of the JSON object looks like this:

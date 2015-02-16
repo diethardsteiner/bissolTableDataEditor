@@ -346,6 +346,19 @@ function bissolSaveAction(){
         function createAlertErrorMsg(msg){
             var alertMsg = bissolCreateAlertMsg('danger','<strong>Error!</strong> Please correct your configuration details: ' + msg);
             $('#html_db_table_metadata_picker').prepend(alertMsg);
+            
+            // Modal
+            // var alertMsg = 'Please correct your configuration details: ' + msg;
+            
+            //$('#html_db_table_metadata_picker').remove(); // removing any pre-existing modals 
+            // bissolCreateModal(
+            //     '#html_db_table_metadata_picker'
+            //     , 'myAlertModal'
+            //     , 'Warning'
+            //     , alertMsg
+            //     , 'myAlertButton'
+            //     , 'Ok'
+            // );
         }
 
         if(isPrimaryKeyCounter === 0){
@@ -372,6 +385,9 @@ function bissolSaveAction(){
         } 
         else if(primaryKeyIsEditable && primaryKeyIsAutoIncremented){
             createAlertErrorMsg('The primary key column must not be editable! Only non-auto-incremented primary keys can be configured to be editable.');                                    
+        } 
+        else if(primaryKeyIsEditable && !primaryKeyIsAutoIncremented && btdeConfigInstance.editorType === 'simple'){
+            createAlertErrorMsg('Editable primary key is only supported in the complex editor mode.');                                    
         }
 
         else {

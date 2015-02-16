@@ -157,12 +157,17 @@ function btdeCreateRow(options){
     
     myRow = '<tr><td>' + rowIcons + '</td>';
     
+    // raw data is in different order then the metadata
+    // provide additional index
+    var z = 0;
+    
     // actual cells for data        
-    param_config.metadata.forEach(function(elt, i) {   
-        // PDI returns empty fields with null, so we have to get rid of this here as well
-        var cellValue = typeof cellValuesLocal[i] === 'undefined' || cellValuesLocal[i] == null ? '' : cellValuesLocal[i];
+    param_config.metadata.forEach(function(elt, i) {               
     
         if(elt.isVisible){
+            
+            // PDI returns empty fields with null, so we have to get rid of this here as well
+            var cellValue = typeof cellValuesLocal[z] === 'undefined' || cellValuesLocal[z] == null ? '' : cellValuesLocal[z];
             
             if(elt.isEditable){
                 myRow +=
@@ -183,6 +188,8 @@ function btdeCreateRow(options){
                     + '</span></td>'
                 ;
             }  
+            
+            z++;
         }
         
     });
