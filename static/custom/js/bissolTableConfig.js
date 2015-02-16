@@ -315,14 +315,15 @@ function bissolSaveAction(){
         // 2) is the chosen primary key column visible? 
         // 3) check that only one primary key is defined
 
-        console.log('--------');
-        console.log(btdeConfigInstance);
+        // console.log('--------');
+        // console.log(btdeConfigInstance);
         var isEditableCounter = 0;
         var isEditableAndVisibleCounter = 0;
         var isPrimaryKeyCounter = 0;
         var isVisibleCounter = 0;
         var primaryKeyIsVisible = false;
         var primaryKeyIsEditable = false;
+        var primaryKeyIsAutoIncremented = false;
         
         $.each(metadata, function(i, val){
            // check if there are any editable columns defined
@@ -337,6 +338,8 @@ function bissolSaveAction(){
            primaryKeyIsVisible += val.isPrimaryKey && val.isVisible ? true : false;
            // check if primary key column is specified as editable
            primaryKeyIsEditable += val.isPrimaryKey && val.isEditable ? true : false;
+           // check if primary key is auto incremented
+           primaryKeyIsAutoIncremented += val.isPrimaryKey && val.isAutoIncrement ? true : false;
         });
 
 
@@ -367,8 +370,8 @@ function bissolSaveAction(){
         else if(isEditableCounter !== isEditableAndVisibleCounter){
             createAlertErrorMsg('All editable columns must be visible as well!');                
         } 
-        else if(primaryKeyIsEditable){
-            createAlertErrorMsg('The primary key column must not be editable!');                                    
+        else if(primaryKeyIsEditable && primaryKeyIsAutoIncremented){
+            createAlertErrorMsg('The primary key column must not be editable! Only non-auto-incremented primary keys can be configured to be editable.');                                    
         }
 
         else {

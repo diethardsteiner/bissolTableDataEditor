@@ -117,10 +117,10 @@ function bissolGetRowValues(myRowDataCells, method){
     console.log('The id of the selected row is: ' + myId);
     
     return {
-        myColValues: myValueArray,
-        myColTypes: myColTypesArray,
-        myColNames: myColNamesArray,
-        myId: myId
+        myColValues: myValueArray
+        , myColTypes: myColTypesArray
+        , myColNames: myColNamesArray
+        , myId: myId
     }
 
 }
@@ -469,32 +469,32 @@ function bissolCreateRecordScreen(buttonRef, editType){
             + 'data-bv-feedbackicons-validating="glyphicon glyphicon-refresh" '
             + '>';
         
-        if(param_is_auto_increment === '' || param_is_auto_increment !== '' && editType === 'Edit'){
-        
-                // get max col id - quite a dummy action but does the purpose
-                Dashboards.setParameter('param_record_edit_type', editType);
-                Dashboards.fireChange('param_id_column', param_id_column);
-                
-                var myRecordId = '';
-                var myRecordIdEditDisabled = '';
-                
-                if(!$.isEmptyObject(existingData) || param_is_auto_increment !== '') {
-                    myRecordId = ' value="' + existingData.myId  + '" ';
-                    myRecordIdEditDisabled = 'disabled';
-                }
-                
-                myFormInput +=
-                '<div class="form-group">'
-                + '    <label for="' + param_id_column + '">' + param_id_column + '</label>'
-                + '    <input class="form-control" '
-                + ' id="' + param_id_column + '" '
-                + ' placeholder="Enter ' + param_id_column + '" '
-                + ' data-type="Integer" '
-                + myRecordId
-                + myRecordIdEditDisabled
-                + '></input>' 
-                + '</div>';          
-        }
+        // if(param_is_auto_increment === '' || param_is_auto_increment !== '' && editType === 'Edit'){
+        // 
+        //         // get max col id - quite a dummy action but does the purpose
+        //         Dashboards.setParameter('param_record_edit_type', editType);
+        //         Dashboards.fireChange('param_id_column', param_id_column);
+        //         
+        //         var myRecordId = '';
+        //         var myRecordIdEditDisabled = '';
+        //         
+        //         if(!$.isEmptyObject(existingData) || param_is_auto_increment !== '') {
+        //             myRecordId = ' value="' + existingData.myId  + '" ';
+        //             myRecordIdEditDisabled = 'disabled';
+        //         }
+        //         
+        //         myFormInput +=
+        //         '<div class="form-group">'
+        //         + '    <label for="' + param_id_column + '">' + param_id_column + '</label>'
+        //         + '    <input class="form-control" '
+        //         + ' id="' + param_id_column + '" '
+        //         + ' placeholder="Enter ' + param_id_column + '" '
+        //         + ' data-type="Integer" '
+        //         + myRecordId
+        //         + myRecordIdEditDisabled
+        //         + '></input>' 
+        //         + '</div>';          
+        // }
         
         var datetimeInputTypes = ['date','datetime','week','time'];
         var timeInputTypes = ['datetime','time'];
@@ -507,99 +507,154 @@ function bissolCreateRecordScreen(buttonRef, editType){
         
         param_config.metadata.forEach(function(elt, i) {
             
-            if(elt.isEditable){
+            if(elt.isPrimaryKey && !elt.isEditable && editType == 'Edit') {
                 
-                var validation = '';
+                var myRecordId = '';
+                var myRecordIdEditDisabled = '';
                 
-                if(elt.isRequired){
-                    validation += ' data-bv-notempty="true"';
-                    validation += ' data-bv-notempty-message="The ' + elt.colName + ' is required"';
-                }
+                myRecordId = ' value="' + existingData.myId  + '" ';
+                myRecordIdEditDisabled = 'disabled';
                 
-                var momentJsDateFormat = '';
+                myFormInput +=
+                '<div class="form-group">'
+                + '    <label for="' + param_id_column + '">' + param_id_column + '</label>'
+                + '    <input class="form-control" '
+                + ' id="' + param_id_column + '" '
+                + ' placeholder="Enter ' + param_id_column + '" '
+                + ' data-type="Integer" '
+                + myRecordId
+                + myRecordIdEditDisabled
+                + '></input>' 
+                + '</div>';  
                 
+            } else if(elt.isEditable) {
                 
-                switch (elt.inputType) {
-                    case 'date':
-                        momentJsDateFormat = elt.colFormat.toUpperCase();
-                        dateTimeCols.push(elt.colName);
-                        break;    
-                    case 'datetime':
-                        momentJsDateFormat = 'YYYY-MM-DD HH:mm:ss';
-                        dateTimeCols.push(elt.colName);
-                        break;
-                    // time not support by momentjs - using regex instead
-                    // case 'time':
-                    //     momentJsDateFormat = elt.colFormat;
-                    //     break;
-                }
-                
-                if(elt.validationPattern != ''){
-                    validation += ' data-bv-regexp="true"';
-                    validation += ' data-bv-regexp-regexp="' + elt.validationPattern + '"';
-                    validation += ' data-bv-regexp-message="' + elt.validationTitle + '"';
-                } 
-                else if (elt.inputType === 'time' && elt.validationPattern === '') {
-                    validation += ' data-bv-regexp="true"';
-                    validation += ' data-bv-regexp-regexp="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$"';
-                    validation += ' data-bv-regexp-message="Time must be specified in this format: ' + elt.colFormat + '"';                    
-                }
-                
-                if(elt.inputType === 'date' || elt.inputType === 'datetime'){
-                    validation += ' data-bv-date="true"';
-                    validation += ' data-bv-date-format="' + momentJsDateFormat + '"';
-                }
-                
-                var existingValueHTML = '';
-                
-                if(editType === 'New'){
-                    existingValueHTML += ' value="' + elt.defaultValue +'" ';
-                }
-                else if(editType === 'Edit' && typeof existingData.myColValues !== 'undefined') {
-                    existingValueHTML = ' value="' + existingData.myColValues[editableCounter] +'" ';    
-                } 
-                
-                if(datetimeInputTypes.indexOf(elt.inputType) > -1){
-        
-                    myFormInput +=
-                    '<div class="form-group">'
-                    + '    <label for="' + elt.colName + '">' + elt.colName + '</label>'
-                    + '    <div class="input-group date">'
-                    + '         <input type="text" class="form-control" '
-                        + ' id="' + elt.colName + '" '
-                        + ' data-type="' + elt.colType + '" '
-                        //required for boostrapValidator:
-                        + ' name="' + elt.colName + '" ' 
-                        + validation
-                        + existingValueHTML
-                        + ' />' 
-                    + '          <span class="input-group-addon">'
-                    + '               <span class="glyphicon glyphicon-' + (timeInputTypes.indexOf(elt.inputType) > -1 ? 'time' : 'calendar') + '"></span>'
-                    + '           </span>'
-                    + '     </div>'
-                    + '</div>'
-                    ;
-                } else {
-                    var valType = elt.inputType === '' ? 'text' : elt.inputType;
+                if(elt.isPrimaryKey){
+                    
+                    if(editType === 'New'){
+                        // get max col id - quite a dummy action but does the purpose
+                        Dashboards.setParameter('param_record_edit_type', editType);
+                        Dashboards.fireChange('param_id_column', param_id_column);
+                    }
+                    
+                    var myRecordId = '';
+                    var myRecordIdEditDisabled = '';
+                    
+                    //if(!$.isEmptyObject(existingData)) {
+                    if(editType === 'Edit'){
+                        myRecordId = ' value="' + existingData.myId  + '" ';
+                        myRecordIdEditDisabled = 'disabled';
+                    }
                     
                     myFormInput +=
                     '<div class="form-group">'
-                    + '    <label for="' + elt.colName + '">' + elt.colName + '</label>'
+                    + '    <label for="' + param_id_column + '">' + param_id_column + '</label>'
                     + '    <input class="form-control" '
-                        + ' type="' + valType + '" '
-                        + ' id="' + elt.colName + '" '
-                        + ' placeholder="Enter ' + elt.colName + '" '
-                        + ' data-type="' + elt.colType + '" '                       
-                        //required for boostrapValidator:
-                        + ' name="' + elt.colName + '" '
-                        + validation
-                        // HTML 5 standard validation attributes - currently not used as not supported by all browsers
-                        // + (elt.isRequired ? ' required ' : '')
-                        // + (elt.validationPattern !== '' ? ' pattern="' + elt.validationPattern + '" ' : '')
-                        // + (elt.validationTitle !== '' ? ' title="' + elt.validationTitle + '" ' : '')
-                        + existingValueHTML
-                        + ' />' 
-                    +'</div>';    
+                    + ' id="' + param_id_column + '" '
+                    + ' placeholder="Enter ' + param_id_column + '" '
+                    + ' data-type="Integer" '
+                    + myRecordId
+                    + myRecordIdEditDisabled
+                    + '></input>' 
+                    + '</div>';  
+                    
+                    
+                } else {
+                
+                    var validation = '';
+                    
+                    if(elt.isRequired){
+                        validation += ' data-bv-notempty="true"';
+                        validation += ' data-bv-notempty-message="The ' + elt.colName + ' is required"';
+                    }
+                    
+                    var momentJsDateFormat = '';
+                    
+                    
+                    switch (elt.inputType) {
+                        case 'date':
+                            momentJsDateFormat = elt.colFormat.toUpperCase();
+                            dateTimeCols.push(elt.colName);
+                            break;    
+                        case 'datetime':
+                            momentJsDateFormat = 'YYYY-MM-DD HH:mm:ss';
+                            dateTimeCols.push(elt.colName);
+                            break;
+                        // time not support by momentjs - using regex instead
+                        // case 'time':
+                        //     momentJsDateFormat = elt.colFormat;
+                        //     break;
+                    }
+                    
+                    if(elt.validationPattern != ''){
+                        validation += ' data-bv-regexp="true"';
+                        validation += ' data-bv-regexp-regexp="' + elt.validationPattern + '"';
+                        validation += ' data-bv-regexp-message="' + elt.validationTitle + '"';
+                    } 
+                    else if (elt.inputType === 'time' && elt.validationPattern === '') {
+                        validation += ' data-bv-regexp="true"';
+                        validation += ' data-bv-regexp-regexp="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$"';
+                        validation += ' data-bv-regexp-message="Time must be specified in this format: ' + elt.colFormat + '"';                    
+                    }
+                    
+                    if(elt.inputType === 'date' || elt.inputType === 'datetime'){
+                        validation += ' data-bv-date="true"';
+                        validation += ' data-bv-date-format="' + momentJsDateFormat + '"';
+                    }
+                    
+                    var existingValueHTML = '';
+                    
+                    if(editType === 'New'){
+                        existingValueHTML += ' value="' + elt.defaultValue +'" ';
+                    }
+                    else if(editType === 'Edit' && typeof existingData.myColValues !== 'undefined') {
+                        existingValueHTML = ' value="' + existingData.myColValues[editableCounter] +'" ';    
+                    } 
+                    
+                    if(datetimeInputTypes.indexOf(elt.inputType) > -1){
+            
+                        myFormInput +=
+                        '<div class="form-group">'
+                        + '    <label for="' + elt.colName + '">' + elt.colName + '</label>'
+                        + '    <div class="input-group date">'
+                        + '         <input type="text" class="form-control" '
+                            + ' id="' + elt.colName + '" '
+                            + ' data-type="' + elt.colType + '" '
+                            //required for boostrapValidator:
+                            + ' name="' + elt.colName + '" ' 
+                            + validation
+                            + existingValueHTML
+                            + ' />' 
+                        + '          <span class="input-group-addon">'
+                        + '               <span class="glyphicon glyphicon-' + (timeInputTypes.indexOf(elt.inputType) > -1 ? 'time' : 'calendar') + '"></span>'
+                        + '           </span>'
+                        + '     </div>'
+                        + '</div>'
+                        ;
+                    } else {
+                        
+                        var valType = elt.inputType === '' ? 'text' : elt.inputType;
+                        
+                        myFormInput +=
+                        '<div class="form-group">'
+                        + '    <label for="' + elt.colName + '">' + elt.colName + '</label>'
+                        + '    <input class="form-control" '
+                            + ' type="' + valType + '" '
+                            + ' id="' + elt.colName + '" '
+                            + ' placeholder="Enter ' + elt.colName + '" '
+                            + ' data-type="' + elt.colType + '" '                       
+                            //required for boostrapValidator:
+                            + ' name="' + elt.colName + '" '
+                            + validation
+                            // HTML 5 standard validation attributes - currently not used as not supported by all browsers
+                            // + (elt.isRequired ? ' required ' : '')
+                            // + (elt.validationPattern !== '' ? ' pattern="' + elt.validationPattern + '" ' : '')
+                            // + (elt.validationTitle !== '' ? ' title="' + elt.validationTitle + '" ' : '')
+                            + existingValueHTML
+                            + ' />' 
+                        +'</div>';    
+                    }
+                
                 }
                 
                 editableCounter++;
@@ -692,9 +747,9 @@ function bissolCreateRecordScreen(buttonRef, editType){
                         
                         myId = $('#new-record-panel #' + param_id_column).val();
                         
-                        if(param_is_auto_increment === '' && editType === 'New'){
-                            myColValues.push(myId);       
-                        }
+                        // if(param_is_auto_increment === '' && editType === 'New'){
+                        //     myColValues.push(myId);       
+                        // }
                         
                         param_config.metadata.forEach(function(elt, i) {
                             if(elt.isEditable){
