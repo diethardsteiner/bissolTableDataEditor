@@ -596,7 +596,7 @@ function bissolCreateRecordScreen(buttonRef, editType){
                     if(elt.validationPattern != ''){
                         validation += ' data-bv-regexp="true"';
                         validation += ' data-bv-regexp-regexp="' + elt.validationPattern + '"';
-                        validation += ' data-bv-regexp-message="' + elt.validationTitle + '"';
+                        validation += ' data-bv-regexp-message="' + elt.validationMessage + '"';
                     } 
                     else if (elt.inputType === 'time' && elt.validationPattern === '') {
                         validation += ' data-bv-regexp="true"';
@@ -656,7 +656,7 @@ function bissolCreateRecordScreen(buttonRef, editType){
                             // HTML 5 standard validation attributes - currently not used as not supported by all browsers
                             // + (elt.isRequired ? ' required ' : '')
                             // + (elt.validationPattern !== '' ? ' pattern="' + elt.validationPattern + '" ' : '')
-                            // + (elt.validationTitle !== '' ? ' title="' + elt.validationTitle + '" ' : '')
+                            // + (elt.validationMessage !== '' ? ' title="' + elt.validationMessage + '" ' : '')
                             + existingValueHTML
                             + ' />' 
                         +'</div>';    

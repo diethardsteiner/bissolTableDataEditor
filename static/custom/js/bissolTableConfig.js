@@ -344,21 +344,21 @@ function bissolSaveAction(){
 
 
         function createAlertErrorMsg(msg){
-            var alertMsg = bissolCreateAlertMsg('danger','<strong>Error!</strong> Please correct your configuration details: ' + msg);
-            $('#html_db_table_metadata_picker').prepend(alertMsg);
+            // var alertMsg = bissolCreateAlertMsg('danger','<strong>Error!</strong> Please correct your configuration details: ' + msg);
+            // $('#html_db_table_metadata_picker').prepend(alertMsg);
             
             // Modal
-            // var alertMsg = 'Please correct your configuration details: ' + msg;
+             var alertMsg = 'Please correct your configuration details: ' + msg;
             
-            //$('#html_db_table_metadata_picker').remove(); // removing any pre-existing modals 
-            // bissolCreateModal(
-            //     '#html_db_table_metadata_picker'
-            //     , 'myAlertModal'
-            //     , 'Warning'
-            //     , alertMsg
-            //     , 'myAlertButton'
-            //     , 'Ok'
-            // );
+            $('#myAlertModal').remove(); // removing any pre-existing modals 
+            bissolCreateModal(
+                '#bissolTablePropertiesContainer'
+                , 'myAlertModal'
+                , 'Warning'
+                , 'Test'
+                , 'myAlertButton'
+                , 'Ok'
+            );
         }
 
         if(isPrimaryKeyCounter === 0){
