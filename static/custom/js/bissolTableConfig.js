@@ -68,6 +68,7 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
         +'    </div>'
         +'  </div>'
         +'  <div id="html_submit"></div>'
+        +'  <div id="html_error_msg"></div>'
         +'</div>'
         ;
 
@@ -344,21 +345,21 @@ function bissolSaveAction(){
 
 
         function createAlertErrorMsg(msg){
-            // var alertMsg = bissolCreateAlertMsg('danger','<strong>Error!</strong> Please correct your configuration details: ' + msg);
-            // $('#html_db_table_metadata_picker').prepend(alertMsg);
+            var alertMsg = bissolCreateAlertMsg('danger','<strong>Error!</strong> Please correct your configuration details: ' + msg);
+            $('#html_error_msg').prepend(alertMsg);
             
             // Modal
-             var alertMsg = 'Please correct your configuration details: ' + msg;
-            
-            $('#myAlertModal').remove(); // removing any pre-existing modals 
-            bissolCreateModal(
-                '#bissolTablePropertiesContainer'
-                , 'myAlertModal'
-                , 'Warning'
-                , 'Test'
-                , 'myAlertButton'
-                , 'Ok'
-            );
+            //  var alertMsg = 'Please correct your configuration details: ' + msg;
+            // 
+            // $('#myAlertModal').remove(); // removing any pre-existing modals 
+            // bissolCreateModal(
+            //     '#bissolTablePropertiesContainer'
+            //     , 'myAlertModal'
+            //     , 'Warning'
+            //     , 'Test'
+            //     , 'myAlertButton'
+            //     , 'Ok'
+            // );
         }
 
         if(isPrimaryKeyCounter === 0){
