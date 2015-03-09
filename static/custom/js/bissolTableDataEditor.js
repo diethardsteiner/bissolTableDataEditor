@@ -3,13 +3,14 @@
 // var deleteIcon = '<span class="glyphicon glyphicon-minus-sign delete-row" data-toggle="modal" data-target="#myDeleteModal"></span>';
 var deleteIcon = '<span class="glyphicon glyphicon-minus-sign delete-row"></span>';
 var addIcon = '<span class="glyphicon glyphicon-plus-sign add-row" id="insert-row-button"></span>';
-var saveIcon = '<span class="glyphicon glyphicon-floppy-disk save-row" data-toggle="modal" data-target="#myUpdateModal"></span>';
+// var updateIcon = '<span class="glyphicon glyphicon-floppy-disk update-row" data-toggle="modal" data-target="#myUpdateModal"></span>';
+var updateIcon = '<span class="glyphicon glyphicon-floppy-disk update-row"></span>';
 var editIcon = '<span class="glyphicon glyphicon-pencil edit-row"></span>';
 
 // font-awesome icons: added fa-fw for fixed width
 // var addIcon = '<i class="fa fa-plus-square fa-fw"></i>'; // two options: fa-plus-square or fa-plus
 // var edit-row = '<i class="fa fa-pencil fa-fw"></i>';
-// var saveIcon = '<i class="fa fa-save fa-fw"></i>';
+// var updateIcon = '<i class="fa fa-save fa-fw"></i>';
 // var deleteIcon= '<i class="fa fa-times fa-fw"></i>'; // two options: fa-times or fa-trash
 
 
@@ -148,7 +149,7 @@ function btdeCreateRow(options){
         rowIcons = addIcon;    
     }
     else if(param_config.editorType === 'simple'){        
-        rowIcons = deleteIcon + saveIcon;
+        rowIcons = deleteIcon + updateIcon;
     } else {
         rowIcons = editIcon + deleteIcon;
     }
@@ -229,21 +230,7 @@ function bissolBuildTable(data) {
     // empty in case table already exists
     $('#html_table_editor').empty();
     $('#html_new_record').empty(); 
-    
-    // ------------------------------------
-    
-    // CREATE MODALS
-    
-    $('#myUpdateModel').remove();
-    bissolCreateModal(
-        '#html_table_editor'
-        , 'myUpdateModal'
-        , 'Update'
-        , 'Do you really want to update this record?'
-        , 'myUpdateButton'
-        , 'Update'
-    );
-    
+        
     // ------------------------------------
    
     // PREPARE BASIC TABLE STRUCTURE
@@ -371,6 +358,30 @@ function bissolBuildTable(data) {
                     
                     } 
                     
+                    else if(e.target.className.indexOf('update-row') > 0) {
+                        
+                        // APPLIES TO SIMPLE EDITOR ONLY
+                        
+                        // stop the event from bubbling up
+                        e.stopPropagation();
+                        
+                        // get data
+
+                        $('#myUpdateModal').remove();  // removing any pre-existing models 
+                        bissolCreateModal(
+                            'body'
+                            , 'myUpdateModal'
+                            , 'Update'
+                            , 'Do you really want to update this record?'
+                            , 'myUpdateButton'
+                            , 'Update'
+                        );
+                        
+                        $('#myUpdateModal').modal('show'); 
+                        
+                        
+                    }
+                    
                     else {
 
                         // function highlightRow() {
@@ -399,7 +410,11 @@ function bissolBuildTable(data) {
                     //var myId = $(this).parent().parent().find('span[data-name="' + param_id_column + '"]').text();
                     //console.log($('#html_table_editor table > tbody > tr > td.row-highlight'));
                     //var myId = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span[data-name="' + param_id_column + '"]').text();
+                    
+                    
+                    
                     var myId = $('#delete-modal-record-id').text();
+                    // actually I could have just stored this in a normal variable instead of reading it from the modal
                     
                     // console.log('------');
                     // console.log('Deleting record with following id: ' + myId);
@@ -440,7 +455,7 @@ function bissolBuildTable(data) {
                         $('#html_table_editor table > tbody > tr:last > td:first')
                             .empty()
                             .append(deleteIcon)
-                            .append(saveIcon)
+                            .append(updateIcon)
                             ;
                         
                         // add new empty row
@@ -453,24 +468,24 @@ function bissolBuildTable(data) {
             )
             ;
         
-        // attach event to a higher level for modal
-        $('#html_table_editor')
-            // deregister any prev events
-            .off('click', '#myUpdateButton')
-            .on(
-                {
-                    click: function btdeUpdateRow(e){
-                        // get data from html table
-                        //var mySpanArray = $(this).parent().parent().find('span[contenteditable]');
-                        //var mySpanArray = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span[contenteditable]');
-                        var mySpanArray = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span');
-                        var myRow = bissolGetRowValues(mySpanArray, 'update');
-                        
-                        bissolCreateUpdateQuery(myRow);
+            // attach event to a higher level for modal
+            $('body')
+                // deregister any prev events
+                .off('click', '#myUpdateButton')
+                .on(
+                    {
+                        click: function btdeUpdateRow(e){
+                            // get data from html table
+                            //var mySpanArray = $(this).parent().parent().find('span[contenteditable]');
+                            //var mySpanArray = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span[contenteditable]');
+                            var mySpanArray = $('#html_table_editor table > tbody > tr > td.row-highlight').find('span');
+                            var myRow = bissolGetRowValues(mySpanArray, 'update');
+                            // console.log(myRow);
+                            bissolCreateUpdateQuery(myRow);
+                        }
                     }
-                }
-                , '#myUpdateButton'    
-            )
+                    , '#myUpdateButton'    
+                )
             ;   
     } 
 
@@ -507,33 +522,6 @@ function bissolCreateRecordScreen(editType, existingData){
         + 'data-bv-feedbackicons-invalid="glyphicon glyphicon-remove" '
         + 'data-bv-feedbackicons-validating="glyphicon glyphicon-refresh" '
         + '>';
-    
-    // if(param_is_auto_increment === '' || param_is_auto_increment !== '' && editType === 'Edit'){
-    // 
-    //         // get max col id - quite a dummy action but does the purpose
-    //         Dashboards.setParameter('param_record_edit_type', editType);
-    //         Dashboards.fireChange('param_id_column', param_id_column);
-    //         
-    //         var myRecordId = '';
-    //         var myRecordIdEditDisabled = '';
-    //         
-    //         if(!$.isEmptyObject(existingData) || param_is_auto_increment !== '') {
-    //             myRecordId = ' value="' + existingData.myId  + '" ';
-    //             myRecordIdEditDisabled = 'disabled';
-    //         }
-    //         
-    //         myFormInput +=
-    //         '<div class="form-group">'
-    //         + '    <label for="' + param_id_column + '">' + param_id_column + '</label>'
-    //         + '    <input class="form-control" '
-    //         + ' id="' + param_id_column + '" '
-    //         + ' placeholder="Enter ' + param_id_column + '" '
-    //         + ' data-type="Integer" '
-    //         + myRecordId
-    //         + myRecordIdEditDisabled
-    //         + '></input>' 
-    //         + '</div>';          
-    // }
     
     var datetimeInputTypes = ['date','datetime','week','time'];
     var timeInputTypes = ['datetime','time'];
