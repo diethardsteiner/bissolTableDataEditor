@@ -19,6 +19,7 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
             elt.inputType = 'none';
             elt.validationPattern = '';
             elt.validationMessage = '';  
+            elt.cdaDataSource = '';
           });
           
         } else {
@@ -115,7 +116,9 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
               //,['datetime-local']
               //,['color']
               //,['email'],['tel'],['url']
-              ,['password']);
+              ,['password']
+              ,['select'] //custom
+            );
 
             myMetadataConfigForm +=
 
@@ -144,8 +147,9 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
             //+'            <td><input type="text" name="max"></td>'
             //+'            <td><input type="text" name="maxlength"></td>'
             //+'            <td><input type="text" name="step"></td>'
-            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="isVisible">Validation Pattern</label><div class="col-sm-10"><input type="text" name="validationPattern" value="' + val.validationPattern + '"></div></div>'
-            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="isVisible">Validation Message</label><div class="col-sm-10"><input type="text" name="validationMessage" value="' + val.validationMessage + '"></div></div>'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="validationPattern">Validation Pattern</label><div class="col-sm-10"><input type="text" name="validationPattern" value="' + val.validationPattern + '"></div></div>'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="validationMessage">Validation Message</label><div class="col-sm-10"><input type="text" name="validationMessage" value="' + val.validationMessage + '"></div></div>'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="cdaDataSource">CDA Data Source</label><div class="col-sm-10"><input type="text" name="cdaDataSource" value="' + val.cdaDataSource + '"></div></div>'
             ;
 
             myColsName.push(val.colName);
@@ -258,6 +262,12 @@ function bissolSaveAction(){
             validationMessageArrayInput.push($(this).val());
         });
         
+        var cdaDataSourceArrayInput = [];
+        $( '#html_db_table_metadata_picker input[name="cdaDataSource"]' ).each(function() { 
+            cdaDataSourceArrayInput.push($(this).val());
+        });
+        console.log(cdaDataSourceArrayInput);
+        
         var inputTypeChosenArrayInput = [];
         $( '#html_db_table_metadata_picker .myInputTypesPickerContainer' ).each(function() { 
             inputTypeChosenArrayInput.push($(this).find('select option:selected').val());
@@ -281,6 +291,7 @@ function bissolSaveAction(){
             metadataInstance.isRequired = isRequiredArrayInput[i];
             metadataInstance.validationPattern = validationPatternArrayInput[i];
             metadataInstance.validationMessage = validationMessageArrayInput[i];
+            metadataInstance.cdaDataSource = cdaDataSourceArrayInput[i];
             
             var inputTypeChosen = inputTypeChosenArrayInput[i];
             metadataInstance.inputType = inputTypeChosen;
@@ -403,7 +414,7 @@ function bissolSaveAction(){
             //Dashboards.fireChange('param_config_save','save');
             
             Dashboards.fireChange('param_config', JSON.stringify(btdeConfigInstance));
-
+            console.log(btdeConfigInstance);
             var alertSuccess = bissolCreateAlertMsg('success', '<strong>Success!</strong> Configuration details were saved.');
 
             $('#html_table_config_container').empty();
