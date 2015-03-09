@@ -331,15 +331,7 @@ function bissolBuildTable(data) {
         .on(
             {
                 click: function (e) {
-                    // stop the event bubbling up to the row level, so that highlight function does not get called
-                    // console.log('~~~~~~~~~');
-                    // console.log(e);
-                    // console.log(e.target);
-                    // console.log(e.target.nodeName);
-                    // console.log(e.target.className);
-                    // console.log($(e.target).parent().parent());
-                    // not very pretty check
-                    // if(e.target.nodeName === 'SPAN'){
+
                     if(e.target.className.indexOf('edit-row') > 0){
                         
                         // stop the event from bubbling up
@@ -351,11 +343,14 @@ function bissolBuildTable(data) {
                         );
                         
                         bissolCreateRecordScreen('Edit', existingData);    
-                    }
+                    
+                    } 
+                    
                     else if(e.target.className.indexOf('delete-row') > 0){
+                        
                         // stop the event from bubbling up
                         e.stopPropagation();
-                        console.log('helllllooo');
+
                         // get data
                         var existingData = bissolGetRowValues(
                             $(e.target).parent().siblings().find('span')
@@ -373,14 +368,17 @@ function bissolBuildTable(data) {
                         );
                         
                         $('#myDeleteModal').modal('show');    
-                    }
+                    
+                    } 
+                    
                     else {
-                        function highlightRow(e) {
-                            // remove existing hightlight
-                            $('#html_table_editor table > tbody > tr > td').removeClass( "row-highlight" );
-                            // highligh this row
-                            $(this).find("td").addClass( "row-highlight" );
-                        }
+
+                        // function highlightRow() {
+                        console.log(e);
+                        // remove existing hightlight
+                        $('#html_table_editor table > tbody > tr > td').removeClass( "row-highlight" );
+                        // highligh this row
+                        $(e.target).parent('tr').find("td").addClass( "row-highlight" );
                     }
                     
 
@@ -392,7 +390,7 @@ function bissolBuildTable(data) {
 
     
     // attached modal actions on a higher level
-    $('html')
+    $('body')
         // deregister any prev events
         .off('click', '#myDeleteButton')
         .on(
