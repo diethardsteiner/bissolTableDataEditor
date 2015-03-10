@@ -692,7 +692,7 @@ function bissolCreateRecordScreen(editType, existingData){
                         + bissolCreateSelect(
                             {
                                 myData: details.result
-                                , myDefaultValue: typeof existingData.myColValues === 'undefined' ? null : existingData.myColValues[editableCounter]
+                                , myDefaultValue: typeof existingData.myColValues === 'undefined' ? '' : existingData.myColValues[editableCounter]
                             }
                         )
                         

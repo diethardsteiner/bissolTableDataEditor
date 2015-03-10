@@ -21,7 +21,7 @@ function bissolCreateSelect(options){
             myLabel += '<label for="' + myDashboardObjectId + '">' + myLabelText + '</label>';
         }
         
-        if(typeof myDefaultValue === 'undefined' ){
+        if(typeof myDefaultValue === 'undefined' || myDefaultValue === '' || myDefaultValue === null){
             var myOptions = '<option disabled selected>Please select an option...</option>';
         } else {
             var myOptions = '<option value="' + myDefaultValue + '" selected>' + myDefaultValue + '</option>';
