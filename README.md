@@ -205,3 +205,7 @@ The file structure is pretty self-explanatory, hence I assume that you will find
 ### Explicit labeling of column config entries
 
 If you **edit** a configuration entry (configuration for one table) the columns will be listed on the **Admin page**. Columns details that are already stored in the configuration file are labelled **Configured** whereas other ones are labelled **New**. This is especially useful when the table definition changes on the database side.
+
+### CDA Data Source
+
+Currently you can only use a CDA data source to populate a select (drop down) menu. 
