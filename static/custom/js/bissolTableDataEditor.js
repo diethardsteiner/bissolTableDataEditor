@@ -658,7 +658,52 @@ function bissolCreateRecordScreen(editType, existingData){
                     + '     </div>'
                     + '</div>'
                     ;
-                } else {
+                }
+                 
+                else if( elt.inputType === 'select' ){
+                                        
+                    var details = 
+                        { queryDefinition:  
+                            {
+                                // query id
+                                dataAccessId: elt.cdaId,
+                                // path to cda file
+                                path: elt.cdaPath
+                            }
+                            // , parameters: { "fruit" : "apple" }
+                        }
+                    ;
+                    
+                    try {
+                            QueryComponent.makeQuery(details);
+                    } catch(e) {
+                            Dashboards.error("Error fetching details:" + e);
+                    }
+                    
+                    
+                    if (details.result && details.result.length > 0) {
+
+                        myFormInput +=
+                        '<div class="form-group">'
+                        + '    <label for="' + elt.colName + '">' + elt.colName + '</label>'
+    
+                        + '     <div id="' + elt.colName + '">'
+                        
+                        + bissolCreateSelect(
+                            {
+                                myData: details.result
+                                , myDefaultValue: typeof existingData.myColValues === 'undefined' ? null : existingData.myColValues[editableCounter]
+                            }
+                        )
+                        
+                        + '     </div>'
+                        + '</div>';    
+                    
+                    }
+                    
+                }
+                
+                else {
                     
                     var valType = elt.inputType === '' ? 'text' : elt.inputType;
                     

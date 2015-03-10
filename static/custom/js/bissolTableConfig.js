@@ -19,7 +19,8 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
             elt.inputType = 'none';
             elt.validationPattern = '';
             elt.validationMessage = '';  
-            elt.cdaDataSource = '';
+            elt.cdaPath = '';
+            elt.cdaId = '';
           });
           
         } else {
@@ -149,7 +150,8 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
             //+'            <td><input type="text" name="step"></td>'
             + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="validationPattern">Validation Pattern</label><div class="col-sm-10"><input type="text" name="validationPattern" value="' + val.validationPattern + '"></div></div>'
             + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="validationMessage">Validation Message</label><div class="col-sm-10"><input type="text" name="validationMessage" value="' + val.validationMessage + '"></div></div>'
-            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="cdaDataSource">CDA Data Source</label><div class="col-sm-10"><input type="text" name="cdaDataSource" value="' + val.cdaDataSource + '"></div></div>'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="cdaPath">CDA Path</label><div class="col-sm-10"><input type="text" name="cdaPath" value="' + val.cdaPath + '"></div></div>'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="cdaId">CDA ID</label><div class="col-sm-10"><input type="text" name="cdaId" value="' + val.cdaId + '"></div></div>'
             ;
 
             myColsName.push(val.colName);
@@ -262,11 +264,15 @@ function bissolSaveAction(){
             validationMessageArrayInput.push($(this).val());
         });
         
-        var cdaDataSourceArrayInput = [];
-        $( '#html_db_table_metadata_picker input[name="cdaDataSource"]' ).each(function() { 
-            cdaDataSourceArrayInput.push($(this).val());
+        var cdaPathArrayInput = [];
+        $( '#html_db_table_metadata_picker input[name="cdaPath"]' ).each(function() { 
+            cdaPathArrayInput.push($(this).val());
         });
-        console.log(cdaDataSourceArrayInput);
+        
+        var cdaIdArrayInput = [];
+        $( '#html_db_table_metadata_picker input[name="cdaId"]' ).each(function() { 
+            cdaIdArrayInput.push($(this).val());
+        });
         
         var inputTypeChosenArrayInput = [];
         $( '#html_db_table_metadata_picker .myInputTypesPickerContainer' ).each(function() { 
@@ -291,7 +297,8 @@ function bissolSaveAction(){
             metadataInstance.isRequired = isRequiredArrayInput[i];
             metadataInstance.validationPattern = validationPatternArrayInput[i];
             metadataInstance.validationMessage = validationMessageArrayInput[i];
-            metadataInstance.cdaDataSource = cdaDataSourceArrayInput[i];
+            metadataInstance.cdaPath = cdaPathArrayInput[i];
+            metadataInstance.cdaId = cdaIdArrayInput[i];
             
             var inputTypeChosen = inputTypeChosenArrayInput[i];
             metadataInstance.inputType = inputTypeChosen;
