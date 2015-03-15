@@ -3,6 +3,8 @@ function createCdaPickers(options) {
     var cdaPathContainer = options.cdaPathContainer; // name must include . or #
     var cdaIdContainer = options.cdaIdContainer; // name must include . or #
     var cdaParamsContainer = options.cdaParamsContainer; // name must include . or #
+    var cdaPathDefaultValue = options.cdaPathDefaultValue;
+    var cdaIdDefaultValue = options.cdaIdDefaultValue;
     
     // console.log('Preparing selects for: ');
     // console.log(cdaPathContainer);
@@ -35,13 +37,14 @@ function createCdaPickers(options) {
         //     $(cdaPathContainer + " select").append("<option value='"+dataFiles.resultset[i][1]+"'>"+dataFiles.resultset[i][0]+"</option>");
         // }
         
-        var myDataFiles = [];
+        var myDataFiles = [['none']];
         
         // console.log(dataFiles.resultset);
         
         // transform dataset so that path is listed first and name after 
         for(var i = 0; i < dataFiles.resultset.length; i++){
-            myRow = [dataFiles.resultset[i][1], dataFiles.resultset[i][0]];
+            // myRow = [dataFiles.resultset[i][1], dataFiles.resultset[i][0]];
+            myRow = [dataFiles.resultset[i][1]];
             myDataFiles.push(myRow);
         }
         
@@ -52,7 +55,7 @@ function createCdaPickers(options) {
                 myCdeContainerId: cdaPathContainer
                 , myData: myDataFiles
                 , myRenderSelectMessage: false
-                // , myDefaultValue: 'test'
+                , myDefaultValue: cdaPathDefaultValue
             }
         );
     
@@ -65,60 +68,86 @@ function createCdaPickers(options) {
             // that return all the queries available on the CDA file (you send the file path over parameter).
             // Note: some queries, special if you create your CDA in CDE don't have name 
             //   because webdetails aren't setting the tag name (I already open a issue but they are ignoring).
-            cdaConn.listQueries(function(dataQueries){
-                
-                // for(var i = 0; i < dataQueries.resultset.length; i++){
-                //     $(cdaIdContainer + " select").append("<option value='"+dataQueries.resultset[i][0]+"'>"+dataQueries.resultset[i][0] + " - " + dataQueries.resultset[i][1]+"</option>");
-                // 
-                // }
-                
-                console.log(dataQueries.resultset);
-                
-                var myDataQueries = [];
-                
-                // console.log(dataFiles.resultset);
-                
-                // transform dataset so that path is listed first and name after 
-                for(var i = 0; i < dataQueries.resultset.length; i++){
-                    myRow = [dataQueries.resultset[i][0], dataQueries.resultset[i][0] + ' - ' + dataQueries.resultset[i][2]];
-                    myDataQueries.push(myRow);
-                }
-                
+            
+            if( $(cdaPathContainer + " select > option:selected").val() === 'none' ){
                 bissolCreateSelect(
-                    {
-                        myCdeContainerId: cdaIdContainer
-                        , myData: myDataQueries
-                        , myRenderSelectMessage: false
-                        // , myDefaultValue: 'test'
-                    }
-                );
+                        {
+                            myCdeContainerId: cdaIdContainer
+                            , myData: [['none']]
+                            , myRenderSelectMessage: false
+                        }
+                    );
+            } else {
                 
-                $(cdaIdContainer + " select").change(function(ev){
-                    var cdaDataAccessId = $(ev.target).val();
-                    $(cdaParamsContainer).empty().append("<select></select>");
+                cdaConn.listQueries(function(dataQueries){
+                    
+                    // for(var i = 0; i < dataQueries.resultset.length; i++){
+                    //     $(cdaIdContainer + " select").append("<option value='"+dataQueries.resultset[i][0]+"'>"+dataQueries.resultset[i][0] + " - " + dataQueries.resultset[i][1]+"</option>");
+                    // 
+                    // }
+                    
+                    // console.log(dataQueries.resultset);
+                    
+                    var myDataQueries = [];
+                    
+                    // console.log(dataFiles.resultset);
+                    
+                    // transform dataset 
+                    for(var i = 0; i < dataQueries.resultset.length; i++){
+                        //myRow = [dataQueries.resultset[i][0], dataQueries.resultset[i][0] + ' - ' + dataQueries.resultset[i][2]];
+                        myRow = [dataQueries.resultset[i][0], dataQueries.resultset[i][0]];
+                        myDataQueries.push(myRow);
+                    }
+                    
+                    if( cdaPathDefaultValue === $(cdaPathContainer + " select > option:selected").val()){
+                        bissolCreateSelect(
+                            {
+                                myCdeContainerId: cdaIdContainer
+                                , myData: myDataQueries
+                                , myRenderSelectMessage: false
+                                , myDefaultValue: cdaIdDefaultValue
+                            }
+                        );                    
+                    } else {
+                        bissolCreateSelect(
+                            {
+                                myCdeContainerId: cdaIdContainer
+                                , myData: myDataQueries
+                                , myRenderSelectMessage: false
+                            }
+                        ); 
+                    }
+                    
     
-                    // With the CDA path file and the data access id you can get the lis of parameters.
-                    // You just need invoke the listParameters endpoint.
-                    cdaConn.listParameters(function(dataParams){
-                        for(var i = 0; i < dataParams.resultset.length; i++){
-                            $(cdaParamsContainer + " select").append("<option value='"+dataParams.resultset[i][0]+"'>"+dataParams.resultset[i][0] + " - " + dataParams.resultset[i][1]+"</option>");
-                        }
-                    },{
-                        params:{
-                            path: cdaFilePath,
-                            dataAccessId: cdaDataAccessId
-                        }
-                    });
+                    
+                    // $(cdaIdContainer + " select").change(function(ev){
+                    //     var cdaDataAccessId = $(ev.target).val();
+                    //     //$(cdaParamsContainer).empty().append("<select></select>");
+                    // 
+                    //     // With the CDA path file and the data access id you can get the lis of parameters.
+                    //     // You just need invoke the listParameters endpoint.
+                    //     cdaConn.listParameters(function(dataParams){
+                    //         for(var i = 0; i < dataParams.resultset.length; i++){
+                    //             $(cdaParamsContainer + " select").append("<option value='"+dataParams.resultset[i][0]+"'>"+dataParams.resultset[i][0] + " - " + dataParams.resultset[i][1]+"</option>");
+                    //         }
+                    //     },{
+                    //         params:{
+                    //             path: cdaFilePath,
+                    //             dataAccessId: cdaDataAccessId
+                    //         }
+                    //     });
+                    // });
+        
+                    // trigger change function after render the select
+                    $(cdaIdContainer + " select").trigger("change");
+        
+                },{
+                    params:{
+                        path: cdaFilePath
+                    }
                 });
-    
-                // trigger change function after render the select
-                $(cdaIdContainer + " select").trigger("change");
-    
-            },{
-                params:{
-                    path: cdaFilePath
-                }
-            });
+                
+            }
         });
         
         // trigger change function after render the select
@@ -282,8 +311,8 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
             + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="validationMessage">Validation Message</label><div class="col-sm-10"><input type="text" name="validationMessage" value="' + val.validationMessage + '"></div></div>'
             // + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="cdaPath">CDA Path</label><div class="col-sm-10"><input type="text" name="cdaPath" value="' + val.cdaPath + '"></div></div>'
             // + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="cdaId">CDA ID</label><div class="col-sm-10"><input type="text" name="cdaId" value="' + val.cdaId + '"></div></div>'
-            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="cdaPath">CDA Path</label><div class="col-sm-10" id="cdaPath' + val.colIndex + '"></div></div>'
-            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="cdaId">CDA ID</label><div class="col-sm-10" id="cdaId' + val.colIndex + '"></div></div>'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="cdaPath">CDA Path</label><div class="col-sm-10 cda-path" id="cdaPath' + val.colIndex + '"></div></div>'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="cdaId">CDA ID</label><div class="col-sm-10 cda-id" id="cdaId' + val.colIndex + '"></div></div>'
             ;
 
             myColsName.push(val.colName);
@@ -306,13 +335,15 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
         // due to dependency CDA Path - ID (id list updates automatically on path change)
         $.each(myMergedConfigData, function(i, val){
             
-            var currentCdaPath = '#cdaPath' + val.colIndex;
-            var currentCdaId = '#cdaId' + val.colIndex;
+            var currentCdaPathContainer = '#cdaPath' + val.colIndex;
+            var currentCdaIdContainer = '#cdaId' + val.colIndex;
             
             createCdaPickers(
                 {
-                    cdaPathContainer: currentCdaPath,
-                    cdaIdContainer: currentCdaId
+                    cdaPathContainer: currentCdaPathContainer
+                    , cdaPathDefaultValue: val.cdaPath
+                    , cdaIdContainer: currentCdaIdContainer
+                    , cdaIdDefaultValue: val.cdaId 
                 }
             );
             
@@ -415,13 +446,13 @@ function bissolSaveAction(){
         });
         
         var cdaPathArrayInput = [];
-        $( '#html_db_table_metadata_picker input[name="cdaPath"]' ).each(function() { 
-            cdaPathArrayInput.push($(this).val());
+        $( '#html_db_table_metadata_picker .cda-path' ).each(function() { 
+            cdaPathArrayInput.push($(this).find('select option:selected').val());
         });
         
         var cdaIdArrayInput = [];
-        $( '#html_db_table_metadata_picker input[name="cdaId"]' ).each(function() { 
-            cdaIdArrayInput.push($(this).val());
+        $( '#html_db_table_metadata_picker .cda-id' ).each(function() { 
+            cdaIdArrayInput.push($(this).find('select option:selected').val());
         });
         
         var inputTypeChosenArrayInput = [];
