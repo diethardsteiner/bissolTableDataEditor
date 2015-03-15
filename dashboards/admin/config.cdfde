@@ -3,6 +3,29 @@
   "title": "config",
   "rows": [
    {
+    "id": "350fedb1-695f-88ac-4041-81f29f0bfe7e",
+    "type": "LayoutResourceFile",
+    "typeDesc": "Resource",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "cda.js",
+      "type": "Id"
+     },
+     {
+      "name": "resourceFile",
+      "value": "/pentaho/api/repos/bissolTableDataEditor/static/custom/js/cda.js",
+      "type": "ResourceFile"
+     },
+     {
+      "name": "resourceType",
+      "value": "Javascript",
+      "type": "Label"
+     }
+    ]
+   },
+   {
     "id": "23ab062b-4d3d-30d5-a93e-601b166b4657",
     "type": "LayoutResourceFile",
     "typeDesc": "Resource",

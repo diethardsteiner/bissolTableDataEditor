@@ -1,6 +1,136 @@
+function createCdaPickers(options) {
+    
+    var cdaPathContainer = options.cdaPathContainer; // name must include . or #
+    var cdaIdContainer = options.cdaIdContainer; // name must include . or #
+    var cdaParamsContainer = options.cdaParamsContainer; // name must include . or #
+    
+    // console.log('Preparing selects for: ');
+    // console.log(cdaPathContainer);
+    // console.log(cdaIdContainer);
+    
+    
+    // details of this function are based on Latino Joel's code
+    var cdaConn = new CDA({
+      url: window.location.origin+webAppPath+"/plugin/cda/api/",
+      error: function(error) {
+        console.log("Error: " + error);
+        return;
+      }
+    });
+    
+    // The next structure is based in callbacks of javascript 
+    // because is the right way for browsers/node.js work over network.
+    // This is almost the same thing if you use jquery. 
+    // The main diferrence is a clean js lib for support CDA on browsers and node.js. Really similar of xmla4js.
+    
+    // We start by invoking the getCdaList endpoint that return all the CDA files on BI Server.
+    cdaConn.getCdaList(function(dataFiles){
+
+        $(cdaPathContainer).empty();
+        // $(cdaPathContainer).append("<select></select>");
+        $(cdaIdContainer).empty();
+        $(cdaParamsContainer).empty();
+        
+        // for(var i = 0; i < dataFiles.resultset.length; i++){
+        //     $(cdaPathContainer + " select").append("<option value='"+dataFiles.resultset[i][1]+"'>"+dataFiles.resultset[i][0]+"</option>");
+        // }
+        
+        var myDataFiles = [];
+        
+        // console.log(dataFiles.resultset);
+        
+        // transform dataset so that path is listed first and name after 
+        for(var i = 0; i < dataFiles.resultset.length; i++){
+            myRow = [dataFiles.resultset[i][1], dataFiles.resultset[i][0]];
+            myDataFiles.push(myRow);
+        }
+        
+        // console.log(myDataFiles);
+        
+        bissolCreateSelect(
+            {
+                myCdeContainerId: cdaPathContainer
+                , myData: myDataFiles
+                , myRenderSelectMessage: false
+                // , myDefaultValue: 'test'
+            }
+        );
+    
+        $(cdaPathContainer + " select").change(function(e){
+            var cdaFilePath = $(e.target).val();
+            // $(cdaIdContainer).empty().append("<select></select>");
+            $(cdaParamsContainer).empty();
+    
+            // We invoke the listQueries endpoint 
+            // that return all the queries available on the CDA file (you send the file path over parameter).
+            // Note: some queries, special if you create your CDA in CDE don't have name 
+            //   because webdetails aren't setting the tag name (I already open a issue but they are ignoring).
+            cdaConn.listQueries(function(dataQueries){
+                
+                // for(var i = 0; i < dataQueries.resultset.length; i++){
+                //     $(cdaIdContainer + " select").append("<option value='"+dataQueries.resultset[i][0]+"'>"+dataQueries.resultset[i][0] + " - " + dataQueries.resultset[i][1]+"</option>");
+                // 
+                // }
+                
+                console.log(dataQueries.resultset);
+                
+                var myDataQueries = [];
+                
+                // console.log(dataFiles.resultset);
+                
+                // transform dataset so that path is listed first and name after 
+                for(var i = 0; i < dataQueries.resultset.length; i++){
+                    myRow = [dataQueries.resultset[i][0], dataQueries.resultset[i][0] + ' - ' + dataQueries.resultset[i][2]];
+                    myDataQueries.push(myRow);
+                }
+                
+                bissolCreateSelect(
+                    {
+                        myCdeContainerId: cdaIdContainer
+                        , myData: myDataQueries
+                        , myRenderSelectMessage: false
+                        // , myDefaultValue: 'test'
+                    }
+                );
+                
+                $(cdaIdContainer + " select").change(function(ev){
+                    var cdaDataAccessId = $(ev.target).val();
+                    $(cdaParamsContainer).empty().append("<select></select>");
+    
+                    // With the CDA path file and the data access id you can get the lis of parameters.
+                    // You just need invoke the listParameters endpoint.
+                    cdaConn.listParameters(function(dataParams){
+                        for(var i = 0; i < dataParams.resultset.length; i++){
+                            $(cdaParamsContainer + " select").append("<option value='"+dataParams.resultset[i][0]+"'>"+dataParams.resultset[i][0] + " - " + dataParams.resultset[i][1]+"</option>");
+                        }
+                    },{
+                        params:{
+                            path: cdaFilePath,
+                            dataAccessId: cdaDataAccessId
+                        }
+                    });
+                });
+    
+                // trigger change function after render the select
+                $(cdaIdContainer + " select").trigger("change");
+    
+            },{
+                params:{
+                    path: cdaFilePath
+                }
+            });
+        });
+        
+        // trigger change function after render the select
+        $(cdaPathContainer + " select").trigger("change");
+    });
+}
+
+
+
 function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){    
-    console.log('--- -- ---');
-    console.log(myNewConfigData);
+    // console.log('--- -- ---');
+    // console.log(myNewConfigData);
     if(!$.isEmptyObject(myNewConfigData)){ 
         
         // merge existing config data with new one
@@ -150,8 +280,10 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
             //+'            <td><input type="text" name="step"></td>'
             + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="validationPattern">Validation Pattern</label><div class="col-sm-10"><input type="text" name="validationPattern" value="' + val.validationPattern + '"></div></div>'
             + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="validationMessage">Validation Message</label><div class="col-sm-10"><input type="text" name="validationMessage" value="' + val.validationMessage + '"></div></div>'
-            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="cdaPath">CDA Path</label><div class="col-sm-10"><input type="text" name="cdaPath" value="' + val.cdaPath + '"></div></div>'
-            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="cdaId">CDA ID</label><div class="col-sm-10"><input type="text" name="cdaId" value="' + val.cdaId + '"></div></div>'
+            // + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="cdaPath">CDA Path</label><div class="col-sm-10"><input type="text" name="cdaPath" value="' + val.cdaPath + '"></div></div>'
+            // + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="cdaId">CDA ID</label><div class="col-sm-10"><input type="text" name="cdaId" value="' + val.cdaId + '"></div></div>'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="cdaPath">CDA Path</label><div class="col-sm-10" id="cdaPath' + val.colIndex + '"></div></div>'
+            + '<div class="form-group form-group-sm"><label class="col-sm-2 control-label" for="cdaId">CDA ID</label><div class="col-sm-10" id="cdaId' + val.colIndex + '"></div></div>'
             ;
 
             myColsName.push(val.colName);
@@ -168,7 +300,25 @@ function bissolCreateTableConfigPicker(myNewConfigData,myOldConfigData){
 
 
         $('#html_db_table_metadata_picker').append(myMetadataConfigForm);
-
+        
+        // add CDA pickers
+        // can only be added once the form elements are attached to the main page
+        // due to dependency CDA Path - ID (id list updates automatically on path change)
+        $.each(myMergedConfigData, function(i, val){
+            
+            var currentCdaPath = '#cdaPath' + val.colIndex;
+            var currentCdaId = '#cdaId' + val.colIndex;
+            
+            createCdaPickers(
+                {
+                    cdaPathContainer: currentCdaPath,
+                    cdaIdContainer: currentCdaId
+                }
+            );
+            
+            
+        });
+        
         // add submit button
 
         if($('#bissol-table-properties-submit').length === 0){    

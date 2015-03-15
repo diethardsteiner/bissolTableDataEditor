@@ -7,6 +7,7 @@ function bissolCreateSelect(options){
     var myData = options.myData; // required
     var cdeParam = options.cdeParam; // optional
     var myDefaultValue = options.myDefaultValue; // optional
+    var myRenderSelectMessage = options.myRenderSelectMessage // optional
 
     //NOTE: if myData has more than one column, the first one will then we used as the id and the second on as value 
     
@@ -21,12 +22,17 @@ function bissolCreateSelect(options){
             myLabel += '<label for="' + myDashboardObjectId + '">' + myLabelText + '</label>';
         }
         
+        
         if(typeof myDefaultValue === 'undefined' || myDefaultValue === '' || myDefaultValue === null){
-            var myOptions = '<option disabled selected>Please select an option...</option>';
+            if(myRenderSelectMessage === false){
+                // dont do anything
+            } else {
+                var myOptions = '<option disabled selected>Please select an option...</option>';    
+            }
         } else {
             var myOptions = '<option value="' + myDefaultValue + '" selected>' + myDefaultValue + '</option>';
-        }
-        
+        }    
+    
         
         
         $.each(myData, function(i, val){
