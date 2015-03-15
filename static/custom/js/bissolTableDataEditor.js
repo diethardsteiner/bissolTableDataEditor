@@ -687,7 +687,7 @@ function bissolCreateRecordScreen(editType, existingData){
                         '<div class="form-group">'
                         + '    <label for="' + elt.colName + '">' + elt.colName + '</label>'
     
-                        + '     <div id="' + elt.colName + '">'
+                        + '     <div id="' + elt.colName + '" data-type="' + elt.colType + '">'
                         
                         + bissolCreateSelect(
                             {
@@ -825,9 +825,17 @@ function bissolCreateRecordScreen(editType, existingData){
                     
                     param_config.metadata.forEach(function(elt, i) {
                         if(elt.isEditable){
-                            var colValue = $('#new-record-panel #' + elt.colName).val();
+                            
+                            var colValue = '';
+                            
+                            if(elt.inputType === 'select'){
+                                colValue = $('#new-record-panel #' + elt.colName + ' option:selected').val();                               
+                            } else {
+                                colValue = $('#new-record-panel #' + elt.colName).val();
+                            }
+                            
                             var colName = elt.colName;
-                            var colType = $('#new-record-panel #' + elt.colName).attr('data-type');
+                            var colType = colType = $('#new-record-panel #' + elt.colName).attr('data-type');
                             myColValues.push(colValue);
                             myColNames.push(colName);
                             myColTypes.push(colType);
