@@ -2,7 +2,8 @@
 <plugin title="bissolTableDataEditor" loader="DEFAULT">
 <overlays>
 		<overlay id="startup.bissolTableDataEditor" resourcebundle="content/bissolTableDataEditor/resources/lang/messages">
-			<menubar id="toolsmenu">
+			<!--<menubar id="toolsmenu">-->
+			<menubar id="newmenu">
 	        	<menuitem id="bissolTableDataEditor" label="${Launcher.bissolTableDataEditor}" command="mantleXulHandler.openUrl('${Launcher.bissolTableDataEditor}','${Launcher.bissolTableDataEditor_TOOLTIP}','plugin/bissolTableDataEditor/api/default')"/>
 	      	</menubar>
 	    </overlay>
